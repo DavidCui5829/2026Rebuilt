@@ -61,12 +61,12 @@ public final class Constants
 
     // public static final Angle epsilonAngleToGoal = Degrees.of(1.0);
 
-    public static final <Supplier> Pose2d getHubPose2D() {
+    public static final Pose2d getHubPose2D() {
       Pose3d pose = DriverStation.getAlliance().equals(Optional.of(Alliance.Red)) ? redHubPose : blueHubPose;
       Pose2d Tdpose = pose.toPose2d();
       return Tdpose;
     }
-
+//should i add <Supplier> to the method signature? it compiles without it but im not sure if its correct
     public static final <Supplier> Pose3d getHubPose3D() {
       Pose3d pose = DriverStation.getAlliance().equals(Optional.of(Alliance.Red)) ? redHubPose : blueHubPose;
       return pose;
