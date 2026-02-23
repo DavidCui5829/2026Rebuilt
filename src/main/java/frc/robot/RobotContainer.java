@@ -15,6 +15,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.measure.Time;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -29,6 +30,9 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ControlAllShooting;
 import frc.robot.Constants.DrivebaseConstants;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+
+import static edu.wpi.first.units.Units.Seconds;
+
 import java.io.File;
 
 import swervelib.SwerveDrive;
@@ -96,7 +100,8 @@ private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.Dr
         .scaleTranslation(0.8)
         .allianceRelativeControl(true)
         .aim(Constants.DrivebaseConstants.getHubPose2D())
-        .aimWhile(driverXbox.leftTrigger());
+        .aimWhile(driverXbox.leftTrigger())
+        .aimLookahead(Time.ofBaseUnits(0, Seconds));
 
 
     /**
