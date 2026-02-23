@@ -105,8 +105,10 @@ private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.Dr
         .aim(Constants.DrivebaseConstants.getHubPose2D())
         .aimWhile(driverXbox.rightTrigger())
         .aimLookahead(Time.ofBaseUnits(0, Seconds))
+        .aimFeedforward(0.01, 0.01, 0.00013)
         // .aim(Constants.DrivebaseConstants.getFerryPose(drivebase.getPose().getTranslation()))
         // .aimWhile(!isInAllianceZone())
+        // .aimWhile(driverXbox.rightTrigger())
         ;
 
 
