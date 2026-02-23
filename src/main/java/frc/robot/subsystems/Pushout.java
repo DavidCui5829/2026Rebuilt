@@ -110,7 +110,7 @@ public class Pushout extends SubsystemBase {
     }
 
     public Command PushCommand() {
-        return new RunCommand(() -> PushoutDutyCycle(), this)
+        return new RunCommand(() -> PushIntake(), this)
                 .finallyDo(interrupted -> StopPushout());
     }
 

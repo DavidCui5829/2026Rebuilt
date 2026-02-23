@@ -280,8 +280,8 @@ private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.Dr
     // Swerve Drive Commands
     driverXbox.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
 
-  //  RBpushout_and_intake.whileTrue(Commands.parallel(m_pushout.PushCommand(), m_intake.runIntakeCommand()));
-  //  LBretract_and_stop.whileTrue(Commands.parallel(m_pushout.RetractCommand()));
+   RBpushout_and_intake.whileTrue(Commands.parallel(m_pushout.PushCommand(), m_intake.runIntakeCommand()));
+   LBretract_and_stop.whileTrue(Commands.parallel(m_pushout.RetractCommand()));
 
    // Pushout Commands
   //  Y_extendIntake.whileTrue(m_pushout.PushCommand());
