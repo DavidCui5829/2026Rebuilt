@@ -76,20 +76,20 @@ public final class Constants {
       return pose;
     }
 
-    public static final Pose3d getFerryPose(Translation2d robotPose) {
+    public static final Pose2d getFerryPose(Translation2d robotPose) {
       if (DriverStation.getAlliance().equals(Optional.of(Alliance.Red))) {
         if (robotPose.getDistance(redFerryPoseDepot.getTranslation().toTranslation2d()) > robotPose
             .getDistance(redFerryPoseOutpost.getTranslation().toTranslation2d())) {
-          return redFerryPoseOutpost;
+          return redFerryPoseOutpost.toPose2d();
         } else {
-          return redFerryPoseDepot;
+          return redFerryPoseDepot.toPose2d();
         }
       } else {
         if (robotPose.getDistance(blueFerryPoseDepot.getTranslation().toTranslation2d()) > robotPose
             .getDistance(blueFerryPoseOutpost.getTranslation().toTranslation2d())) {
-          return blueFerryPoseOutpost;
+          return blueFerryPoseOutpost.toPose2d();
         } else {
-          return blueFerryPoseDepot;
+          return blueFerryPoseDepot.toPose2d();
         }
       }
     }

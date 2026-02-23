@@ -15,14 +15,17 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.Time;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import static edu.wpi.first.units.Units.Inches;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 // import frc.robot.Configs.ShooterSubsystem;
@@ -101,7 +104,10 @@ private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.Dr
         .allianceRelativeControl(true)
         .aim(Constants.DrivebaseConstants.getHubPose2D())
         .aimWhile(driverXbox.leftTrigger())
-        .aimLookahead(Time.ofBaseUnits(0, Seconds));
+        .aimLookahead(Time.ofBaseUnits(0, Seconds))
+        // .aim(Constants.DrivebaseConstants.getFerryPose(drivebase.getPose().getTranslation()))
+        // .aimWhile(!isInAllianceZone())
+        ;
 
 
     /**
@@ -187,6 +193,15 @@ private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.Dr
 
    // Configure the trigger bindings
    configureBindings();
+
+     // Triggers for auto aim/pass poses
+    // new Trigger(() -> isInAllianceZone())
+    //     .onChange(Commands.runOnce(() -> onZoneChanged()).ignoringDisable(true));
+
+    // new Trigger(() -> isOnAllianceOutpostSide())
+    //     .onChange(Commands.runOnce(() -> onZoneChanged()).ignoringDisable(true));
+
+
    DriverStation.silenceJoystickConnectionWarning(true);
 //    SmartDashboard.putNumber("Heading Bias Deg", 0.0);
 //    // Tunable gain: radians of bias -> radians/sec of angular velocity
@@ -465,4 +480,61 @@ private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.Dr
 
        return new ChassisSpeeds(speeds.vxMetersPerSecond, speeds.vyMetersPerSecond, omega);
  }
- }
+
+   private Alliance getAlliance() {
+    return DriverStation.getAlliance().orElse(Alliance.Red);
+  }
+
+  private boolean isInAllianceZone() {
+    Alliance alliance = getAlliance();
+    Distance blueZone = Inches.of(182);
+    Distance redZone = Inches.of(469);
+
+    if (alliance == Alliance.Blue && drivebase.getPose().getMeasureX().lt(blueZone)) {
+      return true;
+    } else if (alliance == Alliance.Red && drivebase.getPose().getMeasureX().gt(redZone)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  private boolean isOnAllianceOutpostSide() {
+    Alliance alliance = getAlliance();
+    Distance midLine = Inches.of(158.84375);
+
+    if (alliance == Alliance.Blue && drivebase.getPose().getMeasureY().lt(midLine)) {
+      return true;
+    } else if (alliance == Alliance.Red && drivebase.getPose().getMeasureY().gt(midLine)) {
+      return true;
+    }
+
+    return false;
+  }
+
+//   private void onZoneChanged() {
+//     if (isInAllianceZone()) {
+//       superstructure.setAimPoint(Constants.AimPoints.getAllianceHubPosition());
+//     } else {
+//       if (isOnAllianceOutpostSide()) {
+//         superstructure.setAimPoint(Constants.AimPoints.getAllianceOutpostPosition());
+//       } else {
+//         superstructure.setAimPoint(Constants.AimPoints.getAllianceFarSidePosition());
+//       }
+//     }
+//   }
+
+//   private void onAllianceChanged(Alliance alliance) {
+//     currentAlliance = alliance;
+
+//     // Update aim point based on alliance
+//     if (alliance == Alliance.Blue) {
+//       superstructure.setAimPoint(Constants.AimPoints.BLUE_HUB.value);
+//     } else {
+//       superstructure.setAimPoint(Constants.AimPoints.RED_HUB.value);
+//     }
+
+//     System.out.println("Alliance changed to: " + alliance);
+//   }
+}
+ 
