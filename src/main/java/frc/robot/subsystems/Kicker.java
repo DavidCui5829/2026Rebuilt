@@ -14,15 +14,15 @@ import com.revrobotics.ResetMode;
 import org.littletonrobotics.junction.Logger;
 
 import com.revrobotics.PersistMode;
-import com.revrobotics.spark.ClosedLoopSlot;
-import com.revrobotics.REVLibError;
+// import com.revrobotics.spark.ClosedLoopSlot;
+// import com.revrobotics.REVLibError;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkBase.ControlType;
 import frc.robot.Constants.KickerConstants;
-import frc.robot.Constants.ShooterConstants;
+// import frc.robot.Constants.ShooterConstants;
 // import yams.motorcontrollers.SmartMotorControllerConfig.ControlMode;
 import frc.robot.Configs;
-import frc.robot.Configs.KickerSubsystem;
+// import frc.robot.Configs.KickerSubsystem;
 
 public class Kicker extends SubsystemBase {
 
@@ -30,7 +30,7 @@ public class Kicker extends SubsystemBase {
     private SparkFlex KickerLeftMotor = new SparkFlex(KickerConstants.KICKER_LEFT_ID, MotorType.kBrushless);
     private SparkFlex KickerRightMotor = new SparkFlex(KickerConstants.KICKER_RIGHT_ID, MotorType.kBrushless);
     private SparkClosedLoopController kickerLeftController = KickerLeftMotor.getClosedLoopController();
-    private SparkClosedLoopController kickerRightController = KickerRightMotor.getClosedLoopController();
+    // private SparkClosedLoopController kickerRightController = KickerRightMotor.getClosedLoopController();
 
     private final RelativeEncoder kickerLeftEncoder = KickerLeftMotor.getEncoder();
     private final RelativeEncoder kickerRightEncoder = KickerRightMotor.getEncoder();

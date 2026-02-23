@@ -14,11 +14,11 @@ import com.revrobotics.ResetMode;
 import org.littletonrobotics.junction.Logger;
 
 import com.revrobotics.PersistMode;
-import com.revrobotics.spark.ClosedLoopSlot;
-import com.revrobotics.REVLibError;
+// import com.revrobotics.spark.ClosedLoopSlot;
+// import com.revrobotics.REVLibError;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
-import au.grapplerobotics.LaserCan;
+// import au.grapplerobotics.LaserCan;
 
 import com.revrobotics.spark.SparkBase.ControlType;
 import frc.robot.Constants.ShooterConstants;
@@ -32,12 +32,12 @@ public class Shooter extends SubsystemBase {
     private SparkFlex ShooterRight1Motor = new SparkFlex(ShooterConstants.SHOOTER_R1_ID, MotorType.kBrushless);
     private SparkFlex ShooterRight2Motor = new SparkFlex(ShooterConstants.SHOOTER_R2_ID, MotorType.kBrushless);
     private SparkClosedLoopController shooterright1Controller = ShooterRight1Motor.getClosedLoopController();
-    private SparkClosedLoopController shooterright2Controller = ShooterRight2Motor.getClosedLoopController();
+    // private SparkClosedLoopController shooterright2Controller = ShooterRight2Motor.getClosedLoopController();
 
     private SparkFlex ShooterLeft1Motor = new SparkFlex(ShooterConstants.SHOOTER_L1_ID, MotorType.kBrushless);
     private SparkFlex ShooterLeft2Motor = new SparkFlex(ShooterConstants.SHOOTER_L2_ID, MotorType.kBrushless);
     private SparkClosedLoopController shooterleft1Controller = ShooterLeft1Motor.getClosedLoopController();
-    private SparkClosedLoopController shooterleft2Controller = ShooterLeft2Motor.getClosedLoopController();
+    // private SparkClosedLoopController shooterleft2Controller = ShooterLeft2Motor.getClosedLoopController();
 
     private final RelativeEncoder shooterRight1Encoder = ShooterRight1Motor.getEncoder();
     private final RelativeEncoder shooterRight2Encoder = ShooterRight2Motor.getEncoder();

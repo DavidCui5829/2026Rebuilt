@@ -21,11 +21,11 @@ public class Hopper extends SubsystemBase {
     private double TwindexerRightDesiredPercent = 0.0;
     private double TwindexerLeftDesiredPercent = 0.0;
 
-    private int six_seven = HopperConstants.six_seven; // <---------- HISTORICAL MONUMENT
+    // private int six_seven = HopperConstants.six_seven; // <---------- HISTORICAL MONUMENT
 
     // Instantiates push down and transfer motors
     private SparkFlex TwindexerRightMotor = new SparkFlex(HopperConstants.TWINDEXER_RIGHT_ID, MotorType.kBrushless);
-    private SparkClosedLoopController TwindexerRightController = TwindexerRightMotor.getClosedLoopController(); // idk
+    // private SparkClosedLoopController TwindexerRightController = TwindexerRightMotor.getClosedLoopController(); // idk
                                                                                                                 // what
                                                                                                                 // this
                                                                                                                 // is

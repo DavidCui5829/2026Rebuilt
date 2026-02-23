@@ -6,10 +6,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.ResetMode;
 import com.revrobotics.PersistMode;
-import com.revrobotics.spark.ClosedLoopSlot;
-import com.revrobotics.spark.SparkBase.ControlType;
-import com.revrobotics.REVLibError;
-import com.revrobotics.RelativeEncoder;
+// import com.revrobotics.spark.ClosedLoopSlot;
+// import com.revrobotics.spark.SparkBase.ControlType;
+// import com.revrobotics.REVLibError;
+// import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
 
@@ -26,10 +26,7 @@ public class Intake extends SubsystemBase {
 
     private SparkFlex IntakeMotor = new SparkFlex(IntakeConstants.INTAKE_ID, MotorType.kBrushless);
     private SparkClosedLoopController intakeController = IntakeMotor.getClosedLoopController();
-    // private SparkFlex IntakeRightMotor = new SparkFlex(IntakeConstants.INTAKE_ID,
-    // MotorType.kBrushless);
-    // private SparkClosedLoopController intakeRightController =
-    // IntakeRightMotor.getClosedLoopController();
+  
 
     public Intake() {
         IntakeMotor.configure(Configs.IntakeSubsystem.IntakeMotorConfig, ResetMode.kResetSafeParameters,
