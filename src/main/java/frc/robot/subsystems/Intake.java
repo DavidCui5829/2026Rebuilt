@@ -19,8 +19,6 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Configs;
 import org.littletonrobotics.junction.Logger;
 
-
-
 public class Intake extends SubsystemBase {
 
     // AdvantageKit logging
@@ -28,23 +26,24 @@ public class Intake extends SubsystemBase {
 
     private SparkFlex IntakeMotor = new SparkFlex(IntakeConstants.INTAKE_ID, MotorType.kBrushless);
     private SparkClosedLoopController intakeController = IntakeMotor.getClosedLoopController();
-    // private SparkFlex IntakeRightMotor = new SparkFlex(IntakeConstants.INTAKE_ID, MotorType.kBrushless);
-    // private SparkClosedLoopController intakeRightController = IntakeRightMotor.getClosedLoopController();
+    // private SparkFlex IntakeRightMotor = new SparkFlex(IntakeConstants.INTAKE_ID,
+    // MotorType.kBrushless);
+    // private SparkClosedLoopController intakeRightController =
+    // IntakeRightMotor.getClosedLoopController();
 
-    
     public Intake() {
         IntakeMotor.configure(Configs.IntakeSubsystem.IntakeMotorConfig, ResetMode.kResetSafeParameters,
                 PersistMode.kPersistParameters);
-        // IntakeRightMotor.configure(Configs.IntakeSubsystem.IntakeRightMotorConfig, ResetMode.kResetSafeParameters,
-        //         PersistMode.kPersistParameters);
+        // IntakeRightMotor.configure(Configs.IntakeSubsystem.IntakeRightMotorConfig,
+        // ResetMode.kResetSafeParameters,
+        // PersistMode.kPersistParameters);
     }
-
 
     public void runOuttake() {
         desiredPercent = IntakeConstants.OUTTAKE_SPEED;
         IntakeMotor.set(IntakeConstants.OUTTAKE_SPEED);
         // IntakeRightMotor.set(IntakeConstants.INTAKE_SPEED);
-        
+
     }
 
     public void runIntake() {
@@ -56,7 +55,7 @@ public class Intake extends SubsystemBase {
     public void stopIntake() {
         desiredPercent = 0.0;
         IntakeMotor.set(0);
-        // IntakeRightMotor.set(0);        
+        // IntakeRightMotor.set(0);
     }
 
     public Command runIntakeCommand() {

@@ -29,8 +29,8 @@ public class Kicker extends SubsystemBase {
     // Instantiating the hopper to shooter motor
     private SparkFlex KickerLeftMotor = new SparkFlex(KickerConstants.KICKER_LEFT_ID, MotorType.kBrushless);
     private SparkFlex KickerRightMotor = new SparkFlex(KickerConstants.KICKER_RIGHT_ID, MotorType.kBrushless);
-    private SparkClosedLoopController kickerLeftController = KickerLeftMotor.getClosedLoopController(); 
-    private SparkClosedLoopController kickerRightController = KickerRightMotor.getClosedLoopController(); 
+    private SparkClosedLoopController kickerLeftController = KickerLeftMotor.getClosedLoopController();
+    private SparkClosedLoopController kickerRightController = KickerRightMotor.getClosedLoopController();
 
     private final RelativeEncoder kickerLeftEncoder = KickerLeftMotor.getEncoder();
     private final RelativeEncoder kickerRightEncoder = KickerRightMotor.getEncoder();
@@ -48,7 +48,6 @@ public class Kicker extends SubsystemBase {
                         double kickerLRps = kickerLeftEncoder.getVelocity() / 60.0;
                         double kickerRRps = kickerRightEncoder.getVelocity() / 60.0;
 
-
                         double kickerLVolts = KickerLeftMotor.getAppliedOutput() * KickerLeftMotor.getBusVoltage();
                         double kickerRVolts = KickerRightMotor.getAppliedOutput() * KickerRightMotor.getBusVoltage();
 
@@ -64,7 +63,7 @@ public class Kicker extends SubsystemBase {
                     },
                     this));
 
-    public Kicker() {        
+    public Kicker() {
         KickerLeftMotor.configure(Configs.KickerSubsystem.kickerLeftMotorConfig, ResetMode.kResetSafeParameters,
                 PersistMode.kPersistParameters);
         KickerRightMotor.configure(Configs.KickerSubsystem.kickerRightMotorConfig, ResetMode.kResetSafeParameters,
@@ -72,18 +71,22 @@ public class Kicker extends SubsystemBase {
     }
 
     public void KickBackwards() {
-        //kickerLeftController.setSetpoint(KickerConstants.KICKER_SPEED, ControlType.kMAXMotionVelocityControl);
-        kickerLeftController.setSetpoint(KickerConstants.KICKER_REVERSE_RPM_TARGET, ControlType.kMAXMotionVelocityControl);
-        // kickerRightController.setSetpoint(KickerConstants.KICKER_SPEED, ControlType.kMAXMotionVelocityControl);
+        // kickerLeftController.setSetpoint(KickerConstants.KICKER_SPEED,
+        // ControlType.kMAXMotionVelocityControl);
+        kickerLeftController.setSetpoint(KickerConstants.KICKER_REVERSE_RPM_TARGET,
+                ControlType.kMAXMotionVelocityControl);
+        // kickerRightController.setSetpoint(KickerConstants.KICKER_SPEED,
+        // ControlType.kMAXMotionVelocityControl);
     }
 
     public void Kick() {
-        //kickerLeftController.setSetpoint(KickerConstants.KICKER_REVERSE_SPEED, ControlType.kMAXMotionVelocityControl);
-        //KickerLeftMotor.set(KickerConstants.KICKER_REVERSE_RPM_TARGET);
+        // kickerLeftController.setSetpoint(KickerConstants.KICKER_REVERSE_SPEED,
+        // ControlType.kMAXMotionVelocityControl);
+        // KickerLeftMotor.set(KickerConstants.KICKER_REVERSE_RPM_TARGET);
         kickerLeftController.setSetpoint(KickerConstants.KICKER_RPM_TARGET, ControlType.kMAXMotionVelocityControl);
-        // kickerRightController.setSetpoint(KickerConstants.KICKER_REVERSE_SPEED, ControlType.kMAXMotionVelocityControl);
+        // kickerRightController.setSetpoint(KickerConstants.KICKER_REVERSE_SPEED,
+        // ControlType.kMAXMotionVelocityControl);
     }
-
 
     public void stopKicking() {
         targetKickerRPM = 0.0;
@@ -91,13 +94,13 @@ public class Kicker extends SubsystemBase {
     }
 
     public Command kickCommand() {
-         
+
         return new RunCommand(() -> Kick(), this)
                 .finallyDo(interrupted -> stopKicking());
     }
 
     public Command kickBackwardsCommand() {
-         
+
         return new RunCommand(() -> KickBackwards(), this)
                 .finallyDo(interrupted -> stopKicking());
     }
@@ -106,28 +109,22 @@ public class Kicker extends SubsystemBase {
         return new RunCommand(() -> stopKicking(), this);
     }
 
-
-    public Command sysIdQuasistaticForward()
-    {
+    public Command sysIdQuasistaticForward() {
         return sysIdRoutine.quasistatic(SysIdRoutine.Direction.kForward);
     }
 
-    public Command sysIdQuasistaticReverse()
-    {
+    public Command sysIdQuasistaticReverse() {
         return sysIdRoutine.quasistatic(SysIdRoutine.Direction.kReverse);
     }
 
-    public Command sysIdDynamicForward()
-    {
+    public Command sysIdDynamicForward() {
         return sysIdRoutine.dynamic(SysIdRoutine.Direction.kForward);
     }
 
-    public Command sysIdDynamicReverse()
-    {
+    public Command sysIdDynamicReverse() {
         return sysIdRoutine.dynamic(SysIdRoutine.Direction.kReverse);
     }
 
-   
     @Override
     public void periodic() {
         // AdvantageKit Logging
@@ -142,7 +139,9 @@ public class Kicker extends SubsystemBase {
         Logger.recordOutput("Shooter/TargetKickerRPM", targetKickerRPM);
 
         // Applied voltage to kicker motors
-        Logger.recordOutput("Shooter/KickerLeftAppliedVolts", KickerLeftMotor.getAppliedOutput() * KickerLeftMotor.getBusVoltage());
-        Logger.recordOutput("Shooter/KickerRightAppliedVolts", KickerRightMotor.getAppliedOutput() * KickerRightMotor.getBusVoltage());
+        Logger.recordOutput("Shooter/KickerLeftAppliedVolts",
+                KickerLeftMotor.getAppliedOutput() * KickerLeftMotor.getBusVoltage());
+        Logger.recordOutput("Shooter/KickerRightAppliedVolts",
+                KickerRightMotor.getAppliedOutput() * KickerRightMotor.getBusVoltage());
     }
 }

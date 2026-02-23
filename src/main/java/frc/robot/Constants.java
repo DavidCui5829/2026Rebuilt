@@ -17,39 +17,41 @@ import edu.wpi.first.math.util.Units;
 import swervelib.math.Matter;
 
 /**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean constants. This
- * class should not be used for any other purpose. All constants should be declared globally (i.e. public static). Do
+ * The Constants class provides a convenient place for teams to hold robot-wide
+ * numerical or boolean constants. This
+ * class should not be used for any other purpose. All constants should be
+ * declared globally (i.e. public static). Do
  * not put anything functional in this class.
  *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
+ * <p>
+ * It is advised to statically import this class (or one of its inner classes)
+ * wherever the
  * constants are needed, to reduce verbosity.
  */
-public final class Constants
-{
+public final class Constants {
   public static final boolean USE_ROBOT_RELATIVE = false;
   public static final boolean USE_DRIVE_ONLY = false;
   public static final boolean USE_SHOOTER_ONLY = false;
   public static final boolean SIM_REPLAY_MODE = false;
-//not used
+  // not used
   public static final double ROBOT_MASS = (148 - 20.3) * 0.453592; // 32lbs * kg per pound
-  public static final Matter CHASSIS    = new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), ROBOT_MASS);
-  public static final double LOOP_TIME  = 0.13; //s, 20ms + 110ms sprk max velocity lag
-//used
-  public static final double MAX_SPEED  = Units.feetToMeters(14.5);
+  public static final Matter CHASSIS = new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), ROBOT_MASS);
+  public static final double LOOP_TIME = 0.13; // s, 20ms + 110ms sprk max velocity lag
+  // used
+  public static final double MAX_SPEED = Units.feetToMeters(14.5);
   // Maximum speed of the robot in meters per second, used to limit acceleration.
 
-//  public static final class AutonConstants
-//  {
-//
-//    public static final PIDConstants TRANSLATION_PID = new PIDConstants(0.7, 0, 0);
-//    public static final PIDConstants ANGLE_PID       = new PIDConstants(0.4, 0, 0.01);
-//  }
+  // public static final class AutonConstants
+  // {
+  //
+  // public static final PIDConstants TRANSLATION_PID = new PIDConstants(0.7, 0,
+  // 0);
+  // public static final PIDConstants ANGLE_PID = new PIDConstants(0.4, 0, 0.01);
+  // }
 
-  public static final class DrivebaseConstants
-  {
+  public static final class DrivebaseConstants {
 
-
-     public static final Pose3d redHubPose = new Pose3d(Units.inchesToMeters(468.56), Units.inchesToMeters(158.32),
+    public static final Pose3d redHubPose = new Pose3d(Units.inchesToMeters(468.56), Units.inchesToMeters(158.32),
         Units.inchesToMeters(72.0), new Rotation3d());
     public static final Pose3d blueHubPose = new Pose3d(Units.inchesToMeters(152.56), Units.inchesToMeters(158.32),
         Units.inchesToMeters(72.0), new Rotation3d());
@@ -66,7 +68,9 @@ public final class Constants
       Pose2d Tdpose = pose.toPose2d();
       return Tdpose;
     }
-//should i add <Supplier> to the method signature? it compiles without it but im not sure if its correct
+
+    // should i add <Supplier> to the method signature? it compiles without it but
+    // im not sure if its correct
     public static final <Supplier> Pose3d getHubPose3D() {
       Pose3d pose = DriverStation.getAlliance().equals(Optional.of(Alliance.Red)) ? redHubPose : blueHubPose;
       return pose;
@@ -94,59 +98,54 @@ public final class Constants
     public static final double WHEEL_LOCK_TIME = 10; // seconds
   }
 
-  public static class OperatorConstants
-  {
+  public static class OperatorConstants {
 
     // Joystick Deadband
-    public static final double DEADBAND        = 0.1;
+    public static final double DEADBAND = 0.1;
     public static final double LEFT_Y_DEADBAND = 0.1;
     public static final double RIGHT_X_DEADBAND = 0.1;
-    public static final double TURN_CONSTANT    = 6;
+    public static final double TURN_CONSTANT = 6;
   }
 
-  public static class IntakeConstants
-  {
+  public static class IntakeConstants {
     public static final int INTAKE_ID = 16; // unknown
     // public static final int INTAKE_RIGHT_ID = 16; // unknown
-
 
     public static final double OUTTAKE_SPEED = 0.7;
     public static final double INTAKE_SPEED = -0.7;
 
   }
 
-  public static class PushoutConstants
-  {
+  public static class PushoutConstants {
     public static final int PUSHOUT_ID = 30; // Unknown
-    // public static final int PUSHOUT_RIGHT_ID = 17; 
+    // public static final int PUSHOUT_RIGHT_ID = 17;
 
-    public static final double PUSHOUT_RETRACTED_POS = 0.0;     
-    public static final double PUSHOUT_EXTENDED_POS  = -0.7;    // TUNE THIS!!!
+    public static final double PUSHOUT_RETRACTED_POS = 0.0;
+    public static final double PUSHOUT_EXTENDED_POS = -0.7; // TUNE THIS!!!
 
-    public static final double PUSHOUT_RETRACTED_AGITATE_POS = 0.0;     // encoder rotations
-    public static final double PUSHOUT_EXTENDED_AGITATE_POS  = 0.2;    // TUNE THIS!!!
+    public static final double PUSHOUT_RETRACTED_AGITATE_POS = 0.0; // encoder rotations
+    public static final double PUSHOUT_EXTENDED_AGITATE_POS = 0.2; // TUNE THIS!!!
 
-    public static final double PUSHOUT_AGITATE_WAIT = 0.3;     
+    public static final double PUSHOUT_AGITATE_WAIT = 0.3;
   }
 
-  public static class ShooterConstants
-  {
+  public static class ShooterConstants {
     public static final int SHOOTER_R1_ID = 11;
     public static final int SHOOTER_R2_ID = 12;
 
     public static final int SHOOTER_L1_ID = 9;
-    public static final int SHOOTER_L2_ID = 10; 
-    
+    public static final int SHOOTER_L2_ID = 10;
+
     public static final double SHOOTER_SPEED = 1900; // RPM 3 meters 1900 4 meters 2200
     public static final double ERROR_MARGIN = 100; // RPM
     public static final double STOP = 0;
     public static final double IDLE = 0; // % voltage -1 --> 1
 
   }
-  public static class KickerConstants
-  {
-    public static final int KICKER_LEFT_ID = 13; 
-    public static final int KICKER_RIGHT_ID = 14; 
+
+  public static class KickerConstants {
+    public static final int KICKER_LEFT_ID = 13;
+    public static final int KICKER_RIGHT_ID = 14;
 
     public static final double KICKER_REVERSE_RPM_TARGET = 6000; // RPM
     public static final double KICKER_RPM_TARGET = -6000; // RPM
@@ -155,8 +154,7 @@ public final class Constants
     public static final double IDLE = 0; // % voltage -1 --> 1
   }
 
-  public static class HopperConstants
-  {
+  public static class HopperConstants {
     // IDEAL mapping from motor_can_ids.csv: left=18, right=19
     public static final int TWINDEXER_LEFT_ID = 18;
     public static final int TWINDEXER_RIGHT_ID = 19;
@@ -171,8 +169,7 @@ public final class Constants
 
   }
 
-  public static class ClimberConstants
-  {
+  public static class ClimberConstants {
     public static final int CLIMBER_LEFT_ID = 20; // placeholder
     // public static final int CLIMBER_RIGHT_ID = 25; // placeholder
 
@@ -181,7 +178,7 @@ public final class Constants
     public static final double CLIMBER_DOWN_SPEED = -0.5; // placeholder
   }
 
-   public static final double X_REEF_ALIGNMENT_P = 2.1; // Proportional gain for X-axis reef alignment
+  public static final double X_REEF_ALIGNMENT_P = 2.1; // Proportional gain for X-axis reef alignment
   public static final double Y_REEF_ALIGNMENT_P = 2.5; // Proportional gain for Y-axis reef alignment (previously 1.74)
   public static final double ROT_REEF_ALIGNMENT_P = 0.07; // Proportional gain for rotational reef alignment
   public static final boolean USE_AUTO_ALIGNMENT_FAST_APPROACH = false; // Turn fast appraoch for auto align
@@ -212,6 +209,4 @@ public final class Constants
   public static final boolean LIMIT_DASHBOARD_PERIODIC_UPDATES = false; // Enable throttling of dashboard updates
   public static final int DASHBOARD_UPDATE_PERIOD_CYCLES = 10; // Number of periodic loops between dashboard refreshes
 
-
 }
-

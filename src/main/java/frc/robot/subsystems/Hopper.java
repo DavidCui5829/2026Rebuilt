@@ -14,6 +14,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import frc.robot.Constants.HopperConstants;
 import frc.robot.Configs;
 import org.littletonrobotics.junction.Logger;
+
 public class Hopper extends SubsystemBase {
 
     // AdvantageKit logging
@@ -24,39 +25,50 @@ public class Hopper extends SubsystemBase {
 
     // Instantiates push down and transfer motors
     private SparkFlex TwindexerRightMotor = new SparkFlex(HopperConstants.TWINDEXER_RIGHT_ID, MotorType.kBrushless);
-    private SparkClosedLoopController TwindexerRightController = TwindexerRightMotor.getClosedLoopController(); // idk what this is
+    private SparkClosedLoopController TwindexerRightController = TwindexerRightMotor.getClosedLoopController(); // idk
+                                                                                                                // what
+                                                                                                                // this
+                                                                                                                // is
 
     private SparkFlex TwindexerLeftMotor = new SparkFlex(HopperConstants.TWINDEXER_LEFT_ID, MotorType.kBrushless);
-    private SparkClosedLoopController TwindexerLeftController = TwindexerLeftMotor.getClosedLoopController(); // idk what this is
+    private SparkClosedLoopController TwindexerLeftController = TwindexerLeftMotor.getClosedLoopController(); // idk
+                                                                                                              // what
+                                                                                                              // this is
 
-    public Hopper(){
-        TwindexerRightMotor.configure(Configs.HopperSubsystem.TwindexerRightControllerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        TwindexerLeftMotor.configure(Configs.HopperSubsystem.TwindexerLeftControllerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    public Hopper() {
+        TwindexerRightMotor.configure(Configs.HopperSubsystem.TwindexerRightControllerConfig,
+                ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        TwindexerLeftMotor.configure(Configs.HopperSubsystem.TwindexerLeftControllerConfig,
+                ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
-    public void ReverseHopper(){
+    public void ReverseHopper() {
         TwindexerLeftDesiredPercent = HopperConstants.REVERSE_TWINDEXER_LEFT_RPM;
         // TwindexerLeftMotor.set(HopperConstants.REVERSE_TWINDEXER_LEFT_RPM);
-        TwindexerLeftController.setSetpoint(HopperConstants.REVERSE_TWINDEXER_LEFT_RPM, ControlType.kMAXMotionVelocityControl);
+        TwindexerLeftController.setSetpoint(HopperConstants.REVERSE_TWINDEXER_LEFT_RPM,
+                ControlType.kMAXMotionVelocityControl);
     }
-    public void HopperToShooter(){ 
+
+    public void HopperToShooter() {
         TwindexerLeftDesiredPercent = HopperConstants.REVERSE_TWINDEXER_LEFT_RPM;
         // TwindexerLeftMotor.set(HopperConstants.TWINDEXER_LEFT_RPM);
-        TwindexerLeftController.setSetpoint(HopperConstants.REVERSE_TWINDEXER_RIGHT_RPM, ControlType.kMAXMotionVelocityControl);
+        TwindexerLeftController.setSetpoint(HopperConstants.REVERSE_TWINDEXER_RIGHT_RPM,
+                ControlType.kMAXMotionVelocityControl);
     }
-    public void stopHopper(){
+
+    public void stopHopper() {
         TwindexerLeftDesiredPercent = 0.0;
         TwindexerLeftController.setSetpoint(0, ControlType.kMAXMotionVelocityControl);
     }
-    
-    public Command runHopperToShooterCommand(){
+
+    public Command runHopperToShooterCommand() {
         return new RunCommand(() -> HopperToShooter(), this)
-            .finallyDo(interrupted -> stopHopper());
+                .finallyDo(interrupted -> stopHopper());
     }
 
-    public Command runReverseHopperCommand(){
+    public Command runReverseHopperCommand() {
         return new RunCommand(() -> ReverseHopper(), this)
-            .finallyDo(interrupted -> stopHopper());
+                .finallyDo(interrupted -> stopHopper());
     }
 
     @Override
@@ -67,8 +79,10 @@ public class Hopper extends SubsystemBase {
         // Commanded transfer motor percent output.
         Logger.recordOutput("Hopper/TransferDesiredPercent", TwindexerLeftDesiredPercent);
         // Applied voltage to pushdown motor.
-        Logger.recordOutput("Hopper/TwindexerRightMotor", TwindexerRightMotor.getAppliedOutput() * TwindexerRightMotor.getBusVoltage());
+        Logger.recordOutput("Hopper/TwindexerRightMotor",
+                TwindexerRightMotor.getAppliedOutput() * TwindexerRightMotor.getBusVoltage());
         // Applied voltage to transfer motor.
-        Logger.recordOutput("Hopper/TwindexerLeftMotor", TwindexerLeftMotor.getAppliedOutput() * TwindexerLeftMotor.getBusVoltage());
+        Logger.recordOutput("Hopper/TwindexerLeftMotor",
+                TwindexerLeftMotor.getAppliedOutput() * TwindexerLeftMotor.getBusVoltage());
     }
 }
