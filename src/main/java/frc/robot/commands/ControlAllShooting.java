@@ -153,8 +153,8 @@ public class ControlAllShooting extends Command
 
      m_shooter.setTargetRPM(idealHorizontalSpeed);
      if (isAtSpeed.getAsBoolean()) {
-      m_hopper.runHopperToShooterCommand();
-      m_kicker.kickCommand();
+      m_hopper.HopperToShooter();
+      m_kicker.Kick();
      }
 
      
@@ -178,6 +178,8 @@ public class ControlAllShooting extends Command
   public void end(boolean interrupted)
   {
     m_shooter.setTargetRPM(0);
+    m_hopper.stopHopper();
+    m_kicker.stopKicking();
     
   }
 }
