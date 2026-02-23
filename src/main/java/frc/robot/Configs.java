@@ -71,8 +71,8 @@ public final class Configs
 
                         PushoutMotorConfig.closedLoop
                         .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-                        .p(3)
-                        .i(0.001)
+                        .p(3.3)
+                        .i(0.004)
                         .d(0.05)
                         .outputRange(-1.0, 1.0)
                         .maxMotion

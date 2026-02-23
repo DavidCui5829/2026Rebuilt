@@ -103,7 +103,7 @@ private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.Dr
         .scaleTranslation(0.8)
         .allianceRelativeControl(true)
         .aim(Constants.DrivebaseConstants.getHubPose2D())
-        .aimWhile(driverXbox.leftTrigger())
+        .aimWhile(driverXbox.rightTrigger())
         .aimLookahead(Time.ofBaseUnits(0, Seconds))
         // .aim(Constants.DrivebaseConstants.getFerryPose(drivebase.getPose().getTranslation()))
         // .aimWhile(!isInAllianceZone())
