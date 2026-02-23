@@ -137,19 +137,27 @@ public class ControlAllShooting extends Command
     
 
 
-  Commands.parallel(
-        // keep running the VariableShoot command while we wait for the shooter to reach speed
-        m_shooter.setTargetRPMCommand(idealHorizontalSpeed),
+  // Commands.parallel(
+  //       // keep running the VariableShoot command while we wait for the shooter to reach speed
+  //       m_shooter.setTargetRPMCommand(idealHorizontalSpeed),
         
-        // once at speed, run hopper + kicker
-        Commands.sequence(
-          Commands.waitUntil(isAtSpeed),
-          Commands.parallel(
-             m_hopper.runHopperToShooterCommand(),
-             m_kicker.kickCommand()
-          )
-        )
-     );
+  //       // once at speed, run hopper + kicker
+  //       Commands.sequence(
+  //         Commands.waitUntil(isAtSpeed),
+  //         Commands.parallel(
+  //            m_hopper.runHopperToShooterCommand(),
+  //            m_kicker.kickCommand()
+  //         )
+  //       )
+  //    );
+
+     m_shooter.setTargetRPM(idealHorizontalSpeed);
+     if (isAtSpeed.getAsBoolean()) {
+      m_hopper.runHopperToShooterCommand();
+      m_kicker.kickCommand();
+     }
+
+     
      
     
     // m_hopper.runReverseHopperCommand().onlyIf(m_shooter::isShooterFast);
