@@ -167,6 +167,7 @@ public class ControlAllShooting extends Command
      }
 
      
+     Logger.recordOutput("Shooter/LUTCurrentTargetRPM", RecordedidealHorizontalSpeed);
     
     
     // m_hopper.runReverseHopperCommand().onlyIf(m_shooter::isShooterFast);
@@ -186,25 +187,25 @@ public class ControlAllShooting extends Command
   @Override
   public void end(boolean interrupted)
   {
-    Translation2d goalLocation = goalPose.getTranslation();
-    Translation2d robotLocation = robotPose.getTranslation();
-    Translation2d targetVec = goalLocation.minus(robotLocation);
-    double        dist         = targetVec.getNorm();
-    // 3. CALCULATE IDEAL SHOT (Stationary)
-    // Note: This returns HORIZONTAL velocity component
-    double idealHorizontalSpeed = shooterTable.get(dist);
+    // Translation2d goalLocation = goalPose.getTranslation();
+    // Translation2d robotLocation = robotPose.getTranslation();
+    // Translation2d targetVec = goalLocation.minus(robotLocation);
+    // double        dist         = targetVec.getNorm();
+    // // 3. CALCULATE IDEAL SHOT (Stationary)
+    // // Note: This returns HORIZONTAL velocity component
+    // double idealHorizontalSpeed = shooterTable.get(dist);
 
-    m_hopper.stopHopper();
-    m_kicker.stopKicking();
-    m_shooter.setTargetRPM(idealHorizontalSpeed);
-    try {
-      Thread.sleep(2000);
-    } catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-      Logger.recordOutput("Shooter/Left1AppliedVolts", e.getMessage());
+    // m_hopper.stopHopper();
+    // m_kicker.stopKicking();
+    // m_shooter.setTargetRPM(idealHorizontalSpeed);
+    // try {
+    //   Thread.sleep(2000);
+    // } catch (InterruptedException e) {
+    //   Thread.currentThread().interrupt();
+    //   Logger.recordOutput("Shooter/Left1AppliedVolts", e.getMessage());
 
-    }
-    m_shooter.stopShooting();
+    // }
+    // m_shooter.stopShooting();
     
     m_hopper.stopHopper();
     m_kicker.stopKicking();
