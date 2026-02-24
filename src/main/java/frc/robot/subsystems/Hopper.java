@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -53,7 +52,6 @@ public class Hopper extends SubsystemBase {
         TwindexerLeftController.setSetpoint(HopperConstants.REVERSE_TWINDEXER_LEFT_RPM,
                 ControlType.kMAXMotionVelocityControl);
         
-        hasBalls = checkBalls();
     }
 
     public void HopperToShooter() {
@@ -62,14 +60,11 @@ public class Hopper extends SubsystemBase {
         TwindexerLeftController.setSetpoint(HopperConstants.REVERSE_TWINDEXER_RIGHT_RPM,
                 ControlType.kMAXMotionVelocityControl);
 
-        hasBalls = checkBalls();
     }
 
     public boolean checkBalls() // Checks if there are balls in hopper based on output current
     {
-        if(TwindexerLeftMotor.getOutputCurrent() < idleCurrent && TwindexerRightMotor.getOutputCurrent() < idleCurrent) return false;
-
-        return true;
+        return !(TwindexerLeftMotor.getOutputCurrent() < idleCurrent && TwindexerRightMotor.getOutputCurrent() < idleCurrent);
     }
 
     public void stopHopper() {
@@ -89,6 +84,7 @@ public class Hopper extends SubsystemBase {
 
     @Override
     public void periodic() {
+        checkBalls();
         // AdvantageKit Logging
         // Commanded pushdown motor percent output.
         Logger.recordOutput("Hopper/PushdownDesiredPercent", TwindexerRightDesiredPercent);
