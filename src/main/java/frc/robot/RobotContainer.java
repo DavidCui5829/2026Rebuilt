@@ -267,6 +267,7 @@ private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.Dr
 //====================================== ALIGN TO HUB COMMANDS ======================================      
 //====================================== ALL CONTROLS ======================================
     RTtransfer_kick_shoot.whileTrue(m_variableShoot);
+    RTtransfer_kick_shoot.onFalse(m_shooter.shootFuelCommand().withTimeout(2));
 
     // Hopper Commands
     PRtransfer.whileTrue(Commands.parallel(m_hopper.runHopperToShooterCommand(), m_kicker.kickCommand()));
