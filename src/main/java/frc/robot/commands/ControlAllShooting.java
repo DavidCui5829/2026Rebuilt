@@ -10,7 +10,7 @@ import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 // import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.Commands;
+// import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Hopper;
@@ -190,7 +190,7 @@ public class ControlAllShooting extends Command
     m_shooter.setTargetRPM(RecordedidealHorizontalSpeed);
     
     CommandScheduler.getInstance().schedule(wait);
-    
+
     m_shooter.setTargetRPM(0);
    
     
