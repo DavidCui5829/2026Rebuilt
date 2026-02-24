@@ -186,7 +186,6 @@ public class ControlAllShooting extends Command
   @Override
   public void end(boolean interrupted)
   {
-<<<<<<< HEAD
     Translation2d goalLocation = goalPose.getTranslation();
     Translation2d robotLocation = robotPose.getTranslation();
     Translation2d targetVec = goalLocation.minus(robotLocation);
@@ -206,7 +205,6 @@ public class ControlAllShooting extends Command
 
     }
     m_shooter.stopShooting();
-=======
     
     m_hopper.stopHopper();
     m_kicker.stopKicking();
@@ -217,6 +215,5 @@ public class ControlAllShooting extends Command
     m_shooter.setTargetRPM(0);
    
     
->>>>>>> c842453f746fd102ae2fd12ed176de4a2f5ebe01
   }
 }
