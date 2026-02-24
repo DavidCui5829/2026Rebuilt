@@ -21,6 +21,8 @@ import java.util.List;
 // import java.util.function.Supplier;
 import java.util.function.BooleanSupplier;
 
+import org.littletonrobotics.junction.Logger;
+
 
 /**
  * Largely written by Eeshwar based off their blog at https://blog.eeshwark.com/robotblog/shooting-on-the-fly
@@ -177,9 +179,24 @@ public class ControlAllShooting extends Command
   @Override
   public void end(boolean interrupted)
   {
-    m_shooter.setTargetRPM(0);
+    Translation2d goalLocation = goalPose.getTranslation();
+    Translation2d robotLocation = robotPose.getTranslation();
+    Translation2d targetVec = goalLocation.minus(robotLocation);
+    double        dist         = targetVec.getNorm();
+    // 3. CALCULATE IDEAL SHOT (Stationary)
+    // Note: This returns HORIZONTAL velocity component
+    double idealHorizontalSpeed = shooterTable.get(dist);
+
     m_hopper.stopHopper();
     m_kicker.stopKicking();
-    
+    m_shooter.setTargetRPM(idealHorizontalSpeed);
+    try {
+      Thread.sleep(2000);
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      Logger.recordOutput("Shooter/Left1AppliedVolts", e.getMessage());
+
+    }
+    m_shooter.stopShooting();
   }
 }
