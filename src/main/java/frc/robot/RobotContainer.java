@@ -336,8 +336,8 @@ private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.Dr
     A_runOuttake.whileTrue(m_intake.runOuttakeCommand());
     
     //  Climber Commands
-    Climb.whileTrue(m_climber.runClimbCommand());
-    ClimbDown.whileTrue(m_climber.runClimberDownCommand());
+    // Climb.whileTrue(m_climber.runClimbCommand());
+    // ClimbDown.whileTrue(m_climber.runClimberDownCommand());
 
 
   //  // transfer + kick + shoot command, only runs if the shooter is up to speed
