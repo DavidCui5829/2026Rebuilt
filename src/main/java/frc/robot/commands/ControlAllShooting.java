@@ -16,6 +16,7 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Kicker;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Pushout;
 // import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 // import swervelib.SwerveDrive;
 
@@ -32,13 +33,14 @@ import org.littletonrobotics.junction.Logger;
 public class ControlAllShooting extends Command
 {
 
-  private final Pose2d        goalPose;
+  private final Pose2d goalPose;
   private final Shooter m_shooter;
   private final Pose2d robotPose;
   private final Hopper m_hopper;
   private final Kicker m_kicker;
+  private final Pushout m_pushout;
 
-  private  double     RecordedidealHorizontalSpeed;
+  private double RecordedidealHorizontalSpeed;
 
   WaitCommand wait = new WaitCommand(1);
   // private final SwerveSubsystem m_swerveSubsystem;
@@ -54,7 +56,7 @@ public class ControlAllShooting extends Command
   
   
 
-  public ControlAllShooting(Pose2d goalPoseSupplier, Shooter shooter, Pose2d robotPoseSupplier, Hopper hopper, Kicker kicker)
+  public ControlAllShooting(Pose2d goalPoseSupplier, Shooter shooter, Pose2d robotPoseSupplier, Hopper hopper, Kicker kicker, Pushout pushout)
                                
   {
    
@@ -62,6 +64,7 @@ public class ControlAllShooting extends Command
     this.m_shooter = shooter;
     this.m_hopper = hopper;
     this.m_kicker = kicker;
+    this.m_pushout = pushout;
     this.robotPose = robotPoseSupplier;
     // this.m_swerveSubsystem = swerveSubsystem;
     // this.m_hopper = hopper;
@@ -164,6 +167,7 @@ public class ControlAllShooting extends Command
      if (isAtSpeed.getAsBoolean()) {
       m_hopper.HopperToShooter();
       m_kicker.Kick();
+      m_pushout.Agitate();
      }
 
      
@@ -202,7 +206,7 @@ public class ControlAllShooting extends Command
     //   Thread.sleep(2000);
     // } catch (InterruptedException e) {
     //   Thread.currentThread().interrupt();
-    //   Logger.recordOutput("Shooter/Left1AppliedVolts", e.getMessage());
+    //   Logger.recordOutput("ThreadSleepFrom2SecondsExtra", e.getMessage());
 
     // }
     // m_shooter.stopShooting();

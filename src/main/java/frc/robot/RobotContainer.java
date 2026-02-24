@@ -75,7 +75,6 @@ public class RobotContainer {
  private final Intake m_intake = new Intake();
  private final Hopper m_hopper = new Hopper();
  private final Shooter m_shooter = new Shooter();
-
  private final Climber m_climber = new Climber();
  private final Kicker m_kicker = new Kicker();
  private final Pushout m_pushout = new Pushout();
@@ -84,7 +83,7 @@ public class RobotContainer {
 
 // VariableShoot constructor parameters do not match here, so declare the field and
 // instantiate it later with the correct constructor when available.
-private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.DrivebaseConstants.getHubPose2D(), m_shooter, drivebase.getPose(), m_hopper, m_kicker);
+private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.DrivebaseConstants.getHubPose2D(), m_shooter, drivebase.getPose(), m_hopper, m_kicker, m_pushout);
  // Establish a Sendable Chooser that will be able to be sent to the
  // SmartDashboard, allowing selection of desired auto
  private final SendableChooser<Command> autoChooser;
@@ -104,6 +103,7 @@ private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.Dr
         .allianceRelativeControl(true)
         .aim(Constants.DrivebaseConstants.getHubPose2D())
         .aimWhile(driverXbox.rightTrigger())
+        .aimWhile(operatorXbox.rightTrigger())
         .aimLookahead(Time.ofBaseUnits(0, Seconds))
         .aimFeedforward(0.01, 0.01, 0.00013)
         // .aim(Constants.DrivebaseConstants.getFerryPose(drivebase.getPose().getTranslation()))
@@ -161,9 +161,9 @@ private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.Dr
 
 
 
- 
+// ========= DRIVER TRIGGERS =========== 
  // Parallel Commands
- private final Trigger RTtransfer_kick_shoot = driverXbox.rightTrigger(); // transfer to kicker, kick, and shoot only when up to speed
+ private final Trigger RTtransfer_kick_shoot = driverXbox.rightTrigger(); // twindex to kicker, kick, agitate, and shoot only when up to speed
  private final Trigger RBpushout_and_intake  = driverXbox.rightBumper(); // pushout the intake and intake fuel
  private final Trigger LBretract_and_stop = driverXbox.leftBumper(); // retract 4 bar and stop intake
  private final Trigger PRtransfer = driverXbox.povRight(); // transfer to kicker and kicks
@@ -172,7 +172,6 @@ private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.Dr
 
  // Shooter
  private final Trigger LT_shootFuel = driverXbox.leftTrigger();
-//  private final Trigger speedUpShooter = driverXbox.leftTrigger();
 
  // Intake
  private final Trigger X_runIntake = driverXbox.x();
@@ -185,6 +184,31 @@ private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.Dr
  // Climber
  private final Trigger Climb = driverXbox.povUp();
  private final Trigger ClimbDown = driverXbox.povDown();
+
+
+
+// ========= OPERATOR TRIGGERS =========== 
+// Shooter
+ private final Trigger LT_OPshootFuel = operatorXbox.rightTrigger(); // just shoot
+ private final Trigger RT_OP_variableshoot = operatorXbox.povRight(); // variable shoot full command
+
+// Get to Shooter 
+ private final Trigger RB_OP_kickIndex = operatorXbox.rightBumper(); // kick and index
+ private final Trigger LB_OP_unjam = operatorXbox.leftBumper(); // unjam
+
+
+ // Intake
+ private final Trigger X_OP_intake = operatorXbox.x(); // intake fuel
+ private final Trigger A_OP_outtake = operatorXbox.a(); // outtake fuel
+
+ // Pushout
+ private final Trigger Y_OP_extendIntake = operatorXbox.y(); // push out
+ private final Trigger B_OP_reteactIntake = operatorXbox.b(); // pull in
+ private final Trigger POVLEFT_OP_agitate = operatorXbox.povLeft(); //agitate
+
+ // Climber
+ private final Trigger POVUP_OP_climb = operatorXbox.povUp(); // climb
+ private final Trigger POVDown_OP_decend = operatorXbox.povDown(); // decend
 
 
  /**
@@ -212,18 +236,30 @@ private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.Dr
 
    // Create the NamedCommands that will be used in PathPlanner
    NamedCommands.registerCommand("test", Commands.print("I EXIST"));
-  //  NamedCommands.registerCommand("extend intake", m_pushout.PushCommand().withTimeout(4));
-  //  NamedCommands.registerCommand("retract intake", m_pushout.RetractCommand().withTimeout(4));
+
+   // pushout
+   NamedCommands.registerCommand("extend intake", m_pushout.PushCommand().withTimeout(4));
+   NamedCommands.registerCommand("retract intake", m_pushout.RetractCommand().withTimeout(4));
+
+   // kicker
    NamedCommands.registerCommand("kick", m_kicker.kickCommand().withTimeout(8));
    NamedCommands.registerCommand("kick backwards", m_kicker.kickBackwardsCommand().withTimeout(8));
-   NamedCommands.registerCommand("shoot", m_shooter.shootFuelCommand().withTimeout(8));
+
+   // shooter
+   NamedCommands.registerCommand("Control All Shooting", m_variableShoot.withTimeout(8));
    NamedCommands.registerCommand("speed up shooter", m_shooter.SpeedUpShooterCommand().withTimeout(15));
+
+   // hopper
    NamedCommands.registerCommand("transfer", m_hopper.runHopperToShooterCommand().withTimeout(6.7));
    NamedCommands.registerCommand("reverse hopper", m_hopper.runReverseHopperCommand().withTimeout(6.7));
-  //  NamedCommands.registerCommand("intake", m_intake.runIntakeCommand().withTimeout(4));
-  //  NamedCommands.registerCommand("outtake", m_intake.runOuttakeCommand().withTimeout(6.7));
-  //  NamedCommands.registerCommand("climb up", m_climber.runClimbCommand().withTimeout(6.7));
-  //  NamedCommands.registerCommand("climb down", m_climber.runClimberDownCommand().withTimeout(6.7));
+
+   // intake
+   NamedCommands.registerCommand("intake", m_intake.runIntakeCommand().withTimeout(4));
+   NamedCommands.registerCommand("outtake", m_intake.runOuttakeCommand().withTimeout(6.7));
+
+   // climber
+   NamedCommands.registerCommand("climb up", m_climber.runClimbCommand().withTimeout(6.7));
+   NamedCommands.registerCommand("climb down", m_climber.runClimberDownCommand().withTimeout(6.7));
 
 
 
@@ -266,6 +302,8 @@ private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.Dr
  private void configureBindings() {
 //====================================== ALIGN TO HUB COMMANDS ======================================      
 //====================================== ALL CONTROLS ======================================
+
+//======= Driver =======
     RTtransfer_kick_shoot.whileTrue(m_variableShoot);
     // RTtransfer_kick_shoot.onFalse(m_shooter.shootFuelCommand().withTimeout(2));
 
@@ -283,20 +321,20 @@ private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.Dr
     // Swerve Drive Commands
     driverXbox.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
 
-   RBpushout_and_intake.whileTrue(Commands.parallel(m_pushout.PushCommand(), m_intake.runIntakeCommand()));
-   LBretract_and_stop.whileTrue(Commands.parallel(m_pushout.RetractCommand()));
+    RBpushout_and_intake.whileTrue(Commands.parallel(m_pushout.PushCommand(), m_intake.runIntakeCommand()));
+    LBretract_and_stop.whileTrue(Commands.parallel(m_pushout.RetractCommand()));
 
-   // Pushout Commands
-  //  Y_extendIntake.whileTrue(m_pushout.PushCommand());
-  //  B_agitate.whileTrue(m_pushout.AgitateCommand().repeatedly());
+    //  Pushout Commands
+    Y_extendIntake.whileTrue(m_pushout.PushCommand());
+    B_agitate.whileTrue(m_pushout.AgitateCommand().repeatedly());
 
-   // Intake Commands
-  //  X_runIntake.whileTrue(m_intake.runIntakeCommand());
-  //  A_runOuttake.whileTrue(m_intake.runOuttakeCommand());
-  
-   // Climber Commands
-   // Climb.whileTrue(m_climber.runClimbCommand());
-   // ClimbDown.whileTrue(m_climber.runClimberDownCommand());
+    //  Intake Commands
+    X_runIntake.whileTrue(m_intake.runIntakeCommand());
+    A_runOuttake.whileTrue(m_intake.runOuttakeCommand());
+    
+    //  Climber Commands
+    Climb.whileTrue(m_climber.runClimbCommand());
+    ClimbDown.whileTrue(m_climber.runClimberDownCommand());
 
 
   //  // transfer + kick + shoot command, only runs if the shooter is up to speed
@@ -316,8 +354,29 @@ private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.Dr
   //    )
   // );
 
-   
+//======== Operator ========  
+    // shooter
+    RT_OP_variableshoot.whileTrue(m_variableShoot);
+    LT_OPshootFuel.whileTrue(m_shooter.shootFuelCommand());
 
+    // get to shooter
+    RB_OP_kickIndex.whileTrue(Commands.parallel(m_hopper.runHopperToShooterCommand(), m_kicker.kickCommand()));
+    LB_OP_unjam.whileTrue(Commands.parallel(m_hopper.runReverseHopperCommand(), m_kicker.kickBackwardsCommand()));
+
+    // intake
+    X_OP_intake.whileTrue(m_intake.runIntakeCommand());
+    A_OP_outtake.whileTrue(m_intake.runOuttakeCommand());
+    
+    // pushout
+    Y_OP_extendIntake.whileTrue(m_pushout.PushCommand());
+    B_OP_reteactIntake.whileTrue(m_pushout.RetractCommand());
+    POVLEFT_OP_agitate.whileTrue(m_pushout.AgitateCommand());
+
+    // climber
+    POVUP_OP_climb.whileTrue(m_climber.runClimbCommand());
+    POVDown_OP_decend.whileTrue(m_climber.runClimberDownCommand());
+
+// ========================
 
     // SysId: run shooter quasistatic forward.
     operatorXbox.a().whileTrue(m_shooter.sysIdQuasistaticForward());
