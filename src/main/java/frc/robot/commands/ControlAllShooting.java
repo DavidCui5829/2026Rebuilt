@@ -9,7 +9,9 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 // import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Kicker;
@@ -33,6 +35,10 @@ public class ControlAllShooting extends Command
   private final Pose2d robotPose;
   private final Hopper m_hopper;
   private final Kicker m_kicker;
+
+  private  double     RecordedidealHorizontalSpeed;
+
+  WaitCommand wait = new WaitCommand(1);
   // private final SwerveSubsystem m_swerveSubsystem;
   // Tuned Constants
   /**
@@ -151,14 +157,15 @@ public class ControlAllShooting extends Command
   //       )
   //    );
 
-     m_shooter.setTargetRPM(idealHorizontalSpeed);
+     m_shooter.setTargetRPM(idealHorizontalSpeed); 
+     RecordedidealHorizontalSpeed = idealHorizontalSpeed;
      if (isAtSpeed.getAsBoolean()) {
       m_hopper.HopperToShooter();
       m_kicker.Kick();
      }
 
      
-     
+    
     
     // m_hopper.runReverseHopperCommand().onlyIf(m_shooter::isShooterFast);
     // m_kicker.kickBackwardsCommand().onlyIf(m_shooter::isShooterFast);
@@ -177,9 +184,15 @@ public class ControlAllShooting extends Command
   @Override
   public void end(boolean interrupted)
   {
-    m_shooter.setTargetRPM(0);
+    
     m_hopper.stopHopper();
     m_kicker.stopKicking();
+    m_shooter.setTargetRPM(RecordedidealHorizontalSpeed);
+    
+    CommandScheduler.getInstance().schedule(wait);
+    
+    m_shooter.setTargetRPM(0);
+   
     
   }
 }
