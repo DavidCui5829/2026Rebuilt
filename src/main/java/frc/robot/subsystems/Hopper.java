@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,6 +21,10 @@ public class Hopper extends SubsystemBase {
     // AdvantageKit logging
     private double TwindexerRightDesiredPercent = 0.0;
     private double TwindexerLeftDesiredPercent = 0.0;
+
+    private double idleCurrent = 3.0f; // Amps <--- Need to find actual value Theoretically should be 0.5A - 3A
+
+    public boolean hasBalls = false; // <--- Based on Power Draw
 
     // private int six_seven = HopperConstants.six_seven; // <---------- HISTORICAL MONUMENT
 
@@ -47,6 +52,8 @@ public class Hopper extends SubsystemBase {
         // TwindexerLeftMotor.set(HopperConstants.REVERSE_TWINDEXER_LEFT_RPM);
         TwindexerLeftController.setSetpoint(HopperConstants.REVERSE_TWINDEXER_LEFT_RPM,
                 ControlType.kMAXMotionVelocityControl);
+        
+        hasBalls = checkBalls();
     }
 
     public void HopperToShooter() {
@@ -54,6 +61,15 @@ public class Hopper extends SubsystemBase {
         // TwindexerLeftMotor.set(HopperConstants.TWINDEXER_LEFT_RPM);
         TwindexerLeftController.setSetpoint(HopperConstants.REVERSE_TWINDEXER_RIGHT_RPM,
                 ControlType.kMAXMotionVelocityControl);
+
+        hasBalls = checkBalls();
+    }
+
+    public boolean checkBalls() // Checks if there are balls in hopper based on output current
+    {
+        if(TwindexerLeftMotor.getOutputCurrent() < idleCurrent && TwindexerRightMotor.getOutputCurrent() < idleCurrent) return false;
+
+        return true;
     }
 
     public void stopHopper() {
