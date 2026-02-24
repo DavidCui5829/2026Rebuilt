@@ -15,6 +15,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.Time;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -25,6 +26,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+
+import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.Inches;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -83,7 +86,7 @@ public class RobotContainer {
 
 // VariableShoot constructor parameters do not match here, so declare the field and
 // instantiate it later with the correct constructor when available.
-private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.DrivebaseConstants.getHubPose2D(), m_shooter, drivebase.getPose(), m_hopper, m_kicker, m_pushout);
+private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.DrivebaseConstants.getHubPose2D(), m_shooter, drivebase.getPose(), m_hopper, m_kicker);
  // Establish a Sendable Chooser that will be able to be sent to the
  // SmartDashboard, allowing selection of desired auto
  private final SendableChooser<Command> autoChooser;
@@ -103,9 +106,9 @@ private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.Dr
         .allianceRelativeControl(true)
         .aim(Constants.DrivebaseConstants.getHubPose2D())
         .aimWhile(driverXbox.rightTrigger())
-        .aimWhile(operatorXbox.rightTrigger())
         .aimLookahead(Time.ofBaseUnits(0, Seconds))
         .aimFeedforward(0.01, 0.01, 0.00013)
+        // .aimLock(Angle.ofBaseUnits(1, Degrees))
         // .aim(Constants.DrivebaseConstants.getFerryPose(drivebase.getPose().getTranslation()))
         // .aimWhile(!isInAllianceZone())
         // .aimWhile(driverXbox.rightTrigger())
@@ -304,7 +307,7 @@ private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.Dr
 //====================================== ALL CONTROLS ======================================
 
 //======= Driver =======
-    RTtransfer_kick_shoot.whileTrue(m_variableShoot);
+    RTtransfer_kick_shoot.whileTrue(Commands.parallel(m_variableShoot, m_pushout.AgitateCommand().repeatedly()));
     // RTtransfer_kick_shoot.onFalse(m_shooter.shootFuelCommand().withTimeout(2));
 
     // Hopper Commands

@@ -38,7 +38,7 @@ public class ControlAllShooting extends Command
   private final Pose2d robotPose;
   private final Hopper m_hopper;
   private final Kicker m_kicker;
-  private final Pushout m_pushout;
+  // private final Pushout m_pushout;
 
   private double RecordedidealHorizontalSpeed;
 
@@ -56,7 +56,7 @@ public class ControlAllShooting extends Command
   
   
 
-  public ControlAllShooting(Pose2d goalPoseSupplier, Shooter shooter, Pose2d robotPoseSupplier, Hopper hopper, Kicker kicker, Pushout pushout)
+  public ControlAllShooting(Pose2d goalPoseSupplier, Shooter shooter, Pose2d robotPoseSupplier, Hopper hopper, Kicker kicker)
                                
   {
    
@@ -64,7 +64,7 @@ public class ControlAllShooting extends Command
     this.m_shooter = shooter;
     this.m_hopper = hopper;
     this.m_kicker = kicker;
-    this.m_pushout = pushout;
+    // this.m_pushout = pushout;
     this.robotPose = robotPoseSupplier;
     // this.m_swerveSubsystem = swerveSubsystem;
     // this.m_hopper = hopper;
@@ -167,7 +167,7 @@ public class ControlAllShooting extends Command
      if (isAtSpeed.getAsBoolean()) {
       m_hopper.HopperToShooter();
       m_kicker.Kick();
-      m_pushout.Agitate();
+      // m_pushout.Agitate();
      }
 
      
