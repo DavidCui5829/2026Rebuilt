@@ -9,17 +9,17 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 // import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
+// import edu.wpi.first.wpilibj2.command.CommandScheduler;
 // import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+// import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.subsystems.Hopper;
-import frc.robot.subsystems.Kicker;
+// import frc.robot.subsystems.Hopper;
+// import frc.robot.subsystems.Kicker;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Pushout;
+// import frc.robot.subsystems.Pushout;
 // import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 // import swervelib.SwerveDrive;
-
+import org.littletonrobotics.junction.Logger;
 import java.util.List;
 // import java.util.function.Supplier;
 import java.util.function.BooleanSupplier;
@@ -34,13 +34,18 @@ public class ControlAllShooting extends Command
   private final Pose2d goalPose;
   private final Shooter m_shooter;
   private final Pose2d robotPose;
-  private final Hopper m_hopper;
-  private final Kicker m_kicker;
+  // private final Hopper m_hopper;
+  // private final Kicker m_kicker;
   // private final Pushout m_pushout;
 
-  private double RecordedidealHorizontalSpeed;
+  public double RecordedidealHorizontalSpeed;
+    private boolean isCASAtSpeed = false;
 
-  WaitCommand wait = new WaitCommand(1);
+  // WaitCommand wait = new WaitCommand(1);
+
+    public boolean isCASAtSpeed() { // <-- getter for RobotContainer
+    return isCASAtSpeed;
+  }
   // private final SwerveSubsystem m_swerveSubsystem;
   // Tuned Constants
   /**
@@ -54,14 +59,14 @@ public class ControlAllShooting extends Command
   
   
 
-  public ControlAllShooting(Pose2d goalPoseSupplier, Shooter shooter, Pose2d robotPoseSupplier, Hopper hopper, Kicker kicker)
+  public ControlAllShooting(Pose2d goalPoseSupplier, Shooter shooter, Pose2d robotPoseSupplier)
                                
   {
    
     this.goalPose = goalPoseSupplier;
     this.m_shooter = shooter;
-    this.m_hopper = hopper;
-    this.m_kicker = kicker;
+    // this.m_hopper = hopper;
+    // this.m_kicker = kicker;
     // this.m_pushout = pushout;
     this.robotPose = robotPoseSupplier;
     // this.m_swerveSubsystem = swerveSubsystem;
@@ -162,11 +167,18 @@ public class ControlAllShooting extends Command
 
      m_shooter.setTargetRPM(idealHorizontalSpeed); 
      RecordedidealHorizontalSpeed = idealHorizontalSpeed;
+
      if (isAtSpeed.getAsBoolean()) {
-      m_hopper.HopperToShooter();
-      m_kicker.Kick();
-      // m_pushout.Agitate();
+      isCASAtSpeed = true; // Set the flag to true when at speed
      }
+     else {
+      isCASAtSpeed = false; // Set the flag to false when not at speed
+     }
+    //  if (isAtSpeed.getAsBoolean()) {
+    //   m_hopper.HopperToShooter();
+    //   m_kicker.Kick();
+    //   // m_pushout.Agitate();
+    //  }
 
      
      Logger.recordOutput("Shooter/LUTCurrentTargetRPM", RecordedidealHorizontalSpeed);
@@ -209,11 +221,11 @@ public class ControlAllShooting extends Command
     // }
     // m_shooter.stopShooting();
     
-    m_hopper.stopHopper();
-    m_kicker.stopKicking();
-    m_shooter.setTargetRPM(RecordedidealHorizontalSpeed);
+    // m_hopper.stopHopper();
+    // m_kicker.stopKicking();
+    // m_shooter.setTargetRPM(RecordedidealHorizontalSpeed);
     
-    CommandScheduler.getInstance().schedule(wait);
+    // CommandScheduler.getInstance().schedule(wait);
 
     m_shooter.setTargetRPM(0);
    
