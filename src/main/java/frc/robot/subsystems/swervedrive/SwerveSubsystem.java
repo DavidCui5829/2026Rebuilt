@@ -629,7 +629,7 @@ public class SwerveSubsystem extends SubsystemBase {
     else if (useMegaTag2 == true)
     {
       LimelightHelpers.SetRobotOrientation("limelight", 
-      swerveDrive.getGyro().getRawRotation3d().toRotation2d().getDegrees(), 
+      swerveDrive.getYaw().getDegrees(), //swerveDrive.getGyro().getRotation3d().getRotation2d().getDegrees(), //swerveDrive.getOdometryHeading().getDegrees(),
       0.0, 0.0, 0.0, 0.0, 0.0);
       //first try raw, then delete raw, if both dont work try getHeading and stuff
       LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
