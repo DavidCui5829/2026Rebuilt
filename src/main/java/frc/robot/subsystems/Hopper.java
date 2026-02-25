@@ -21,6 +21,10 @@ public class Hopper extends SubsystemBase {
     private double TwindexerRightDesiredPercent = 0.0;
     private double TwindexerLeftDesiredPercent = 0.0;
 
+    private double idleCurrent = 3.0f; // Amps <--- Need to find actual value Theoretically should be 0.5A - 3A
+
+    public boolean hasBalls = false; // <--- Based on Power Draw
+
     // private int six_seven = HopperConstants.six_seven; // <---------- HISTORICAL MONUMENT
 
     // Instantiates push down and transfer motors
@@ -47,6 +51,7 @@ public class Hopper extends SubsystemBase {
         // TwindexerLeftMotor.set(HopperConstants.REVERSE_TWINDEXER_LEFT_RPM);
         TwindexerLeftController.setSetpoint(HopperConstants.REVERSE_TWINDEXER_LEFT_RPM,
                 ControlType.kMAXMotionVelocityControl);
+        
     }
 
     public void HopperToShooter() {
@@ -54,6 +59,12 @@ public class Hopper extends SubsystemBase {
         // TwindexerLeftMotor.set(HopperConstants.TWINDEXER_LEFT_RPM);
         TwindexerLeftController.setSetpoint(HopperConstants.REVERSE_TWINDEXER_RIGHT_RPM,
                 ControlType.kMAXMotionVelocityControl);
+
+    }
+
+    public boolean checkBalls() // Checks if there are balls in hopper based on output current
+    {
+        return !(TwindexerLeftMotor.getOutputCurrent() < idleCurrent && TwindexerRightMotor.getOutputCurrent() < idleCurrent);
     }
 
     public void stopHopper() {
@@ -73,6 +84,7 @@ public class Hopper extends SubsystemBase {
 
     @Override
     public void periodic() {
+        checkBalls();
         // AdvantageKit Logging
         // Commanded pushdown motor percent output.
         Logger.recordOutput("Hopper/PushdownDesiredPercent", TwindexerRightDesiredPercent);
