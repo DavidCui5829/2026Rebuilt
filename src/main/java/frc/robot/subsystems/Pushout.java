@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -13,11 +14,22 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
 
+import edu.wpi.first.math.filter.Debouncer;
+
+import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.units.measure.Current;
+import edu.wpi.first.units.measure.Voltage;
+
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import frc.robot.Constants.PushoutConstants;
 import frc.robot.Configs;
 import edu.wpi.first.wpilibj.Timer;
+
+import static edu.wpi.first.units.Units.Amp;
+import static edu.wpi.first.units.Units.Degrees;
+import static edu.wpi.first.units.Units.Volts;
+
 import org.littletonrobotics.junction.Logger;
 
 public class Pushout extends SubsystemBase {
@@ -27,6 +39,9 @@ public class Pushout extends SubsystemBase {
 
     private SparkFlex PushoutMotor = new SparkFlex(PushoutConstants.PUSHOUT_ID, MotorType.kBrushless);
     private SparkClosedLoopController PushoutController = PushoutMotor.getClosedLoopController();
+
+    private final Angle hardLowerLimit = Degrees.of(0);
+
     // private SparkFlex PushoutRightMotor = new
     // SparkFlex(PushoutConstants.PUSHOUT_RIGHT_ID, MotorType.kBrushless);
     // private SparkClosedLoopController PushoutRightController =
@@ -106,6 +121,23 @@ public class Pushout extends SubsystemBase {
         Timer.delay(PushoutConstants.PUSHOUT_AGITATE_WAIT);
         SmallRetract();
         Timer.delay(PushoutConstants.PUSHOUT_AGITATE_WAIT);
+    }
+
+
+    public Command homing(double threshold)
+    {
+        Debouncer currentDebouncer = new Debouncer(0.1);
+
+
+        double runAmps = 1;
+
+
+        return new RunCommand(() -> PushoutController.setSetpoint(runAmps, ControlType.kCurrent), this)
+                .until(() -> currentDebouncer.calculate((PushoutMotor.getOutputCurrent() >= threshold)))
+                .finallyDo(() ->
+                {
+                    StopPushout();
+                });
 
     }
 
