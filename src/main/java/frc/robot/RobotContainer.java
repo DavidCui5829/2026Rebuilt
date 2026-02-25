@@ -86,7 +86,7 @@ public class RobotContainer {
 
 // VariableShoot constructor parameters do not match here, so declare the field and
 // instantiate it later with the correct constructor when available.
-private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.DrivebaseConstants.getHubPose2D(), m_shooter, drivebase.getPose(), m_hopper, m_kicker);
+private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.DrivebaseConstants.getHubPose2D(), m_shooter, drivebase.getPose());
  // Establish a Sendable Chooser that will be able to be sent to the
  // SmartDashboard, allowing selection of desired auto
  private final SendableChooser<Command> autoChooser;
@@ -105,10 +105,11 @@ private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.Dr
         .scaleTranslation(0.8)
         .allianceRelativeControl(true)
         .aim(Constants.DrivebaseConstants.getHubPose2D())
+        // .aimLock(Angle.ofBaseUnits(1, Degrees))
         .aimWhile(driverXbox.rightTrigger())
         .aimLookahead(Time.ofBaseUnits(0, Seconds))
         .aimFeedforward(0.01, 0.01, 0.00013)
-        // .aimLock(Angle.ofBaseUnits(1, Degrees))
+        
         // .aim(Constants.DrivebaseConstants.getFerryPose(drivebase.getPose().getTranslation()))
         // .aimWhile(!isInAllianceZone())
         // .aimWhile(driverXbox.rightTrigger())
@@ -307,8 +308,25 @@ private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.Dr
 //====================================== ALL CONTROLS ======================================
 
 //======= Driver =======
-    RTtransfer_kick_shoot.whileTrue(Commands.parallel(m_variableShoot, m_pushout.AgitateCommand().repeatedly()));
-    // RTtransfer_kick_shoot.onFalse(m_shooter.shootFuelCommand().withTimeout(2));
+// RTtransfer_kick_shoot.whileTrue(Commands.parallel(m_variableShoot, m_hopper.runHopperToShooterCommand().onlyIf(), m_kicker.kickCommand().onlyIf(m_variableShoot::isCASAtSpeed), m_pushout.AgitateCommand().repeatedly()).onlyIf(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees))));
+// RTtransfer_kick_shoot.onFalse(m_shooter.shootFuelCommand().withTimeout(2));
+      // transfer + kick + shoot command, only runs if the shooter is up to speed
+  RTtransfer_kick_shoot.whileTrue(
+     Commands.parallel(
+        // keep running the VariableShoot command while we wait for the shooter to reach speed
+        m_variableShoot,
+        
+        // once at speed, run hopper + kicker
+        Commands.sequence(
+          Commands.waitUntil(m_variableShoot::isCASAtSpeed),
+          Commands.parallel(
+             m_hopper.runHopperToShooterCommand(),
+             m_kicker.kickCommand(),
+              m_pushout.AgitateCommand().repeatedly()
+          ).onlyIf(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)))
+        )
+     ).finallyDo(interrupted -> m_shooter.setTargetRPMCommand(m_variableShoot.RecordedidealHorizontalSpeed).withTimeout(1))
+  );
 
     // Hopper Commands
     PRtransfer.whileTrue(Commands.parallel(m_hopper.runHopperToShooterCommand(), m_kicker.kickCommand()));
@@ -340,7 +358,7 @@ private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.Dr
     // ClimbDown.whileTrue(m_climber.runClimberDownCommand());
 
 
-  //  // transfer + kick + shoot command, only runs if the shooter is up to speed
+   // transfer + kick + shoot command, only runs if the shooter is up to speed
   // RTtransfer_kick_shoot.whileTrue(
   //    Commands.parallel(
   //       // keep running the VariableShoot command while we wait for the shooter to reach speed
@@ -356,6 +374,9 @@ private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.Dr
   //       )
   //    )
   // );
+
+
+
 
 //======== Operator ========  
     // shooter

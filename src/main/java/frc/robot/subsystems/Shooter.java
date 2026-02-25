@@ -164,7 +164,8 @@ public class Shooter extends SubsystemBase {
     }
 
     public Command setTargetRPMCommand(double rpm) {
-        return new RunCommand(() -> setTargetRPM(rpm), this);
+        return new RunCommand(() -> setTargetRPM(rpm), this)
+                .finallyDo(interrupted -> setTargetRPM(0.0));
     }
 
     public Command shootFuelCommand() {
