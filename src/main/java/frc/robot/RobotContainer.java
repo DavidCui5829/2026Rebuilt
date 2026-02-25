@@ -325,7 +325,7 @@ private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.Dr
               m_pushout.AgitateCommand().repeatedly()
           ).onlyIf(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)))
         )
-     ).finallyDo(interrupted -> m_shooter.setTargetRPMCommand(m_variableShoot.RecordedidealHorizontalSpeed).withTimeout(1))
+     ).finallyDo(() -> m_shooter.setTargetRPMCommand(m_variableShoot.RecordedidealHorizontalSpeed).withTimeout(1))
   );
 
     // Hopper Commands
