@@ -250,7 +250,7 @@ private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.Dr
    NamedCommands.registerCommand("kick backwards", m_kicker.kickBackwardsCommand().withTimeout(8));
 
    // shooter
-   NamedCommands.registerCommand("Control All Shooting", m_variableShoot.withTimeout(8));
+  //  NamedCommands.registerCommand("Control All Shooting", m_variableShoot.withTimeout(8));
    NamedCommands.registerCommand("speed up shooter", m_shooter.SpeedUpShooterCommand().withTimeout(15));
 
    // hopper
