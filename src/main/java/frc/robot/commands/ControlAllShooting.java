@@ -201,22 +201,22 @@ public class ControlAllShooting extends Command
   @Override
   public void end(boolean interrupted)
   {
-    Translation2d goalLocation = goalPose.getTranslation();
-    Translation2d robotLocation = robotPose.getTranslation();
-    Translation2d targetVec = goalLocation.minus(robotLocation);
-    double        dist         = targetVec.getNorm();
+    // Translation2d goalLocation = goalPose.getTranslation();
+    // Translation2d robotLocation = robotPose.getTranslation();
+    // Translation2d targetVec = goalLocation.minus(robotLocation);
+    // double        dist         = targetVec.getNorm();
 
-    double idealHorizontalSpeed = shooterTable.get(dist);
+    // double idealHorizontalSpeed = shooterTable.get(dist);
 
 
-    m_shooter.setTargetRPM(idealHorizontalSpeed);
-    try {
-      Thread.sleep(2000);
-    } catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-      Logger.recordOutput("ThreadSleepFrom2SecondsExtra", e.getMessage());
+    // m_shooter.setTargetRPM(idealHorizontalSpeed);
+    // try {
+    //   Thread.sleep(2000);
+    // } catch (InterruptedException e) {
+    //   Thread.currentThread().interrupt();
+    //   Logger.recordOutput("ThreadSleepFrom2SecondsExtra", e.getMessage());
 
-    }
+    // }
     m_shooter.stopShooting();
         
   }
