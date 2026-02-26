@@ -201,34 +201,23 @@ public class ControlAllShooting extends Command
   @Override
   public void end(boolean interrupted)
   {
-    // Translation2d goalLocation = goalPose.getTranslation();
-    // Translation2d robotLocation = robotPose.getTranslation();
-    // Translation2d targetVec = goalLocation.minus(robotLocation);
-    // double        dist         = targetVec.getNorm();
-    // // 3. CALCULATE IDEAL SHOT (Stationary)
-    // // Note: This returns HORIZONTAL velocity component
-    // double idealHorizontalSpeed = shooterTable.get(dist);
+    Translation2d goalLocation = goalPose.getTranslation();
+    Translation2d robotLocation = robotPose.getTranslation();
+    Translation2d targetVec = goalLocation.minus(robotLocation);
+    double        dist         = targetVec.getNorm();
 
-    // m_hopper.stopHopper();
-    // m_kicker.stopKicking();
-    // m_shooter.setTargetRPM(idealHorizontalSpeed);
-    // try {
-    //   Thread.sleep(2000);
-    // } catch (InterruptedException e) {
-    //   Thread.currentThread().interrupt();
-    //   Logger.recordOutput("ThreadSleepFrom2SecondsExtra", e.getMessage());
+    double idealHorizontalSpeed = shooterTable.get(dist);
 
-    // }
-    // m_shooter.stopShooting();
-    
-    // m_hopper.stopHopper();
-    // m_kicker.stopKicking();
-    // m_shooter.setTargetRPM(RecordedidealHorizontalSpeed);
-    
-    // CommandScheduler.getInstance().schedule(wait);
 
-    m_shooter.setTargetRPM(0);
-   
-    
+    m_shooter.setTargetRPM(idealHorizontalSpeed);
+    try {
+      Thread.sleep(2000);
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      Logger.recordOutput("ThreadSleepFrom2SecondsExtra", e.getMessage());
+
+    }
+    m_shooter.stopShooting();
+        
   }
 }
