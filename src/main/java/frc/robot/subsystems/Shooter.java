@@ -136,11 +136,12 @@ public class Shooter extends SubsystemBase {
 
     public void stopShooting() {
         targetRPM = 0.0;
-        targetKickerRPM = 0.0;
-        ShooterRight1Motor.set(ShooterConstants.IDLE);
-        ShooterRight2Motor.set(ShooterConstants.IDLE);
-        ShooterLeft1Motor.set(ShooterConstants.IDLE);
-        ShooterLeft2Motor.set(ShooterConstants.IDLE);
+        // targetKickerRPM = 0.0;
+      shooterright1Controller.setSetpoint(0.0, ControlType.kMAXMotionVelocityControl);
+        // shooterright2Controller.setSetpoint(ShooterConstants.SHOOTER_SPEED,
+        // ControlType.kMAXMotionVelocityControl);
+        shooterleft1Controller.setSetpoint(0.0, ControlType.kMAXMotionVelocityControl);
+        // ShooterLeft2Motor.set(ShooterConstants.IDLE);
     }
 
     // Speeds up shooter (runs all motors except kicker) so it's faster
