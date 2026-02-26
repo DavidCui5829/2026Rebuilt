@@ -23,13 +23,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "extend intake"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "intake"
+                  "name": "extend and intake"
                 }
               }
             ]
@@ -42,22 +36,22 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Shoot Path 1"
+                  "pathName": "Trench to Shoot"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "retract intake"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "speed-up-shooter"
+                  "name": "speed up shooter"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shoot Path 1"
           }
         },
         {
@@ -67,19 +61,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "kick"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "transfer"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "shoot"
+                  "name": "Control All Shooting"
                 }
               }
             ]
@@ -88,7 +70,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left Climb From Shoot"
+            "pathName": "Left Climb From Depot Shoot"
           }
         },
         {
@@ -101,6 +83,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "McAllen Autos",
+  "folder": "McAllen Climb Autos",
   "choreoAuto": false
 }

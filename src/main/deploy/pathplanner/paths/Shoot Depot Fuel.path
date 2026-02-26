@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7979877990359947,
-        "y": 5.335134800298206
+        "x": 1.0277270626862727,
+        "y": 5.656950273087845
       },
       "isLocked": false,
       "linkedName": "Depot"
     },
     {
       "anchor": {
-        "x": 2.4605420827389435,
-        "y": 4.85660485021398
+        "x": 1.855433734939759,
+        "y": 5.313542168674698
       },
       "prevControl": {
-        "x": 1.550389003709567,
-        "y": 5.410557057079457
+        "x": 0.8091001064422181,
+        "y": 5.649231137248856
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Shoot Pos"
+      "linkedName": "Depot Shoot Pos"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -20.594090220308768
+    "rotation": -24.732211671135918
   },
   "reversed": false,
   "folder": "Week 3 Paths",

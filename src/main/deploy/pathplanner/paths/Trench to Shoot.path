@@ -1,0 +1,95 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.739514978601996,
+        "y": 4.701340941512126
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 8.074966751579172,
+        "y": 6.450344659529248
+      },
+      "isLocked": false,
+      "linkedName": "Intake End 1"
+    },
+    {
+      "anchor": {
+        "x": 5.854975903614458,
+        "y": 7.357024096385541
+      },
+      "prevControl": {
+        "x": 5.094720322075404,
+        "y": 7.550586599152722
+      },
+      "nextControl": {
+        "x": 6.163106766708505,
+        "y": 7.278573398372177
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.3306746987951805,
+        "y": 7.357024096385541
+      },
+      "prevControl": {
+        "x": 3.946579830380087,
+        "y": 7.501690209627931
+      },
+      "nextControl": {
+        "x": 2.751744720058444,
+        "y": 7.221042846078655
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.183265060240964,
+        "y": 7.2368192771084345
+      },
+      "prevControl": {
+        "x": 3.294209182287225,
+        "y": 7.281281353493786
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "shoot 67"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 2,
+      "rotationDegrees": 0.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -52.165932156881
+  },
+  "reversed": false,
+  "folder": "Week 3 Paths",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "useDefaultConstraints": true
+}

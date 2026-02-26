@@ -11,13 +11,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "extend intake"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "intake"
+                  "name": "extend and intake"
                 }
               },
               {
@@ -52,12 +46,6 @@
                 }
               },
               {
-                "type": "named",
-                "data": {
-                  "name": "retract intake"
-                }
-              },
-              {
                 "type": "wait",
                 "data": {
                   "waitTime": 2.0
@@ -79,19 +67,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "transfer"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "kick"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "shoot"
+                  "name": "Control All Shooting"
                 }
               }
             ]
@@ -100,7 +76,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left Climb From Shoot"
+            "pathName": "Left Climb From Depot Shoot"
           }
         },
         {
@@ -113,6 +89,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "McAllen Autos",
+  "folder": "McAllen Climb Autos",
   "choreoAuto": false
 }

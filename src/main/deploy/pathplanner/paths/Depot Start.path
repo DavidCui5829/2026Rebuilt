@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.560328102710413,
-        "y": 5.982268188302426
+        "x": 3.5732667617689007,
+        "y": 5.943452211126962
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.7875310552101267,
-        "y": 5.964833798535621
+        "x": 2.8097754918194218,
+        "y": 5.948877840926719
       },
       "isLocked": false,
-      "linkedName": "Depot Start"
+      "linkedName": null
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 5.943452211126962
       },
       "prevControl": {
-        "x": 1.3096853590029145,
-        "y": 5.950956897714788
+        "x": 1.299759963884482,
+        "y": 5.923513754532964
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,7 +48,7 @@
   "folder": "Week 3 Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

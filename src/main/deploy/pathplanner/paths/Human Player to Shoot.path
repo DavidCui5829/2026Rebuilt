@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.7070033079754785,
-        "y": 1.0937975630630934
+        "x": 0.6618894312980458,
+        "y": 0.9711767854457742
       },
       "isLocked": false,
       "linkedName": "Human Player"
@@ -20,28 +20,28 @@
         "y": 2.6052781740370903
       },
       "prevControl": {
-        "x": 1.8941671318545785,
-        "y": 1.3735622354327297
+        "x": 1.8640755128629305,
+        "y": 1.6469747978331326
       },
       "nextControl": {
-        "x": 2.5547539773262105,
-        "y": 3.6377638273093336
+        "x": 2.561726388305109,
+        "y": 3.3636639232961043
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.4605420827389435,
-        "y": 4.85660485021398
+        "x": 1.855433734939759,
+        "y": 5.313542168674698
       },
       "prevControl": {
-        "x": 2.3313998087579537,
-        "y": 4.000050898840455
+        "x": 1.7903371021472037,
+        "y": 5.0721660546968
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Shoot Pos"
+      "linkedName": "Shoot End 1"
     }
   ],
   "rotationTargets": [],
@@ -58,13 +58,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -20.594090220308768
+    "rotation": -24.732211671135918
   },
   "reversed": false,
   "folder": "Week 3 Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

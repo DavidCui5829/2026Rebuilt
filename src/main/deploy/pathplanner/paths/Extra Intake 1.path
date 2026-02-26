@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.4605420827389435,
-        "y": 4.85660485021398
+        "x": 2.183265060240964,
+        "y": 7.2368192771084345
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9812388892703297,
-        "y": 5.153771737684683
+        "x": 1.70396186677235,
+        "y": 7.5339861645791375
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Leave Trench"
     },
     {
       "anchor": {
@@ -48,7 +48,7 @@
   "folder": "Week 3 Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -52.165932156881
   },
   "useDefaultConstraints": true
 }
