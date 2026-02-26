@@ -1,5 +1,7 @@
 package frc.robot;
 
+import static edu.wpi.first.units.Units.Inches;
+
 import java.util.Optional;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -7,7 +9,7 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
-
+import edu.wpi.first.units.measure.Distance;
 // import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -209,4 +211,14 @@ public final class Constants {
   public static final boolean LIMIT_DASHBOARD_PERIODIC_UPDATES = false; // Enable throttling of dashboard updates
   public static final int DASHBOARD_UPDATE_PERIOD_CYCLES = 10; // Number of periodic loops between dashboard refreshes
 
+
+  public static class Dimensions {
+        public static final Distance BUMPER_THICKNESS = Inches.of(3); // frame to edge of bumper
+        public static final Distance BUMPER_HEIGHT = Inches.of(7); // height from floor to top of bumper
+        public static final Distance FRAME_SIZE_Y = Inches.of(26.25); // left to right (y-axis)
+        public static final Distance FRAME_SIZE_X = Inches.of(28.75); // front to back (x-axis)
+
+        public static final Distance FULL_WIDTH = FRAME_SIZE_Y.plus(BUMPER_THICKNESS.times(2));
+        public static final Distance FULL_LENGTH = FRAME_SIZE_X.plus(BUMPER_THICKNESS.times(2));
+    }
 }

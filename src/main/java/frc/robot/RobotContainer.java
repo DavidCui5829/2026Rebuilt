@@ -29,17 +29,22 @@ import edu.wpi.first.wpilibj2.command.Commands;
 
 import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.Inches;
+import static edu.wpi.first.units.Units.Meters;
+
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.Dimensions;
 // import frc.robot.Configs.ShooterSubsystem;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ControlAllShooting;
 // import frc.robot.Constants.DrivebaseConstants;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.utils.FuelSim;
 
 import static edu.wpi.first.units.Units.Seconds;
 
 import java.io.File;
+import java.util.function.BooleanSupplier;
 
 // import swervelib.SwerveDrive;
 import swervelib.SwerveInputStream;
@@ -87,7 +92,13 @@ public class RobotContainer {
 // VariableShoot constructor parameters do not match here, so declare the field and
 // instantiate it later with the correct constructor when available.
 private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.DrivebaseConstants.getHubPose2D(), m_shooter, drivebase.getPose());
- // Establish a Sendable Chooser that will be able to be sent to the
+ 
+public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of FuelSim
+
+
+
+
+// Establish a Sendable Chooser that will be able to be sent to the
  // SmartDashboard, allowing selection of desired auto
  private final SendableChooser<Command> autoChooser;
  private LoggedDashboardChooser<Command> loggedAutoChooser;
@@ -224,6 +235,8 @@ private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.Dr
    // Configure the trigger bindings
    configureBindings();
 
+   configureFuelSim();
+   configureFuelSimRobot();
      // Triggers for auto aim/pass poses
     // new Trigger(() -> isInAllianceZone())
     //     .onChange(Commands.runOnce(() -> onZoneChanged()).ignoringDisable(true));
@@ -598,6 +611,34 @@ private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.Dr
     return false;
   }
 
+  private void configureFuelSim() {
+    fuelSim = new FuelSim();
+    fuelSim.spawnStartingFuel();
+
+    fuelSim.start();
+    SmartDashboard.putData(Commands.runOnce(() -> {
+                fuelSim.clearFuel();
+                fuelSim.spawnStartingFuel();
+            })
+            .withName("Reset Fuel")
+            .ignoringDisable(true));
+}
+
+private void configureFuelSimRobot() {
+    fuelSim.registerRobot(
+            Dimensions.FULL_WIDTH.in(Meters),
+            Dimensions.FULL_LENGTH.in(Meters),
+            Dimensions.BUMPER_HEIGHT.in(Meters),
+            drivebase::getPose,
+            drivebase::getFieldVelocity);
+    // fuelSim.registerIntake(
+    //         -Dimensions.FULL_LENGTH.div(2).in(Meters),
+    //         Dimensions.FULL_LENGTH.div(2).in(Meters),
+    //         -Dimensions.FULL_WIDTH.div(2).plus(Inches.of(7)).in(Meters),
+    //         -Dimensions.FULL_WIDTH.div(2).in(Meters),
+    //         () -> m_pushout.isRightDeployed() && ableToIntake.getAsBoolean(),
+    //         intakeCallback);
+    }
 //   private void onZoneChanged() {
 //     if (isInAllianceZone()) {
 //       superstructure.setAimPoint(Constants.AimPoints.getAllianceHubPosition());

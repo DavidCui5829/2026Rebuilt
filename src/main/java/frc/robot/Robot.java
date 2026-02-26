@@ -243,5 +243,6 @@ public class Robot extends LoggedRobot {
    */
   @Override
   public void simulationPeriodic() {
+    m_robotContainer.fuelSim.updateSim();
   }
 }
