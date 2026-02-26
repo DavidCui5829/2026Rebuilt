@@ -255,7 +255,7 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
    NamedCommands.registerCommand("test", Commands.print("I EXIST"));
 
    // pushout
-   NamedCommands.registerCommand("extend intake", m_pushout.PushCommand().withTimeout(4));
+   NamedCommands.registerCommand("extend and intake", Commands.parallel(m_pushout.PushCommand(), m_intake.runIntakeCommand()).withTimeout(4));
    NamedCommands.registerCommand("retract intake", m_pushout.RetractCommand().withTimeout(4));
 
    // kicker
@@ -263,7 +263,12 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
    NamedCommands.registerCommand("kick backwards", m_kicker.kickBackwardsCommand().withTimeout(8));
 
    // shooter
-  //  NamedCommands.registerCommand("Control All Shooting", m_variableShoot.withTimeout(8));
+   NamedCommands.registerCommand("Control All Shooting", Commands.parallel(
+      m_variableShoot, 
+      m_hopper.runHopperToShooterCommand().onlyIf(m_variableShoot::isCASAtSpeed), 
+      m_kicker.kickCommand().onlyIf(m_variableShoot::isCASAtSpeed), 
+      m_pushout.AgitateCommand().repeatedly()).onlyIf(m_variableShoot::isCASAtSpeed)
+      .onlyIf(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees))).withTimeout(8));
    NamedCommands.registerCommand("speed up shooter", m_shooter.SpeedUpShooterCommand().withTimeout(15));
 
    // hopper
@@ -272,11 +277,11 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
 
    // intake
    NamedCommands.registerCommand("intake", m_intake.runIntakeCommand().withTimeout(4));
-   NamedCommands.registerCommand("outtake", m_intake.runOuttakeCommand().withTimeout(6.7));
+   NamedCommands.registerCommand("outtake", m_intake.runOuttakeCommand().withTimeout(4));
 
    // climber
-   NamedCommands.registerCommand("climb up", m_climber.runClimbCommand().withTimeout(6.7));
-   NamedCommands.registerCommand("climb down", m_climber.runClimberDownCommand().withTimeout(6.7));
+   NamedCommands.registerCommand("climb up", m_climber.runClimbCommand().withTimeout(4));
+   NamedCommands.registerCommand("climb down", m_climber.runClimberDownCommand().withTimeout(4));
 
 
 
@@ -321,9 +326,7 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
 //====================================== ALL CONTROLS ======================================
 
 //======= Driver =======
-// RTtransfer_kick_shoot.whileTrue(Commands.parallel(m_variableShoot, m_hopper.runHopperToShooterCommand().onlyIf(), m_kicker.kickCommand().onlyIf(m_variableShoot::isCASAtSpeed), m_pushout.AgitateCommand().repeatedly()).onlyIf(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees))));
-// RTtransfer_kick_shoot.onFalse(m_shooter.shootFuelCommand().withTimeout(2));
-      // transfer + kick + shoot command, only runs if the shooter is up to speed
+  // transfer + kick + shoot command, only runs if the shooter is up to speed
   RTtransfer_kick_shoot.whileTrue(
      Commands.parallel(
         // keep running the VariableShoot command while we wait for the shooter to reach speed

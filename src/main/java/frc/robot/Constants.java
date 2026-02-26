@@ -173,11 +173,9 @@ public final class Constants {
 
   public static class ClimberConstants {
     public static final int CLIMBER_LEFT_ID = 20; // placeholder
-    // public static final int CLIMBER_RIGHT_ID = 25; // placeholder
 
-    public static final double CLIMBER_SPEED = 0.5; // placeholder
-
-    public static final double CLIMBER_DOWN_SPEED = -0.5; // placeholder
+    public static final double CLIMBER_RETRACTED_POS = 0.0; // TUNE THIS!!!
+    public static final double CLIMBER_EXTENDED_POS = 0.0; // TUNE THIS!!!
   }
 
   public static final double X_REEF_ALIGNMENT_P = 2.1; // Proportional gain for X-axis reef alignment

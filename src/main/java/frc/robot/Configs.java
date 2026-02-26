@@ -46,6 +46,33 @@ public final class Configs
 
         };
 
+        public static final class ClimberSubsystem {
+                
+            public static final SparkFlexConfig ClimbMotorLeftConfig = new SparkFlexConfig();
+            
+
+                static {
+
+                        ClimbMotorLeftConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
+
+                        ClimbMotorLeftConfig.closedLoop
+                        .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                        .p(0.0002355)
+                        .i(0)
+                        .d(0)
+                        .outputRange(-1, 1);
+                        ClimbMotorLeftConfig.closedLoop
+                                .maxMotion
+                                        .maxAcceleration(600000)
+                                        .cruiseVelocity(600000)
+                                        .allowedProfileError(0.1); // smooth extension
+
+                                
+                }
+
+        };
+
+
         public static final class PushoutSubsystem {
 
             public static final SparkFlexConfig PushoutMotorConfig = new SparkFlexConfig();
@@ -54,20 +81,7 @@ public final class Configs
 
                 static {
                         PushoutMotorConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
-                        // PushoutRightMotorConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12).follow(21,true);
-                        
 
-                        // PushoutLeftMotorConfig
-                        // // .inverted(true)
-                        // .idleMode(IdleMode.kBrake)
-                        // .smartCurrentLimit(40)
-                        // .voltageCompensation(12);
-
-                        // PushoutRightMotorConfig
-                        // // .inverted(false) // likely opposite side of 4-bar
-                        // .idleMode(IdleMode.kBrake)
-                        // .smartCurrentLimit(40)
-                        // .voltageCompensation(12);
 
                         PushoutMotorConfig.closedLoop
                         .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
@@ -284,32 +298,5 @@ public final class Configs
                 }
         }
 
-        public static final class ClimberSubsystem {
-                
-            public static final SparkFlexConfig ClimbMotorLeftConfig = new SparkFlexConfig();
-            public static final SparkFlexConfig ClimbMotorRightConfig = new SparkFlexConfig();
-
-                static {
-
-                        ClimbMotorLeftConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
-                        ClimbMotorRightConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
-
-                        ClimbMotorLeftConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-                                .p(0.0002355)
-                                .i(0)
-                                .d(0)
-                                .outputRange(-1, 1);
-                        ClimbMotorRightConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-
-                            // Set PID values for position control. We don't need to pass a closed
-                            // loop slot, as it will default to slot 0.
-                            .p(0.0002355)
-                            .i(0)
-                            .d(0)
-                            .outputRange(-1, 1);
-
-                }
-
-        };
 }
 
