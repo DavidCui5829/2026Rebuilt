@@ -89,9 +89,11 @@ public class RobotContainer {
 
   private final ObjectDetection m_ObjectDetection = new ObjectDetection();
 
-// VariableShoot constructor parameters do not match here, so declare the field and
-// instantiate it later with the correct constructor when available.
-private ControlAllShooting m_variableShoot = new ControlAllShooting(Constants.DrivebaseConstants.getHubPose2D(), m_shooter, drivebase.getPose());
+// Factory for ControlAllShooting instances. Create a fresh instance for each
+// composition to avoid WPILib's "composed commands may not be reused" error.
+private ControlAllShooting makeVariableShoot() {
+  return new ControlAllShooting(Constants.DrivebaseConstants.getHubPose2D(), m_shooter, drivebase.getPose());
+}
  
 public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of FuelSim
 
@@ -263,13 +265,17 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
    NamedCommands.registerCommand("kick", m_kicker.kickCommand().withTimeout(8));
    NamedCommands.registerCommand("kick backwards", m_kicker.kickBackwardsCommand().withTimeout(8));
 
-   // shooter
-   NamedCommands.registerCommand("Control All Shooting", Commands.parallel(
-      m_variableShoot, 
-      m_hopper.runHopperToShooterCommand().onlyIf(m_variableShoot::isCASAtSpeed), 
-      m_kicker.kickCommand().onlyIf(m_variableShoot::isCASAtSpeed), 
-      m_pushout.AgitateCommand().repeatedly()).onlyIf(m_variableShoot::isCASAtSpeed)
-      .onlyIf(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees))).withTimeout(8));
+  // shooter
+   NamedCommands.registerCommand("Control All Shooting", Commands.defer(() -> {
+     ControlAllShooting shootCmd = makeVariableShoot();
+     return Commands.parallel(
+         shootCmd,
+         m_hopper.runHopperToShooterCommand().onlyIf(shootCmd::isCASAtSpeed),
+         m_kicker.kickCommand().onlyIf(shootCmd::isCASAtSpeed),
+         m_pushout.AgitateCommand().repeatedly()
+     ).onlyIf(shootCmd::isCASAtSpeed)
+      .onlyIf(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees))).withTimeout(8);
+   }, java.util.Collections.emptySet()));
    NamedCommands.registerCommand("speed up shooter", m_shooter.SpeedUpShooterCommand().withTimeout(15));
 
    // hopper
@@ -329,20 +335,23 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
 //======= Driver =======
   // transfer + kick + shoot command, only runs if the shooter is up to speed
   RTtransfer_kick_shoot.whileTrue(
-     Commands.parallel(
+    Commands.defer(() -> {
+      ControlAllShooting shootCmd = makeVariableShoot();
+      return Commands.parallel(
         // keep running the VariableShoot command while we wait for the shooter to reach speed
-        m_variableShoot,
-        
+        shootCmd,
+
         // once at speed, run hopper + kicker
         Commands.sequence(
-          Commands.waitUntil(m_variableShoot::isCASAtSpeed),
+          Commands.waitUntil(shootCmd::isCASAtSpeed),
           Commands.parallel(
-             m_hopper.runHopperToShooterCommand(),
-             m_kicker.kickCommand(),
-              m_pushout.AgitateCommand().repeatedly()
+            m_hopper.runHopperToShooterCommand(),
+            m_kicker.kickCommand(),
+            m_pushout.AgitateCommand().repeatedly()
           ).onlyIf(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)))
         )
-     ).finallyDo(() -> m_shooter.setTargetRPMCommand(m_variableShoot.RecordedidealHorizontalSpeed).withTimeout(1))
+      ).finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1));
+    }, java.util.Collections.emptySet())
   );
 
     // Hopper Commands
@@ -397,7 +406,7 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
 
 //======== Operator ========  
     // shooter
-    RT_OP_variableshoot.whileTrue(m_variableShoot);
+  RT_OP_variableshoot.whileTrue(Commands.defer(() -> makeVariableShoot(), java.util.Collections.emptySet()));
     LT_OPshootFuel.whileTrue(m_shooter.shootFuelCommand());
 
     // get to shooter
