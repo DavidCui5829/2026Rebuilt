@@ -118,7 +118,7 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
         .aim(Constants.DrivebaseConstants.getHubPose2D())
         // .aimLock(Angle.ofBaseUnits(1, Degrees))
         .aimWhile(driverXbox.rightTrigger())
-        .aimWhile(driverXbox.leftTrigger())
+        // .aimWhile(driverXbox.leftTrigger())
         .aimLookahead(Time.ofBaseUnits(0, Seconds))
         .aimFeedforward(0.01, 0.01, 0.00013)
         
