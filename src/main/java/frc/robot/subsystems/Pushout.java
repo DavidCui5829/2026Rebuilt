@@ -69,7 +69,7 @@ public class Pushout extends SubsystemBase {
         // PushoutRightMotor.configure(Configs.PushoutSubsystem.PushoutRightMotorConfig,
         // ResetMode.kResetSafeParameters,
         // PersistMode.kPersistParameters);
-        pushoutEncoder.setPosition(0);
+        pushoutEncoder.setPosition( -23.3);
         // pushoutRightEncoder.setPosition(0);
     }
 
