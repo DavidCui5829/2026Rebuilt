@@ -238,8 +238,8 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
    // Configure the trigger bindings
    configureBindings();
 
-   configureFuelSim();
-   configureFuelSimRobot();
+  //  configureFuelSim();
+  //  configureFuelSimRobot();
      // Triggers for auto aim/pass poses
     // new Trigger(() -> isInAllianceZone())
     //     .onChange(Commands.runOnce(() -> onZoneChanged()).ignoringDisable(true));
