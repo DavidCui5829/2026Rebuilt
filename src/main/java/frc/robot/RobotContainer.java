@@ -122,7 +122,7 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
         .aimWhile(driverXbox.rightTrigger())
         // .aimWhile(driverXbox.leftTrigger())
         .aimLookahead(Time.ofBaseUnits(0, Seconds))
-        .aimFeedforward(0.01, 0.01, 0.00013)
+        .aimFeedforward(0.0001, 0.0001, 0.00013)
         
         // .aim(Constants.DrivebaseConstants.getFerryPose(drivebase.getPose().getTranslation()))
         // .aimWhile(!isInAllianceZone())

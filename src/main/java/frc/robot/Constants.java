@@ -123,7 +123,7 @@ public final class Constants {
     // public static final int PUSHOUT_RIGHT_ID = 17;
 
     public static final double PUSHOUT_RETRACTED_POS = 0.0;
-    public static final double PUSHOUT_EXTENDED_POS = -22.189; // TUNE THIS!!!
+    public static final double PUSHOUT_EXTENDED_POS = -22; // TUNE THIS!!!
 
     public static final double PUSHOUT_RETRACTED_AGITATE_POS = -18; // encoder rotations
     public static final double PUSHOUT_EXTENDED_AGITATE_POS = -21; // TUNE THIS!!!
