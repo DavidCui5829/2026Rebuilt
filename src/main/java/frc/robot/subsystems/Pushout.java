@@ -116,11 +116,15 @@ public class Pushout extends SubsystemBase {
     // PushoutRightController.setSetpoint(0, ControlType.kMAXMotionPositionControl);
     // }
 
-    public void Agitate() {
+    public void Agitateout() {
         SmallPush();
-        Timer.delay(PushoutConstants.PUSHOUT_AGITATE_WAIT);
+  
+    }
+    
+        public void Agitatein() {
+ 
         SmallRetract();
-        Timer.delay(PushoutConstants.PUSHOUT_AGITATE_WAIT);
+        
     }
 
 
@@ -153,8 +157,13 @@ public class Pushout extends SubsystemBase {
                 ;
     }
 
-    public Command AgitateCommand() {
-        return new RunCommand(() -> Agitate(), this)
+    public Command AgitateinCommand() {
+        return new RunCommand(() -> Agitatein(), this)
+                .finallyDo(interrupted -> RetractIntake());
+    }
+
+        public Command AgitateoutCommand() {
+        return new RunCommand(() -> Agitateout(), this)
                 .finallyDo(interrupted -> RetractIntake());
     }
 
