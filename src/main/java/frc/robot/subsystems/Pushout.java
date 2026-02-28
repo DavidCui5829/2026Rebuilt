@@ -25,6 +25,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import frc.robot.Constants.PushoutConstants;
 import frc.robot.Configs;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import static edu.wpi.first.units.Units.Amp;
 import static edu.wpi.first.units.Units.Degrees;
@@ -122,12 +123,14 @@ public class Pushout extends SubsystemBase {
     // }
 
     public void Agitateout() {
+         SmartDashboard.putBoolean("Outfinish", false);
         SmallPush();
   
     }
     
         public void Agitatein() {
- 
+ SmartDashboard.putBoolean("Outfinish", true);
+
         SmallRetract();
         
     }
