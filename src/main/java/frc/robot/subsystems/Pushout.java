@@ -164,12 +164,12 @@ public class Pushout extends SubsystemBase {
 
     public Command AgitateinCommand() {
         return new RunCommand(() -> Agitatein(), this)
-                .finallyDo(interrupted -> RetractIntake());
+            ;
     }
 
         public Command AgitateoutCommand() {
         return new RunCommand(() -> Agitateout(), this)
-                .finallyDo(interrupted -> RetractIntake());
+       ;
     }
 
     @Override
