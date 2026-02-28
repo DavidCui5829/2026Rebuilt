@@ -110,7 +110,7 @@ public final class Constants {
   }
 
   public static class IntakeConstants {
-    public static final int INTAKE_ID = 16; // unknown
+    public static final int INTAKE_ID = 18; // unknown
     // public static final int INTAKE_RIGHT_ID = 16; // unknown
 
     public static final double OUTTAKE_SPEED = 0.7;
@@ -119,7 +119,7 @@ public final class Constants {
   }
 
   public static class PushoutConstants {
-    public static final int PUSHOUT_ID = 30; // Unknown
+    public static final int PUSHOUT_ID = 17; // Unknown
     // public static final int PUSHOUT_RIGHT_ID = 17;
 
     public static final double PUSHOUT_RETRACTED_POS = 0.0;
@@ -158,8 +158,8 @@ public final class Constants {
 
   public static class HopperConstants {
     // IDEAL mapping from motor_can_ids.csv: left=18, right=19
-    public static final int TWINDEXER_LEFT_ID = 18;
-    public static final int TWINDEXER_RIGHT_ID = 19;
+    public static final int TWINDEXER_LEFT_ID = 15;
+    public static final int TWINDEXER_RIGHT_ID = 16;
 
     public static final double TWINDEXER_RIGHT_RPM = -0.8;
     public static final double TWINDEXER_LEFT_RPM = 0.8;
@@ -172,7 +172,7 @@ public final class Constants {
   }
 
   public static class ClimberConstants {
-    public static final int CLIMBER_LEFT_ID = 20; // placeholder
+    public static final int CLIMBER_LEFT_ID = 19; // placeholder
 
     public static final double CLIMBER_RETRACTED_POS = 0.0; // TUNE THIS!!!
     public static final double CLIMBER_EXTENDED_POS = 0.0; // TUNE THIS!!!
