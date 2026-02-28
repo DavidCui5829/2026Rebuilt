@@ -92,7 +92,7 @@ public final class Configs
                         .maxMotion
                                 .maxAcceleration(5000)
                                 .cruiseVelocity(5000)
-                                .allowedProfileError(0.1); // smooth extension
+                                .allowedProfileError(0.6); // smooth extension
                                 
 
                         // PushoutRightMotorConfig.closedLoop
