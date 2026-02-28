@@ -132,11 +132,11 @@ public final class Constants {
   }
 
   public static class ShooterConstants {
-    public static final int SHOOTER_R1_ID = 11;
-    public static final int SHOOTER_R2_ID = 12;
-
     public static final int SHOOTER_L1_ID = 9;
     public static final int SHOOTER_L2_ID = 10;
+    
+    public static final int SHOOTER_R1_ID = 11;
+    public static final int SHOOTER_R2_ID = 12;
 
     public static final double SHOOTER_SPEED = 1900; // RPM 3 meters 1900 4 meters 2200
     public static final double ERROR_MARGIN = 100; // RPM
