@@ -90,8 +90,8 @@ public final class Configs
                         .d(0.05)
                         .outputRange(-1.0, 1.0)
                         .maxMotion
-                                .maxAcceleration(3000)
-                                .cruiseVelocity(3000)
+                                .maxAcceleration(5000)
+                                .cruiseVelocity(5000)
                                 .allowedProfileError(0.1); // smooth extension
                                 
 
