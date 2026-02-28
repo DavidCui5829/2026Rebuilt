@@ -245,7 +245,7 @@ public final class Configs
 
                 static {
 
-                        TwindexerRightControllerConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12).follow(16, true);
+                        TwindexerRightControllerConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12).follow(15, true);
                         TwindexerLeftControllerConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
 
                         TwindexerRightControllerConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
