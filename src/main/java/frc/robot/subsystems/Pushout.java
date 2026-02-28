@@ -25,7 +25,6 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import frc.robot.Constants.PushoutConstants;
 import frc.robot.Configs;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import static edu.wpi.first.units.Units.Amp;
 import static edu.wpi.first.units.Units.Degrees;
@@ -111,28 +110,17 @@ public class Pushout extends SubsystemBase {
         PushoutMotor.set(0);
     }
 
-    public boolean pushoutReady() {
-
-        return PushoutController.isAtSetpoint();
-    }
-
     // public void StopPushing() {
     // // PushoutLeftController.setSetpoint(0,
     // ControlType.kMAXMotionPositionControl);
     // PushoutRightController.setSetpoint(0, ControlType.kMAXMotionPositionControl);
     // }
 
-    public void Agitateout() {
-         SmartDashboard.putBoolean("Outfinish", false);
+    public void Agitate() {
         SmallPush();
-  
-    }
-    
-        public void Agitatein() {
- SmartDashboard.putBoolean("Outfinish", true);
-
+        Timer.delay(PushoutConstants.PUSHOUT_AGITATE_WAIT);
         SmallRetract();
-        
+        Timer.delay(PushoutConstants.PUSHOUT_AGITATE_WAIT);
     }
 
 
@@ -165,14 +153,9 @@ public class Pushout extends SubsystemBase {
                 ;
     }
 
-    public Command AgitateinCommand() {
-        return new RunCommand(() -> Agitatein(), this)
-            ;
-    }
-
-        public Command AgitateoutCommand() {
-        return new RunCommand(() -> Agitateout(), this)
-       ;
+    public Command AgitateCommand() {
+        return new RunCommand(() -> Agitate(), this)
+                .finallyDo(interrupted -> RetractIntake());
     }
 
     @Override

@@ -128,7 +128,7 @@ public final class Constants {
     public static final double PUSHOUT_RETRACTED_AGITATE_POS = 8.374; // encoder rotations
     public static final double PUSHOUT_EXTENDED_AGITATE_POS = 20; // TUNE THIS!!!
 
-    public static final double PUSHOUT_AGITATE_WAIT = 0.3;
+    public static final double PUSHOUT_AGITATE_WAIT = 1;
   }
 
   public static class ShooterConstants {

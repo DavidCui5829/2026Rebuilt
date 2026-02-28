@@ -271,8 +271,8 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
      return Commands.parallel(
          shootCmd,
          m_hopper.runHopperToShooterCommand().onlyIf(shootCmd::isCASAtSpeed),
-         m_kicker.kickCommand().onlyIf(shootCmd::isCASAtSpeed)
-        //  ,m_pushout.AgitateCommand().repeatedly()
+         m_kicker.kickCommand().onlyIf(shootCmd::isCASAtSpeed),
+         m_pushout.AgitateCommand().repeatedly()
      ).onlyIf(shootCmd::isCASAtSpeed)
       .onlyIf(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees))).withTimeout(8);
    }, java.util.Collections.emptySet()));
@@ -346,8 +346,8 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
           Commands.waitUntil(shootCmd::isCASAtSpeed),
           Commands.parallel(
             m_hopper.runHopperToShooterCommand(),
-            m_kicker.kickCommand()
-            // ,m_pushout.AgitateCommand().repeatedly()
+            m_kicker.kickCommand(),
+            m_pushout.AgitateCommand().repeatedly()
           ).onlyIf(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)))
         )
       ).finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1));
@@ -373,7 +373,7 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
 
     //  Pushout Commands
     Y_extendIntake.whileTrue(m_pushout.PushCommand());
-    B_agitate.whileTrue(m_pushout.AgitateoutCommand().andThen(m_pushout.AgitateinCommand()));
+    B_agitate.whileTrue((m_pushout.AgitateCommand().repeatedly()));
 
     //  Intake Commands
     X_runIntake.whileTrue(m_intake.runIntakeCommand());
@@ -420,7 +420,7 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
     // pushout
     Y_OP_extendIntake.whileTrue(m_pushout.PushCommand());
     B_OP_reteactIntake.whileTrue(m_pushout.RetractCommand());
-    // POVLEFT_OP_agitate.whileTrue(m_pushout.AgitateCommand());
+    POVLEFT_OP_agitate.whileTrue(m_pushout.AgitateCommand());
 
     // climber
     POVUP_OP_climb.whileTrue(m_climber.runClimbCommand());
