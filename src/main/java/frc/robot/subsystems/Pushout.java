@@ -110,6 +110,11 @@ public class Pushout extends SubsystemBase {
         PushoutMotor.set(0);
     }
 
+    public boolean pushoutReady() {
+
+        return PushoutController.isAtSetpoint();
+    }
+
     // public void StopPushing() {
     // // PushoutLeftController.setSetpoint(0,
     // ControlType.kMAXMotionPositionControl);

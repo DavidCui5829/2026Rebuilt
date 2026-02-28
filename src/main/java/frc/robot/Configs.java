@@ -80,7 +80,7 @@ public final class Configs
 
 
                 static {
-                        PushoutMotorConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
+                        PushoutMotorConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40).voltageCompensation(12);
 
 
                         PushoutMotorConfig.closedLoop
