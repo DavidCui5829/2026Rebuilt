@@ -113,8 +113,8 @@ public final class Constants {
     public static final int INTAKE_ID = 18; // unknown
     // public static final int INTAKE_RIGHT_ID = 16; // unknown
 
-    public static final double OUTTAKE_SPEED = 0.7;
-    public static final double INTAKE_SPEED = -0.7;
+    public static final double OUTTAKE_SPEED = 1;
+    public static final double INTAKE_SPEED = -1;
 
   }
 
