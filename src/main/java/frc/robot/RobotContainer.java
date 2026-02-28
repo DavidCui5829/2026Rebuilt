@@ -369,7 +369,7 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
     driverXbox.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
 
     RBpushout_and_intake.whileTrue(Commands.parallel(m_pushout.PushCommand(), m_intake.runIntakeCommand()));
-    LBretract_and_stop.whileTrue(Commands.parallel(m_pushout.RetractCommand()));
+    LBretract_and_stop.whileTrue(Commands.parallel(m_pushout.RetractCommand(), m_intake.runIntakeCommand()));
 
     //  Pushout Commands
     Y_extendIntake.whileTrue(m_pushout.PushCommand());
