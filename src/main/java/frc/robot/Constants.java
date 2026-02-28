@@ -125,8 +125,8 @@ public final class Constants {
     public static final double PUSHOUT_RETRACTED_POS = 0.0;
     public static final double PUSHOUT_EXTENDED_POS = 29.4; // TUNE THIS!!!
 
-    public static final double PUSHOUT_RETRACTED_AGITATE_POS = -18; // encoder rotations
-    public static final double PUSHOUT_EXTENDED_AGITATE_POS = -21; // TUNE THIS!!!
+    public static final double PUSHOUT_RETRACTED_AGITATE_POS = 18; // encoder rotations
+    public static final double PUSHOUT_EXTENDED_AGITATE_POS = 28; // TUNE THIS!!!
 
     public static final double PUSHOUT_AGITATE_WAIT = 0.3;
   }
