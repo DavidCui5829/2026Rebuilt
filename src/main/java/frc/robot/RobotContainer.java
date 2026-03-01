@@ -37,6 +37,7 @@ import frc.robot.Constants.Dimensions;
 // import frc.robot.Configs.ShooterSubsystem;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ControlAllShooting;
+import frc.robot.commands.ControllAllPassing;
 // import frc.robot.Constants.DrivebaseConstants;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.utils.FuelSim;
@@ -95,6 +96,10 @@ private ControlAllShooting makeVariableShoot() {
   return new ControlAllShooting(Constants.DrivebaseConstants.getHubPose2D(), m_shooter, drivebase.getPose());
 }
  
+ 
+private ControllAllPassing makeVariablePass() {
+  return new ControllAllPassing(Constants.DrivebaseConstants.getFerryPose(drivebase.getPose().getTranslation()), m_shooter, drivebase.getPose());
+}
 public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of FuelSim
 
 
@@ -115,7 +120,7 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
         () -> driverXbox.getLeftX() * -1)
         .withControllerRotationAxis(() -> driverXbox.getRightX()*-1)
         .deadband(OperatorConstants.DEADBAND)
-        .scaleTranslation(0.8)
+        .scaleTranslation(1.0)
         .allianceRelativeControl(true)
         .aim(Constants.DrivebaseConstants.getHubPose2D())
         // .aimLock(Angle.ofBaseUnits(1, Degrees))
@@ -329,6 +334,19 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
   * Flight joysticks}.
   */
  private void configureBindings() {
+
+     Command driveFieldOrientedDirectAngle = drivebase.driveFieldOriented(() -> applyHeadingBias(driveDirectAngle.get()));
+   Command driveFieldOrientedAnglularVelocity = drivebase.driveFieldOriented(
+       () -> applyHeadingBias(driveAngularVelocity.get()));
+   Command driveRobotOrientedAngularVelocity = drivebase.driveFieldOriented(driveRobotOriented);
+   Command driveSetpointGen = drivebase.driveWithSetpointGeneratorFieldRelative(
+       driveDirectAngle);
+   Command driveFieldOrientedDirectAngleKeyboard = drivebase.driveFieldOriented(
+       () -> applyHeadingBias(driveDirectAngleKeyboard.get()));
+   Command driveFieldOrientedAnglularVelocityKeyboard = drivebase.driveFieldOriented(
+       () -> applyHeadingBias(driveAngularVelocityKeyboard.get()));
+   Command driveSetpointGenKeyboard = drivebase.driveWithSetpointGeneratorFieldRelative(
+       driveDirectAngleKeyboard);
 //====================================== ALIGN TO HUB COMMANDS ======================================      
 //====================================== ALL CONTROLS ======================================
 
@@ -347,23 +365,27 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
           Commands.parallel(
             m_hopper.runHopperToShooterCommand(),
             m_kicker.kickCommand(),
-            m_pushout.AgitateCommand().repeatedly()
+            m_pushout.AgitateCommand().repeatedly(),
+            m_intake.runIntakeCommand()
           ).onlyIf(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)))
         )
       ).finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1));
-    }, java.util.Collections.emptySet())
+    }
+    , java.util.Collections.emptySet()
+  )
   );
 
     // Hopper Commands
     PRtransfer.whileTrue(Commands.parallel(m_hopper.runHopperToShooterCommand(), m_kicker.kickCommand()));
     PLunjam.whileTrue(Commands.parallel(m_hopper.runReverseHopperCommand(), m_kicker.kickBackwardsCommand()));
-
+  
 
     // Shooter Commands
     LT_shootFuel.whileTrue(m_shooter.shootFuelCommand());
     //  speedUpShooter.whileTrue(m_shooter.SpeedUpShooterCommand());
-
-    driverXbox.povDown().whileTrue(drivebase.driveToPose(new Pose2d(new Translation2d(2.3, 4.0), Rotation2d.fromDegrees(0)))); //in front of the blue hub
+    
+    driverXbox.povDown().whileTrue(driveFieldOrientedDirectAngleKeyboard);  
+    driverXbox.povUp().whileTrue(driveFieldOrientedDirectAngle).toggleOnFalse(driveFieldOrientedAnglularVelocity);
 
     // Swerve Drive Commands
     driverXbox.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
@@ -373,11 +395,12 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
 
     //  Pushout Commands
     Y_extendIntake.whileTrue(m_pushout.PushCommand());
-    B_agitate.whileTrue((m_pushout.AgitateCommand().repeatedly()));
+    B_agitate.whileTrue((m_pushout.AgitateCommand().repeatedly().alongWith(m_intake.runIntakeCommand())));
 
     //  Intake Commands
     X_runIntake.whileTrue(m_intake.runIntakeCommand());
     A_runOuttake.whileTrue(m_intake.runOuttakeCommand());
+    
     
     //  Climber Commands
     // Climb.whileTrue(m_climber.runClimbCommand());
@@ -439,18 +462,7 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
   
 
 
-   Command driveFieldOrientedDirectAngle = drivebase.driveFieldOriented(() -> applyHeadingBias(driveDirectAngle.get()));
-   Command driveFieldOrientedAnglularVelocity = drivebase.driveFieldOriented(
-       () -> applyHeadingBias(driveAngularVelocity.get()));
-   Command driveRobotOrientedAngularVelocity = drivebase.driveFieldOriented(driveRobotOriented);
-   Command driveSetpointGen = drivebase.driveWithSetpointGeneratorFieldRelative(
-       driveDirectAngle);
-   Command driveFieldOrientedDirectAngleKeyboard = drivebase.driveFieldOriented(
-       () -> applyHeadingBias(driveDirectAngleKeyboard.get()));
-   Command driveFieldOrientedAnglularVelocityKeyboard = drivebase.driveFieldOriented(
-       () -> applyHeadingBias(driveAngularVelocityKeyboard.get()));
-   Command driveSetpointGenKeyboard = drivebase.driveWithSetpointGeneratorFieldRelative(
-       driveDirectAngleKeyboard);
+
 
 
    if (RobotBase.isSimulation()) {

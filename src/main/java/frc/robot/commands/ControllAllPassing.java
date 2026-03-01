@@ -28,7 +28,7 @@ import java.util.function.BooleanSupplier;
 /**
  * Largely written by Eeshwar based off their blog at https://blog.eeshwark.com/robotblog/shooting-on-the-fly
  */
-public class ControlAllShooting extends Command
+public class ControllAllPassing extends Command
 {
 
   private final Pose2d goalPose;
@@ -59,7 +59,7 @@ public class ControlAllShooting extends Command
   
   
 
-  public ControlAllShooting(Pose2d goalPoseSupplier, Shooter shooter, Pose2d robotPoseSupplier)
+  public ControllAllPassing(Pose2d goalPoseSupplier, Shooter shooter, Pose2d robotPoseSupplier)
                                
   {
    
@@ -83,11 +83,11 @@ public class ControlAllShooting extends Command
     // Test Results
     for (var entry : List.of(
       // Pair.of(Meters.of(1), RPM.of((1000))),
-                            Pair.of(Meters.of(2), RPM.of(1822.8225)),
-                            Pair.of(Meters.of(3), RPM.of(2100)),
+                            Pair.of(Meters.of(2), RPM.of(1622.8225)),
+                            Pair.of(Meters.of(3), RPM.of(1900)),
                             // Pair.of(Meters.of(3.5), RPM.of(2050),
-                            Pair.of(Meters.of(4), RPM.of(2400)),
-                            Pair.of(Meters.of(5.2048), RPM.of(2496.918))
+                            Pair.of(Meters.of(4), RPM.of(2200)),
+                            Pair.of(Meters.of(5.2048), RPM.of(2296.918))
                             )
     )
     {shooterTable.put(entry.getFirst().in(Meters), entry.getSecond().in(RPM));}

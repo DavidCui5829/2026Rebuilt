@@ -90,9 +90,9 @@ public final class Configs
                         .d(0.05)
                         .outputRange(-1.0, 1.0)
                         .maxMotion
-                                .maxAcceleration(5000)
-                                .cruiseVelocity(5000)
-                                .allowedProfileError(0.6); // smooth extension
+                                .maxAcceleration(8000)
+                                .cruiseVelocity(8000)
+                                .allowedProfileError(0.1); // smooth extension
                                 
 
                         // PushoutRightMotorConfig.closedLoop
@@ -128,7 +128,7 @@ public final class Configs
                                  .feedForward
                                 .kS(0.10)
                                 .kV(0.003)
-                                .kA(0.00017);
+                                .kA(0.0003);
                                 kickerLeftMotorConfig.closedLoop
                                 .maxMotion.maxAcceleration(100000);
 
@@ -143,7 +143,7 @@ public final class Configs
                                  .feedForward
                                 .kS(0.10)
                                 .kV(0.003)
-                                .kA(0.00017);
+                                .kA(0.0003);
 
                                 kickerRightMotorConfig.closedLoop
                                 .maxMotion.maxAcceleration(100000);
