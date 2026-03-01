@@ -408,7 +408,7 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
 
     //  Pushout Commands
     Y_extendIntake.whileTrue(m_pushout.PushCommand());
-    B_agitate.whileTrue((m_pushout.AgitateCommand().repeatedly().alongWith(m_intake.runIntakeCommand())));
+    B_agitate.whileTrue((m_pushout.AgitateCommand().repeatedly()));
 
     //  Intake Commands
     X_runIntake.whileTrue(m_intake.runIntakeCommand());
