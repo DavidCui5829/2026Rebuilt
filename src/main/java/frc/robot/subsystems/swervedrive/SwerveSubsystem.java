@@ -312,6 +312,22 @@ public class SwerveSubsystem extends SubsystemBase {
     );
   }
 
+  public Command aimAtHub(Pose2d targetPose) {
+    return run(() -> {
+      // Calculate angle from robot to target
+      Translation2d robotPos = getPose().getTranslation();
+      Translation2d targetPos = targetPose.getTranslation();
+      Rotation2d targetAngle = targetPos.minus(robotPos).getAngle();
+
+      // Drive with zero translation, only rotate toward target
+      drive(ChassisSpeeds.fromFieldRelativeSpeeds(
+          0, 0,
+          swerveDrive.getSwerveController().headingCalculate(
+              getHeading().getRadians(), targetAngle.getRadians()),
+          getHeading()));
+    });
+  }
+
   /**
    * Drive with {@link SwerveSetpointGenerator} from 254, implemented by
    * PathPlanner.

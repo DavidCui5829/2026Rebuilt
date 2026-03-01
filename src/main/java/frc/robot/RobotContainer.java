@@ -279,6 +279,7 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
       .onlyIf(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees))).withTimeout(8);
    }, java.util.Collections.emptySet()));
    NamedCommands.registerCommand("speed up shooter", m_shooter.SpeedUpShooterCommand().withTimeout(15));
+   NamedCommands.registerCommand("aim at hub", drivebase.aimAtHub(Constants.DrivebaseConstants.getHubPose2D()));
 
    // hopper
    NamedCommands.registerCommand("transfer", m_hopper.runHopperToShooterCommand().withTimeout(6.7));
