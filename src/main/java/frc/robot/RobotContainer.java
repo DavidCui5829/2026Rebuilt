@@ -429,7 +429,8 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
           Commands.waitUntil(m_shooter::isShooterFast),
           Commands.parallel(
              m_hopper.runHopperToShooterCommand(),
-             m_kicker.kickCommand()
+             m_kicker.kickCommand(),
+             m_pushout.AgitateCommand().repeatedly()
           )
         )
      )
