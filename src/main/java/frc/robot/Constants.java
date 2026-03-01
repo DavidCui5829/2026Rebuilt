@@ -41,6 +41,13 @@ public final class Constants {
   public static final double LOOP_TIME = 0.13; // s, 20ms + 110ms sprk max velocity lag
   // used
   public static final double MAX_SPEED = Units.feetToMeters(16.5);
+
+  // RobotContainer or a constants class
+private static final double LOOKAHEAD_BASE_SEC = 0.03;    // minimum lead
+private static final double LOOKAHEAD_K_OMEGA   = 0.012;  // seconds per (rad/s)
+private static final double LOOKAHEAD_K_V       = 0.015;  // seconds per (m/s)
+private static final double LOOKAHEAD_MIN_SEC   = 0.0;
+private static final double LOOKAHEAD_MAX_SEC   = 0.5;
   // Maximum speed of the robot in meters per second, used to limit acceleration.
 
   // public static final class AutonConstants

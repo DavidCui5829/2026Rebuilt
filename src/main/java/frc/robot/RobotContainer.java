@@ -126,7 +126,7 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
         // .aimLock(Angle.ofBaseUnits(1, Degrees))
         .aimWhile(driverXbox.rightTrigger())
         // .aimWhile(driverXbox.leftTrigger())
-        .aimLookahead(Time.ofBaseUnits(0, Seconds))
+        .aimLookahead(Time.ofBaseUnits(computeDynamicLookaheadSeconds(), Seconds))
         .aimFeedforward(0.0001, 0.0001, 0.00013)
         
         // .aim(Constants.DrivebaseConstants.getFerryPose(drivebase.getPose().getTranslation()))
@@ -656,6 +656,8 @@ private void configureFuelSimRobot() {
             Dimensions.BUMPER_HEIGHT.in(Meters),
             drivebase::getPose,
             drivebase::getFieldVelocity);
+
+          
     // fuelSim.registerIntake(
     //         -Dimensions.FULL_LENGTH.div(2).in(Meters),
     //         Dimensions.FULL_LENGTH.div(2).in(Meters),
@@ -664,6 +666,22 @@ private void configureFuelSimRobot() {
     //         () -> m_pushout.isRightDeployed() && ableToIntake.getAsBoolean(),
     //         intakeCallback);
     }
+
+private double computeDynamicLookaheadSeconds() {
+    // Read robot field velocities (from SwerveSubsystem)
+    var chassisSpeeds = drivebase.getFieldVelocity(); // ChassisSpeeds
+
+    double omega = Math.abs(chassisSpeeds.omegaRadiansPerSecond); 
+    double speed = Math.hypot(chassisSpeeds.vxMetersPerSecond, chassisSpeeds.vyMetersPerSecond);
+
+    // Simple linear combination of yaw rate and translation speed
+    double lookahead = Constants.LOOKAHEAD_BASE_SEC + Constants.LOOKAHEAD_K_OMEGA * omega + Constants.LOOKAHEAD_K_V * speed;
+
+    // Clamp to safe range
+    lookahead = Math.min(Math.max(lookahead, Constants.LOOKAHEAD_MIN_SEC), Constants.LOOKAHEAD_MAX_SEC);
+
+    return lookahead;
+}
 //   private void onZoneChanged() {
 //     if (isInAllianceZone()) {
 //       superstructure.setAimPoint(Constants.AimPoints.getAllianceHubPosition());
