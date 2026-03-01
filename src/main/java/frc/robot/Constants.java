@@ -128,10 +128,10 @@ public static final double LOOKAHEAD_MAX_SEC   = 0.5;
     public static final int PUSHOUT_ID = 17; // Unknown
     // public static final int PUSHOUT_RIGHT_ID = 17;
 
-    public static final double PUSHOUT_RETRACTED_POS = 8.374;
-    public static final double PUSHOUT_EXTENDED_POS = 29.4; // TUNE THIS!!!
+    public static final double PUSHOUT_RETRACTED_POS = 9.386;
+    public static final double PUSHOUT_EXTENDED_POS = 30.4; // TUNE THIS!!!
 
-    public static final double PUSHOUT_RETRACTED_AGITATE_POS = 8.374; // encoder rotations
+    public static final double PUSHOUT_RETRACTED_AGITATE_POS = 9.386; // encoder rotations
     public static final double PUSHOUT_EXTENDED_AGITATE_POS = 20; // TUNE THIS!!!
 
     public static final double PUSHOUT_AGITATE_WAIT = 1;

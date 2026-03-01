@@ -312,7 +312,7 @@ public class SwerveSubsystem extends SubsystemBase {
     );
   }
 
-  public Command aimAtHub(Pose2d targetPose) {
+  public Command aimAtPose(Pose2d targetPose) {
     return run(() -> {
       // Calculate angle from robot to target
       Translation2d robotPos = getPose().getTranslation();
@@ -327,7 +327,6 @@ public class SwerveSubsystem extends SubsystemBase {
           getHeading()));
     });
   }
-
   /**
    * Drive with {@link SwerveSetpointGenerator} from 254, implemented by
    * PathPlanner.

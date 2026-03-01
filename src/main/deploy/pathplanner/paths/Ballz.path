@@ -3,32 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.0616457960644006,
-        "y": 1.7391055456171727
+        "x": 8.20530670470756,
+        "y": 6.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.061645796064399,
-        "y": 1.7391055456171727
+        "x": 10.182345787419553,
+        "y": 5.488371591511338
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "MiddleOFBallsOnLeftSide"
     },
     {
       "anchor": {
-        "x": 2.3,
-        "y": 4.0
+        "x": 8.313710843373494,
+        "y": 5.073132530120482
       },
       "prevControl": {
-        "x": 1.2999999999999998,
-        "y": 4.0
+        "x": 7.98587951807229,
+        "y": 4.078710843373494
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": -73.46516214265495
+    },
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -42,7 +55,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -90.0
   },
   "reversed": false,
   "folder": null,
