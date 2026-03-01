@@ -129,9 +129,6 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
         .aimLookahead(Time.ofBaseUnits(computeDynamicLookaheadSeconds(), Seconds))
         .aimFeedforward(0.0001, 0.0001, 0.00013)
         
-        // .aim(Constants.DrivebaseConstants.getFerryPose(drivebase.getPose().getTranslation()))
-        // .aimWhile(!isInAllianceZone())
-        // .aimWhile(driverXbox.rightTrigger())
         ;
 
 
@@ -246,11 +243,11 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
   //  configureFuelSim();
   //  configureFuelSimRobot();
      // Triggers for auto aim/pass poses
-    // new Trigger(() -> isInAllianceZone())
-    //     .onChange(Commands.runOnce(() -> onZoneChanged()).ignoringDisable(true));
+    new Trigger(() -> isInAllianceZone())
+        .onChange(Commands.runOnce(() -> onZoneChanged()).ignoringDisable(true));
 
-    // new Trigger(() -> isOnAllianceOutpostSide())
-    //     .onChange(Commands.runOnce(() -> onZoneChanged()).ignoringDisable(true));
+    new Trigger(() -> isOnAllianceOutpostSide())
+        .onChange(Commands.runOnce(() -> onZoneChanged()).ignoringDisable(true));
 
 
    DriverStation.silenceJoystickConnectionWarning(true);
@@ -351,27 +348,41 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
 //====================================== ALL CONTROLS ======================================
 
 //======= Driver =======
-  // transfer + kick + shoot command, only runs if the shooter is up to speed
+  // transfer + kick + shoot/pass command, switches based on zone
   RTtransfer_kick_shoot.whileTrue(
     Commands.defer(() -> {
-      ControlAllShooting shootCmd = makeVariableShoot();
-      return Commands.parallel(
-        // keep running the VariableShoot command while we wait for the shooter to reach speed
-        shootCmd,
-
-        // once at speed, run hopper + kicker
-        Commands.sequence(
-          Commands.waitUntil(shootCmd::isCASAtSpeed),
-          Commands.parallel(
-            m_hopper.runHopperToShooterCommand(),
-            m_kicker.kickCommand(),
-            m_pushout.AgitateCommand().repeatedly(),
-            m_intake.runIntakeCommand()
-          ).onlyIf(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)))
-        )
-      ).finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1));
-    }
-    , java.util.Collections.emptySet()
+      if (isInAllianceZone()) {
+        // In alliance zone → shoot at hub
+        ControlAllShooting shootCmd = makeVariableShoot();
+        return Commands.parallel(
+          shootCmd,
+          Commands.sequence(
+            Commands.waitUntil(shootCmd::isCASAtSpeed),
+            Commands.parallel(
+              m_hopper.runHopperToShooterCommand(),
+              m_kicker.kickCommand(),
+              m_pushout.AgitateCommand().repeatedly(),
+              m_intake.runIntakeCommand()
+            ).onlyIf(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)))
+          )
+        ).finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1));
+      } else {
+        // Outside alliance zone → pass to ferry
+        ControllAllPassing passCmd = makeVariablePass();
+        return Commands.parallel(
+          passCmd,
+          Commands.sequence(
+            Commands.waitUntil(passCmd::isCASAtSpeed),
+            Commands.parallel(
+              m_hopper.runHopperToShooterCommand(),
+              m_kicker.kickCommand(),
+              m_pushout.AgitateCommand().repeatedly(),
+              m_intake.runIntakeCommand()
+            ).onlyIf(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)))
+          )
+        ).finallyDo(() -> m_shooter.setTargetRPMCommand(passCmd.RecordedidealHorizontalSpeed).withTimeout(1));
+      }
+    }, java.util.Collections.emptySet()
   )
   );
 
@@ -666,12 +677,11 @@ private void configureFuelSimRobot() {
     //         () -> m_pushout.isRightDeployed() && ableToIntake.getAsBoolean(),
     //         intakeCallback);
     }
-
 private double computeDynamicLookaheadSeconds() {
     // Read robot field velocities (from SwerveSubsystem)
     var chassisSpeeds = drivebase.getFieldVelocity(); // ChassisSpeeds
 
-    double omega = Math.abs(chassisSpeeds.omegaRadiansPerSecond); 
+    double omega = Math.abs(chassisSpeeds.omegaRadiansPerSecond);
     double speed = Math.hypot(chassisSpeeds.vxMetersPerSecond, chassisSpeeds.vyMetersPerSecond);
 
     // Simple linear combination of yaw rate and translation speed
@@ -682,29 +692,15 @@ private double computeDynamicLookaheadSeconds() {
 
     return lookahead;
 }
-//   private void onZoneChanged() {
-//     if (isInAllianceZone()) {
-//       superstructure.setAimPoint(Constants.AimPoints.getAllianceHubPosition());
-//     } else {
-//       if (isOnAllianceOutpostSide()) {
-//         superstructure.setAimPoint(Constants.AimPoints.getAllianceOutpostPosition());
-//       } else {
-//         superstructure.setAimPoint(Constants.AimPoints.getAllianceFarSidePosition());
-//       }
-//     }
-//   }
 
-//   private void onAllianceChanged(Alliance alliance) {
-//     currentAlliance = alliance;
-
-//     // Update aim point based on alliance
-//     if (alliance == Alliance.Blue) {
-//       superstructure.setAimPoint(Constants.AimPoints.BLUE_HUB.value);
-//     } else {
-//       superstructure.setAimPoint(Constants.AimPoints.RED_HUB.value);
-//     }
-
-//     System.out.println("Alliance changed to: " + alliance);
-//   }
+  private void onZoneChanged() {
+    if (isInAllianceZone()) {
+      driveAngularVelocity.aim(Constants.DrivebaseConstants.getHubPose2D());
+    } else {
+      driveAngularVelocity.aim(
+        Constants.DrivebaseConstants.getFerryPose(drivebase.getPose().getTranslation())
+      );
+    }
+  }
 }
  
