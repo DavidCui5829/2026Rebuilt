@@ -670,6 +670,7 @@ public class SwerveSubsystem extends SubsystemBase {
       }
     }
 
+    doRejectUpdate = false;
     if(useMegaTag2 == false)
     {
       LimelightHelpers.PoseEstimate mt1bright = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-bright");
@@ -725,6 +726,7 @@ public class SwerveSubsystem extends SubsystemBase {
       }
     }
     
+    doRejectUpdate = false;
     if(useMegaTag2 == false)
     {
       LimelightHelpers.PoseEstimate mt1climber = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-climber");
