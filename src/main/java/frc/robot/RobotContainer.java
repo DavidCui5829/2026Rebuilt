@@ -393,8 +393,6 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
     PLunjam.whileTrue(Commands.parallel(m_hopper.runReverseHopperCommand(), m_kicker.kickBackwardsCommand()));
   
 
-    // Shooter Commands
-    LT_shootFuel.whileTrue(m_shooter.shootFuelCommand());
     //  speedUpShooter.whileTrue(m_shooter.SpeedUpShooterCommand());
     
     driverXbox.povDown().whileTrue(driveFieldOrientedDirectAngleKeyboard);  
@@ -419,23 +417,23 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
     // Climb.whileTrue(m_climber.runClimbCommand());
     // ClimbDown.whileTrue(m_climber.runClimberDownCommand());
 
-
+ // Shooter Commands
    // transfer + kick + shoot command, only runs if the shooter is up to speed
-  // RTtransfer_kick_shoot.whileTrue(
-  //    Commands.parallel(
-  //       // keep running the VariableShoot command while we wait for the shooter to reach speed
-  //       m_variableShoot,
+ LT_shootFuel.whileTrue(
+     Commands.parallel(
+        // keep running the VariableShoot command while we wait for the shooter to reach speed
+       m_shooter.shootFuelCommand(),
         
-  //       // once at speed, run hopper + kicker
-  //       Commands.sequence(
-  //         Commands.waitUntil(m_shooter::isShooterFast),
-  //         Commands.parallel(
-  //            m_hopper.runReverseHopperCommand(),
-  //            m_kicker.kickBackwardsCommand()
-  //         )
-  //       )
-  //    )
-  // );
+        // once at speed, run hopper + kicker
+        Commands.sequence(
+          Commands.waitUntil(m_shooter::isShooterFast),
+          Commands.parallel(
+             m_hopper.runHopperToShooterCommand(),
+             m_kicker.kickCommand()
+          )
+        )
+     )
+  );
 
 
 
