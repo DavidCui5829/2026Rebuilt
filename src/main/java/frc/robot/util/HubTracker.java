@@ -5,6 +5,8 @@ import static edu.wpi.first.units.Units.Seconds;
 import edu.wpi.first.units.measure.Time;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -16,6 +18,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+
 
 public class HubTracker {
     /**
@@ -268,8 +271,36 @@ public class HubTracker {
      * Example: startPeriodicPublishing("http://es:9200", "hubtracker", 5);
      */
     public static ScheduledFuture<?> startPeriodicPublishing(String elasticBaseUrl, String index, long periodSeconds) {
-        return ELASTIC_PUBLISHER.scheduleAtFixedRate(() -> publishStatusToElastic(elasticBaseUrl, index), 0,
-                Math.max(1, periodSeconds), TimeUnit.SECONDS);
+        return ELASTIC_PUBLISHER.scheduleAtFixedRate(() -> {
+            try {
+                Optional<Shift> current = getCurrentShift();
+                Optional<Shift> next = getNextShift();
+                Optional<Alliance> alliance = DriverStation.getAlliance();
+                Optional<Alliance> autoWinner = getAutoWinner();
+
+                double matchTime = getMatchTime();
+                Double timeRemaining = current.map(s -> s.endTime - matchTime).orElse(null);
+
+                String json = buildStatusJson(Instant.now().toString(), matchTime, current.orElse(null), timeRemaining,
+                        next.orElse(null), alliance.orElse(null), autoWinner.orElse(null), isActive());
+
+                try {
+                    String url = elasticBaseUrl + "/" + index + "/_doc";
+                    sendJsonToElastic(json, url);
+
+                    // Simple pretty-print for SmartDashboard (shallow JSON)
+                    String pretty = json.replace("{", "{\n  ")
+                                        .replace("}", "\n}")
+                                        .replaceAll(",", ",\n  ");
+                    SmartDashboard.putString("HubTracker/status", pretty);
+                } catch (IOException e) {
+                    DriverStation.reportWarning("Failed to publish HubTracker status to Elastic: " + e.getMessage(), false);
+                    SmartDashboard.putString("HubTracker/status", json);
+                }
+            } catch (Exception e) {
+                DriverStation.reportWarning("Failed to publish HubTracker status to SmartDashboard: " + e.getMessage(), false);
+            }
+        }, 0, Math.max(1, periodSeconds), TimeUnit.SECONDS);
     }
 
     /**
