@@ -275,8 +275,7 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
          m_hopper.runHopperToShooterCommand().onlyIf(shootCmd::isCASAtSpeed),
          m_kicker.kickCommand().onlyIf(shootCmd::isCASAtSpeed),
          m_pushout.AgitateCommand().repeatedly()
-     ).onlyIf(shootCmd::isCASAtSpeed)
-      .onlyIf(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)));
+     ).onlyIf(shootCmd::isCASAtSpeed);
    }, java.util.Collections.emptySet()).withTimeout(8));
    NamedCommands.registerCommand("speed up shooter", m_shooter.SpeedUpShooterCommand().withTimeout(15));
    NamedCommands.registerCommand("aim at hub", drivebase.aimAtPose(Constants.DrivebaseConstants.getHubPose2D()));
