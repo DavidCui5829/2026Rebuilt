@@ -146,6 +146,7 @@ public class Pushout extends SubsystemBase {
     }
 
     public Command AgitateCommand() {
+        Commands.waitSeconds(0.5);
         return Commands.sequence(
             runOnce(() -> SmallPush()),
             Commands.waitSeconds(PushoutConstants.PUSHOUT_AGITATE_WAIT),
@@ -156,12 +157,14 @@ public class Pushout extends SubsystemBase {
             runOnce(() -> {
                 PushoutRetractedAgitate -= 3.0;   // retract by 3 encoder each cycle
 
-                if (PushoutRetractedAgitate <= 12) {
+                if (PushoutRetractedAgitate <= 0) {
+                    Commands.waitSeconds(PushoutConstants.PUSHOUT_AGITATE_WAIT*2);
                     PushoutRetractedAgitate = 22.0;   // reset
                 }
             })
         ).finallyDo(interrupted -> RetractIntake());
     }
+
     @Override
     public void periodic() {
         // AdvantageKit Logging
