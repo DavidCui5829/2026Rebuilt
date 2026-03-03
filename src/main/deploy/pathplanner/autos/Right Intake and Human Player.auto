@@ -7,42 +7,23 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Start-Intake Path"
+            "pathName": "Right Trench to Neutral"
           }
         },
         {
           "type": "parallel",
           "data": {
             "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Intake Path 1"
-                }
-              },
               {
                 "type": "named",
                 "data": {
                   "name": "extend and intake"
                 }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
+              },
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Trench to Shoot"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "speed up shooter"
+                  "pathName": "Intake Right"
                 }
               }
             ]
@@ -51,26 +32,43 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Shoot Path 1"
+            "pathName": "Right Intake to Right Shoot"
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Control All Shooting"
-                }
-              }
-            ]
+            "name": "Control All Shooting"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "retract intake"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Left Climb From Depot Shoot"
+            "pathName": "Right Shoot to Human Player"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Human Player Shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Control All Shooting"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Human Player Shoot to Right Climb"
           }
         },
         {

@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.183265060240964,
-        "y": 7.2368192771084345
+        "x": 3.2756776034236803,
+        "y": 7.366704707560627
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.227429699000964,
-        "y": 7.4970348311168316
+        "x": 3.3303879973732484,
+        "y": 7.634913729814565
       },
       "isLocked": false,
-      "linkedName": "Leave Trench"
+      "linkedName": "shoot 67"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 5.313542168674698
       },
       "prevControl": {
-        "x": 1.9065446449394523,
-        "y": 5.0688225844992525
+        "x": 1.7484093353041497,
+        "y": 5.069638909495709
       },
       "nextControl": null,
       "isLocked": false,
@@ -57,7 +57,7 @@
     "rotation": -24.732211671135918
   },
   "reversed": false,
-  "folder": "Week 3 Paths",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": -52.165932156881

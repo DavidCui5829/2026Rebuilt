@@ -3,51 +3,67 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.9754096385542166,
-        "y": 0.680192771084337
+        "x": 3.1542093555295945,
+        "y": 0.6830277940031146
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.352143449943648,
-        "y": 1.0779925469379616
+        "x": 3.382203459944133,
+        "y": 0.785588450944324
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "shoot 41"
     },
     {
       "anchor": {
-        "x": 2.838055636682243,
-        "y": 1.1292971670560745
+        "x": 3.1542093555295945,
+        "y": 1.412452394859813
       },
       "prevControl": {
-        "x": 3.1970212925823254,
-        "y": 0.7485296105789965
+        "x": 2.9505641300856555,
+        "y": 0.2633313950898024
       },
       "nextControl": {
-        "x": 2.666563485727177,
-        "y": 1.311204951828483
+        "x": 3.2631973331156665,
+        "y": 2.0274453243213264
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.6422289156626504,
-        "y": 1.9587349397590366
+        "x": 2.5935338298286603,
+        "y": 3.9524824279595023
       },
       "prevControl": {
-        "x": 2.672490170956634,
-        "y": 1.7105731851955415
+        "x": 3.0087830053525226,
+        "y": 3.4630435728389366
+      },
+      "nextControl": {
+        "x": 2.0902967791104636,
+        "y": 4.545629339442317
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.9596576319543504,
+        "y": 4.817788873038516
+      },
+      "prevControl": {
+        "x": 0.7168498856068151,
+        "y": 4.877323722611107
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Climb End 1"
     }
   ],
   "rotationTargets": [
     {
       "waypointRelativePos": 1,
-      "rotationDegrees": 49.938105646801475
+      "rotationDegrees": 90.0
     }
   ],
   "constraintZones": [],
@@ -63,13 +79,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 61.38954033403473
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 61.31623759980989
   },
   "useDefaultConstraints": true
 }

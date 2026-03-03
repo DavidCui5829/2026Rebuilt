@@ -5,15 +5,15 @@
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "Right Trench to Neutral"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Depot Start"
-                }
-              },
               {
                 "type": "named",
                 "data": {
@@ -21,9 +21,9 @@
                 }
               },
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "speed up shooter"
+                  "pathName": "Intake Right"
                 }
               }
             ]
@@ -32,26 +32,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Shoot Depot Fuel"
+            "pathName": "Right Intake to Right Shoot"
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Control All Shooting"
-                }
-              }
-            ]
+            "name": "Control All Shooting"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Right Climb From Depot Shoot"
+            "pathName": "Right Shoot to Right Cimb"
           }
         },
         {
