@@ -154,13 +154,20 @@ public class Pushout extends SubsystemBase {
             Commands.waitSeconds(PushoutConstants.PUSHOUT_AGITATE_WAIT),
 
             runOnce(() -> {
-                PushoutRetractedAgitate -= 3.0;   // retract by 3 encoder each cycle
+                i = 1;
+                if (PushoutRetractedAgitate <= 3) {
 
-                if (PushoutRetractedAgitate <= 12) {
-                    PushoutRetractedAgitate = 22.0;   // reset
+
+                    PushoutRetractedAgitate -= 3.0;   // retract by 3 encoder each cycle
+                    if (i >= 4) {
+                        PushoutRetractedAgitate = 22.0;   // reset
+                    }
+                        
                 }
+                ++i; 
+
             })
-        ).finallyDo(interrupted -> RetractIntake());
+        ).finallyDo(interrupted -> PushIntake());
     }
     @Override
     public void periodic() {
