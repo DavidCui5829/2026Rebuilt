@@ -17,6 +17,9 @@ import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
+import com.ctre.phoenix.Util;
+import frc.robot.util.HubTracker;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as
@@ -120,6 +123,9 @@ public class Robot extends LoggedRobot {
     // robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    // Publish hub tracker status for all the robotPeriodics
+    // the hubtracker will pass to elastic.
+    HubTracker.SmartDashboardPublish("ignored", "ignored");
     if (Constants.USE_DRIVE_ONLY) {
       m_robotContainerDrive.logControllerInputs();
     } else if (Constants.USE_SHOOTER_ONLY) {

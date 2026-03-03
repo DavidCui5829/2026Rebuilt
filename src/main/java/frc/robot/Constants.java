@@ -131,8 +131,8 @@ public static final double LOOKAHEAD_MAX_SEC   = 0.5;
     public static final double PUSHOUT_RETRACTED_POS = 10.462;
     public static final double PUSHOUT_EXTENDED_POS = 25.5; // TUNE THIS!!!
 
-    public static final double PUSHOUT_RETRACTED_AGITATE_POS = 10.461; // encoder rotations
-    public static final double PUSHOUT_EXTENDED_AGITATE_POS = 18; // TUNE THIS!!!
+    public static final double PUSHOUT_RETRACTED_AGITATE_POS = 22; // encoder rotations
+    public static final double PUSHOUT_EXTENDED_AGITATE_POS = 25.5; // TUNE THIS!!!
 
     public static final double PUSHOUT_AGITATE_WAIT = 1;
   }

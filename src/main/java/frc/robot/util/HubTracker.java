@@ -196,15 +196,15 @@ public class HubTracker {
         AUTO_LOSER
     }
 
-    // --- Elastic publishing helpers ---
+    private static final ScheduledExecutorService ELASTIC_PUBLISHER = Executors.newSingleThreadScheduledExecutor();
+    public static final String SmartDashboard = null;
 
     /**
-     * Publish a single status document to an Elasticsearch index.
-     * elasticBaseUrl should be like "http://elasticsearch-host:9200" (no trailing slash).
-     * index is the index name to post to.
-     * Errors are reported to DriverStation as warnings.
+     * Publish the hub tracker status to SmartDashboard using putNumber/putString/putBoolean.
+     * The elasticBaseUrl and index parameters are ignored to preserve compatibility with call sites.
      */
-    public static void publishStatusToElastic(String elasticBaseUrl, String index) {
+    public static void publishStatusToElastic(@SuppressWarnings("unused") String elasticBaseUrl,
+                                              @SuppressWarnings("unused") String index) {
         try {
             Optional<Shift> current = getCurrentShift();
             Optional<Shift> next = getNextShift();
@@ -214,89 +214,46 @@ public class HubTracker {
             double matchTime = getMatchTime();
             Double timeRemaining = current.map(s -> s.endTime - matchTime).orElse(null);
 
-            String json = buildStatusJson(Instant.now().toString(), matchTime, current.orElse(null), timeRemaining,
-                    next.orElse(null), alliance.orElse(null), autoWinner.orElse(null), isActive());
-
-            String url = elasticBaseUrl + "/" + index + "/_doc";
-            sendJsonToElastic(json, url);
+            SmartDashboard.putNumber("HubTracker/match_time", matchTime);
+            SmartDashboard.putNumber("HubTracker/time_remaining_in_current_shift",
+                    timeRemaining == null ? Double.NaN : timeRemaining);
+            SmartDashboard.putString("HubTracker/current_shift", current.map(Enum::name).orElse("null"));
+            SmartDashboard.putString("HubTracker/next_shift", next.map(Enum::name).orElse("null"));
+            SmartDashboard.putString("HubTracker/alliance", alliance.map(Enum::name).orElse("null"));
+            SmartDashboard.putString("HubTracker/auto_winner", autoWinner.map(Enum::name).orElse("null"));
+            SmartDashboard.putBoolean("HubTracker/is_active", isActive());
         } catch (Exception e) {
-            DriverStation.reportWarning("Failed to publish HubTracker status to Elastic: " + e.getMessage(), false);
+            DriverStation.reportWarning("Failed to publish HubTracker status to SmartDashboard: " + e.getMessage(), false);
         }
     }
-
-    private static String buildStatusJson(String timestamp, double matchTime, Shift currentShift, Double timeRemaining,
-            Shift nextShift, Alliance alliance, Alliance autoWinner, boolean isActive) {
-        // Build a compact JSON string (no external dependency)
-        StringBuilder sb = new StringBuilder();
-        sb.append("{");
-        sb.append("\"timestamp\":\"").append(timestamp).append("\",");
-        sb.append("\"match_time\":").append(matchTime).append(",");
-        sb.append("\"current_shift\":").append(currentShift == null ? "null" : "\"" + currentShift.name() + "\"").append(",");
-        sb.append("\"time_remaining_in_current_shift\":").append(timeRemaining == null ? "null" : timeRemaining).append(",");
-        sb.append("\"next_shift\":").append(nextShift == null ? "null" : "\"" + nextShift.name() + "\"").append(",");
-        sb.append("\"alliance\":").append(alliance == null ? "null" : "\"" + alliance.name() + "\"").append(",");
-        sb.append("\"auto_winner\":").append(autoWinner == null ? "null" : "\"" + autoWinner.name() + "\"").append(",");
-        sb.append("\"is_active\":").append(isActive);
-        sb.append("}");
-        return sb.toString();
-    }
-
-    private static void sendJsonToElastic(String json, String urlString) throws IOException {
-        URL url = new URL(urlString);
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        try {
-            con.setRequestMethod("POST");
-            con.setDoOutput(true);
-            con.setRequestProperty("Content-Type", "application/json");
-            byte[] out = json.getBytes(StandardCharsets.UTF_8);
-            con.setFixedLengthStreamingMode(out.length);
-            con.connect();
-            try (OutputStream os = con.getOutputStream()) {
-                os.write(out);
-            }
-            int code = con.getResponseCode();
-            if (code < 200 || code >= 300) {
-                DriverStation.reportWarning("Elastic returned HTTP " + code + " for HubTracker publish", false);
-            }
-        } finally {
-            con.disconnect();
-        }
-    }
-
-    private static final ScheduledExecutorService ELASTIC_PUBLISHER = Executors.newSingleThreadScheduledExecutor();
 
     /**
-     * Start periodic publishing of hub tracker status to Elastic.
+     * Start periodic publishing of hub tracker status to SmartDashboard.
      * Returns a ScheduledFuture you can cancel to stop publishing.
-     * Example: startPeriodicPublishing("http://es:9200", "hubtracker", 5);
+     * Example: startPeriodicPublishing("ignored", "ignored", 5);
      */
     public static ScheduledFuture<?> startPeriodicPublishing(String elasticBaseUrl, String index, long periodSeconds) {
         return ELASTIC_PUBLISHER.scheduleAtFixedRate(() -> {
             try {
+                publishStatusToElastic(elasticBaseUrl, index);
+
+                // Also provide a compact human-readable status string
                 Optional<Shift> current = getCurrentShift();
                 Optional<Shift> next = getNextShift();
                 Optional<Alliance> alliance = DriverStation.getAlliance();
                 Optional<Alliance> autoWinner = getAutoWinner();
-
                 double matchTime = getMatchTime();
                 Double timeRemaining = current.map(s -> s.endTime - matchTime).orElse(null);
 
-                String json = buildStatusJson(Instant.now().toString(), matchTime, current.orElse(null), timeRemaining,
-                        next.orElse(null), alliance.orElse(null), autoWinner.orElse(null), isActive());
-
-                try {
-                    String url = elasticBaseUrl + "/" + index + "/_doc";
-                    sendJsonToElastic(json, url);
-
-                    // Simple pretty-print for SmartDashboard (shallow JSON)
-                    String pretty = json.replace("{", "{\n  ")
-                                        .replace("}", "\n}")
-                                        .replaceAll(",", ",\n  ");
-                    SmartDashboard.putString("HubTracker/status", pretty);
-                } catch (IOException e) {
-                    DriverStation.reportWarning("Failed to publish HubTracker status to Elastic: " + e.getMessage(), false);
-                    SmartDashboard.putString("HubTracker/status", json);
-                }
+                String status = String.format("t=%.2f cur=%s next=%s rem=%s ally=%s auto=%s active=%s",
+                        matchTime,
+                        current.map(Enum::name).orElse("null"),
+                        next.map(Enum::name).orElse("null"),
+                        timeRemaining == null ? "null" : String.format("%.2f", timeRemaining),
+                        alliance.map(Enum::name).orElse("null"),
+                        autoWinner.map(Enum::name).orElse("null"),
+                        isActive());
+                SmartDashboard.putString("HubTracker/status", status);
             } catch (Exception e) {
                 DriverStation.reportWarning("Failed to publish HubTracker status to SmartDashboard: " + e.getMessage(), false);
             }
@@ -308,5 +265,10 @@ public class HubTracker {
      */
     public static void stopPeriodicPublishing() {
         ELASTIC_PUBLISHER.shutdownNow();
+    }
+
+    public static void SmartDashboardPublish(String string, String string2) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'SmartDashboardPublish'");
     }
 }
