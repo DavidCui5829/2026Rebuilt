@@ -197,7 +197,6 @@ public class HubTracker {
     }
 
     private static final ScheduledExecutorService ELASTIC_PUBLISHER = Executors.newSingleThreadScheduledExecutor();
-    public static final String SmartDashboard = null;
 
     /**
      * Publish the hub tracker status to SmartDashboard using putNumber/putString/putBoolean.
@@ -265,10 +264,5 @@ public class HubTracker {
      */
     public static void stopPeriodicPublishing() {
         ELASTIC_PUBLISHER.shutdownNow();
-    }
-
-    public static void SmartDashboardPublish(String string, String string2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'SmartDashboardPublish'");
     }
 }

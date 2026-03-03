@@ -125,7 +125,6 @@ public class Robot extends LoggedRobot {
     CommandScheduler.getInstance().run();
     // Publish hub tracker status for all the robotPeriodics
     // the hubtracker will pass to elastic.
-    HubTracker.SmartDashboardPublish("ignored", "ignored");
     if (Constants.USE_DRIVE_ONLY) {
       m_robotContainerDrive.logControllerInputs();
     } else if (Constants.USE_SHOOTER_ONLY) {
