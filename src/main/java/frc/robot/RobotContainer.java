@@ -395,7 +395,8 @@ public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of Fue
 
     //  speedUpShooter.whileTrue(m_shooter.SpeedUpShooterCommand());
     
-    driverXbox.povDown().whileTrue(driveFieldOrientedDirectAngleKeyboard);  
+    driverXbox.povDown().whileTrue(drivebase.driveToPose(new Pose2d(new Translation2d(2.6, 3.379),
+         Rotation2d.fromDegrees(0))));  
     driverXbox.povUp().whileTrue(driveFieldOrientedDirectAngle).toggleOnFalse(driveFieldOrientedAnglularVelocity);
 
     // Swerve Drive Commands
