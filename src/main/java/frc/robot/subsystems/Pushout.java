@@ -154,7 +154,7 @@ public class Pushout extends SubsystemBase {
             Commands.waitSeconds(PushoutConstants.PUSHOUT_AGITATE_WAIT),
 
             runOnce(() -> {
-                i = 1;
+                int i = 1;
                 if (PushoutRetractedAgitate <= 3) {
 
 
