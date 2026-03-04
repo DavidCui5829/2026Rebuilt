@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.BuildConstants; // <---------- WISCONSIN???
+import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -35,6 +36,7 @@ public class Robot extends LoggedRobot {
   private RobotContainer m_robotContainer;
   private RobotContainerShooter m_robotContainerShooter;
   private RobotContainerDrive m_robotContainerDrive;
+  private SwerveSubsystem drivebase;
 
   private Timer disabledTimer;
 
@@ -80,6 +82,7 @@ public class Robot extends LoggedRobot {
    */
   @Override
   public void robotInit() {
+    drivebase.useMegaTag2 = false;
     // LimelightHelpers.SetIMUMode("limelight-bright", 1); // Seed internal IMU
     // LimelightHelpers.SetIMUMode("limelight-bleft", 1); // Seed internal IMU
     // LimelightHelpers.SetIMUMode("limelight-climber", 1); // Seed internal IMU
@@ -140,6 +143,7 @@ public class Robot extends LoggedRobot {
    */
   @Override
   public void disabledInit() {
+    drivebase.useMegaTag2 = false;
     // LimelightHelpers.SetIMUMode("limelight-bleft", 1); // Seed internal IMU
     // LimelightHelpers.SetIMUMode("limelight-bright", 1); // Seed internal IMU
     // LimelightHelpers.SetIMUMode("limelight-climber", 1); // Seed internal IMU
@@ -175,6 +179,7 @@ public class Robot extends LoggedRobot {
    */
   @Override
   public void autonomousInit() {
+    drivebase.useMegaTag2 = true;
     LimelightHelpers.SetThrottle("limelight-bleft", 0);
     LimelightHelpers.SetThrottle("limelight-bright", 0);
     LimelightHelpers.SetThrottle("limelight-climber", 0);
@@ -213,6 +218,7 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void teleopInit() {
+    drivebase.useMegaTag2 = true;
     LimelightHelpers.SetThrottle("limelight-bleft", 0);
     // LimelightHelpers.SetIMUMode("limelight-bleft", 4); // Use internal IMU + external IMU
     // // Set the complementary filter alpha (optional, default is 0.001)
