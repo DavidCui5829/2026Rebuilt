@@ -85,15 +85,18 @@ public final class Configs
 
                         PushoutMotorConfig.closedLoop
                         .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-                        .p(3.3)
-                        .i(0.004)
-                        .d(0.05)
+                        .p(0.002)
+                        .i(0.0)
+                        .d(0.0)
                         .outputRange(-1.0, 1.0)
+                         .feedForward
+                        .kS(0.10)
+                        .kV(0.003)
+                        .kA(0.0003);
+                        
+                        PushoutMotorConfig.closedLoop
                         .maxMotion
-                                .maxAcceleration(800000)
-                                .cruiseVelocity(800000)
-                                .allowedProfileError(0.1); // smooth extension
-                                
+                                .maxAcceleration(100000);                                
 
                         // PushoutRightMotorConfig.closedLoop
                         // .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
