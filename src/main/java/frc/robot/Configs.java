@@ -29,7 +29,7 @@ public final class Configs
                             .d(0)
                             .outputRange(-1, 1);
                         IntakeMotorConfig.closedLoop
-                        .maxMotion.maxAcceleration(10000);
+                        .maxMotion.maxAcceleration(1000000);
 
 
                         // IntakeRightMotorConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
@@ -90,8 +90,8 @@ public final class Configs
                         .d(0.05)
                         .outputRange(-1.0, 1.0)
                         .maxMotion
-                                .maxAcceleration(8000)
-                                .cruiseVelocity(8000)
+                                .maxAcceleration(800000)
+                                .cruiseVelocity(800000)
                                 .allowedProfileError(0.1); // smooth extension
                                 
 
