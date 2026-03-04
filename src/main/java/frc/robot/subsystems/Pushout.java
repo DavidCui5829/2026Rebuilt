@@ -162,7 +162,7 @@ public class Pushout extends SubsystemBase {
                     PushoutRetractedAgitate = 22.0;   // reset
                 }
             })
-        ).finallyDo(interrupted -> RetractIntake());
+        ).finallyDo(interrupted -> PushIntake());
     }
 
     @Override
