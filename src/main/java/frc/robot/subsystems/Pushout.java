@@ -134,27 +134,18 @@ public class Pushout extends SubsystemBase {
     }
 
     public Command PushCommand() {
-        PushoutMotor.configure(Configs.PushoutSubsystem.PushoutMotorConfig, ResetMode.kResetSafeParameters,
-                PersistMode.kNoPersistParameters);
-
         return this.runOnce(() -> PushIntake());
                 // .finallyDo(interrupted -> StopPushout())
                 
     }
 
     public Command RetractCommand() {
-        PushoutMotor.configure(Configs.PushoutSubsystem.PushoutMotorConfig, ResetMode.kResetSafeParameters,
-                PersistMode.kNoPersistParameters);
-
         return this.runOnce(() -> RetractIntake());
                 // .finallyDo(interrupted -> StopPushout())
                 
     }
 
     public Command AgitateCommand() {
-        PushoutMotor.configure(Configs.PushoutSubsystem.PushoutMotorConfig, ResetMode.kResetSafeParameters,
-                PersistMode.kNoPersistParameters);
-        
         Commands.waitSeconds(0.5);
         return Commands.sequence(
             runOnce(() -> SmallPush()),
@@ -172,14 +163,6 @@ public class Pushout extends SubsystemBase {
                 }
             })
         ).finallyDo(interrupted -> PushIntake());
-    }
-
-    public Command AgitatePullCommand() {
-        PushoutMotor.configure(Configs.PushoutSubsystem.PushoutMotorAgitateConfig, ResetMode.kResetSafeParameters,
-                PersistMode.kNoPersistParameters);
-        Commands.waitSeconds(0.5);
-        return this.runOnce(() -> RetractCommand());
-                // .finallyDo(interrupted -> StopPushout())
     }
 
     @Override
