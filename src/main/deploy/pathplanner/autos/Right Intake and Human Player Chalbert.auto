@@ -17,19 +17,6 @@
           }
         },
         {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "intake"
-                }
-              }
-            ]
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "Right Intake to Right Shoot"
@@ -50,7 +37,7 @@
         {
           "type": "named",
           "data": {
-            "name": "retract intake"
+            "name": "extend"
           }
         },
         {

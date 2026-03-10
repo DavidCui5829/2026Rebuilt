@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.579589661209968,
-        "y": 0.7751710706450176
+        "x": 4.676429418742587,
+        "y": 0.6189561091340454
       },
       "isLocked": false,
       "linkedName": "Right Trench Start Pos"
@@ -68,8 +68,8 @@
         "y": 3.907094977283923
       },
       "prevControl": {
-        "x": 7.78431066387699,
-        "y": 3.7159280357664164
+        "x": 8.442147093712931,
+        "y": 3.5992526690391458
       },
       "nextControl": null,
       "isLocked": false,
@@ -84,7 +84,19 @@
   ],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "intake",
+      "waypointRelativePos": 1.6737907761529824,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "intake"
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
