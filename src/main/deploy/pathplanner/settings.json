@@ -3,13 +3,10 @@
   "robotLength": 0.87,
   "holonomicMode": true,
   "pathFolders": [
-    "Idea",
-    "Idea2",
     "Test",
     "Week 3 Paths"
   ],
   "autoFolders": [
-    "Idea",
     "McAllen Climb Autos",
     "NoClimb",
     "Test"
