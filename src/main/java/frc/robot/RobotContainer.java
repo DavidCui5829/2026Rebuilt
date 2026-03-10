@@ -382,7 +382,7 @@ public class RobotContainer {
                     m_hopper.runHopperToShooterCommand(),
                     m_intake.runIntakeCommand(),
                     m_kicker.kickCommand(),
-                    m_pushout.AgitateCommand().repeatedly()))));
+                    m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(2.5)).repeatedly()))));
 
 
     // Hopper Commands
