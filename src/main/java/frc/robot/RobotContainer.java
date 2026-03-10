@@ -255,6 +255,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("test", Commands.print("I EXIST"));
 
     // pushout
+    NamedCommands.registerCommand("extend", m_pushout.PushCommand());
     NamedCommands.registerCommand("extend and intake",
         Commands.parallel(m_pushout.PushCommand(), m_intake.runIntakeCommand()).withTimeout(4));
     NamedCommands.registerCommand("retract intake", m_pushout.RetractCommand().withTimeout(4));
