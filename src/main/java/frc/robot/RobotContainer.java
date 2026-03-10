@@ -352,13 +352,15 @@ public class RobotContainer {
     // ======================================
     
    
-      ControlAllShooting shootCmd = makeVariableShoot();
+     
 
     // ======= Driver =======
     // transfer + kick + shoot/pass command, switches based on zone
     RTtransfer_kick_shoot.whileTrue(
-            // In alliance zone → shoot at hub
-             Commands.parallel(
+      
+      Commands.defer(() -> { // In alliance zone → shoot at hub
+         ControlAllShooting shootCmd = makeVariableShoot();    
+        return Commands.parallel(
                 shootCmd,
                 Commands.sequence(
                       Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
@@ -368,7 +370,7 @@ public class RobotContainer {
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(2.5)).repeatedly(),
                         m_intake.runIntakeCommand())))
-                .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
+                .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1));}, java.util.Collections.emptySet()));
 
     LT_shootFuel.whileTrue(
         Commands.parallel(
