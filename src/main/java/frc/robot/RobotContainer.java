@@ -97,6 +97,8 @@ public class RobotContainer {
         m_shooter, drivebase.getPose());
   }
 
+   ControlAllShooting shootCmd = makeVariableShoot();
+
   public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of FuelSim
 
   // Establish a Sendable Chooser that will be able to be sent to the
@@ -255,6 +257,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("test", Commands.print("I EXIST"));
 
     // pushout
+    NamedCommands.registerCommand("extend", m_pushout.PushCommand());
     NamedCommands.registerCommand("extend and intake",
         Commands.parallel(m_pushout.PushCommand(), m_intake.runIntakeCommand()).withTimeout(4));
     NamedCommands.registerCommand("retract intake", m_pushout.RetractCommand().withTimeout(4));
@@ -347,24 +350,24 @@ public class RobotContainer {
     // ======================================
     // ====================================== ALL CONTROLS
     // ======================================
-    ControlAllShooting shootCmd = makeVariableShoot();
+    
+   
 
     // ======= Driver =======
     // transfer + kick + shoot/pass command, switches based on zone
     RTtransfer_kick_shoot.whileTrue(
             // In alliance zone → shoot at hub
-
             Commands.parallel(
                 shootCmd,
                 Commands.sequence(
-                    Commands.waitUntil(shootCmd::isCASAtSpeed),
+                      Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
+                        && driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
                     Commands.parallel(
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand().repeatedly(),
-                        m_intake.runIntakeCommand())
-                        .onlyIf(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)))))
-                .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1));
+                        m_intake.runIntakeCommand())))
+                .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
 
     LT_shootFuel.whileTrue(
         Commands.parallel(

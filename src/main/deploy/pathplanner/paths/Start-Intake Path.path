@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.773433111288259,
-        "y": 7.398158810942165
+        "x": 3.8427534388965907,
+        "y": 7.410385087663733
       },
       "isLocked": false,
       "linkedName": null
@@ -20,34 +20,78 @@
         "y": 7.400734939759036
       },
       "prevControl": {
-        "x": 5.7285728308180826,
-        "y": 7.44177817997071
+        "x": 5.732616829835638,
+        "y": 7.461255661710713
       },
       "nextControl": {
-        "x": 6.376344458395697,
-        "y": 7.333968789567855
+        "x": 6.99035166515956,
+        "y": 7.1474454762845285
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.713637660485022,
-        "y": 6.7974037089871615
+        "x": 7.826745468073593,
+        "y": 6.906133939844877
       },
       "prevControl": {
-        "x": 7.461711624205091,
-        "y": 6.86734164833322
+        "x": 7.452994687756443,
+        "y": 7.211064227457387
+      },
+      "nextControl": {
+        "x": 8.159899933164619,
+        "y": 6.634324776601407
+      },
+      "isLocked": false,
+      "linkedName": "Start Path"
+    },
+    {
+      "anchor": {
+        "x": 8.5079802251663,
+        "y": 5.249176761320566
+      },
+      "prevControl": {
+        "x": 8.492207212435568,
+        "y": 5.498678689307899
+      },
+      "nextControl": {
+        "x": 8.523753237897031,
+        "y": 4.999674833333233
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.211223268351615,
+        "y": 3.4771253740382067
+      },
+      "prevControl": {
+        "x": 8.257696926878472,
+        "y": 3.7227677951774085
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Start Path"
+      "linkedName": "Intake End 1"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "intake",
+      "waypointRelativePos": 1.9238995016611298,
+      "endWaypointRelativePos": 3.0,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "intake"
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -64,7 +108,7 @@
   "folder": "Week 3 Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

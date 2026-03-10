@@ -3,14 +3,12 @@
   "robotLength": 0.87,
   "holonomicMode": true,
   "pathFolders": [
-    "Idea",
-    "Idea2",
-    "Week 3 Paths",
-    "Test"
+    "Test",
+    "Week 3 Paths"
   ],
   "autoFolders": [
-    "Idea",
     "McAllen Climb Autos",
+    "NoClimb",
     "Test"
   ],
   "defaultMaxVel": 3.0,
@@ -19,14 +17,14 @@
   "defaultMaxAngAccel": 720.0,
   "defaultNominalVoltage": 12.0,
   "robotMass": 52.1631,
-  "robotMOI": 6.883,
+  "robotMOI": 4.09,
   "robotTrackwidth": 0.6223,
   "driveWheelRadius": 0.0381,
   "driveGearing": 5.08,
   "maxDriveSpeed": 5.0,
   "driveMotorType": "vortex",
-  "driveCurrentLimit": 40.0,
-  "wheelCOF": 0.8,
+  "driveCurrentLimit": 50.0,
+  "wheelCOF": 1.1,
   "flModuleX": 0.2937,
   "flModuleY": 0.2937,
   "frModuleX": 0.2937,

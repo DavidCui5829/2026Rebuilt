@@ -11,19 +11,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Depot Start"
+                  "pathName": "Right Start to Human Player"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "extend and intake"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "speed up shooter"
+                  "name": "extend"
                 }
               }
             ]
@@ -32,38 +26,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Shoot Depot Fuel"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Control All Shooting"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Left Climb From Depot Shoot"
+            "pathName": "Human Player Shoot"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "climb up"
+            "name": "aim at hub"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Control All Shooting"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "McAllen Climb Autos",
+  "folder": "NoClimb",
   "choreoAuto": false
 }

@@ -121,6 +121,8 @@ public class Shooter extends SubsystemBase {
         return Math.abs(avgShooterRPM - ShooterConstants.SHOOTER_SPEED) <= ShooterConstants.ERROR_MARGIN;
     }
 
+    
+
     public double getRPM() {
 
         return (shooterLeft1Encoder.getVelocity() + shooterLeft2Encoder.getVelocity()

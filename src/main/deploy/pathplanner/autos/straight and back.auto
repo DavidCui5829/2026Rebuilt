@@ -7,25 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Drive to Hub"
+            "pathName": "Straight"
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "aim at hub"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Control All Shooting"
+            "pathName": "back"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Test",
   "choreoAuto": false
 }

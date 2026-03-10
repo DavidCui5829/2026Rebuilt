@@ -5,28 +5,15 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Right Trench to Neutral"
+            "name": "extend"
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "extend and intake"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Intake Right"
-                }
-              }
-            ]
+            "pathName": "Right Trench to Neutral"
           }
         },
         {
@@ -38,13 +25,19 @@
         {
           "type": "named",
           "data": {
+            "name": "aim at hub"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "Control All Shooting"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "retract intake"
+            "name": "extend"
           }
         },
         {
@@ -62,25 +55,19 @@
         {
           "type": "named",
           "data": {
-            "name": "Control All Shooting"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Human Player Shoot to Right Climb"
+            "name": "aim at hub"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "climb up"
+            "name": "Control All Shooting"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "McAllen Climb Autos",
+  "folder": "NoClimb",
   "choreoAuto": false
 }

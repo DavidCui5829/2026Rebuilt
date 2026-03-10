@@ -5,15 +5,27 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Right Start to Human Player"
+            "name": "extend"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Human Player Shoot"
+            "pathName": "Start-Intake Path"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Trench to Shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aim at hub"
           }
         },
         {
@@ -23,21 +35,15 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "Human Player Shoot to Right Climb"
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "climb up"
+            "name": "extend"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "McAllen Climb Autos",
+  "folder": "NoClimb",
   "choreoAuto": false
 }
