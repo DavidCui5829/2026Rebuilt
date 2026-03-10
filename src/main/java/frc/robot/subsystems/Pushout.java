@@ -116,16 +116,16 @@ public class Pushout extends SubsystemBase {
     // PushoutRightController.setSetpoint(0, ControlType.kMAXMotionPositionControl);
     // }
 
-    public Command homing(double threshold)
+    public Command HomingCommand(double threshold)
     {
-        Debouncer currentDebouncer = new Debouncer(0.1);
+        Debouncer currentDebouncer = new Debouncer(0.2);
 
 
-        double runAmps = 1;
+        double velocity = 1000;
 
 
-        return new RunCommand(() -> PushoutController.setSetpoint(runAmps, ControlType.kCurrent), this)
-                .until(() -> currentDebouncer.calculate((PushoutMotor.getOutputCurrent() >= threshold)))
+        return new RunCommand(() -> PushoutController.setSetpoint(velocity, ControlType.kCurrent), this)
+                .until(() -> currentDebouncer.calculate((PushoutMotor.getEncoder().getVelocity() >= threshold)))
                 .finallyDo(() ->
                 {
                     StopPushout();
