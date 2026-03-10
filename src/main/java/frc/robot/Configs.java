@@ -16,7 +16,7 @@ public final class Configs
 
                 static {
 
-                        IntakeMotorConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
+                        IntakeMotorConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(60).voltageCompensation(12);
                         // IntakeRightMotorConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
 
 
@@ -120,8 +120,8 @@ public final class Configs
                 public static final SparkFlexConfig kickerRightMotorConfig = new SparkFlexConfig();
 
                         static {
-                                kickerLeftMotorConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40).voltageCompensation(12);
-                                kickerRightMotorConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40).voltageCompensation(12).follow(13,true);
+                                kickerLeftMotorConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(60).voltageCompensation(12);
+                                kickerRightMotorConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(60).voltageCompensation(12).follow(13,true);
                                 
                                 kickerLeftMotorConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                                 // Set PID values for position control. We don't need to pass a closed
@@ -165,12 +165,12 @@ public final class Configs
                         static {
 
 
-                                ShooterRightMotor1Config.idleMode(IdleMode.kCoast).smartCurrentLimit(40).voltageCompensation(12);
-                                ShooterRightMotor2Config.idleMode(IdleMode.kCoast).smartCurrentLimit(40).voltageCompensation(12)
+                                ShooterRightMotor1Config.idleMode(IdleMode.kCoast).smartCurrentLimit(45).voltageCompensation(12);
+                                ShooterRightMotor2Config.idleMode(IdleMode.kCoast).smartCurrentLimit(45).voltageCompensation(12)
                                 .follow(11, true);
                                 
-                                ShooterLeftMotor1Config.idleMode(IdleMode.kCoast).smartCurrentLimit(40).voltageCompensation(12);
-                                ShooterLeftMotor2Config.idleMode(IdleMode.kCoast).smartCurrentLimit(40).voltageCompensation(12)
+                                ShooterLeftMotor1Config.idleMode(IdleMode.kCoast).smartCurrentLimit(45).voltageCompensation(12);
+                                ShooterLeftMotor2Config.idleMode(IdleMode.kCoast).smartCurrentLimit(45).voltageCompensation(12)
                                 .follow(9, true);
                                 
                                 
@@ -250,8 +250,8 @@ public final class Configs
 
                 static {
 
-                        TwindexerRightControllerConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12).follow(15, true);
-                        TwindexerLeftControllerConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
+                        TwindexerRightControllerConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(60).voltageCompensation(12).follow(15, true);
+                        TwindexerLeftControllerConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(60).voltageCompensation(12);
 
                         TwindexerRightControllerConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                             // Set PID values for  position control. We don't need to pass a closed
