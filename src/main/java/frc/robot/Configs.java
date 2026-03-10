@@ -76,7 +76,7 @@ public final class Configs
         public static final class PushoutSubsystem {
 
             public static final SparkFlexConfig PushoutMotorConfig = new SparkFlexConfig();
-            public static final SparkFlexConfig PushoutMotorAgitateConfig = new SparkFlexConfig();
+        //     public static final SparkFlexConfig PushoutMotorAgitateConfig = new SparkFlexConfig();
             // public static final SparkFlexConfig PushoutRightMotorConfig = new SparkFlexConfig();
 
 
@@ -97,19 +97,19 @@ public final class Configs
                                 .cruiseVelocity(10000)
                                 .maxAcceleration(10000);   
                         
-                        PushoutMotorAgitateConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40).voltageCompensation(12);
-                        PushoutMotorAgitateConfig.closedLoop
-                        .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-                        .p(3.3)
-                        .i(0.0)
-                        .d(0.001)
-                        .outputRange(-1.0, 1.0);
+                        // PushoutMotorAgitateConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40).voltageCompensation(12);
+                        // PushoutMotorAgitateConfig.closedLoop
+                        // .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                        // .p(3.3)
+                        // .i(0.0)
+                        // .d(0.001)
+                        // .outputRange(-1.0, 1.0);
 
-                        PushoutMotorAgitateConfig.closedLoop
-                        .maxMotion
-                                .allowedProfileError(0.5)
-                                .cruiseVelocity(3000)
-                                .maxAcceleration(10000);   
+                        // PushoutMotorAgitateConfig.closedLoop
+                        // .maxMotion
+                        //         .allowedProfileError(0.5)
+                        //         .cruiseVelocity(3000)
+                        //         .maxAcceleration(10000);   
                         
                 }
 
