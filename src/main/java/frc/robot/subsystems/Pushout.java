@@ -146,7 +146,7 @@ public class Pushout extends SubsystemBase {
     }
 
     public Command AgitateCommand() {
-        Commands.waitSeconds(0.5);
+        Commands.waitSeconds(2.5);
         return Commands.sequence(
             runOnce(() -> SmallPush()),
             Commands.waitSeconds(PushoutConstants.PUSHOUT_AGITATE_WAIT),
