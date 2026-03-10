@@ -97,6 +97,8 @@ public class RobotContainer {
         m_shooter, drivebase.getPose());
   }
 
+   ControlAllShooting shootCmd = makeVariableShoot();
+
   public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of FuelSim
 
   // Establish a Sendable Chooser that will be able to be sent to the
@@ -349,7 +351,7 @@ public class RobotContainer {
     // ====================================== ALL CONTROLS
     // ======================================
     
-    ControlAllShooting shootCmd = makeVariableShoot();
+   
 
     // ======= Driver =======
     // transfer + kick + shoot/pass command, switches based on zone
@@ -358,13 +360,13 @@ public class RobotContainer {
             Commands.parallel(
                 shootCmd,
                 Commands.sequence(
-                    Commands.waitUntil(shootCmd::isCASAtSpeed),
+                      Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
+                        && driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
                     Commands.parallel(
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand().repeatedly(),
-                        m_intake.runIntakeCommand())
-                        .onlyIf(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)))))
+                        m_intake.runIntakeCommand())))
                 .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
 
     LT_shootFuel.whileTrue(
