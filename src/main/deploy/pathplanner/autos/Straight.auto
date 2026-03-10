@@ -9,11 +9,17 @@
           "data": {
             "pathName": "Straight"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aim at hub"
+          }
         }
       ]
     }
   },
-  "resetOdom": true,
+  "resetOdom": false,
   "folder": "Test",
   "choreoAuto": false
 }
