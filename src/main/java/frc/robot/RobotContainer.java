@@ -347,15 +347,14 @@ public class RobotContainer {
     // ======================================
     // ====================================== ALL CONTROLS
     // ======================================
+    ControlAllShooting shootCmd = makeVariableShoot();
 
     // ======= Driver =======
     // transfer + kick + shoot/pass command, switches based on zone
     RTtransfer_kick_shoot.whileTrue(
-        Commands.defer(() -> {
-          if (isInAllianceZone()) {
             // In alliance zone → shoot at hub
-            ControlAllShooting shootCmd = makeVariableShoot();
-            return Commands.parallel(
+
+            Commands.parallel(
                 shootCmd,
                 Commands.sequence(
                     Commands.waitUntil(shootCmd::isCASAtSpeed),
@@ -366,22 +365,21 @@ public class RobotContainer {
                         m_intake.runIntakeCommand())
                         .onlyIf(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)))))
                 .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1));
-          } else {
-            // Outside alliance zone → pass to ferry
-            ControllAllPassing passCmd = makeVariablePass();
-            return Commands.parallel(
-                passCmd,
-                Commands.sequence(
-                    Commands.waitUntil(passCmd::isCASAtSpeed),
-                    Commands.parallel(
-                        m_hopper.runHopperToShooterCommand(),
-                        m_kicker.kickCommand(),
-                        m_pushout.AgitateCommand().repeatedly(),
-                        m_intake.runIntakeCommand())
-                        .onlyIf(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)))))
-                .finallyDo(() -> m_shooter.setTargetRPMCommand(passCmd.RecordedidealHorizontalSpeed).withTimeout(1));
-          }
-        }, java.util.Collections.emptySet()));
+
+    LT_shootFuel.whileTrue(
+        Commands.parallel(
+            // keep running the VariableShoot command while we wait for the shooter to reach
+            // speed
+            m_shooter.shootFuelCommand(),
+
+            // once at speed, run hopper + kicker
+            Commands.sequence(
+                Commands.waitUntil(m_shooter::isShooterFast),
+                Commands.parallel(
+                    m_hopper.runHopperToShooterCommand(),
+                    m_kicker.kickCommand(),
+                    m_pushout.AgitateCommand().repeatedly()))));
+
 
     // Hopper Commands
     PRtransfer.whileTrue(Commands.parallel(m_hopper.runHopperToShooterCommand(), m_kicker.kickCommand()));
@@ -413,19 +411,6 @@ public class RobotContainer {
 
     // Shooter Commands
     // transfer + kick + shoot command, only runs if the shooter is up to speed
-    LT_shootFuel.whileTrue(
-        Commands.parallel(
-            // keep running the VariableShoot command while we wait for the shooter to reach
-            // speed
-            m_shooter.shootFuelCommand(),
-
-            // once at speed, run hopper + kicker
-            Commands.sequence(
-                Commands.waitUntil(m_shooter::isShooterFast),
-                Commands.parallel(
-                    m_hopper.runHopperToShooterCommand(),
-                    m_kicker.kickCommand(),
-                    m_pushout.AgitateCommand().repeatedly()))));
 
     // ======== Operator ========
     // shooter
