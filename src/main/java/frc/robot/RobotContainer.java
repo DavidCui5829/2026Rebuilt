@@ -348,13 +348,13 @@ public class RobotContainer {
     // ======================================
     // ====================================== ALL CONTROLS
     // ======================================
+    
     ControlAllShooting shootCmd = makeVariableShoot();
 
     // ======= Driver =======
     // transfer + kick + shoot/pass command, switches based on zone
     RTtransfer_kick_shoot.whileTrue(
             // In alliance zone → shoot at hub
-
             Commands.parallel(
                 shootCmd,
                 Commands.sequence(
