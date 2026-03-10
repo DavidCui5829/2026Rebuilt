@@ -364,7 +364,7 @@ public class RobotContainer {
                         m_pushout.AgitateCommand().repeatedly(),
                         m_intake.runIntakeCommand())
                         .onlyIf(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)))))
-                .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1));
+                .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
 
     LT_shootFuel.whileTrue(
         Commands.parallel(
