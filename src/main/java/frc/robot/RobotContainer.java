@@ -380,6 +380,7 @@ public class RobotContainer {
                 Commands.waitUntil(m_shooter::isShooterFast),
                 Commands.parallel(
                     m_hopper.runHopperToShooterCommand(),
+                    m_intake.runIntakeCommand(),
                     m_kicker.kickCommand(),
                     m_pushout.AgitateCommand().repeatedly()))));
 
