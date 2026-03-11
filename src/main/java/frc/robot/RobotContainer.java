@@ -121,7 +121,7 @@ public class RobotContainer {
       // .aimLock(Angle.ofBaseUnits(1, Degrees))
       .aimWhile(driverXbox.rightTrigger())
       // .aimWhile(driverXbox.leftTrigger())
-      .aimLookahead(Time.ofBaseUnits(computeDynamicLookaheadSeconds(), Seconds))
+      .aimLookahead(Time.ofBaseUnits(0, Seconds))
       .aimFeedforward(0.0001, 0.0001, 0.00013)
 
   ;
@@ -175,7 +175,7 @@ public class RobotContainer {
       .withControllerRotationAxis(() -> 0.0)
       .aim(Constants.DrivebaseConstants.getHubPose2D())
       .aimWhile(true)
-      .aimLookahead(Time.ofBaseUnits(computeDynamicLookaheadSeconds(), Seconds))
+      .aimLookahead(Time.ofBaseUnits(0, Seconds))
       .aimFeedforward(0.0001, 0.0001, 0.00013);
 
   SwerveInputStream aimAtFerryStream = SwerveInputStream.of(drivebase.getSwerveDrive(),
@@ -183,7 +183,7 @@ public class RobotContainer {
       .withControllerRotationAxis(() -> 0.0)
       .aim(Constants.DrivebaseConstants.getFerryPose(drivebase.getPose().getTranslation()))
       .aimWhile(true)
-      .aimLookahead(Time.ofBaseUnits(computeDynamicLookaheadSeconds(), Seconds))
+      .aimLookahead(Time.ofBaseUnits(0, Seconds))
       .aimFeedforward(0.0001, 0.0001, 0.00013);
   // ========= DRIVER TRIGGERS ===========
   // Parallel Commands
