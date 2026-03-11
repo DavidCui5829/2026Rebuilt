@@ -7,7 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.BuildConstants; // <---------- WISCONSIN???
-import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+// import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -144,11 +144,14 @@ public class Robot extends LoggedRobot {
   @Override
   public void disabledInit() {
     if (!Constants.USE_DRIVE_ONLY && !Constants.USE_SHOOTER_ONLY) {
-      m_robotContainer.setUseMegaTag2(false); // Use MT1 during disabled to calibrate heading
+      m_robotContainer.setUseMegaTag2(true); // Use MT1 during disabled to calibrate heading
     }
-    // LimelightHelpers.SetIMUMode("limelight-bleft", 1); // Seed internal IMU
-    // LimelightHelpers.SetIMUMode("limelight-bright", 1); // Seed internal IMU
-    // LimelightHelpers.SetIMUMode("limelight-climber", 1); // Seed internal IMU
+    LimelightHelpers.SetIMUMode("limelight-bleft", 1); // Seed internal IMU
+    LimelightHelpers.SetIMUMode("limelight-bright", 1); // Seed internal IMU
+    LimelightHelpers.SetIMUMode("limelight-climber", 1); // Seed internal IMU 
+    LimelightHelpers.SetThrottle("limelight-bleft", 200);
+    LimelightHelpers.SetThrottle("limelight-bright", 200);
+    LimelightHelpers.SetThrottle("limelight-climber", 200);
     if (Constants.USE_DRIVE_ONLY) {
       m_robotContainerDrive.setMotorBrake(true);
     } else if (!Constants.USE_SHOOTER_ONLY) {
@@ -156,9 +159,7 @@ public class Robot extends LoggedRobot {
     }
     disabledTimer.reset();
     disabledTimer.start();
-    LimelightHelpers.SetThrottle("limelight-bleft", 200);
-    LimelightHelpers.SetThrottle("limelight-bright", 200);
-    LimelightHelpers.SetThrottle("limelight-climber", 200);
+   
   }
 
   @Override
@@ -187,13 +188,13 @@ public class Robot extends LoggedRobot {
     LimelightHelpers.SetThrottle("limelight-bleft", 0);
     LimelightHelpers.SetThrottle("limelight-bright", 0);
     LimelightHelpers.SetThrottle("limelight-climber", 0);
-    // LimelightHelpers.SetIMUMode("limelight-bleft", 4); // Use internal IMU + external IMU
-    // LimelightHelpers.SetIMUMode("limelight-bright", 4); // Use internal IMU + external IMU
-    // LimelightHelpers.SetIMUMode("limelight-climber", 4); // Use internal IMU + external IMU
+    LimelightHelpers.SetIMUMode("limelight-bleft", 4); // Use internal IMU + external IMU
+    LimelightHelpers.SetIMUMode("limelight-bright", 4); // Use internal IMU + external IMU
+    LimelightHelpers.SetIMUMode("limelight-climber", 4); // Use internal IMU + external IMU
     // // Set the complementary filter alpha (optional, default is 0.001)
-    // LimelightHelpers.SetIMUAssistAlpha("limelight-bleft", 0.001);
-    // LimelightHelpers.SetIMUAssistAlpha("limelight-bright", 0.001);
-    // LimelightHelpers.SetIMUAssistAlpha("limelight-climber", 0.001);
+    LimelightHelpers.SetIMUAssistAlpha("limelight-bleft", 0.001);
+    LimelightHelpers.SetIMUAssistAlpha("limelight-bright", 0.001);
+    LimelightHelpers.SetIMUAssistAlpha("limelight-climber", 0.001);
     if (Constants.USE_DRIVE_ONLY) {
       m_robotContainerDrive.setMotorBrake(true);
       m_autonomousCommand = m_robotContainerDrive.getAutonomousCommand();
@@ -226,17 +227,17 @@ public class Robot extends LoggedRobot {
       m_robotContainer.setUseMegaTag2(true); // Switch to MT2 for accurate x/y with calibrated gyro
     }
     LimelightHelpers.SetThrottle("limelight-bleft", 0);
-    // LimelightHelpers.SetIMUMode("limelight-bleft", 4); // Use internal IMU + external IMU
+    LimelightHelpers.SetIMUMode("limelight-bleft", 4); // Use internal IMU + external IMU
     // // Set the complementary filter alpha (optional, default is 0.001)
-    // LimelightHelpers.SetIMUAssistAlpha("limelight-bleft", 0.001);
+    LimelightHelpers.SetIMUAssistAlpha("limelight-bleft", 0.001);
     LimelightHelpers.SetThrottle("limelight-bright", 0);
-    // LimelightHelpers.SetIMUMode("limelight-bright", 4); // Use internal IMU + external IMU
+    LimelightHelpers.SetIMUMode("limelight-bright", 4); // Use internal IMU + external IMU
     // // Set the complementary filter alpha (optional, default is 0.001)
-    // LimelightHelpers.SetIMUAssistAlpha("limelight-bright", 0.001);
+    LimelightHelpers.SetIMUAssistAlpha("limelight-bright", 0.001);
     LimelightHelpers.SetThrottle("limelight-climber", 0);
-    // LimelightHelpers.SetIMUMode("limelight-climber", 4); // Use internal IMU + external IMU
+    LimelightHelpers.SetIMUMode("limelight-climber", 4); // Use internal IMU + external IMU
     // // Set the complementary filter alpha (optional, default is 0.001)
-    // LimelightHelpers.SetIMUAssistAlpha("limelight-climber", 0.001);
+    LimelightHelpers.SetIMUAssistAlpha("limelight-climber", 0.001);
 
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
