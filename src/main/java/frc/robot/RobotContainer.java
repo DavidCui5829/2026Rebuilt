@@ -267,14 +267,19 @@ public class RobotContainer {
     NamedCommands.registerCommand("kick backwards", m_kicker.kickBackwardsCommand().withTimeout(8));
 
     // shooter
-    NamedCommands.registerCommand("Control All Shooting", Commands.defer(() -> {
-      ControlAllShooting shootCmd = makeVariableShoot();
-      return Commands.parallel(
-          shootCmd,
-          m_hopper.runHopperToShooterCommand().onlyIf(shootCmd::isCASAtSpeed),
-          m_kicker.kickCommand().onlyIf(shootCmd::isCASAtSpeed),
-          m_pushout.AgitateCommand().repeatedly()).onlyIf(shootCmd::isCASAtSpeed);
-    }, java.util.Collections.emptySet()).withTimeout(8));
+    NamedCommands.registerCommand("Control All Shooting",  Commands.defer(() -> { // In alliance zone → shoot at hub
+         ControlAllShooting shootCmd = makeVariableShoot();    
+        return Commands.parallel(
+                shootCmd,
+                Commands.sequence(
+                      Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
+                        && driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
+                    Commands.parallel(
+                        m_hopper.runHopperToShooterCommand(),
+                        m_kicker.kickCommand(),
+                        m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(2.5)).repeatedly(),
+                        m_intake.runIntakeCommand()).onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees))))
+                .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));}, java.util.Collections.emptySet()).withTimeout(6));
     NamedCommands.registerCommand("speed up shooter", m_shooter.SpeedUpShooterCommand().withTimeout(15));
     // NamedCommands.registerCommand("aim at hub", drivebase.aimAtPose(Constants.DrivebaseConstants.getHubPose2D()));
     // NamedCommands.registerCommand("aim at ferry",
