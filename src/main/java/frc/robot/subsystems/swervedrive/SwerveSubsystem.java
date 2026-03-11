@@ -164,20 +164,20 @@ public class SwerveSubsystem extends SubsystemBase {
     Logger.recordOutput("Drive/GyroRotation3d", swerveDrive.getGyroRotation3d());
 
     // Yaw rate estimate (deg/sec); near zero when driving straight.
-    double now = Timer.getFPGATimestamp();
-    double yawRad = swerveDrive.getYaw().getRadians();
-    double dt = now - lastYawTimeSec;
-    double yawRateDegPerSec = 0.0;
-    if (dt > 1e-3) {
-      yawRateDegPerSec = Units.radiansToDegrees((yawRad - lastYawRadians) / dt);
-      lastYawRadians = yawRad;
-      lastYawTimeSec = now;
-    } else if (lastYawTimeSec == 0.0) {
-      // Initialize on first loop.
-      lastYawRadians = yawRad;
-      lastYawTimeSec = now;
-    }
-    Logger.recordOutput("Drive/YawRateDegPerSec", yawRateDegPerSec);
+    // double now = Timer.getFPGATimestamp();
+    // double yawRad = swerveDrive.getYaw().getRadians();
+    // double dt = now - lastYawTimeSec;
+    // double yawRateDegPerSec = 0.0;
+    // if (dt > 1e-3) {
+    //   yawRateDegPerSec = Units.radiansToDegrees((yawRad - lastYawRadians) / dt);
+    //   lastYawRadians = yawRad;
+    //   lastYawTimeSec = now;
+    // } else if (lastYawTimeSec == 0.0) {
+    //   // Initialize on first loop.
+    //   lastYawRadians = yawRad;
+    //   lastYawTimeSec = now;
+    // }
+    // Logger.recordOutput("Drive/YawRateDegPerSec", yawRateDegPerSec);
 
     ChassisSpeeds robotVel = getRobotVelocity();
     ChassisSpeeds fieldVel = getFieldVelocity();

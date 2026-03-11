@@ -120,8 +120,8 @@ public final class Configs
                 public static final SparkFlexConfig kickerRightMotorConfig = new SparkFlexConfig();
 
                         static {
-                                kickerLeftMotorConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(45).voltageCompensation(12);
-                                kickerRightMotorConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(45).voltageCompensation(12).follow(13,true);
+                                kickerLeftMotorConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(55).voltageCompensation(12);
+                                kickerRightMotorConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(55).voltageCompensation(12).follow(13,true);
                                 
                                 kickerLeftMotorConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                                 // Set PID values for position control. We don't need to pass a closed
