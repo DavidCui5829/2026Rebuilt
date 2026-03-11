@@ -71,7 +71,7 @@ public class SwerveSubsystem extends SubsystemBase {
   // Track yaw over time to estimate yaw rate for logs.
   private double lastYawRadians = 0.0;
   private double lastYawTimeSec = 0.0;
-  public boolean useMegaTag2 = false; // MT1 during disabled, MT2 during auto/teleop
+  public boolean useMegaTag2 = true; // MT1 during disabled, MT2 during auto/teleop
 
   /**
    * Initialize {@link SwerveDrive} with the directory provided.
