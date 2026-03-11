@@ -157,8 +157,8 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
     public static final int KICKER_LEFT_ID = 13;
     public static final int KICKER_RIGHT_ID = 14;
 
-    public static final double KICKER_REVERSE_RPM_TARGET = -6000; // RPM
-    public static final double KICKER_RPM_TARGET = 6000; // RPM
+    public static final double KICKER_REVERSE_RPM_TARGET = -10000; // RPM
+    public static final double KICKER_RPM_TARGET = 10000; // RPM
 
     public static final double STOP = 0;
     public static final double IDLE = 0; // % voltage -1 --> 1
@@ -172,8 +172,8 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
     public static final double TWINDEXER_RIGHT_RPM = -0.8;
     public static final double TWINDEXER_LEFT_RPM = 0.8;
 
-    public static final double REVERSE_TWINDEXER_RIGHT_RPM = -4000;
-    public static final double REVERSE_TWINDEXER_LEFT_RPM = 4000;
+    public static final double REVERSE_TWINDEXER_RIGHT_RPM = -9000;
+    public static final double REVERSE_TWINDEXER_LEFT_RPM = 9000;
 
     public static final int six_seven = 67; // <---------- HISTORICAL MONUMENT
 
