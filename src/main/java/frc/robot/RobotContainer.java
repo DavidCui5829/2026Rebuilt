@@ -106,6 +106,8 @@ public class RobotContainer {
   private final SendableChooser<Command> autoChooser;
   private LoggedDashboardChooser<Command> loggedAutoChooser;
 
+  
+
   /**
    * Converts driver input into a field-relative ChassisSpeeds that is controlled
    * by angular velocity.
@@ -228,8 +230,10 @@ public class RobotContainer {
   private final Trigger POVLEFT_OP_agitate = operatorXbox.povLeft(); // agitate
 
   // Climber
-  private final Trigger POVUP_OP_climb = operatorXbox.povUp(); // climb
-  private final Trigger POVDown_OP_decend = operatorXbox.povDown(); // decend
+  private final Trigger POVUP_OP_ClimberLimelight = operatorXbox.povUp();
+  private final Trigger POVUP_OP_BLeftLimelight = operatorXbox.povLeft();
+  private final Trigger POVUP_OP_BRightLimelight = operatorXbox.povRight();
+  private final Trigger PD_OP_ToggleVision = operatorXbox.povDown(); // toggle vision
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -442,9 +446,11 @@ public class RobotContainer {
     B_OP_reteactIntake.whileTrue(m_pushout.RetractCommand());
     POVLEFT_OP_agitate.whileTrue(m_pushout.AgitateCommand());
 
-    // climber
-    POVUP_OP_climb.whileTrue(m_climber.runClimbCommand());
-    POVDown_OP_decend.whileTrue(m_climber.runClimberDownCommand());
+    // vision
+    POVUP_OP_ClimberLimelight.onTrue(drivebase.ClimberToggle());
+    POVUP_OP_BLeftLimelight.onTrue(drivebase.BLeftToggle());
+    POVUP_OP_BRightLimelight.onTrue(drivebase.BRightToggle());
+    PD_OP_ToggleVision.onTrue(drivebase.VisionToggle());
 
     // ========================
 

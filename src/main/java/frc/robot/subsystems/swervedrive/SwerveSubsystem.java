@@ -32,6 +32,8 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -58,6 +60,7 @@ import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 public class SwerveSubsystem extends SubsystemBase {
   /**
@@ -72,6 +75,21 @@ public class SwerveSubsystem extends SubsystemBase {
   private double lastYawRadians = 0.0;
   private double lastYawTimeSec = 0.0;
   public boolean useMegaTag2 = true; // MT1 during disabled, MT2 during auto/teleop
+
+  public boolean useBLeftLimelight = true;
+  public boolean useBRightLimelight = true;
+  public boolean useClimberLimelight = true;
+
+  public boolean visionToggleAll = false;
+
+  private final SendableChooser<Boolean> megaTagChooser = new SendableChooser<Boolean>();
+  private LoggedDashboardChooser<Boolean> loggedMegaTagChooser;
+
+  // private final SendableChooser<Boolean> limelightBLeftChooser = new SendableChooser<Boolean>();
+
+  // private final SendableChooser<Boolean> limelightBRightChooser = new SendableChooser<Boolean>();
+
+  // private final SendableChooser<Boolean> limelightClimberChooser = new SendableChooser<Boolean>();
 
   /**
    * Initialize {@link SwerveDrive} with the directory provided.
@@ -118,6 +136,30 @@ public class SwerveSubsystem extends SubsystemBase {
     // so do not attempt to call it here; rely on the default behavior or other
     // available APIs.
     setupPathPlanner();
+
+    // Set up MegaTag Chooser
+    megaTagChooser.addOption("MegaTag 1", false);
+    megaTagChooser.setDefaultOption("MegaTag 2", true);
+
+    SmartDashboard.putData("MegaTag Chooser", megaTagChooser);
+
+    loggedMegaTagChooser = new LoggedDashboardChooser<>("MegaTag Chooser", megaTagChooser);
+
+    // Set up bleft Chooser
+    // limelightBLeftChooser.addOption("Don't Use B-Left Limelight", false);
+    // limelightBLeftChooser.setDefaultOption("Use B-Left Limelight", true);
+
+    // SmartDashboard.putData("B-Left Limelight Chooser", limelightBLeftChooser);
+    // // Set up bright Chooser
+    // limelightBRightChooser.addOption("Don't Use B-Right Limelight", false);
+    // limelightBRightChooser.setDefaultOption("Use B-Right Limelight", true);
+
+    // SmartDashboard.putData("B-Right Limelight Chooser", limelightBRightChooser);
+    // // Set up climber Chooser
+    // limelightClimberChooser.addOption("Don't Use Climber Limelight", false);
+    // limelightClimberChooser.setDefaultOption("Use Climber Limelight", true);
+
+    // SmartDashboard.putData("Climber Limelight Chooser", limelightClimberChooser);
   }
 
   /**
@@ -136,8 +178,50 @@ public class SwerveSubsystem extends SubsystemBase {
 
   }
 
+  public Command VisionToggle()
+  {
+    return run(() ->
+    {
+      useBLeftLimelight = visionToggleAll;
+      useBRightLimelight = visionToggleAll;
+      useClimberLimelight = visionToggleAll;
+
+      visionToggleAll = !visionToggleAll;
+    });
+  }
+
+  public Command ClimberToggle()
+  {
+    return run(() ->
+    {
+      useClimberLimelight = !useClimberLimelight;
+    });
+  }
+
+  public Command BLeftToggle()
+  {
+    return run(() ->
+    {
+      useBLeftLimelight = !useBLeftLimelight;
+    });
+  }
+
+  public Command BRightToggle()
+  {
+    return run(() ->
+    {
+      useBRightLimelight = !useBRightLimelight;
+    });
+  }
+
   @Override
   public void periodic() {
+    // useBLeftLimelight = limelightBLeftChooser.getSelected();
+    // useBRightLimelight = limelightBRightChooser.getSelected();
+    // useClimberLimelight = limelightClimberChooser.getSelected();
+
+    useMegaTag2 = megaTagChooser.getSelected();
+
     updateOdometry();
     // -----------------------
     // AdvantageKit Logging
@@ -673,9 +757,10 @@ public class SwerveSubsystem extends SubsystemBase {
   /** Updates the field relative position of the robot. */
   public void updateOdometry() {
 
-    updateLimelight("limelight-bleft");
-    updateLimelight("limelight-bright");
-    updateLimelight("limelight-climber");
+
+    if(useBLeftLimelight) updateLimelight("limelight-bleft");
+    if(useBRightLimelight) updateLimelight("limelight-bright");
+    if(useClimberLimelight) updateLimelight("limelight-climber");
     
     swerveDrive.updateOdometry();
   }
