@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Straight"
+            "pathName": "Copy of Straight"
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "back"
+            "name": "aim at hub"
           }
         }
       ]
