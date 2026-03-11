@@ -86,6 +86,7 @@ public class ControlAllShooting extends Command
       // Pair.of(Meters.of(1), RPM.of((1000))),
                             Pair.of(Meters.of(2), RPM.of(1682.8225)),
                             Pair.of(Meters.of(3), RPM.of(1860)),
+                            Pair.of(Meters.of(3.5), RPM.of(2040)),
                             // Pair.of(Meters.of(3.5), RPM.of(2050),
                             Pair.of(Meters.of(4), RPM.of(2160)),
                             Pair.of(Meters.of(5.2048), RPM.of(2456.918)),
@@ -184,7 +185,7 @@ public class ControlAllShooting extends Command
 
      
      Logger.recordOutput("Shooter/LUTCurrentTargetRPM", RecordedidealHorizontalSpeed);
-    
+     Logger.recordOutput("Shooter/LUTDistance", dist);
     
     // m_hopper.runReverseHopperCommand().onlyIf(m_shooter::isShooterFast);
     // m_kicker.kickBackwardsCommand().onlyIf(m_shooter::isShooterFast);
