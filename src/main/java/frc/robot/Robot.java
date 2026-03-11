@@ -192,9 +192,9 @@ public class Robot extends LoggedRobot {
     LimelightHelpers.SetIMUMode("limelight-bright", 4); // Use internal IMU + external IMU
     LimelightHelpers.SetIMUMode("limelight-climber", 4); // Use internal IMU + external IMU
     // // Set the complementary filter alpha (optional, default is 0.001)
-    LimelightHelpers.SetIMUAssistAlpha("limelight-bleft", 0.001);
-    LimelightHelpers.SetIMUAssistAlpha("limelight-bright", 0.001);
-    LimelightHelpers.SetIMUAssistAlpha("limelight-climber", 0.001);
+    LimelightHelpers.SetIMUAssistAlpha("limelight-bleft", 0.1);
+    LimelightHelpers.SetIMUAssistAlpha("limelight-bright", 0.1);
+    LimelightHelpers.SetIMUAssistAlpha("limelight-climber", 0.1);
     if (Constants.USE_DRIVE_ONLY) {
       m_robotContainerDrive.setMotorBrake(true);
       m_autonomousCommand = m_robotContainerDrive.getAutonomousCommand();
@@ -229,15 +229,15 @@ public class Robot extends LoggedRobot {
     LimelightHelpers.SetThrottle("limelight-bleft", 0);
     LimelightHelpers.SetIMUMode("limelight-bleft", 4); // Use internal IMU + external IMU
     // // Set the complementary filter alpha (optional, default is 0.001)
-    LimelightHelpers.SetIMUAssistAlpha("limelight-bleft", 0.001);
+    LimelightHelpers.SetIMUAssistAlpha("limelight-bleft", 0.1);
     LimelightHelpers.SetThrottle("limelight-bright", 0);
     LimelightHelpers.SetIMUMode("limelight-bright", 4); // Use internal IMU + external IMU
     // // Set the complementary filter alpha (optional, default is 0.001)
-    LimelightHelpers.SetIMUAssistAlpha("limelight-bright", 0.001);
+    LimelightHelpers.SetIMUAssistAlpha("limelight-bright", 0.1);
     LimelightHelpers.SetThrottle("limelight-climber", 0);
     LimelightHelpers.SetIMUMode("limelight-climber", 4); // Use internal IMU + external IMU
     // // Set the complementary filter alpha (optional, default is 0.001)
-    LimelightHelpers.SetIMUAssistAlpha("limelight-climber", 0.001);
+    LimelightHelpers.SetIMUAssistAlpha("limelight-climber", 0.1);
 
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
