@@ -84,7 +84,7 @@ public class RobotContainer {
   private final Kicker m_kicker = new Kicker();
   private final Pushout m_pushout = new Pushout();
 
-  private final ObjectDetection m_ObjectDetection = new ObjectDetection();
+  // private final ObjectDetection m_ObjectDetection = new ObjectDetection();
 
   // Factory for ControlAllShooting instances. Create a fresh instance for each
   // composition to avoid WPILib's "composed commands may not be reused" error.
