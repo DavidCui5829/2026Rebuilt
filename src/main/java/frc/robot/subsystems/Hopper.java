@@ -84,7 +84,7 @@ public class Hopper extends SubsystemBase {
 
     @Override
     public void periodic() {
-        checkBalls();
+        
         // AdvantageKit Logging
         // Commanded pushdown motor percent output.
         Logger.recordOutput("Hopper/PushdownDesiredPercent", TwindexerRightDesiredPercent);
