@@ -614,7 +614,7 @@ public class SwerveSubsystem extends SubsystemBase {
   private void updateLimelight(String cameraName)
   {
     boolean doRejectUpdate = false;
-    if(!useMegaTag2)
+    if(!useMegaTag2) // If using mega tag 1
     {
       LimelightHelpers.PoseEstimate mt1bleft = LimelightHelpers.getBotPoseEstimate_wpiBlue(cameraName);
       
@@ -636,13 +636,13 @@ public class SwerveSubsystem extends SubsystemBase {
 
       if(!doRejectUpdate)
       {
-        swerveDrive.setVisionMeasurementStdDevs(VecBuilder.fill(.5,.5,9999999));
+        swerveDrive.setVisionMeasurementStdDevs(VecBuilder.fill(.6,.6,9999999));
         swerveDrive.addVisionMeasurement(
             mt1bleft.pose,
             mt1bleft.timestampSeconds);
       }
     }
-    else
+    else  // If using mega tag 2
     {
       LimelightHelpers.SetRobotOrientation(cameraName, 
       swerveDrive.getOdometryHeading().getDegrees(), //swerveDrive.getGyro().getRotation3d().getRotation2d().getDegrees(), //swerveDrive.getOdometryHeading().getDegrees(),
@@ -662,7 +662,7 @@ public class SwerveSubsystem extends SubsystemBase {
       }
       if(!doRejectUpdate)
       {
-        swerveDrive.setVisionMeasurementStdDevs(VecBuilder.fill(.7,.7,9999999));
+        swerveDrive.setVisionMeasurementStdDevs(VecBuilder.fill(.6,.6,9999999));
         swerveDrive.addVisionMeasurement(
             mt2bleft.pose,
             mt2bleft.timestampSeconds);
