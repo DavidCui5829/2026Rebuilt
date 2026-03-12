@@ -1,8 +1,14 @@
 package frc.robot;
 
 import static edu.wpi.first.units.Units.Inches;
+import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.Seconds;
 
+import java.util.List;
 import java.util.Optional;
+
+import edu.wpi.first.math.Pair;
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation3d;
@@ -151,6 +157,18 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
     public static final double STOP = 0;
     public static final double IDLE = 0; // % voltage -1 --> 1
 
+    public final static InterpolatingDoubleTreeMap TOF = new InterpolatingDoubleTreeMap();
+
+    static {
+      for (var entry : List.of(
+          Pair.of(Meters.of(2), Seconds.of(1.0)),
+          Pair.of(Meters.of(3), Seconds.of(1.16)),
+          Pair.of(Meters.of(4), Seconds.of(1.28)),
+          Pair.of(Meters.of(5), Seconds.of(1.4)),
+          Pair.of(Meters.of(6), Seconds.of(1.6)))) {
+        TOF.put(entry.getFirst().in(Meters), entry.getSecond().in(Seconds));
+      }
+    }
   }
 
   public static class KickerConstants {
