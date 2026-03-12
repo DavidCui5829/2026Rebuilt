@@ -384,7 +384,7 @@ public class RobotContainer {
                         m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(2.5)).repeatedly(),
                         m_intake.runIntakeCommand()).onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees))))
                 .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));}, java.util.Collections.emptySet()));
-
+      
     LT_shootFuel.whileTrue(
         Commands.parallel(
             // keep running the VariableShoot command while we wait for the shooter to reach
