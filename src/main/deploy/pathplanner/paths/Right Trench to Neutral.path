@@ -86,6 +86,12 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
+      "name": "extend",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
       "name": "intake",
       "waypointRelativePos": 1.6737907761529824,
       "endWaypointRelativePos": null,
