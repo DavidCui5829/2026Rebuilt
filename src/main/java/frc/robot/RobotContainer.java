@@ -373,7 +373,11 @@ public class RobotContainer {
     // transfer + kick + shoot/pass command, switches based on zone
     RTtransfer_kick_shoot.whileTrue(
 
-      Commands.defer(() -> { // In alliance zone → shoot at hub
+      Commands.defer(() -> { 
+        if(isInAllianceZone()) // In alliance zone → shoot at hub
+        {
+
+        
          ControlAllShooting shootCmd = makeVariableShoot();
         return Commands.parallel(
                 shootCmd,
@@ -387,7 +391,25 @@ public class RobotContainer {
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(2.5)).repeatedly(),
                         m_intake.runIntakeCommand()).onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees))))
-                .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));}, java.util.Collections.emptySet()));
+                .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
+        }
+        else
+        {
+          ControllAllPassing passCmd = makeVariablePass();
+            return Commands.parallel(
+                passCmd,
+                Commands.sequence(
+                    Commands.waitUntil(() -> passCmd.isCASAtSpeed()
+                        && driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
+                    Commands.parallel(
+                        m_hopper.runHopperToShooterCommand(),
+                        m_kicker.kickCommand(),
+                        m_pushout.AgitateCommand().repeatedly(),
+                        m_intake.runIntakeCommand())))
+                .finallyDo(() -> m_shooter.setTargetRPMCommand(passCmd.RecordedidealHorizontalSpeed).withTimeout(1));
+        }
+            }, java.util.Collections.emptySet()));
+
       
     LT_shootFuel.whileTrue(
         Commands.parallel(

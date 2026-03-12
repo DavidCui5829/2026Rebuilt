@@ -106,7 +106,8 @@ public class Shooter extends SubsystemBase {
 
     }
 
-    public boolean isShooterFast() {
+    public boolean isShooterFast() 
+    {
         double right1RPM = ShooterRight1Motor.getEncoder().getVelocity();
         // double right2RPM = ShooterRight2Motor.getEncoder().getVelocity();
 
