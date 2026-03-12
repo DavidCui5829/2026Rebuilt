@@ -278,7 +278,7 @@ public class RobotContainer {
           drivebase.driveFieldOriented(aimAtHubStream),
           Commands.sequence(
               Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
-                  && isAimedAt(Constants.DrivebaseConstants.getHubPose2D(), 1)),
+                  && isAimedAt(Constants.DrivebaseConstants.getHubPose2D(), 3)),
               Commands.parallel(
                   m_hopper.runHopperToShooterCommand(),
                   m_kicker.kickCommand(),
