@@ -89,12 +89,12 @@ public class RobotContainer {
   // Factory for ControlAllShooting instances. Create a fresh instance for each
   // composition to avoid WPILib's "composed commands may not be reused" error.
   private ControlAllShooting makeVariableShoot() {
-    return new ControlAllShooting(Constants.DrivebaseConstants.getHubPose2D(), m_shooter, drivebase.getPose());
+    return new ControlAllShooting(Constants.DrivebaseConstants.getHubPose2D(), m_shooter, drivebase::getPose);
   }
 
   private ControllAllPassing makeVariablePass() {
     return new ControllAllPassing(Constants.DrivebaseConstants.getFerryPose(drivebase.getPose().getTranslation()),
-        m_shooter, drivebase.getPose());
+        m_shooter, drivebase::getPose);
   }
 
    
@@ -271,19 +271,23 @@ public class RobotContainer {
     NamedCommands.registerCommand("kick backwards", m_kicker.kickBackwardsCommand().withTimeout(8));
 
     // shooter
-    NamedCommands.registerCommand("Control All Shooting",  Commands.defer(() -> { // In alliance zone → shoot at hub
-         ControlAllShooting shootCmd = makeVariableShoot();    
-        return Commands.parallel(
-                shootCmd,
-                Commands.sequence(
-                      Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
-                        && aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
-                    Commands.parallel(
-                        m_hopper.runHopperToShooterCommand(),
-                        m_kicker.kickCommand(),
-                        m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(2.5)).repeatedly(),
-                        m_intake.runIntakeCommand()).onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(3, Degrees))))
-                .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));}, java.util.Collections.emptySet()).withTimeout(6));
+    NamedCommands.registerCommand("Control All Shooting", Commands.defer(() -> {
+      ControlAllShooting shootCmd = makeVariableShoot();
+      return Commands.parallel(
+          shootCmd,
+          drivebase.driveFieldOriented(aimAtHubStream),
+          Commands.sequence(
+              Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
+                  && isAimedAt(Constants.DrivebaseConstants.getHubPose2D(), 1)),
+              Commands.parallel(
+                  m_hopper.runHopperToShooterCommand(),
+                  m_kicker.kickCommand(),
+                  m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(2.5)).repeatedly(),
+                  m_intake.runIntakeCommand()
+              ).onlyWhile(() -> isAimedAt(Constants.DrivebaseConstants.getHubPose2D(), 3))
+          ).finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1))
+      );
+    }, java.util.Collections.emptySet()).withTimeout(6));
     NamedCommands.registerCommand("speed up shooter", m_shooter.SpeedUpShooterCommand().withTimeout(15));
     // NamedCommands.registerCommand("aim at hub", drivebase.aimAtPose(Constants.DrivebaseConstants.getHubPose2D()));
     // NamedCommands.registerCommand("aim at ferry",
@@ -674,6 +678,21 @@ public class RobotContainer {
     lookahead = Math.min(Math.max(lookahead, Constants.LOOKAHEAD_MIN_SEC), Constants.LOOKAHEAD_MAX_SEC);
 
     return lookahead;
+  }
+
+  /**
+   * Checks if the robot heading is within a tolerance of the angle toward a target pose.
+   */
+  private boolean isAimedAt(Pose2d target, double toleranceDegrees) {
+    Pose2d robot = drivebase.getPose();
+    double targetAngle = Math.toDegrees(Math.atan2(
+        target.getY() - robot.getY(),
+        target.getX() - robot.getX()));
+    double currentAngle = robot.getRotation().getDegrees();
+    double error = Math.abs(currentAngle - targetAngle);
+    error = error % 360;
+    if (error > 180) error = 360 - error;
+    return error <= toleranceDegrees;
   }
 
   private void onZoneChanged() {
