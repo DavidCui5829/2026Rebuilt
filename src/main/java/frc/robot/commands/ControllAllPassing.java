@@ -21,7 +21,7 @@ import frc.robot.subsystems.Shooter;
 // import swervelib.SwerveDrive;
 import org.littletonrobotics.junction.Logger;
 import java.util.List;
-// import java.util.function.Supplier;
+import java.util.function.Supplier;
 import java.util.function.BooleanSupplier;
 
 
@@ -33,7 +33,7 @@ public class ControllAllPassing extends Command
 
   private final Pose2d goalPose;
   private final Shooter m_shooter;
-  private final Pose2d robotPose;
+  private final Supplier<Pose2d> robotPoseSupplier;
   // private final Hopper m_hopper;
   // private final Kicker m_kicker;
   // private final Pushout m_pushout;
@@ -59,16 +59,13 @@ public class ControllAllPassing extends Command
   
   
 
-  public ControllAllPassing(Pose2d goalPoseSupplier, Shooter shooter, Pose2d robotPoseSupplier)
-                               
+  public ControllAllPassing(Pose2d goalPoseSupplier, Shooter shooter, Supplier<Pose2d> robotPoseSupplier)
+
   {
-   
+
     this.goalPose = goalPoseSupplier;
     this.m_shooter = shooter;
-    // this.m_hopper = hopper;
-    // this.m_kicker = kicker;
-    // this.m_pushout = pushout;
-    this.robotPose = robotPoseSupplier;
+    this.robotPoseSupplier = robotPoseSupplier;
     // this.m_swerveSubsystem = swerveSubsystem;
     // this.m_hopper = hopper;
     // this.m_kicker = kicker;
@@ -118,7 +115,7 @@ public class ControllAllPassing extends Command
 
     // 2. GET TARGET VECTOR
     Translation2d goalLocation = goalPose.getTranslation();
-    Translation2d robotLocation = robotPose.getTranslation();
+    Translation2d robotLocation = robotPoseSupplier.get().getTranslation();
     Translation2d targetVec = goalLocation.minus(robotLocation);
     double        dist         = targetVec.getNorm();
     // 3. CALCULATE IDEAL SHOT (Stationary)
