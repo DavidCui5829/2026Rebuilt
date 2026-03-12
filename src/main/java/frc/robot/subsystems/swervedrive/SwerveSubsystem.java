@@ -940,4 +940,27 @@ public class SwerveSubsystem extends SubsystemBase {
   public SwerveDrive getSwerveDrive() {
     return swerveDrive;
   }
+
+  /**
+   * Computes a virtual hub location that compensates for robot velocity,
+   * so the robot aims ahead of the actual hub when moving (shoot-on-the-move).
+   * Uses an iterative time-of-flight lookup to converge on the correct lead.
+   *
+   * @return A Pose2d representing the compensated aim point.
+   */
+  public Pose2d getDynamicHubLocation() {
+    Translation2d hubVec = Constants.DrivebaseConstants.getHubPose2D().getTranslation();
+    Translation2d robotVec = getPose().getTranslation();
+    ChassisSpeeds vel = getFieldVelocity();
+    Translation2d robotVel = new Translation2d(vel.vxMetersPerSecond, vel.vyMetersPerSecond);
+
+    Translation2d CompensatedHub = hubVec;
+    for (int i = 0; i < 4; i++) {
+      double distance = CompensatedHub.minus(robotVec).getNorm();
+      double tof = Constants.ShooterConstants.TOF.get(distance);
+      CompensatedHub = hubVec.minus(robotVel.times(tof));
+    }
+
+    return new Pose2d(CompensatedHub, new Rotation2d());
+  }
 }
