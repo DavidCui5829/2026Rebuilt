@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.898513165509259,
-        "y": 3.903319661458333
+        "x": 7.9454168415079,
+        "y": 3.907094977283923
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.688085078848132,
-        "y": 3.491054531994469
+        "x": 7.734988754846772,
+        "y": 3.494829847820059
       },
       "isLocked": false,
-      "linkedName": "Right Intake End Pos"
+      "linkedName": "Right Neutral Intake Pos"
     },
     {
       "anchor": {

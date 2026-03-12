@@ -124,7 +124,7 @@ public class RobotContainer {
       .aimWhile(driverXbox.rightTrigger())
       // .aimWhile(driverXbox.leftTrigger())
       .aimLookahead(Time.ofBaseUnits(0, Seconds))
-      .aimFeedforward(0.0001, 0.0001, 0.00013)
+      .aimFeedforward(0.0002, 0.0002, 0.00013)
 
   ;
 
@@ -289,7 +289,7 @@ public class RobotContainer {
               ).onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)))
           ).finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1))
       );
-    }, java.util.Collections.emptySet()).withTimeout(6));
+    }, java.util.Collections.emptySet()).withTimeout(5));
     NamedCommands.registerCommand("speed up shooter", m_shooter.SpeedUpShooterCommand().withTimeout(15));
     // NamedCommands.registerCommand("aim at hub", drivebase.aimAtPose(Constants.DrivebaseConstants.getHubPose2D()));
     // NamedCommands.registerCommand("aim at ferry",
