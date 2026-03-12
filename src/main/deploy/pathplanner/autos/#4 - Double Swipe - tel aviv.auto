@@ -5,15 +5,15 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Right Trench to Neutral"
+            "name": "extend"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Right Intake to Right Shoot"
+            "pathName": "Start-Intake Path"
           }
         },
         {
@@ -29,15 +29,21 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Right Shoot to Human Player"
+            "name": "extend"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Human Player Shoot"
+            "pathName": "Second Swipe from Shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Wiggle to Shoot"
           }
         },
         {
