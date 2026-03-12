@@ -278,13 +278,13 @@ public class RobotContainer {
           drivebase.driveFieldOriented(aimAtHubStream),
           Commands.sequence(
               Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
-                  && isAimedAt(Constants.DrivebaseConstants.getHubPose2D(), 3)),
+                  && aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
               Commands.parallel(
                   m_hopper.runHopperToShooterCommand(),
                   m_kicker.kickCommand(),
                   m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(2.5)).repeatedly(),
                   m_intake.runIntakeCommand()
-              ).onlyWhile(() -> isAimedAt(Constants.DrivebaseConstants.getHubPose2D(), 3))
+              ).onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)))
           ).finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1))
       );
     }, java.util.Collections.emptySet()).withTimeout(6));
