@@ -89,7 +89,7 @@ public class RobotContainer {
   // Factory for ControlAllShooting instances. Create a fresh instance for each
   // composition to avoid WPILib's "composed commands may not be reused" error.
   private ControlAllShooting makeVariableShoot() {
-    return new ControlAllShooting(Constants.DrivebaseConstants.getHubPose2D(), m_shooter, drivebase::getPose);
+    return new ControlAllShooting(drivebase.getDynamicHubLocation(), m_shooter, drivebase::getPose);
   }
 
   private ControllAllPassing makeVariablePass() {
@@ -119,7 +119,7 @@ public class RobotContainer {
       .deadband(OperatorConstants.DEADBAND)
       .scaleTranslation(1.0)
       .allianceRelativeControl(true)
-      .aim(Constants.DrivebaseConstants.getHubPose2D())
+      .aim(drivebase.getDynamicHubLocation())
       // .aimLock(Angle.ofBaseUnits(1, Degrees))
       .aimWhile(driverXbox.rightTrigger())
       // .aimWhile(driverXbox.leftTrigger())
