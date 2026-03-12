@@ -93,7 +93,7 @@ public class RobotContainer {
   }
 
   private ControllAllPassing makeVariablePass() {
-    return new ControllAllPassing(Constants.DrivebaseConstants.getFerryPose(drivebase.getPose().getTranslation()),
+    return new ControllAllPassing(drivebase.getDynamicFerryLocation(),
         m_shooter, drivebase::getPose);
   }
 
