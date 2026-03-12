@@ -398,6 +398,7 @@ public class RobotContainer {
           ControllAllPassing passCmd = makeVariablePass();
             return Commands.parallel(
                 passCmd,
+                Commands.run(() -> driveAngularVelocity.aim(drivebase.getDynamicFerryLocation())),
                 Commands.sequence(
                     Commands.waitUntil(() -> passCmd.isCASAtSpeed()
                         && driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees)).getAsBoolean()),
@@ -405,7 +406,7 @@ public class RobotContainer {
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand().repeatedly(),
-                        m_intake.runIntakeCommand())))
+                        m_intake.runIntakeCommand()).onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees)))))
                 .finallyDo(() -> m_shooter.setTargetRPMCommand(passCmd.RecordedidealHorizontalSpeed).withTimeout(1));
         }
             }, java.util.Collections.emptySet()));
