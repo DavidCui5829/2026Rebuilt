@@ -963,4 +963,27 @@ public class SwerveSubsystem extends SubsystemBase {
 
     return new Pose2d(CompensatedHub, new Rotation2d());
   }
+
+  /**
+   * Computes a virtual ferry location that compensates for robot velocity,
+   * so the robot aims ahead of the actual ferry target when moving (pass-on-the-move).
+   * Uses an iterative time-of-flight lookup to converge on the correct lead.
+   *
+   * @return A Pose2d representing the compensated aim point.
+   */
+  public Pose2d getDynamicFerryLocation() {
+    Translation2d ferryVec = Constants.DrivebaseConstants.getFerryPose(getPose().getTranslation()).getTranslation();
+    Translation2d robotVec = getPose().getTranslation();
+    ChassisSpeeds vel = getFieldVelocity();
+    Translation2d robotVel = new Translation2d(vel.vxMetersPerSecond, vel.vyMetersPerSecond);
+
+    Translation2d CompensatedFerry = ferryVec;
+    for (int i = 0; i < 4; i++) {
+      double distance = CompensatedFerry.minus(robotVec).getNorm();
+      double tof = Constants.ShooterConstants.TOF.get(distance);
+      CompensatedFerry = ferryVec.minus(robotVel.times(tof));
+    }
+
+    return new Pose2d(CompensatedFerry, new Rotation2d());
+  }
 }

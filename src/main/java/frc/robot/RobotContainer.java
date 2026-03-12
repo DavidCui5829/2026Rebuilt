@@ -703,8 +703,7 @@ public class RobotContainer {
     if (isInAllianceZone()) {
       driveAngularVelocity.aim(drivebase.getDynamicHubLocation());
     } else {
-      driveAngularVelocity.aim(
-          Constants.DrivebaseConstants.getFerryPose(drivebase.getPose().getTranslation()));
+      driveAngularVelocity.aim(drivebase.getDynamicFerryLocation());
     }
   }
 }
