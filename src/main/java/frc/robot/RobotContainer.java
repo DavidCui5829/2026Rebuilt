@@ -284,7 +284,7 @@ public class RobotContainer {
                   m_kicker.kickCommand(),
                   m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(2.5)).repeatedly(),
                   m_intake.runIntakeCommand()
-              ).onlyWhile(() -> isAimedAt(Constants.DrivebaseConstants.getHubPose2D(), 3))
+              ).onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(3, Degrees)))
           ).finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1))
       );
     }, java.util.Collections.emptySet()).withTimeout(6));
