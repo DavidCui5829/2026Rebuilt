@@ -119,7 +119,7 @@ public class RobotContainer {
       .deadband(OperatorConstants.DEADBAND)
       .scaleTranslation(1.0)
       .allianceRelativeControl(true)
-      .aim(() -> drivebase.getDynamicHubLocation())
+      .aim(drivebase.getDynamicHubLocation())
       // .aimLock(Angle.ofBaseUnits(1, Degrees))
       .aimWhile(driverXbox.rightTrigger())
       // .aimWhile(driverXbox.leftTrigger())
@@ -175,7 +175,7 @@ public class RobotContainer {
   SwerveInputStream aimAtHubStream = SwerveInputStream.of(drivebase.getSwerveDrive(),
       () -> 0.0, () -> 0.0)
       .withControllerRotationAxis(() -> 0.0)
-      .aim(Constants.DrivebaseConstants.getHubPose2D())
+      .aim(drivebase.getDynamicHubLocation())
       .aimWhile(true)
       .aimLookahead(Time.ofBaseUnits(0, Seconds))
       .aimFeedforward(0.0001, 0.0001, 0.00013);
@@ -183,7 +183,7 @@ public class RobotContainer {
   SwerveInputStream aimAtFerryStream = SwerveInputStream.of(drivebase.getSwerveDrive(),
       () -> 0.0, () -> 0.0)
       .withControllerRotationAxis(() -> 0.0)
-      .aim(Constants.DrivebaseConstants.getFerryPose(drivebase.getPose().getTranslation()))
+      .aim(drivebase.getDynamicFerryLocation())
       .aimWhile(true)
       .aimLookahead(Time.ofBaseUnits(0, Seconds))
       .aimFeedforward(0.0001, 0.0001, 0.00013);
@@ -381,8 +381,8 @@ public class RobotContainer {
          ControlAllShooting shootCmd = makeVariableShoot();
         return Commands.parallel(
                 shootCmd,
-                // Continuously update aim target for shoot-on-the-move should no longer be needed since we have pose 2d suppplier for aim now
-                // Commands.run(() -> driveAngularVelocity.aim(drivebase.getDynamicHubLocation())),
+                // Continuously update aim target for shoot-on-the-move
+                Commands.run(() -> driveAngularVelocity.aim(drivebase.getDynamicHubLocation())),
                 Commands.sequence(
                       Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
                         && driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
@@ -398,7 +398,7 @@ public class RobotContainer {
           ControllAllPassing passCmd = makeVariablePass();
             return Commands.parallel(
                 passCmd,
-                Commands.runOnce(() -> driveAngularVelocity.aim(() -> drivebase.getDynamicFerryLocation())),
+                Commands.run(() -> driveAngularVelocity.aim(drivebase.getDynamicFerryLocation())),
                 Commands.sequence(
                     Commands.waitUntil(() -> passCmd.isCASAtSpeed()
                         && driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees)).getAsBoolean()),
