@@ -179,7 +179,7 @@ public final class Configs
                                 // loop slot, as it will default to slot 0.
                                 .p(0.0002)
                                 .i(0.0)
-                                .d(0.000)
+                                .d(0.0001)
                                 .outputRange(-1, 1)
                                 .feedForward
                                 .kS(0.10)
@@ -195,7 +195,7 @@ public final class Configs
                                 // loop slot, as it will default to slot 0.
                                 .p(0.0002)
                                 .i(0.0)
-                                .d(0.000)
+                                .d(0.0001)
                                 .outputRange(-1, 1)
                                 .feedForward
                                 .kS(0.10)
