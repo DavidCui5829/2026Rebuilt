@@ -276,6 +276,8 @@ public class RobotContainer {
       return Commands.parallel(
           shootCmd,
           drivebase.driveFieldOriented(aimAtHubStream),
+          // Continuously update aim target for shoot-on-the-move
+          Commands.run(() -> aimAtHubStream.aim(drivebase.getDynamicHubLocation())),
           Commands.sequence(
               Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
                   && aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
@@ -370,11 +372,13 @@ public class RobotContainer {
     // ======= Driver =======
     // transfer + kick + shoot/pass command, switches based on zone
     RTtransfer_kick_shoot.whileTrue(
-      
+
       Commands.defer(() -> { // In alliance zone → shoot at hub
-         ControlAllShooting shootCmd = makeVariableShoot();    
+         ControlAllShooting shootCmd = makeVariableShoot();
         return Commands.parallel(
                 shootCmd,
+                // Continuously update aim target for shoot-on-the-move
+                Commands.run(() -> driveAngularVelocity.aim(drivebase.getDynamicHubLocation())),
                 Commands.sequence(
                       Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
                         && driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
@@ -697,7 +701,7 @@ public class RobotContainer {
 
   private void onZoneChanged() {
     if (isInAllianceZone()) {
-      driveAngularVelocity.aim(Constants.DrivebaseConstants.getHubPose2D());
+      driveAngularVelocity.aim(drivebase.getDynamicHubLocation());
     } else {
       driveAngularVelocity.aim(
           Constants.DrivebaseConstants.getFerryPose(drivebase.getPose().getTranslation()));
