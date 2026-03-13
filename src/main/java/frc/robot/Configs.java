@@ -178,8 +178,8 @@ public final class Configs
                                 // Set PID values for position control. We don't need to pass a closed
                                 // loop slot, as it will default to slot 0.
                                 .p(0.0003)
-                                .i(0.0000002)
-                                .d(0.000)
+                                .i(0.0)
+                                .d(0.001)
                                 .outputRange(-1, 1)
                                 .feedForward
                                 .kS(0.10)
@@ -194,8 +194,8 @@ public final class Configs
                                 // Set PID values for position control. We don't need to pass a closed
                                 // loop slot, as it will default to slot 0.
                                 .p(0.0003)
-                                .i(0.0000002)
-                                .d(0.000)
+                                .i(0.0)
+                                .d(0.001)
                                 .outputRange(-1, 1)
                                 .feedForward
                                 .kS(0.10)
@@ -210,8 +210,8 @@ public final class Configs
                                 // Set PID values for position control. We don't need to pass a closed
                                 // loop slot, as it will default to slot 0.
                                 .p(0.0003)
-                                .i(0.0000002)
-                                .d(0.000)
+                                .i(0.000000)
+                                .d(0.001)
                                 .outputRange(-1, 1)
                                 .feedForward
                                 .kS(0.10)
@@ -226,8 +226,8 @@ public final class Configs
                                 // Set PID values for position control. We don't need to pass a closed
                                 // loop slot, as it will default to slot 0.
                                 .p(0.0003)
-                                .i(0.0000002)
-                                .d(0.000)
+                                .i(0.0)
+                                .d(0.001)
                                 .outputRange(-1, 1)
                                 .feedForward
                                 .kS(0.10)
