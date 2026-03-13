@@ -484,15 +484,16 @@ public class RobotContainer {
     POVDOwn_OP_ToggleVision.onTrue(drivebase.VisionToggle());
 
     // ========================
-
+ 
     // SysId: run shooter quasistatic forward.
-    operatorXbox.a().whileTrue(m_shooter.sysIdQuasistaticForward());
-    // SysId: run shooter quasistatic reverse.
-    operatorXbox.b().whileTrue(m_shooter.sysIdQuasistaticReverse());
-    // SysId: run shooter dynamic forward.
     operatorXbox.x().whileTrue(m_shooter.sysIdDynamicForward());
-    // SysId: run shooter dynamic reverse.
-    operatorXbox.y().whileTrue(m_shooter.sysIdDynamicReverse());
+    // operatorXbox.a().whileTrue(m_shooter.sysIdQuasistaticForward());
+    // // SysId: run shooter quasistatic reverse.
+    // operatorXbox.b().whileTrue(m_shooter.sysIdQuasistaticReverse());
+    // // SysId: run shooter dynamic forward.
+    // operatorXbox.x().whileTrue(m_shooter.sysIdDynamicForward());
+    // // SysId: run shooter dynamic reverse.
+    // operatorXbox.y().whileTrue(m_shooter.sysIdDynamicReverse());
 
     if (RobotBase.isSimulation()) {
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngleKeyboard);
