@@ -3,6 +3,11 @@ package frc.robot;
 import com.revrobotics.spark.config.SparkFlexConfig;
 
 import com.revrobotics.spark.config.SparkBaseConfig.*;
+
+import frc.robot.Constants.HopperConstants;
+import frc.robot.Constants.KickerConstants;
+import frc.robot.Constants.ShooterConstants;
+
 // import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.FeedbackSensor;
 
@@ -121,19 +126,20 @@ public final class Configs
 
                         static {
                                 kickerLeftMotorConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40).voltageCompensation(12);
-                                kickerRightMotorConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40).voltageCompensation(12).follow(13,true);
+                                kickerRightMotorConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40).voltageCompensation(12).follow(KickerConstants.KICKER_LEFT_ID,true);
                                 
                                 kickerLeftMotorConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                                 // Set PID values for position control. We don't need to pass a closed
                                 // loop slot, as it will default to slot 0.
-                                .p(0.0002355)
-                                .i(0)
-                                .d(0)
+                                .p(KickerConstants.p)
+                                .i(KickerConstants.i)
+                                .d(KickerConstants.d)
                                 .outputRange(-1, 1)
-                                 .feedForward
-                                .kS(0.10)
-                                .kV(0.003)
-                                .kA(0.0003);
+                                .feedForward
+                                .kS(KickerConstants.s)
+                                .kV(KickerConstants.v)
+                                .kA(KickerConstants.a)
+                                ;
                                 kickerLeftMotorConfig.closedLoop
                                 .maxMotion.maxAcceleration(1000000);
 
@@ -141,14 +147,15 @@ public final class Configs
                                 kickerRightMotorConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                                 // Set PID values for position control. We don't need to pass a closed
                                 // loop slot, as it will default to slot 0.
-                                .p(0.0002355)
-                                .i(0)
-                                .d(0)
+                                .p(KickerConstants.p)
+                                .i(KickerConstants.i)
+                                .d(KickerConstants.d)
                                 .outputRange(-1, 1)
-                                 .feedForward
-                                .kS(0.10)
-                                .kV(0.003)
-                                .kA(0.0003);
+                                .feedForward
+                                .kS(KickerConstants.s)
+                                .kV(KickerConstants.v)
+                                .kA(KickerConstants.a)
+                                ;
 
                                 kickerRightMotorConfig.closedLoop
                                 .maxMotion.maxAcceleration(1000000);
@@ -167,24 +174,24 @@ public final class Configs
 
                                 ShooterRightMotor1Config.idleMode(IdleMode.kCoast).smartCurrentLimit(50).voltageCompensation(12);
                                 ShooterRightMotor2Config.idleMode(IdleMode.kCoast).smartCurrentLimit(50).voltageCompensation(12)
-                                .follow(11, true);
+                                .follow(ShooterConstants.SHOOTER_R1_ID, true);
                                 
                                 ShooterLeftMotor1Config.idleMode(IdleMode.kCoast).smartCurrentLimit(50).voltageCompensation(12);
                                 ShooterLeftMotor2Config.idleMode(IdleMode.kCoast).smartCurrentLimit(50).voltageCompensation(12)
-                                .follow(9, true);
+                                .follow(ShooterConstants.SHOOTER_L1_ID, true);
                                 
                                 
                                 ShooterRightMotor1Config.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                                 // Set PID values for position control. We don't need to pass a closed
                                 // loop slot, as it will default to slot 0.
-                              .p(0.008)
-                                .i(0.0)
-                                .d(0.0)
+                                .p(ShooterConstants.p)
+                                .i(ShooterConstants.i)
+                                .d(ShooterConstants.d)
                                 .outputRange(-1, 1)
                                 .feedForward
-                                .kS(0.0)
-                                .kV(0.1)
-                                .kA(0.0)
+                                .kS(ShooterConstants.s)
+                                .kV(ShooterConstants.v)
+                                .kA(ShooterConstants.a)
                                 ;
                                 ;              
 
@@ -194,14 +201,14 @@ public final class Configs
                                 ShooterRightMotor2Config.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                                 // Set PID values for position control. We don't need to pass a closed
                                 // loop slot, as it will default to slot 0.
-                             .p(0.008)
-                                .i(0.0)
-                                .d(0.0)
+                                .p(ShooterConstants.p)
+                                .i(ShooterConstants.i)
+                                .d(ShooterConstants.d)
                                 .outputRange(-1, 1)
                                 .feedForward
-                                .kS(0.0)
-                                .kV(0.1)
-                                .kA(0.0)
+                                .kS(ShooterConstants.s)
+                                .kV(ShooterConstants.v)
+                                .kA(ShooterConstants.a)
                                 ;
                                 ;
 
@@ -211,14 +218,14 @@ public final class Configs
                                 ShooterLeftMotor1Config.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                                 // Set PID values for position control. We don't need to pass a closed
                                 // loop slot, as it will default to slot 0.
-                               .p(0.008)
-                                .i(0.0)
-                                .d(0.0)
+                                .p(ShooterConstants.p)
+                                .i(ShooterConstants.i)
+                                .d(ShooterConstants.d)
                                 .outputRange(-1, 1)
                                 .feedForward
-                                .kS(0.0)
-                                .kV(0.1)
-                                .kA(0.0)
+                                .kS(ShooterConstants.s)
+                                .kV(ShooterConstants.v)
+                                .kA(ShooterConstants.a)
                                 ;
                                 ;      
                                 
@@ -228,14 +235,14 @@ public final class Configs
                                 ShooterLeftMotor2Config.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                                 // Set PID values for position control. We don't need to pass a closed
                                 // loop slot, as it will default to slot 0.
-                                .p(0.008)
-                                .i(0.0)
-                                .d(0.0)
+                                .p(ShooterConstants.p)
+                                .i(ShooterConstants.i)
+                                .d(ShooterConstants.d)
                                 .outputRange(-1, 1)
                                 .feedForward
-                                .kS(0.0)
-                                .kV(0.1)
-                                .kA(0.0)
+                                .kS(ShooterConstants.s)
+                                .kV(ShooterConstants.v)
+                                .kA(ShooterConstants.a)
                                 ;
 
                                 ShooterLeftMotor2Config.closedLoop
@@ -253,7 +260,7 @@ public final class Configs
 
                 static {
 
-                        TwindexerRightControllerConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12).follow(15, true);
+                        TwindexerRightControllerConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12).follow(HopperConstants.TWINDEXER_LEFT_ID, true);
                         TwindexerLeftControllerConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
 
                         TwindexerRightControllerConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
@@ -282,14 +289,15 @@ public final class Configs
                             TwindexerLeftControllerConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                             // Set PID values for position control. We don't need to pass a closed
                             // loop slot, as it will default to slot 0.
-                            .p(0.0002)
-                            .i(0)
-                            .d(0)
-                            .outputRange(-1, 1)
-                             .feedForward
-                                .kS(0.10)
-                                .kV(0.00177)
-                                .kA(0.00017);
+                                .p(HopperConstants.p)
+                                .i(HopperConstants.i)
+                                .d(HopperConstants.d)
+                                .outputRange(-1, 1)
+                                .feedForward
+                                .kS(HopperConstants.s)
+                                .kV(HopperConstants.v)
+                                .kA(HopperConstants.a)
+                                ;
                         TwindexerLeftControllerConfig.closedLoop
                                 .maxMotion.maxAcceleration(100000);
                             // Set PID values for velocity control in slot 1

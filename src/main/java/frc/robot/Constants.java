@@ -157,6 +157,16 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
     public static final double STOP = 0;
     public static final double IDLE = 0; // % voltage -1 --> 1
 
+    // PID Constants
+    public static final double p = 0.008;
+    public static final double i = 0.000;
+    public static final double d = 0.000;
+
+    // Feed-Forward Constants
+    public static final double s = 0.000;
+    public static final double v = 0.100;
+    public static final double a = 0.000;
+
     public final static InterpolatingDoubleTreeMap TOF = new InterpolatingDoubleTreeMap();
 
     static {
@@ -178,6 +188,16 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
     public static final double KICKER_REVERSE_RPM_TARGET = -10000; // RPM
     public static final double KICKER_RPM_TARGET = 10000; // RPM
 
+    // PID Constants
+    public static final double p = 0.0002355;
+    public static final double i = 0.000;
+    public static final double d = 0.000;
+
+    // Feed-Forward Constants
+    public static final double s = 0.100;
+    public static final double v = 0.003;
+    public static final double a = 0.0003;
+
     public static final double STOP = 0;
     public static final double IDLE = 0; // % voltage -1 --> 1
   }
@@ -192,6 +212,16 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
 
     public static final double REVERSE_TWINDEXER_RIGHT_RPM = -9000;
     public static final double REVERSE_TWINDEXER_LEFT_RPM = 9000;
+
+    // PID Constants
+    public static final double p = 0.0002;
+    public static final double i = 0.000;
+    public static final double d = 0.000;
+
+    // Feed-Forward Constants
+    public static final double s = 0.100;
+    public static final double v = 0.00177;
+    public static final double a = 0.00017;
 
     public static final int six_seven = 67; // <---------- HISTORICAL MONUMENT
 
