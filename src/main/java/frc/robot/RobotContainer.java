@@ -423,9 +423,9 @@ public class RobotContainer {
 
     // speedUpShooter.whileTrue(m_shooter.SpeedUpShooterCommand());
 
-    driverXbox.povDown().whileTrue(drivebase.driveToPose(new Pose2d(new Translation2d(2.6, 3.379),
-        Rotation2d.fromDegrees(0))));
-    driverXbox.povUp().whileTrue(driveFieldOrientedDirectAngle).toggleOnFalse(driveFieldOrientedAnglularVelocity);
+    // driverXbox.povDown().whileTrue(drivebase.driveToPose(new Pose2d(new Translation2d(2.6, 3.379),
+        // Rotation2d.fromDegrees(0))));
+    // driverXbox.povUp().whileTrue(driveFieldOrientedDirectAngle).toggleOnFalse(driveFieldOrientedAnglularVelocity);
 
     // Swerve Drive Commands
     driverXbox.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
@@ -433,11 +433,11 @@ public class RobotContainer {
     LBretract_and_stop.whileTrue(Commands.parallel(m_pushout.RetractCommand(), m_intake.runIntakeCommand()));
 
     // Pushout Commands
-    Y_extendIntake.whileTrue(m_pushout.PushCommand());
+    // Y_extendIntake.whileTrue(m_pushout.PushCommand());
     B_agitate.whileTrue((m_pushout.AgitateCommand().repeatedly()));
 
     // Intake Commands
-    X_runIntake.whileTrue(m_intake.runIntakeCommand());
+    // X_runIntake.whileTrue(m_intake.runIntakeCommand());
     A_runOuttake.whileTrue(m_intake.runOuttakeCommand());
 
     // Climber Commands
