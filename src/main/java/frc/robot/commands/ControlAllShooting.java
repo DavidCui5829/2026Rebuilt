@@ -85,8 +85,8 @@ public class ControlAllShooting extends Command
                             Pair.of(Meters.of(3), RPM.of(1960)),
                             Pair.of(Meters.of(3.5), RPM.of(2090)),
                             // Pair.of(Meters.of(3.5), RPM.of(2050),
-                            Pair.of(Meters.of(4), RPM.of(2160)),
-                            Pair.of(Meters.of(5.2048), RPM.of(2356.918)),
+                            Pair.of(Meters.of(4), RPM.of(2260)),
+                            Pair.of(Meters.of(5.2048), RPM.of(2456.918)),
                             Pair.of(Meters.of(6), RPM.of(2600))
                             )
     )

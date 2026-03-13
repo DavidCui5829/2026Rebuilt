@@ -183,8 +183,8 @@ public final class Configs
                                 .outputRange(-1, 1)
                                 .feedForward
                                 .kS(0.10)
-                                .kV(0.002)
-                                .kA(0.00017)
+                                .kV(0.0022)
+                                .kA(0.0002)
                                 ;              
 
                                 ShooterRightMotor1Config.closedLoop
