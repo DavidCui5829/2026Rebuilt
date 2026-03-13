@@ -183,7 +183,7 @@ public final class Configs
                                 .outputRange(-1, 1)
                                 .feedForward
                                 .kS(0.0)
-                                .kV(0.0)
+                                .kV(0.2)
                                 .kA(0.0)
                                 ;
                                 ;              
@@ -200,7 +200,7 @@ public final class Configs
                                 .outputRange(-1, 1)
                                 .feedForward
                                 .kS(0.0)
-                                .kV(0.0)
+                                .kV(0.2)
                                 .kA(0.0)
                                 ;
                                 ;
@@ -217,7 +217,7 @@ public final class Configs
                                 .outputRange(-1, 1)
                                 .feedForward
                                 .kS(0.0)
-                                .kV(0.0000)
+                                .kV(0.2)
                                 .kA(0.0)
                                 ;
                                 ;      
@@ -234,7 +234,7 @@ public final class Configs
                                 .outputRange(-1, 1)
                                 .feedForward
                                 .kS(0.0)
-                                .kV(0.0000)
+                                .kV(0.2)
                                 .kA(0.0)
                                 ;
 
