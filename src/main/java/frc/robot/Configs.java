@@ -177,7 +177,7 @@ public final class Configs
                                 ShooterRightMotor1Config.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                                 // Set PID values for position control. We don't need to pass a closed
                                 // loop slot, as it will default to slot 0.
-                              .p(0.0004)
+                              .p(0.0009)
                                 .i(0.0)
                                 .d(0.0)
                                 .outputRange(-1, 1)
@@ -194,7 +194,7 @@ public final class Configs
                                 ShooterRightMotor2Config.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                                 // Set PID values for position control. We don't need to pass a closed
                                 // loop slot, as it will default to slot 0.
-                             .p(0.0004)
+                             .p(0.0009)
                                 .i(0.0)
                                 .d(0.0)
                                 .outputRange(-1, 1)
@@ -211,7 +211,7 @@ public final class Configs
                                 ShooterLeftMotor1Config.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                                 // Set PID values for position control. We don't need to pass a closed
                                 // loop slot, as it will default to slot 0.
-                               .p(0.0004)
+                               .p(0.0009)
                                 .i(0.0)
                                 .d(0.0)
                                 .outputRange(-1, 1)
@@ -228,7 +228,7 @@ public final class Configs
                                 ShooterLeftMotor2Config.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                                 // Set PID values for position control. We don't need to pass a closed
                                 // loop slot, as it will default to slot 0.
-                                .p(0.0004)
+                                .p(0.0009)
                                 .i(0.0)
                                 .d(0.0)
                                 .outputRange(-1, 1)
