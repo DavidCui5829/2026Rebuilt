@@ -36,13 +36,23 @@
       "name": "extend",
       "waypointRelativePos": 0,
       "endWaypointRelativePos": null,
-      "command": null
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "extend"
+        }
+      }
     },
     {
       "name": "intake",
       "waypointRelativePos": 0.6890527950310559,
       "endWaypointRelativePos": 1.0,
-      "command": null
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "intake"
+        }
+      }
     }
   ],
   "globalConstraints": {

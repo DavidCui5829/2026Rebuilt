@@ -75,6 +75,9 @@ public class SwerveSubsystem extends SubsystemBase {
   private double lastYawRadians = 0.0;
   private double lastYawTimeSec = 0.0;
   public boolean useMegaTag2 = true; // MT1 during disabled, MT2 during auto/teleop
+  
+  public boolean useMegaTag1 = false; // MT1 during disabled, MT2 during auto/teleop
+
 
   public boolean useBLeftLimelight = true;
   public boolean useBRightLimelight = true;
@@ -695,10 +698,10 @@ public class SwerveSubsystem extends SubsystemBase {
     return swerveDrive.getPose();
   }
 
-  private void updateLimelight(String cameraName)
+  private void updateLimelight(String cameraName, int megaTag)
   {
     boolean doRejectUpdate = false;
-    if(!useMegaTag2) // If using mega tag 1
+    if(megaTag == 1) // If using mega tag 1
     {
       LimelightHelpers.PoseEstimate mt1bleft = LimelightHelpers.getBotPoseEstimate_wpiBlue(cameraName);
       
@@ -758,9 +761,9 @@ public class SwerveSubsystem extends SubsystemBase {
   public void updateOdometry() {
 
 
-    if(useBLeftLimelight) updateLimelight("limelight-bleft");
-    if(useBRightLimelight) updateLimelight("limelight-bright");
-    if(useClimberLimelight) updateLimelight("limelight-climber");
+    if(useBLeftLimelight) updateLimelight("limelight-bleft", 1);
+    if(useBRightLimelight) updateLimelight("limelight-bright", 1);
+    if(useClimberLimelight) updateLimelight("limelight-climber", 2);
     
     swerveDrive.updateOdometry();
   }

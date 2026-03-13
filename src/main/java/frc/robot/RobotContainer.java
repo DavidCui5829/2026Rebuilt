@@ -124,7 +124,7 @@ public class RobotContainer {
       .aimWhile(driverXbox.rightTrigger())
       // .aimWhile(driverXbox.leftTrigger())
       .aimLookahead(Time.ofBaseUnits(0, Seconds))
-      .aimFeedforward(0.0002, 0.0002, 0.00013)
+      .aimFeedforward(0.0001, 0.0001, 0.00013)
 
   ;
 
@@ -246,11 +246,11 @@ public class RobotContainer {
     // configureFuelSim();
     // configureFuelSimRobot();
     // Triggers for auto aim/pass poses
-    new Trigger(() -> isInAllianceZone())
-        .onChange(Commands.runOnce(() -> onZoneChanged()).ignoringDisable(true));
+    // new Trigger(() -> isInAllianceZone())
+    //     .onChange(Commands.runOnce(() -> onZoneChanged()).ignoringDisable(true));
 
-    new Trigger(() -> isOnAllianceOutpostSide())
-        .onChange(Commands.runOnce(() -> onZoneChanged()).ignoringDisable(true));
+    // new Trigger(() -> isOnAllianceOutpostSide())
+    //     .onChange(Commands.runOnce(() -> onZoneChanged()).ignoringDisable(true));
 
     DriverStation.silenceJoystickConnectionWarning(true);
     // SmartDashboard.putNumber("Heading Bias Deg", 0.0);
@@ -277,7 +277,7 @@ public class RobotContainer {
           shootCmd,
           drivebase.driveFieldOriented(aimAtHubStream),
           // Continuously update aim target for shoot-on-the-move
-          Commands.run(() -> aimAtHubStream.aim(drivebase.getDynamicHubLocation())),
+          // Commands.run(() -> aimAtHubStream.aim(drivebase.getDynamicHubLocation())),
           Commands.sequence(
               Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
                   && aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
@@ -484,15 +484,15 @@ public class RobotContainer {
     POVDOwn_OP_ToggleVision.onTrue(drivebase.VisionToggle());
 
     // ========================
-
+ 
     // SysId: run shooter quasistatic forward.
-    operatorXbox.a().whileTrue(m_shooter.sysIdQuasistaticForward());
-    // SysId: run shooter quasistatic reverse.
-    operatorXbox.b().whileTrue(m_shooter.sysIdQuasistaticReverse());
-    // SysId: run shooter dynamic forward.
-    operatorXbox.x().whileTrue(m_shooter.sysIdDynamicForward());
-    // SysId: run shooter dynamic reverse.
-    operatorXbox.y().whileTrue(m_shooter.sysIdDynamicReverse());
+    // operatorXbox.a().whileTrue(m_shooter.sysIdQuasistaticForward());
+    // // SysId: run shooter quasistatic reverse.
+    // operatorXbox.b().whileTrue(m_shooter.sysIdQuasistaticReverse());
+    // // SysId: run shooter dynamic forward.
+    // operatorXbox.x().whileTrue(m_shooter.sysIdDynamicForward());
+    // // SysId: run shooter dynamic reverse.
+    // operatorXbox.y().whileTrue(m_shooter.sysIdDynamicReverse());
 
     if (RobotBase.isSimulation()) {
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngleKeyboard);
@@ -722,11 +722,11 @@ public class RobotContainer {
     return error <= toleranceDegrees;
   }
 
-  private void onZoneChanged() {
-    if (isInAllianceZone()) {
-      driveAngularVelocity.aim(drivebase.getDynamicHubLocation());
-    } else {
-      driveAngularVelocity.aim(drivebase.getDynamicFerryLocation());
-    }
-  }
+  // private void onZoneChanged() {
+  //   if (isInAllianceZone()) {
+  //     driveAngularVelocity.aim(drivebase.getDynamicHubLocation());
+  //   } else {
+  //     driveAngularVelocity.aim(drivebase.getDynamicFerryLocation());
+  //   }
+  // }
 }
