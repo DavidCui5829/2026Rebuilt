@@ -177,14 +177,15 @@ public final class Configs
                                 ShooterRightMotor1Config.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                                 // Set PID values for position control. We don't need to pass a closed
                                 // loop slot, as it will default to slot 0.
-                                .p(0.000315)
+                              .p(0.0002)
                                 .i(0.0)
-                                .d(0.000009)
+                                .d(0.0)
                                 .outputRange(-1, 1)
                                 .feedForward
-                                .kS(0.10)
-                                .kV(0.0026)
-                                .kA(0.0002)
+                                .kS(0.0)
+                                .kV(0.00017)
+                                .kA(0.0)
+                                ;
                                 ;              
 
                                 ShooterRightMotor1Config.closedLoop
@@ -193,14 +194,15 @@ public final class Configs
                                 ShooterRightMotor2Config.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                                 // Set PID values for position control. We don't need to pass a closed
                                 // loop slot, as it will default to slot 0.
-                                .p(0.000315)
+                             .p(0.0002)
                                 .i(0.0)
-                                .d(0.000009)
+                                .d(0.0)
                                 .outputRange(-1, 1)
                                 .feedForward
-                                .kS(0.10)
-                                .kV(0.0026)
-                                .kA(0.0002)
+                                .kS(0.0)
+                                .kV(0.00017)
+                                .kA(0.0)
+                                ;
                                 ;
 
                                 ShooterRightMotor2Config.closedLoop
@@ -209,14 +211,15 @@ public final class Configs
                                 ShooterLeftMotor1Config.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                                 // Set PID values for position control. We don't need to pass a closed
                                 // loop slot, as it will default to slot 0.
-                                .p(0.000315)
-                                .i(0.000000)
-                                .d(0.000009)
+                               .p(0.0002)
+                                .i(0.0)
+                                .d(0.0)
                                 .outputRange(-1, 1)
                                 .feedForward
-                                .kS(0.10)
-                                .kV(0.0026)
-                                .kA(0.0002)
+                                .kS(0.0)
+                                .kV(0.00017)
+                                .kA(0.0)
+                                ;
                                 ;      
                                 
                                 ShooterLeftMotor1Config.closedLoop
@@ -225,14 +228,14 @@ public final class Configs
                                 ShooterLeftMotor2Config.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                                 // Set PID values for position control. We don't need to pass a closed
                                 // loop slot, as it will default to slot 0.
-                                .p(0.000315)
+                                .p(0.0002)
                                 .i(0.0)
-                                .d(0.000009)
+                                .d(0.0)
                                 .outputRange(-1, 1)
                                 .feedForward
-                                .kS(0.10)
-                                .kV(0.0026)
-                                .kA(0.0002)
+                                .kS(0.0)
+                                .kV(0.00017)
+                                .kA(0.0)
                                 ;
 
                                 ShooterLeftMotor2Config.closedLoop
