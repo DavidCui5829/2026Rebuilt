@@ -16,7 +16,7 @@ public final class Configs
 
                 static {
 
-                        IntakeMotorConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(60).voltageCompensation(12);
+                        IntakeMotorConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(50).voltageCompensation(12);
                         // IntakeRightMotorConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
 
 
