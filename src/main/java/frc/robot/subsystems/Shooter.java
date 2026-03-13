@@ -174,7 +174,7 @@ public class Shooter extends SubsystemBase {
 
     public Command shootFuelCommand() {
 
-        return new RunCommand(() -> shootFuel(), this)
+        return new RunCommand(() -> SpeedUpShooter(), this)
                 .finallyDo(interrupted -> stopShooting());
     }
 
