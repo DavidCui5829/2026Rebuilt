@@ -124,7 +124,7 @@ public class RobotContainer {
       .aimWhile(driverXbox.rightTrigger())
       // .aimWhile(driverXbox.leftTrigger())
       .aimLookahead(Time.ofBaseUnits(0, Seconds))
-      .aimFeedforward(0.0002, 0.0002, 0.00013)
+      .aimFeedforward(0.0001, 0.0001, 0.00013)
 
   ;
 
@@ -486,7 +486,6 @@ public class RobotContainer {
     // ========================
  
     // SysId: run shooter quasistatic forward.
-    operatorXbox.x().whileTrue(m_shooter.sysIdDynamicForward());
     // operatorXbox.a().whileTrue(m_shooter.sysIdQuasistaticForward());
     // // SysId: run shooter quasistatic reverse.
     // operatorXbox.b().whileTrue(m_shooter.sysIdQuasistaticReverse());
