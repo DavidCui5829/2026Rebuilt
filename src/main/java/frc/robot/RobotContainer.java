@@ -123,7 +123,7 @@ public class RobotContainer {
       // .aimLock(Angle.ofBaseUnits(1, Degrees))
       .aimWhile(driverXbox.rightTrigger())
       // .aimWhile(driverXbox.leftTrigger())
-      .aimLookahead(Time.ofBaseUnits(0, Seconds))
+      .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
       .aimFeedforward(0.0001, 0.0001, 0.00013)
 
   ;
