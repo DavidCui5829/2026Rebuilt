@@ -466,7 +466,12 @@ public class RobotContainer {
     LT_OPshootFuel.whileTrue(m_shooter.shootFuelCommand());
 
     // get to shooter
-    RB_OP_kickIndex.whileTrue(Commands.parallel(m_hopper.runHopperToShooterCommand(), m_kicker.kickCommand()));
+    RB_OP_kickIndex.whileTrue(Commands.parallel(
+              m_hopper.runHopperToShooterCommand(),
+              m_intake.runIntakeCommand(),
+              m_kicker.kickCommand(),
+              m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(2.5)).repeatedly()));
+
     LB_OP_unjam.whileTrue(Commands.parallel(m_hopper.runReverseHopperCommand(), m_kicker.kickBackwardsCommand()));
 
     // intake
