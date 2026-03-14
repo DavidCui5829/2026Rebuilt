@@ -158,7 +158,7 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
     public static final double IDLE = 0; // % voltage -1 --> 1
 
     // PID Constants For Shooter
-    public static final double p = 0.0005;
+    public static final double p = 0.00005;
     public static final double i = 0.00025;
     public static final double d = 3;
 
