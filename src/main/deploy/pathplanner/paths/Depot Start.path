@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.112892317679455,
-        "y": 5.961961962353453
+        "x": 2.975192279274668,
+        "y": 6.049525293963876
       },
       "isLocked": false,
       "linkedName": null
@@ -20,8 +20,8 @@
         "y": 5.938496333607106
       },
       "prevControl": {
-        "x": 1.1125046486426307,
-        "y": 5.962706568270642
+        "x": 0.8830389876815884,
+        "y": 5.864426654354953
       },
       "nextControl": null,
       "isLocked": false,
@@ -34,7 +34,7 @@
   "eventMarkers": [
     {
       "name": "extend",
-      "waypointRelativePos": 0,
+      "waypointRelativePos": 0.28629304523969623,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -71,7 +71,7 @@
   "folder": "Week 3 Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }
