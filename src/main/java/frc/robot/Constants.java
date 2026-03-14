@@ -163,9 +163,9 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
     public static final double d = 0;
 
     // Feed-Forward Constants for Shooter
-    public static final double s = 0.100;
+    public static final double s = 0.0;
     public static final double v = 0.00177;
-    public static final double a = 0.00017;
+    public static final double a = 0.0;
 
     public final static InterpolatingDoubleTreeMap TOF = new InterpolatingDoubleTreeMap();
 
