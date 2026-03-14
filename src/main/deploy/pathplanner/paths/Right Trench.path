@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.997138494698977,
-        "y": 0.7399640301130432
+        "x": 3.5730371179804017,
+        "y": 0.55
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.7107771142918913,
-        "y": 0.7821267000821766
+        "x": 4.02859983717865,
+        "y": 0.4094631743820254
       },
       "isLocked": false,
-      "linkedName": "shoot 41"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.9,
-        "y": 0.6228364972741429
+        "x": 2.291174623842593,
+        "y": 0.9747279369212969
       },
       "prevControl": {
-        "x": 3.209667156836461,
-        "y": 0.6323068535876952
+        "x": 2.0540312145092625,
+        "y": 0.8955887973646618
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Right Trench Start Pos"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 52.98626850864021
   },
   "reversed": false,
   "folder": "Week 3 Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 61.31623759980989
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

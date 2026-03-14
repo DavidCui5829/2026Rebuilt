@@ -19,7 +19,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right Trench to Neutral"
+            "pathName": "Start-Intake Path"
           }
         },
         {
@@ -32,6 +32,12 @@
           "type": "named",
           "data": {
             "name": "Control All Shooting"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "extend"
           }
         }
       ]
