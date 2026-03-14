@@ -214,7 +214,7 @@ public class RobotContainer {
   // ========= OPERATOR TRIGGERS ===========
   // Shooter
   private final Trigger LT_OPshootFuel = operatorXbox.rightTrigger(); // just shoot
-  private final Trigger RT_OP_variableshoot = operatorXbox.povRight(); // variable shoot full command
+  private final Trigger RT_OP_1900Shot = operatorXbox.povRight(); // variable shoot full command
 
   // Get to Shooter
   private final Trigger RB_OP_kickIndex = operatorXbox.rightBumper(); // kick and index
@@ -450,7 +450,7 @@ public class RobotContainer {
 
     // ======== Operator ========
     // shooter
-    RT_OP_variableshoot.whileTrue( Commands.parallel(
+    RT_OP_1900Shot.whileTrue( Commands.parallel(
             // keep running the VariableShoot command while we wait for the shooter to reach
             // speed
             m_shooter.shootFuelCommand(),
