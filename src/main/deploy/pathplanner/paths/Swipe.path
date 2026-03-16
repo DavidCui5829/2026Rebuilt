@@ -1,0 +1,244 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.458911568326952,
+        "y": 0.5650810486752176
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.900814661956955,
+        "y": 0.7338220956817456
+      },
+      "isLocked": false,
+      "linkedName": "RT start spc"
+    },
+    {
+      "anchor": {
+        "x": 5.704015217917921,
+        "y": 0.5650810486752176
+      },
+      "prevControl": {
+        "x": 5.33131523774402,
+        "y": 0.47698660851166996
+      },
+      "nextControl": {
+        "x": 6.363143323431435,
+        "y": 0.7208780020965179
+      },
+      "isLocked": false,
+      "linkedName": "RT exit"
+    },
+    {
+      "anchor": {
+        "x": 8.2300269290954,
+        "y": 1.423684027291373
+      },
+      "prevControl": {
+        "x": 7.891611793149287,
+        "y": 0.8316173136025669
+      },
+      "nextControl": {
+        "x": 8.456458881566975,
+        "y": 1.8198330399505849
+      },
+      "isLocked": false,
+      "linkedName": "ballz 1"
+    },
+    {
+      "anchor": {
+        "x": 8.2300269290954,
+        "y": 2.610359432527389
+      },
+      "prevControl": {
+        "x": 8.130028058925053,
+        "y": 2.196887734264422
+      },
+      "nextControl": {
+        "x": 8.288795545321323,
+        "y": 2.853353773504479
+      },
+      "isLocked": false,
+      "linkedName": "ballz 2"
+    },
+    {
+      "anchor": {
+        "x": 8.2300269290954,
+        "y": 3.514615862378651
+      },
+      "prevControl": {
+        "x": 8.533083298671281,
+        "y": 3.496692395838295
+      },
+      "nextControl": {
+        "x": 7.963338677371141,
+        "y": 3.530388432884842
+      },
+      "isLocked": false,
+      "linkedName": "ballz 3"
+    },
+    {
+      "anchor": {
+        "x": 8.2300269290954,
+        "y": 2.610359432527389
+      },
+      "prevControl": {
+        "x": 8.221418573358438,
+        "y": 2.8649625982099605
+      },
+      "nextControl": {
+        "x": 8.244059835717037,
+        "y": 2.1953182145796166
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.282822604770774,
+        "y": 0.8671282781953449
+      },
+      "prevControl": {
+        "x": 7.7083401031114125,
+        "y": 1.2026449918372468
+      },
+      "nextControl": {
+        "x": 6.880405091741026,
+        "y": 0.549825694846344
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.704015217917921,
+        "y": 0.5650810486752176
+      },
+      "prevControl": {
+        "x": 6.70473645656986,
+        "y": 0.6109744180553472
+      },
+      "nextControl": {
+        "x": 5.160566325745813,
+        "y": 0.5401583231604936
+      },
+      "isLocked": false,
+      "linkedName": "RT exit"
+    },
+    {
+      "anchor": {
+        "x": 4.458911568326952,
+        "y": 0.5650810486752176
+      },
+      "prevControl": {
+        "x": 4.976703256317513,
+        "y": 0.5907885876525395
+      },
+      "nextControl": {
+        "x": 3.8556489643908556,
+        "y": 0.5351300138016515
+      },
+      "isLocked": false,
+      "linkedName": "RT start spc"
+    },
+    {
+      "anchor": {
+        "x": 3.9160878203864273,
+        "y": 0.5650810486752176
+      },
+      "prevControl": {
+        "x": 4.165634867529627,
+        "y": 0.5801233643915573
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 90.0
+    },
+    {
+      "waypointRelativePos": 2.0,
+      "rotationDegrees": 81.98270280267339
+    },
+    {
+      "waypointRelativePos": 3,
+      "rotationDegrees": 76.60480817940118
+    },
+    {
+      "waypointRelativePos": 4,
+      "rotationDegrees": 90.0
+    },
+    {
+      "waypointRelativePos": 7,
+      "rotationDegrees": 90.0
+    },
+    {
+      "waypointRelativePos": 8,
+      "rotationDegrees": 90.0
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Intake Slow",
+      "minWaypointRelativePos": 2.0,
+      "maxWaypointRelativePos": 4.0,
+      "constraints": {
+        "maxVelocity": 2.0,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "extend",
+      "waypointRelativePos": 1.2290671719269104,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "extend"
+        }
+      }
+    },
+    {
+      "name": "intake",
+      "waypointRelativePos": 1.4849719684385363,
+      "endWaypointRelativePos": 6.126764950166113,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "intake"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.5,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 78.45334836254014
+  },
+  "reversed": false,
+  "folder": "Spc Cty Paths",
+  "idealStartingState": {
+    "velocity": 0.0,
+    "rotation": 90.0
+  },
+  "useDefaultConstraints": false
+}

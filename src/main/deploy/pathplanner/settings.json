@@ -3,6 +3,7 @@
   "robotLength": 0.87,
   "holonomicMode": true,
   "pathFolders": [
+    "Spc Cty Paths",
     "Test",
     "Week 3 Paths"
   ],
