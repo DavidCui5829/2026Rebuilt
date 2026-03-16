@@ -1,0 +1,300 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.037857121416857,
+        "y": 0.7290875787629421
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.350899642678778,
+        "y": 0.809791602362659
+      },
+      "isLocked": false,
+      "linkedName": "RT shoot spc"
+    },
+    {
+      "anchor": {
+        "x": 4.458911568326952,
+        "y": 0.7290875787629421
+      },
+      "prevControl": {
+        "x": 3.962959144980648,
+        "y": 0.5845972342145264
+      },
+      "nextControl": {
+        "x": 5.033072055893103,
+        "y": 0.8963629922285423
+      },
+      "isLocked": false,
+      "linkedName": "RT start spc"
+    },
+    {
+      "anchor": {
+        "x": 5.069094332251077,
+        "y": 0.7290875787629421
+      },
+      "prevControl": {
+        "x": 4.428935226272909,
+        "y": 0.7160663923154625
+      },
+      "nextControl": {
+        "x": 5.704159203298616,
+        "y": 0.74200514568487
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.704015217917921,
+        "y": 0.7290875787629421
+      },
+      "prevControl": {
+        "x": 5.357187755406131,
+        "y": 0.667895422924967
+      },
+      "nextControl": {
+        "x": 6.3354167528165375,
+        "y": 0.8404882759281486
+      },
+      "isLocked": false,
+      "linkedName": "RT exit"
+    },
+    {
+      "anchor": {
+        "x": 6.2032026186360865,
+        "y": 1.4778212458564235
+      },
+      "prevControl": {
+        "x": 6.109663397819276,
+        "y": 1.2459798902509494
+      },
+      "nextControl": {
+        "x": 6.517672003264327,
+        "y": 2.2572483972907187
+      },
+      "isLocked": false,
+      "linkedName": "balls 1"
+    },
+    {
+      "anchor": {
+        "x": 6.49792513021016,
+        "y": 2.6944225238819444
+      },
+      "prevControl": {
+        "x": 6.440886379461522,
+        "y": 2.397447088144311
+      },
+      "nextControl": {
+        "x": 6.6386223243421485,
+        "y": 3.4269703091331327
+      },
+      "isLocked": false,
+      "linkedName": "balls 2"
+    },
+    {
+      "anchor": {
+        "x": 6.829914424191641,
+        "y": 3.7324698350696544
+      },
+      "prevControl": {
+        "x": 6.952408317247758,
+        "y": 3.973952776537858
+      },
+      "nextControl": {
+        "x": 6.716818520266969,
+        "y": 3.509513972811087
+      },
+      "isLocked": false,
+      "linkedName": "balls 3"
+    },
+    {
+      "anchor": {
+        "x": 6.49792513021016,
+        "y": 2.6944225238819444
+      },
+      "prevControl": {
+        "x": 6.393946201501283,
+        "y": 2.275001728802809
+      },
+      "nextControl": {
+        "x": 6.558081777492602,
+        "y": 2.9370769649864417
+      },
+      "isLocked": false,
+      "linkedName": "balls 2"
+    },
+    {
+      "anchor": {
+        "x": 6.2032026186360865,
+        "y": 1.4778212458564235
+      },
+      "prevControl": {
+        "x": 6.142959832299124,
+        "y": 1.2351881757807244
+      },
+      "nextControl": {
+        "x": 6.267354903275701,
+        "y": 1.7362001609254578
+      },
+      "isLocked": false,
+      "linkedName": "balls 1"
+    },
+    {
+      "anchor": {
+        "x": 5.704015217917921,
+        "y": 0.7290875787629421
+      },
+      "prevControl": {
+        "x": 6.169238276287485,
+        "y": 0.8517981118791903
+      },
+      "nextControl": {
+        "x": 5.243184002573863,
+        "y": 0.6075354693089079
+      },
+      "isLocked": false,
+      "linkedName": "RT exit"
+    },
+    {
+      "anchor": {
+        "x": 5.069094332251077,
+        "y": 0.7290875787629421
+      },
+      "prevControl": {
+        "x": 5.571530300716895,
+        "y": 0.7786634198023944
+      },
+      "nextControl": {
+        "x": 4.577820806463179,
+        "y": 0.6806131466960644
+      },
+      "isLocked": false,
+      "linkedName": "RT middle spc"
+    },
+    {
+      "anchor": {
+        "x": 4.458911568326952,
+        "y": 0.7290875787629421
+      },
+      "prevControl": {
+        "x": 4.695282541043332,
+        "y": 0.6476703615597439
+      },
+      "nextControl": {
+        "x": 4.075814875513685,
+        "y": 0.861043995788946
+      },
+      "isLocked": false,
+      "linkedName": "RT start spc"
+    },
+    {
+      "anchor": {
+        "x": 4.037857121416857,
+        "y": 0.7290875787629421
+      },
+      "prevControl": {
+        "x": 3.8277010405383822,
+        "y": 0.5936829197965681
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "RT shoot spc"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": -90.0
+    },
+    {
+      "waypointRelativePos": 2,
+      "rotationDegrees": -90.0
+    },
+    {
+      "waypointRelativePos": 3.0,
+      "rotationDegrees": -90.0
+    },
+    {
+      "waypointRelativePos": 4.0,
+      "rotationDegrees": 80.0
+    },
+    {
+      "waypointRelativePos": 5.0,
+      "rotationDegrees": 80.0
+    },
+    {
+      "waypointRelativePos": 6.0,
+      "rotationDegrees": 53.293072437448515
+    },
+    {
+      "waypointRelativePos": 9.0,
+      "rotationDegrees": -90.0
+    },
+    {
+      "waypointRelativePos": 10,
+      "rotationDegrees": -90.0
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "intake slow",
+      "minWaypointRelativePos": 3.75,
+      "maxWaypointRelativePos": 5.8,
+      "constraints": {
+        "maxVelocity": 2.8,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "intake",
+      "waypointRelativePos": 3.176754568106312,
+      "endWaypointRelativePos": 8.879931478405325,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "intake"
+        }
+      }
+    },
+    {
+      "name": "extend",
+      "waypointRelativePos": 3.2169331395348837,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "extend"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.5,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -99.77499999999998
+  },
+  "reversed": false,
+  "folder": "Spc Cty Paths",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -99.77499999999998
+  },
+  "useDefaultConstraints": false
+}
