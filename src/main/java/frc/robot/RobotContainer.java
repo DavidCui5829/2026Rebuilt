@@ -280,7 +280,7 @@ public class RobotContainer {
           // Commands.run(() -> aimAtHubStream.aim(drivebase.getDynamicHubLocation())),
           Commands.sequence(
               Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
-                  && aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
+                  && aimAtHubStream.aimLock(Angle.ofBaseUnits(100, Degrees)).getAsBoolean()),
               Commands.parallel(
                   m_hopper.runHopperToShooterCommand(),
                   m_kicker.kickCommand(),
