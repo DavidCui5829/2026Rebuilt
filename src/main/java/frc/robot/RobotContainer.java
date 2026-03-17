@@ -284,9 +284,9 @@ public class RobotContainer {
               Commands.parallel(
                   m_hopper.runHopperToShooterCommand(),
                   m_kicker.kickCommand(),
-                  m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(0.5)).repeatedly(),
+                  // m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(0.5)).repeatedly(),
                   m_intake.runIntakeCommand()
-              ).onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)))
+              ).onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(100, Degrees)))
           ).finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(4.75))
       );
     }, java.util.Collections.emptySet()).withTimeout(5));
