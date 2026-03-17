@@ -5,9 +5,34 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Start 90 degs 1m"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Start 90 degs 1m"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "extend"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aim at hub"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Control All Shooting"
           }
         }
       ]
