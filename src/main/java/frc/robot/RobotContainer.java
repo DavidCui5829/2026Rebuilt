@@ -287,7 +287,7 @@ public class RobotContainer {
                   m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(0.5)).repeatedly(),
                   m_intake.runIntakeCommand()
               ).onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)))
-          ).finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1))
+          ).finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(4.75))
       );
     }, java.util.Collections.emptySet()).withTimeout(5));
     NamedCommands.registerCommand("speed up shooter", m_shooter.SpeedUpShooterCommand().withTimeout(15));
@@ -508,6 +508,7 @@ public class RobotContainer {
             drivebase.run(() -> drivebase.drive(driveRobotOriented.get())));
       } else {
         drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
+        m_shooter.setDefaultCommand(m_shooter.SpeedUpShooterCommand());
       }
     }
 
