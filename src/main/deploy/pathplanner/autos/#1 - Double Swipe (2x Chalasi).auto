@@ -9,7 +9,9 @@
           "data": {
             "commands": [
               {
+                "type": "path",
                 "data": {
+                  "pathName": "RT Swipe"
                 }
               },
               {
