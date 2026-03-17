@@ -9,6 +9,12 @@
           "data": {
             "pathName": "3 mps (2 meters)"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3 mps 180 rotation"
+          }
         }
       ]
     }
