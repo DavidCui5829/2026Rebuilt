@@ -215,7 +215,7 @@
     },
     {
       "waypointRelativePos": 7,
-      "rotationDegrees": 99.53936210106303
+      "rotationDegrees": 99.53936210106305
     },
     {
       "waypointRelativePos": 8,
@@ -283,7 +283,7 @@
     "rotation": 100.489
   },
   "reversed": false,
-  "folder": "Spc Cty Paths",
+  "folder": "Space City Paths",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 100.489

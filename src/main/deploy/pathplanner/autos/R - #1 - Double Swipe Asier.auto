@@ -5,41 +5,15 @@
     "data": {
       "commands": [
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "RT Swipe"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "speed up shooter"
-                }
-              }
-            ]
+            "pathName": "RT Swipe"
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "aim at hub"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "speed up shooter"
-                }
-              }
-            ]
+            "name": "aim at hub"
           }
         },
         {
@@ -49,41 +23,15 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "RT Second Swipe"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "speed up shooter"
-                }
-              }
-            ]
+            "pathName": "RT Second Swipe"
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "aim at hub"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "speed up shooter"
-                }
-              }
-            ]
+            "name": "aim at hub"
           }
         },
         {

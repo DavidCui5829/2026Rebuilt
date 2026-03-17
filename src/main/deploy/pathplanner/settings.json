@@ -3,9 +3,9 @@
   "robotLength": 0.87,
   "holonomicMode": true,
   "pathFolders": [
-    "Spc Cty Paths",
+    "Space City Paths",
     "Test",
-    "Week 3 Paths"
+    "McAllen Paths"
   ],
   "autoFolders": [
     "Space City Autos",
