@@ -280,13 +280,13 @@ public class RobotContainer {
           // Commands.run(() -> aimAtHubStream.aim(drivebase.getDynamicHubLocation())),
           Commands.sequence(
               Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
-                  && aimAtHubStream.aimLock(Angle.ofBaseUnits(100, Degrees)).getAsBoolean()),
+                  && aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
               Commands.parallel(
                   m_hopper.runHopperToShooterCommand(),
                   m_kicker.kickCommand(),
-                  // m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(0.5)).repeatedly(),
+                  m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(0.5)).repeatedly(),
                   m_intake.runIntakeCommand()
-              ).onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(100, Degrees)))
+              ).onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)))
           ).finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(4.75))
       );
     }, java.util.Collections.emptySet()).withTimeout(5));
