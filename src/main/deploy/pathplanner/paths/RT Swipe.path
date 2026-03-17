@@ -144,12 +144,12 @@
     },
     {
       "anchor": {
-        "x": 4.037857121416857,
+        "x": 4.010387079637285,
         "y": 0.7290875787629421
       },
       "prevControl": {
-        "x": 4.287845723827294,
-        "y": 0.726700391112905
+        "x": 4.260375686689624,
+        "y": 0.726700877266921
       },
       "nextControl": null,
       "isLocked": false,
@@ -240,7 +240,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -99.77499999999998
+    "rotation": -100.516
   },
   "reversed": false,
   "folder": "Spc Cty Paths",

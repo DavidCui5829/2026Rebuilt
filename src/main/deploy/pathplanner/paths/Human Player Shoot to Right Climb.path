@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.641742941978193,
-        "y": 2.230285630841121
+        "x": 1.3594767433085944,
+        "y": 1.4270487373110234
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9853852442309115,
-        "y": 2.161704691099134
+        "x": 1.7031190455613128,
+        "y": 1.3584677975690367
       },
       "isLocked": false,
       "linkedName": "Human Player Shoot"
@@ -48,7 +48,7 @@
   "folder": "Week 3 Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 30.761744076942353
+    "rotation": -141.784
   },
   "useDefaultConstraints": true
 }
