@@ -7,13 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": null
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "aim at hub"
+            "pathName": "Start 90 degs 1m"
           }
         }
       ]
