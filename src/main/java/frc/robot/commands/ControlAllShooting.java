@@ -31,7 +31,7 @@ import java.util.function.BooleanSupplier;
 public class ControlAllShooting extends Command
 {
 
-  private final Pose2d goalPose;
+  private final Supplier<Pose2d> goalPoseSupplier;
   private final Shooter m_shooter;
   private final Supplier<Pose2d> robotPoseSupplier;
   // private final Hopper m_hopper;
@@ -59,11 +59,11 @@ public class ControlAllShooting extends Command
   
   
 
-  public ControlAllShooting(Pose2d goalPoseSupplier, Shooter shooter, Supplier<Pose2d> robotPoseSupplier)
+  public ControlAllShooting(Supplier<Pose2d> goalPoseSupplier, Shooter shooter, Supplier<Pose2d> robotPoseSupplier)
 
   {
 
-    this.goalPose = goalPoseSupplier;
+    this.goalPoseSupplier = goalPoseSupplier;
     this.m_shooter = shooter;
     this.robotPoseSupplier = robotPoseSupplier;
     // this.m_swerveSubsystem = swerveSubsystem;
@@ -82,11 +82,11 @@ public class ControlAllShooting extends Command
     for (var entry : List.of(
       // Pair.of(Meters.of(1), RPM.of((1000))),
                             Pair.of(Meters.of(2), RPM.of(1700)),
-                            Pair.of(Meters.of(2.5), RPM.of(1815)),
-                            Pair.of(Meters.of(3), RPM.of(1930)),
+                            Pair.of(Meters.of(2.5), RPM.of(1835)),
+                            Pair.of(Meters.of(3), RPM.of(1950)),
                             Pair.of(Meters.of(3.5), RPM.of(2090)),
                             // Pair.of(Meters.of(3.5), RPM.of(2050),
-                            Pair.of(Meters.of(4), RPM.of(2260)),
+                            Pair.of(Meters.of(4), RPM.of(2220)),
                             Pair.of(Meters.of(5.2048), RPM.of(2456.918)),
                             Pair.of(Meters.of(6), RPM.of(2600))
                             
@@ -130,7 +130,7 @@ public class ControlAllShooting extends Command
     //                                                                );
 
     // 2. GET TARGET VECTOR
-    Translation2d goalLocation = goalPose.getTranslation();
+    Translation2d goalLocation = goalPoseSupplier.get().getTranslation();
     Translation2d robotLocation = robotPoseSupplier.get().getTranslation();
     Translation2d targetVec = goalLocation.minus(robotLocation);
     double        dist         = targetVec.getNorm();

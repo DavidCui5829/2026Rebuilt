@@ -8,11 +8,11 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8140522666378265,
-        "y": 4.010061340978027
+        "x": 1.8123871053205112,
+        "y": 3.973505095031518
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "climber"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 3.991
       },
       "prevControl": {
-        "x": 1.2774192681283987,
-        "y": 3.969110927701416
+        "x": 1.283403270759493,
+        "y": 4.010676343982023
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.5,
-    "maxAcceleration": 3.5,
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
