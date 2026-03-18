@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.0,
-        "y": 7.0
+        "x": 3.0,
+        "y": 3.756818830242511
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.0,
-        "y": 7.0
+        "x": 1.6414407988587731,
+        "y": 3.5886162624821685
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 11.931640513552068,
-        "y": 4.028530670470756
+        "x": 3.0,
+        "y": 4.6495863052781745
       },
       "prevControl": {
-        "x": 10.931640513552068,
-        "y": 4.028530670470756
+        "x": 1.7837660485021396,
+        "y": 4.778972895863053
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,7 +48,7 @@
   "folder": "Space City Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }
