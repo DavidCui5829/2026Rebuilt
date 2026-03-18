@@ -21,6 +21,12 @@
           "data": {
             "name": "Control All Shooting"
           }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
+          }
         }
       ]
     }
