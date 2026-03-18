@@ -40,9 +40,9 @@ public class HubTrackerSubsystem extends SubsystemBase
         Alliance alliance = DriverStation.getAlliance().orElse(Alliance.Blue);
         hubPose = switch (alliance)
         {
-            case Blue -> new Pose2d(1.9, 4.1, new Rotation2d());
-            case Red -> new Pose2d(16.54 - 1.9, 4.1, new Rotation2d());
-            default -> new Pose2d(1.9, 4.1, new Rotation2d());
+            case Blue -> new Pose2d(4.6, 4, new Rotation2d());
+            case Red -> new Pose2d(11.9, 4, new Rotation2d());
+            default -> new Pose2d(4.6, 4.1, new Rotation2d());
         };
         SmartDashboard.putData("Field", field);
         this.driverController = driverController;
