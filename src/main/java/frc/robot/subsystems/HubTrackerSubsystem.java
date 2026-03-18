@@ -27,7 +27,7 @@ public class HubTrackerSubsystem extends SubsystemBase
 
     final CommandXboxController driverController;
 
-    private final Pose2d hubPose;
+    private Pose2d hubPose;
     private double radius = 1; // radius to represent time left (circle gets smaller when shift ending)
 
     boolean show = false;
@@ -81,36 +81,48 @@ public class HubTrackerSubsystem extends SubsystemBase
 
         if (matchTime >= 130) // transition shift, always active
         {
-            radius = (140 - matchTime) / 10;
+            int seconds = (140 - (int)matchTime);
+            SmartDashboard.putNumber("TimeLeft", seconds);
+            radius = seconds / 10.0;
             vibrate(radius);
             return true;
         } 
         else if (matchTime >= 105) { // shift 1
-            radius = (130 - matchTime) / 15;
+            int seconds = (130 - (int)matchTime);
+            SmartDashboard.putNumber("TimeLeft", seconds);
+            radius = seconds / 15.0;
             vibrate(radius);
             return shiftOneActive;
         } 
         else if (matchTime >= 80) // shift 2
         {
-            radius = (105 - matchTime) / 15;
+            int seconds = (105 - (int)matchTime);
+            SmartDashboard.putNumber("TimeLeft", seconds);
+            radius = seconds / 15.0;
             vibrate(radius);
             return !shiftOneActive;
         } 
         else if (matchTime >= 55) // shift 3
         {
-            radius = (80 - matchTime) / 15;
+            int seconds = (80 - (int)matchTime);
+            SmartDashboard.putNumber("TimeLeft", seconds);
+            radius = seconds / 15.0;
             vibrate(radius);
             return shiftOneActive;
         } 
         else if (matchTime >= 30) // shift 4
         {
-            radius = (55 - matchTime) / 15;
+            int seconds = (55 - (int)matchTime);
+            SmartDashboard.putNumber("TimeLeft", seconds);
+            radius = seconds / 15.0;
             vibrate(radius);
             return !shiftOneActive;
         } 
         else
         {
-            radius = matchTime / 30;
+            int seconds = (int)matchTime;
+            SmartDashboard.putNumber("TimeLeft", seconds);
+            radius = seconds / 30.0;
             vibrate(radius);
             return true; // Endgame, always active
         }
@@ -128,8 +140,9 @@ public class HubTrackerSubsystem extends SubsystemBase
   {
     if(r <= 0.15)
     {
-        driverController.setRumble(RumbleType.kBothRumble, 0.3);
+        driverController.setRumble(RumbleType.kBothRumble, 0.3 * Math.pow((1.0 - r), 2));
     }
+    else driverController.setRumble(RumbleType.kBothRumble, 0);
   }
 
   public List<Pose2d> createCircle(Pose2d center, double r, int pts)
@@ -170,5 +183,4 @@ public class HubTrackerSubsystem extends SubsystemBase
   {
     runPeriodic();
   }
-
 }
