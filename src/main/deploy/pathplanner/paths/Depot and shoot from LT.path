@@ -28,7 +28,7 @@
         "y": 5.86624481052071
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "depot setup"
     },
     {
       "anchor": {
@@ -125,7 +125,7 @@
   "reversed": false,
   "folder": "Space City Paths",
   "idealStartingState": {
-    "velocity": 0,
+    "velocity": 3.0,
     "rotation": 100.489
   },
   "useDefaultConstraints": false
