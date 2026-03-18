@@ -18,6 +18,7 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.Time;
 import edu.wpi.first.wpilibj.DriverStation;
+import java.util.Optional;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -39,6 +40,7 @@ import frc.robot.commands.ControlAllShooting;
 import frc.robot.commands.ControllAllPassing;
 // import frc.robot.Constants.DrivebaseConstants;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.util.HubTracker;
 import frc.robot.utils.FuelSim;
 
 import static edu.wpi.first.units.Units.Seconds;
@@ -54,6 +56,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Kicker;
 import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.HubTrackerSubsystem;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Pushout;
@@ -83,6 +86,9 @@ public class RobotContainer {
   private final Climber m_climber = new Climber();
   private final Kicker m_kicker = new Kicker();
   private final Pushout m_pushout = new Pushout();
+
+  // Helper Subsystems
+  private final HubTrackerSubsystem m_hubtracker = new HubTrackerSubsystem(drivebase);
 
   // private final ObjectDetection m_ObjectDetection = new ObjectDetection();
 
