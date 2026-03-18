@@ -163,12 +163,15 @@ public class HubTrackerSubsystem extends SubsystemBase
 
   public void runPeriodic()
   {
+
     field.setRobotPose(drivebase.getPose());
+    boolean active = isHubActive();
     x = (x == 1) ? 0 : 1;
     // Ok so this is a really weird (but genius) line of code i came up with (yk it aint AI because AI wouldn't make something like this lol)
     // essentially, the circle will be shown either when it is an INACTIVE hub, or every other frame of active shift
     // this way, if it is active, it blinks. this is my workaround for not being able to change color of circle
-    if(!isHubActive() || x == 0) circle.setPoses(createCircle(hubPose, radius, 20));
+    SmartDashboard.putBoolean("HubActivity", active);
+    if(!active || x == 0) circle.setPoses(createCircle(hubPose, radius, 20));
     else circle.setPoses(); // clears circle when not showing
   }
 
