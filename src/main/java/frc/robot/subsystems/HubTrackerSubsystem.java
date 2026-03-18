@@ -2,7 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
 import java.util.ArrayList;
@@ -13,6 +13,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,13 +25,15 @@ public class HubTrackerSubsystem extends SubsystemBase
     private final SwerveSubsystem drivebase;
     private FieldObject2d circle;
 
+    final CommandXboxController driverController;
+
     private final Pose2d hubPose;
     private double radius = 1; // radius to represent time left (circle gets smaller when shift ending)
 
     boolean show = false;
     int x = 0;
     
-    public HubTrackerSubsystem(SwerveSubsystem drivebase)
+    public HubTrackerSubsystem(SwerveSubsystem drivebase, CommandXboxController driverController)
     {
         this.drivebase = drivebase;
         circle = field.getObject("Circle"); 
@@ -42,6 +45,7 @@ public class HubTrackerSubsystem extends SubsystemBase
             default -> new Pose2d(1.9, 4.1, new Rotation2d());
         };
         SmartDashboard.putData("Field", field);
+        this.driverController = driverController;
     }
 
     public boolean isHubActive() {
@@ -78,30 +82,36 @@ public class HubTrackerSubsystem extends SubsystemBase
         if (matchTime >= 130) // transition shift, always active
         {
             radius = (140 - matchTime) / 10;
+            vibrate(radius);
             return true;
         } 
         else if (matchTime >= 105) { // shift 1
             radius = (130 - matchTime) / 15;
+            vibrate(radius);
             return shiftOneActive;
         } 
         else if (matchTime >= 80) // shift 2
         {
             radius = (105 - matchTime) / 15;
+            vibrate(radius);
             return !shiftOneActive;
         } 
         else if (matchTime >= 55) // shift 3
         {
             radius = (80 - matchTime) / 15;
+            vibrate(radius);
             return shiftOneActive;
         } 
         else if (matchTime >= 30) // shift 4
         {
             radius = (55 - matchTime) / 15;
+            vibrate(radius);
             return !shiftOneActive;
         } 
         else
         {
             radius = matchTime / 30;
+            vibrate(radius);
             return true; // Endgame, always active
         }
   }
@@ -113,6 +123,14 @@ public class HubTrackerSubsystem extends SubsystemBase
 //         isHubActive();
 //     });
 //   }
+
+  private void vibrate(double r)
+  {
+    if(r <= 0.15)
+    {
+        driverController.setRumble(RumbleType.kBothRumble, 0.3);
+    }
+  }
 
   public List<Pose2d> createCircle(Pose2d center, double r, int pts)
   {

@@ -88,7 +88,7 @@ public class RobotContainer {
   private final Pushout m_pushout = new Pushout();
 
   // Helper Subsystems
-  private final HubTrackerSubsystem m_hubtracker = new HubTrackerSubsystem(drivebase);
+  private final HubTrackerSubsystem m_hubtracker = new HubTrackerSubsystem(drivebase, driverXbox);
 
   // private final ObjectDetection m_ObjectDetection = new ObjectDetection();
 
