@@ -315,8 +315,14 @@ public class RobotContainer {
     NamedCommands.registerCommand("climb down", m_climber.runClimberDownCommand().withTimeout(4));
 
     NamedCommands.registerCommand("aim at hub",
-        drivebase.driveFieldOriented(aimAtHubStream)
-            .until(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees))));
+            Commands.sequence
+            (Commands.runOnce(() -> drivebase.shouldAimAtHubAuto = true),
+            Commands.waitUntil(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees))),(Commands.runOnce(() -> drivebase.shouldAimAtHubAuto = false))));
+
+
+            // Commands.sequence
+            // (Commands.runOnce(() -> drivebase.shouldAimAtHubAuto = true), drivebase.driveFieldOriented(aimAtHubStream)
+            // .until(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees))),(Commands.runOnce(() -> drivebase.shouldAimAtHubAuto = false))));
 
     NamedCommands.registerCommand("aim at ferry",
         drivebase.driveFieldOriented(aimAtFerryStream)

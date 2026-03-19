@@ -54,11 +54,20 @@ public class HubTrackerSubsystem extends SubsystemBase
         if (alliance.isEmpty()) return false;
         if(!DriverStation.isFMSAttached()) return false;
 
-        if (DriverStation.isAutonomousEnabled()) return true; // Always enabled in auton
+        double matchTime = DriverStation.getMatchTime();
+
+        if (DriverStation.isAutonomousEnabled()) // Always enabled in auton
+        {
+            int seconds = (20 - (int)matchTime);
+            SmartDashboard.putNumber("TimeLeft", seconds);
+            radius = seconds / 20.0;
+            vibrate(radius);
+            return true;
+        }
 
         if (!DriverStation.isTeleopEnabled()) return false; // If we're disabled then were probably not playing
 
-        double matchTime = DriverStation.getMatchTime();
+        
         String gameData = DriverStation.getGameSpecificMessage();
 
         if (gameData.isEmpty()) return true;

@@ -44,7 +44,9 @@ import frc.robot.LimelightHelpers;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.http.HttpResponse.PushPromiseHandler;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
@@ -77,6 +79,8 @@ public class SwerveSubsystem extends SubsystemBase {
   public boolean useMegaTag2 = true; // MT1 during disabled, MT2 during auto/teleop
   
   public boolean useMegaTag1 = false; // MT1 during disabled, MT2 during auto/teleop
+
+  public boolean shouldAimAtHubAuto = false;
 
 
   public boolean useBLeftLimelight = true;
@@ -359,6 +363,14 @@ public class SwerveSubsystem extends SubsystemBase {
           this
       // Reference to this subsystem to set requirements
       );
+      PPHolonomicDriveController.setRotationTargetOverride(() ->
+      {
+        if (shouldAimAtHubAuto)
+        {
+          return Optional.of(getDynamicHubLocation().getRotation());
+        }
+        return Optional.empty();
+      });
 
     } catch (Exception e) {
       // Handle exception as needed
@@ -964,7 +976,9 @@ public class SwerveSubsystem extends SubsystemBase {
       CompensatedHub = hubVec.minus(robotVel.times(tof));
     }
 
-    return new Pose2d(CompensatedHub, new Rotation2d());
+    Rotation2d aimRotation = CompensatedHub.minus(robotVec).getAngle();
+
+    return new Pose2d(CompensatedHub, aimRotation);
   }
 
   /**
