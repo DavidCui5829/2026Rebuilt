@@ -970,7 +970,7 @@ public class SwerveSubsystem extends SubsystemBase {
     Translation2d robotVel = new Translation2d(vel.vxMetersPerSecond, vel.vyMetersPerSecond);
 
     Translation2d CompensatedHub = hubVec;
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 15; i++) {
       double distance = CompensatedHub.minus(robotVec).getNorm();
       double tof = Constants.ShooterConstants.TOF.get(distance);
       CompensatedHub = hubVec.minus(robotVel.times(tof));
