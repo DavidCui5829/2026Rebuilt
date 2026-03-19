@@ -5,9 +5,22 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "2m start by hub"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "2m start by hub"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aim at hub"
+                }
+              }
+            ]
           }
         }
       ]
