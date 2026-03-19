@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.6919377404832963,
-        "y": 4.764187016528425
+        "x": 2.691539351746673,
+        "y": 4.774452232811123
       },
       "isLocked": false,
       "linkedName": null
@@ -20,8 +20,8 @@
         "y": 5.993
       },
       "prevControl": {
-        "x": 2.6968931819650996,
-        "y": 5.709955309500654
+        "x": 2.6976048536960477,
+        "y": 5.7383175539198765
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,7 +31,19 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "SOTM",
+      "waypointRelativePos": 0.4564483457123505,
+      "endWaypointRelativePos": 1.0,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "aim at hub"
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.5,
     "maxAcceleration": 3.5,
