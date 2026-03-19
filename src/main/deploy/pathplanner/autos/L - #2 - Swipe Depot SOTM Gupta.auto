@@ -7,32 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LT Swipe with 3mps end Velocity"
+            "pathName": "LT Swipe with Depot"
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Depot and shoot from LT"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "aim at hub"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Control All Shooting"
-                }
-              }
-            ]
+            "name": "aim at hub"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Control All Shooting"
           }
         }
       ]
