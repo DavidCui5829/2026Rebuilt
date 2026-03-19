@@ -52,6 +52,7 @@ public class HubTrackerSubsystem extends SubsystemBase
         Optional<Alliance> alliance = DriverStation.getAlliance();
 
         if (alliance.isEmpty()) return false;
+        if(!DriverStation.isFMSAttached()) return false;
 
         if (DriverStation.isAutonomousEnabled()) return true; // Always enabled in auton
 
@@ -138,9 +139,9 @@ public class HubTrackerSubsystem extends SubsystemBase
 
   private void vibrate(double r)
   {
-    if(r <= 0.15)
+    if(r <= 0.15 && DriverStation.isFMSAttached())
     {
-        driverController.setRumble(RumbleType.kBothRumble, 0.3 * Math.pow((1.0 - r), 2));
+        driverController.setRumble(RumbleType.kBothRumble, 0.15 * Math.pow((1.0 - r), 2));
     }
     else driverController.setRumble(RumbleType.kBothRumble, 0);
   }
