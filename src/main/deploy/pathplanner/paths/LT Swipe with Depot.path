@@ -296,30 +296,6 @@
       "waypointRelativePos": 1.3884966777408616,
       "endWaypointRelativePos": 6.590220099667782,
       "command": null
-    },
-    {
-      "name": "SOTM",
-      "waypointRelativePos": 8.929921096345515,
-      "endWaypointRelativePos": 10.03685631229236,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "aim at hub"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "Control All Shooting"
-              }
-            }
-          ]
-        }
-      }
     }
   ],
   "globalConstraints": {
