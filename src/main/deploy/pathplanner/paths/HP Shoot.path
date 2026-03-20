@@ -8,27 +8,11 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.7219019016973518,
-        "y": 0.8565585833987075
+        "x": 1.3881462610345392,
+        "y": 1.3982423472688366
       },
       "isLocked": false,
       "linkedName": "Human Player"
-    },
-    {
-      "anchor": {
-        "x": 1.0397849392361116,
-        "y": 1.5197546296296296
-      },
-      "prevControl": {
-        "x": 0.9090223959324298,
-        "y": 1.3066791564546234
-      },
-      "nextControl": {
-        "x": 1.3707304029661316,
-        "y": 2.0590249703389665
-      },
-      "isLocked": false,
-      "linkedName": null
     },
     {
       "anchor": {
@@ -36,8 +20,8 @@
         "y": 1.787093998423793
       },
       "prevControl": {
-        "x": 1.588348631718949,
-        "y": 1.5636997530988292
+        "x": 0.8191002625041904,
+        "y": 1.0360937619463062
       },
       "nextControl": null,
       "isLocked": false,
@@ -61,7 +45,7 @@
     "rotation": -141.784
   },
   "reversed": false,
-  "folder": "McAllen Paths",
+  "folder": "Space City Paths",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0

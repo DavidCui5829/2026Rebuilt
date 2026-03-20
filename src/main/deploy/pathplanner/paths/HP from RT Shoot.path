@@ -3,78 +3,58 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.010387079637285,
+        "x": 4.021972416302811,
         "y": 0.7290875787629421
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.762299149519733,
-        "y": 0.6982269415370386
+        "x": 3.4500120019286205,
+        "y": 0.747518607104728
       },
       "isLocked": false,
       "linkedName": "RT shoot spc"
     },
     {
       "anchor": {
-        "x": 2.6759319642446644,
-        "y": 0.7290875787629421
+        "x": 2.703030341968202,
+        "y": 0.9635542163514252
       },
       "prevControl": {
-        "x": 3.344098360077102,
-        "y": 0.8451645968798764
+        "x": 3.2152724618835764,
+        "y": 1.0460243157695759
       },
       "nextControl": {
-        "x": 1.761044728244733,
-        "y": 0.5701490524759238
+        "x": 1.259997543659363,
+        "y": 0.7312284201833107
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.6115309752151645,
-        "y": 0.6279845575850322
+        "x": 0.624685486910636,
+        "y": 0.6262349660773021
       },
       "prevControl": {
-        "x": 0.8383126662987559,
-        "y": 0.733198932027247
-      },
-      "nextControl": {
-        "x": 0.3847492841315732,
-        "y": 0.5227701831428175
-      },
-      "isLocked": false,
-      "linkedName": "Human Player"
-    },
-    {
-      "anchor": {
-        "x": 1.3594767433085944,
-        "y": 1.4270487373110234
-      },
-      "prevControl": {
-        "x": 1.5103770047890852,
-        "y": 0.9577243967423185
+        "x": 1.5359450079573695,
+        "y": 0.7036598577874907
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Human Player Shoot"
+      "linkedName": "Human Player"
     }
   ],
   "rotationTargets": [
     {
       "waypointRelativePos": 1,
       "rotationDegrees": -148.71306712424882
-    },
-    {
-      "waypointRelativePos": 2.0,
-      "rotationDegrees": 180.0
     }
   ],
   "constraintZones": [
     {
       "name": "slow safe",
-      "minWaypointRelativePos": 1.4642597591362096,
-      "maxWaypointRelativePos": 2.4331784676079735,
+      "minWaypointRelativePos": 1.25,
+      "maxWaypointRelativePos": 1.7,
       "constraints": {
         "maxVelocity": 2.5,
         "maxAcceleration": 2.5,
@@ -86,7 +66,14 @@
     }
   ],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "WAIT",
+      "waypointRelativePos": 1.55,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.5,
     "maxAcceleration": 3.5,
@@ -97,13 +84,13 @@
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": -141.784
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": "Space City Paths",
   "idealStartingState": {
     "velocity": 0.0,
-    "rotation": -100.516
+    "rotation": -100.629
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }
