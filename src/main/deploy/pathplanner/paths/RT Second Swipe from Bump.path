@@ -1,0 +1,232 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.0244379340277785,
+        "y": 2.5087021846064816
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.182250851712348,
+        "y": 2.702596699773578
+      },
+      "isLocked": false,
+      "linkedName": "RB Shoot SPC"
+    },
+    {
+      "anchor": {
+        "x": 3.682477036119238,
+        "y": 0.6254533053880493
+      },
+      "prevControl": {
+        "x": 2.416528321519264,
+        "y": 0.592667911590012
+      },
+      "nextControl": {
+        "x": 4.764347248416945,
+        "y": 0.653471455364808
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.324294884721573,
+        "y": 0.6254533053880493
+      },
+      "prevControl": {
+        "x": 5.075643271210848,
+        "y": 0.5995231087340951
+      },
+      "nextControl": {
+        "x": 6.09950175377017,
+        "y": 0.7062943917502708
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.695609664351853,
+        "y": 2.383779730902778
+      },
+      "prevControl": {
+        "x": 6.693259367384297,
+        "y": 1.4761894751342255
+      },
+      "nextControl": {
+        "x": 6.696670778828575,
+        "y": 2.79353950705948
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.039868127893519,
+        "y": 3.7266961082175927
+      },
+      "prevControl": {
+        "x": 6.878177730201603,
+        "y": 3.163606001523905
+      },
+      "nextControl": {
+        "x": 7.334613434906635,
+        "y": 4.7531526495003575
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.205827039930556,
+        "y": 4.623985749421297
+      },
+      "prevControl": {
+        "x": 6.30087905489771,
+        "y": 5.628214922753384
+      },
+      "nextControl": {
+        "x": 6.151877028862995,
+        "y": 4.054001251624425
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.680745949074074,
+        "y": 2.738142216435185
+      },
+      "prevControl": {
+        "x": 6.436236804245344,
+        "y": 3.1924083658654636
+      },
+      "nextControl": {
+        "x": 5.212356358623009,
+        "y": 2.4565060665982763
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.587280815972223,
+        "y": 2.5087021846064816
+      },
+      "prevControl": {
+        "x": 4.8527483875388,
+        "y": 2.5015879253699804
+      },
+      "nextControl": {
+        "x": 3.956822884197811,
+        "y": 2.5255978119627085
+      },
+      "isLocked": false,
+      "linkedName": "RB SPC"
+    },
+    {
+      "anchor": {
+        "x": 3.0244379340277785,
+        "y": 2.5087021846064816
+      },
+      "prevControl": {
+        "x": 2.7746676138634667,
+        "y": 2.5194160618233012
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "RB Shoot SPC"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.0,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 2.0,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 3.0,
+      "rotationDegrees": 65.7758950097387
+    },
+    {
+      "waypointRelativePos": 4.0,
+      "rotationDegrees": 85.83821861180188
+    },
+    {
+      "waypointRelativePos": 5.0,
+      "rotationDegrees": -128.30824062588744
+    },
+    {
+      "waypointRelativePos": 6.0,
+      "rotationDegrees": -107.33348191397101
+    },
+    {
+      "waypointRelativePos": 7,
+      "rotationDegrees": -104.08869317965534
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Slow for Intake",
+      "minWaypointRelativePos": 3.75,
+      "maxWaypointRelativePos": 5.0,
+      "constraints": {
+        "maxVelocity": 3.0,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "intake",
+      "waypointRelativePos": 0.0,
+      "endWaypointRelativePos": 8.0,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "intake"
+        }
+      }
+    },
+    {
+      "name": "extend",
+      "waypointRelativePos": 0.1,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "extend"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.5,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -137.437
+  },
+  "reversed": false,
+  "folder": "Space City Paths",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -137.437
+  },
+  "useDefaultConstraints": true
+}
