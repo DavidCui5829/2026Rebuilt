@@ -171,8 +171,7 @@ public class Shooter extends SubsystemBase {
     {
         return new RunCommand(() -> 
         {
-            ShooterLeft1Motor.set(ShooterConstants.ALLIANCE_IDLE);
-            ShooterRight1Motor.set(ShooterConstants.ALLIANCE_IDLE);
+            setTargetRPM(ShooterConstants.ALLIANCE_IDLE_RPM);
         });
     }
 
