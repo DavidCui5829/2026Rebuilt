@@ -167,6 +167,15 @@ public class Shooter extends SubsystemBase {
         // ControlType.kMAXMotionVelocityControl);
     }
 
+    public Command setAllianceIdle()
+    {
+        return new RunCommand(() -> 
+        {
+            ShooterLeft1Motor.set(ShooterConstants.ALLIANCE_IDLE);
+            ShooterRight1Motor.set(ShooterConstants.ALLIANCE_IDLE);
+        });
+    }
+
     public Command setTargetRPMCommand(double rpm) {
         return new RunCommand(() -> setTargetRPM(rpm), this)
                 .finallyDo(interrupted -> setTargetRPM(0.0));

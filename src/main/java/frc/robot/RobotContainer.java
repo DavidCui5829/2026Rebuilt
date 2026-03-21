@@ -513,6 +513,8 @@ public class RobotContainer {
     // // SysId: run shooter dynamic reverse.
     // operatorXbox.y().whileTrue(m_shooter.sysIdDynamicReverse());
 
+    new Trigger(() -> isInAllianceZone() && !m_shooter.isShooterFast()).onTrue(m_shooter.setAllianceIdle());
+
     if (RobotBase.isSimulation()) {
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngleKeyboard);
     } else {
