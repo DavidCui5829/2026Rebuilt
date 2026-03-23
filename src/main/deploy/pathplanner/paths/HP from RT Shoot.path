@@ -9,7 +9,7 @@
       "prevControl": null,
       "nextControl": {
         "x": 3.4500120019286205,
-        "y": 0.747518607104728
+        "y": 0.7475186071047278
       },
       "isLocked": false,
       "linkedName": "RT shoot spc"
@@ -68,8 +68,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "WAIT",
-      "waypointRelativePos": 1.55,
+      "name": "extend",
+      "waypointRelativePos": 0,
       "endWaypointRelativePos": null,
       "command": null
     }
