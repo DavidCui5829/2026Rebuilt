@@ -1,0 +1,225 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.024,
+        "y": 5.623
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.9884546010759125,
+        "y": 5.631143781891475
+      },
+      "isLocked": false,
+      "linkedName": "LB Shoot Spc"
+    },
+    {
+      "anchor": {
+        "x": 4.647889440632135,
+        "y": 5.581297462830812
+      },
+      "prevControl": {
+        "x": 3.436959589734458,
+        "y": 5.452228093293475
+      },
+      "nextControl": {
+        "x": 5.881433921542161,
+        "y": 5.712777257741551
+      },
+      "isLocked": false,
+      "linkedName": "Left Bump"
+    },
+    {
+      "anchor": {
+        "x": 5.703753469343366,
+        "y": 5.68590956288155
+      },
+      "prevControl": {
+        "x": 4.7773750726372715,
+        "y": 5.579696229765558
+      },
+      "nextControl": {
+        "x": 7.005759979238858,
+        "y": 5.835190301342677
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.8145615596064815,
+        "y": 5.804516059027779
+      },
+      "prevControl": {
+        "x": 6.352285871129107,
+        "y": 5.967850473650781
+      },
+      "nextControl": {
+        "x": 7.21315197030002,
+        "y": 5.663683363240971
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.093012659143519,
+        "y": 4.123180555555556
+      },
+      "prevControl": {
+        "x": 7.052347989719516,
+        "y": 4.53703195633219
+      },
+      "nextControl": {
+        "x": 7.204392631211226,
+        "y": 2.989647242446309
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.27081933794219,
+        "y": 3.402968422299929
+      },
+      "prevControl": {
+        "x": 6.531066433356545,
+        "y": 2.937407195742277
+      },
+      "nextControl": {
+        "x": 6.108328561311306,
+        "y": 3.693651417828213
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.825,
+        "y": 4.637569226427008
+      },
+      "prevControl": {
+        "x": 5.841837469780886,
+        "y": 3.932204979488431
+      },
+      "nextControl": {
+        "x": 5.819034048769818,
+        "y": 4.887498031141309
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.667033347800927,
+        "y": 5.508481336805556
+      },
+      "prevControl": {
+        "x": 5.90851230772097,
+        "y": 5.259306494722254
+      },
+      "nextControl": {
+        "x": 5.493050786868766,
+        "y": 5.6880086842807716
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.647889440632135,
+        "y": 5.581297462830812
+      },
+      "prevControl": {
+        "x": 5.246420386781157,
+        "y": 5.775447023765304
+      },
+      "nextControl": {
+        "x": 4.11149975208436,
+        "y": 5.407305085007443
+      },
+      "isLocked": false,
+      "linkedName": "Left Bump"
+    },
+    {
+      "anchor": {
+        "x": 3.024,
+        "y": 5.623
+      },
+      "prevControl": {
+        "x": 2.715261521189833,
+        "y": 5.676330691460734
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "LB Shoot Spc"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 90.03157693809682
+    },
+    {
+      "waypointRelativePos": 2,
+      "rotationDegrees": 86.58415224112261
+    },
+    {
+      "waypointRelativePos": 3,
+      "rotationDegrees": -65.776
+    },
+    {
+      "waypointRelativePos": 4,
+      "rotationDegrees": -95.17654763742827
+    },
+    {
+      "waypointRelativePos": 5,
+      "rotationDegrees": 121.44308855068404
+    },
+    {
+      "waypointRelativePos": 6,
+      "rotationDegrees": 100.10432206466672
+    },
+    {
+      "waypointRelativePos": 7,
+      "rotationDegrees": 88.12568162649654
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Slow for Intake",
+      "minWaypointRelativePos": 3.0499506852159497,
+      "maxWaypointRelativePos": 5.826710444352161,
+      "constraints": {
+        "maxVelocity": 2.25,
+        "maxAcceleration": 2.25,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.5,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 135.44299999999998
+  },
+  "reversed": false,
+  "folder": "Space City Paths",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 135.44299999999998
+  },
+  "useDefaultConstraints": false
+}

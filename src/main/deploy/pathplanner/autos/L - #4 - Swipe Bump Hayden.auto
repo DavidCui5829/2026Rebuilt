@@ -7,25 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RT Swipe Single"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "aim at hub"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Control All Shooting"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "RT Second Swipe"
+            "pathName": "LB Swipe"
           }
         },
         {
