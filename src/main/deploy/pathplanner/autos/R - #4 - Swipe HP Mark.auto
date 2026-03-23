@@ -25,7 +25,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RT Second Swipe"
+            "pathName": "HP from RT Shoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HP Shoot"
           }
         },
         {

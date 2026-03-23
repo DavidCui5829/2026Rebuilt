@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RT Swipe Single"
+            "pathName": "LB Swipe"
           }
         },
         {
@@ -25,19 +25,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "HP from RT Shoot"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "HP Shoot"
+            "pathName": "Depot and shoot from LB"
           }
         },
         {

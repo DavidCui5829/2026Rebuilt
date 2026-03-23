@@ -9,6 +9,18 @@
           "data": {
             "pathName": "RB Swipe"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aim at hub"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Control All Shooting"
+          }
         }
       ]
     }

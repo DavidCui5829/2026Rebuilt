@@ -1,0 +1,132 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.024,
+        "y": 5.623
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.437352939631492,
+        "y": 5.886620024568677
+      },
+      "isLocked": false,
+      "linkedName": "LB Shoot Spc"
+    },
+    {
+      "anchor": {
+        "x": 1.405053834464432,
+        "y": 5.938496333607106
+      },
+      "prevControl": {
+        "x": 1.630026626405947,
+        "y": 6.085908732302918
+      },
+      "nextControl": {
+        "x": 1.0830953937111842,
+        "y": 5.727534529638661
+      },
+      "isLocked": false,
+      "linkedName": "depot setup"
+    },
+    {
+      "anchor": {
+        "x": 0.6718602709008432,
+        "y": 5.943452211126962
+      },
+      "prevControl": {
+        "x": 0.6522624643536247,
+        "y": 5.694221542912679
+      },
+      "nextControl": {
+        "x": 0.7046965031201721,
+        "y": 6.361039560912501
+      },
+      "isLocked": false,
+      "linkedName": "Depot"
+    },
+    {
+      "anchor": {
+        "x": 1.6130241608796299,
+        "y": 5.943452211126962
+      },
+      "prevControl": {
+        "x": 1.8461086822370478,
+        "y": 5.853055275871482
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Depot Shoot Pos"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 180.0
+    },
+    {
+      "waypointRelativePos": 2,
+      "rotationDegrees": 180.0
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Slow for intake",
+      "minWaypointRelativePos": 0.7601614410298997,
+      "maxWaypointRelativePos": 3.0,
+      "constraints": {
+        "maxVelocity": 2.0,
+        "maxAcceleration": 2.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "extend",
+      "waypointRelativePos": 0.43280211794019907,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "extend"
+        }
+      }
+    },
+    {
+      "name": "intake",
+      "waypointRelativePos": 0.6196791943521601,
+      "endWaypointRelativePos": 2.0,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "intake"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.5,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 147.20499999999998
+  },
+  "reversed": false,
+  "folder": "Space City Paths",
+  "idealStartingState": {
+    "velocity": 0.0,
+    "rotation": 135.44299999999998
+  },
+  "useDefaultConstraints": false
+}
