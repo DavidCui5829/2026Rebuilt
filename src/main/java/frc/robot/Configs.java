@@ -4,6 +4,7 @@ import com.revrobotics.spark.config.SparkFlexConfig;
 
 import com.revrobotics.spark.config.SparkBaseConfig.*;
 
+import frc.robot.Constants.FunnelConstants;
 import frc.robot.Constants.HopperConstants;
 import frc.robot.Constants.KickerConstants;
 import frc.robot.Constants.ShooterConstants;
@@ -50,6 +51,38 @@ public final class Configs
                 }
 
         };
+
+        public static final class FunnelSubsystem {
+                
+            public static final SparkFlexConfig FunnelMotorConfig = new SparkFlexConfig();
+
+                static {
+
+                        FunnelMotorConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
+
+
+
+                        FunnelMotorConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                            // Set PID values for position control. We don't need to pass a closed
+                            // loop slot, as it will default to slot 0.
+                            .p(FunnelConstants.p)
+                            .i(FunnelConstants.i)
+                            .d(FunnelConstants.d)
+                            .outputRange(-1, 1)
+                            .feedForward
+                            .kS(FunnelConstants.s)
+                            .kV(FunnelConstants.v)
+                            .kA(FunnelConstants.a)
+                            ;
+                        FunnelMotorConfig.closedLoop
+                                .maxMotion.maxAcceleration(100000);
+
+
+
+                }
+
+        };
+        
 
         public static final class ClimberSubsystem {
                 
@@ -266,7 +299,7 @@ public final class Configs
                         TwindexerRightControllerConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                             // Set PID values for  position control. We don't need to pass a closed
                             // loop slot, as it will default to slot 0.
-                            .p(HopperConstants.p)
+                                .p(HopperConstants.p)
                                 .i(HopperConstants.i)
                                 .d(HopperConstants.d)
                                 .outputRange(-1, 1)
