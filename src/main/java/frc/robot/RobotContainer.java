@@ -60,7 +60,6 @@ import frc.robot.subsystems.HubTrackerSubsystem;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Pushout;
-import frc.robot.subsystems.Funnel;
 import frc.robot.subsystems.ObjectDetection;
 
 /**
@@ -87,7 +86,6 @@ public class RobotContainer {
   private final Climber m_climber = new Climber();
   private final Kicker m_kicker = new Kicker();
   private final Pushout m_pushout = new Pushout();
-  private final Funnel m_funnel = new Funnel();
 
   // Helper Subsystems
   private final HubTrackerSubsystem m_hubtracker = new HubTrackerSubsystem(drivebase, driverXbox);
@@ -199,12 +197,12 @@ public class RobotContainer {
 
   // ========= DRIVER TRIGGERS ===========
   // Parallel Commands
-  private final Trigger RTtransfer_funnel_kick_shoot = driverXbox.rightTrigger(); // twindex to kicker, kick, agitate, and
+  private final Trigger RTtransfer_kick_shoot = driverXbox.rightTrigger(); // twindex to kicker, kick, agitate, and
                                                                            // shoot only when up to speed
   private final Trigger RBpushout_and_intake = driverXbox.rightBumper(); // pushout the intake and intake fuel
   private final Trigger LBretract_and_stop = driverXbox.leftBumper(); // retract 4 bar and stop intake
-  private final Trigger PRtransfer = driverXbox.povRight(); // transfers with hopper and funnel to kicker and kicks
-  private final Trigger PLunjam = driverXbox.povLeft(); // run hopper and funnel in reverse and kick backwards to unjam
+  private final Trigger PRtransfer = driverXbox.povRight(); // transfers with hopper to kicker and kicks
+  private final Trigger PLunjam = driverXbox.povLeft(); // run hopper in reverse and kick backwards to unjam
 
   // Shooter
   private final Trigger LT_Intake = driverXbox.leftTrigger();
@@ -227,7 +225,7 @@ public class RobotContainer {
   private final Trigger RT_OP_1900Shot = operatorXbox.povRight(); // variable shoot full command
 
   // Get to Shooter
-  private final Trigger RB_OP_kickIndex = operatorXbox.rightBumper(); // kick, index, funnel
+  private final Trigger RB_OP_kickIndex = operatorXbox.rightBumper(); // kick, index
   private final Trigger LB_OP_unjam = operatorXbox.leftBumper(); // unjam
 
   // Intake
@@ -388,7 +386,7 @@ public class RobotContainer {
 
     // ======= Driver =======
     // transfer + kick + shoot/pass command, switches based on zone
-    RTtransfer_funnel_kick_shoot.whileTrue(
+    RTtransfer_kick_shoot.whileTrue(
 
       Commands.defer(() -> { 
         if(isInAllianceZone()) // In alliance zone → shoot at hub
@@ -408,7 +406,6 @@ public class RobotContainer {
                     Commands.parallel(
                         drivebase.antiPushDefense(),
                         m_hopper.runHopperToShooterCommand(),
-                        m_funnel.runFunnelCommand(),
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand().onlyWhile(() -> !LT_Intake.getAsBoolean()),
                         m_intake.runIntakeCommand()).onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees))))
@@ -425,15 +422,14 @@ public class RobotContainer {
                         && driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees)).getAsBoolean()),
                     Commands.parallel(
                         m_hopper.runHopperToShooterCommand(),
-                        m_funnel.runFunnelCommand(),                        
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand().repeatedly().onlyWhile(() -> !LT_Intake.getAsBoolean()),
                         m_intake.runIntakeCommand()).onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees)))))
                 .finallyDo(() -> m_shooter.setTargetRPMCommand(passCmd.RecordedidealHorizontalSpeed).withTimeout(1));
         }
             }, java.util.Collections.emptySet()));
-      RTtransfer_funnel_kick_shoot.onTrue(Commands.runOnce(() -> driveAngularVelocity.scaleTranslation(0.4)));
-      RTtransfer_funnel_kick_shoot.onFalse(Commands.runOnce(() -> driveAngularVelocity.scaleTranslation(1)));
+      RTtransfer_kick_shoot.onTrue(Commands.runOnce(() -> driveAngularVelocity.scaleTranslation(0.4)));
+      RTtransfer_kick_shoot.onFalse(Commands.runOnce(() -> driveAngularVelocity.scaleTranslation(1)));
       
     LT_Intake.whileTrue(Commands.parallel(m_pushout.PushCommand(), m_intake.runIntakeCommand()));
 
@@ -441,12 +437,10 @@ public class RobotContainer {
     // Hopper Commands
     PRtransfer.whileTrue(Commands.parallel(
       m_hopper.runHopperToShooterCommand(), 
-      m_kicker.kickCommand(),
-      m_funnel.runFunnelCommand()));
+      m_kicker.kickCommand()));
     
     PLunjam.whileTrue(Commands.parallel(
       m_hopper.runReverseHopperCommand(),
-      m_funnel.runReverseFunnelCommand(),
       m_kicker.kickBackwardsCommand()));
 
     // speedUpShooter.whileTrue(m_shooter.SpeedUpShooterCommand());
@@ -480,7 +474,6 @@ public class RobotContainer {
                 Commands.waitUntil(m_shooter::isShooterFast),
                 Commands.parallel(
                     m_hopper.runHopperToShooterCommand(),
-                    m_funnel.runFunnelCommand(),
                     m_intake.runIntakeCommand(),
                     m_kicker.kickCommand(),
                     m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(2.5)).repeatedly()))));
@@ -491,7 +484,6 @@ public class RobotContainer {
               m_hopper.runHopperToShooterCommand(),
               m_intake.runIntakeCommand(),
               m_kicker.kickCommand(),
-              m_funnel.runFunnelCommand(),
               m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(2.5)).repeatedly()));
 
     LB_OP_unjam.whileTrue(Commands.parallel(m_hopper.runReverseHopperCommand(), m_kicker.kickBackwardsCommand()));
