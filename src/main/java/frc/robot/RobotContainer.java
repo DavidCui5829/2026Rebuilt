@@ -404,7 +404,11 @@ public class RobotContainer {
                         && driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
                       Commands.waitSeconds(0.5),
                     Commands.parallel(
-                        drivebase.antiPushDefense().repeatedly(),
+                        drivebase.antiPushDefense(
+                            driverXbox::getLeftX,
+                            driverXbox::getLeftY,
+                            driverXbox::getRightX,
+                            driveAngularVelocity::get),
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand().onlyWhile(() -> !LT_Intake.getAsBoolean()),
