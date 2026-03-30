@@ -33,7 +33,13 @@ public final class Configs
                             .p(0.0002155)
                             .i(0)
                             .d(0)
-                            .outputRange(-1, 1);
+                            .outputRange(-1, 1)
+                        .feedForward
+                            .kS(0.1)
+                            .kV(0.177)
+                            .kA(0.177)
+                            ;
+
                         IntakeMotorConfig.closedLoop
                         .maxMotion.maxAcceleration(1000000);
 

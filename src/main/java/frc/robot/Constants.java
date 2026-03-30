@@ -137,7 +137,7 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
     // public static final int PUSHOUT_RIGHT_ID = 17;
 
     public static final double PUSHOUT_RETRACTED_POS = 4.693; // it was 4.693
-    public static final double PUSHOUT_EXTENDED_POS = 14.125; // TUNE THIS!!!
+    public static final double PUSHOUT_EXTENDED_POS = 16; // TUNE THIS!!!
 
     public static final double PUSHOUT_RETRACTED_AGITATE_POS = 4.693; // it was 4.693
     public static final double PUSHOUT_EXTENDED_AGITATE_POS = 10; // TUNE THIS!!!
