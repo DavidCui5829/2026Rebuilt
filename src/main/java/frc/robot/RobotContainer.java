@@ -456,7 +456,7 @@ public class RobotContainer {
     // Swerve Drive Commands
     driverXbox.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
 
-    LBretract_and_stop.whileTrue(Commands.parallel(m_pushout.RetractCommand(), m_intake.runIntakeCommand()));
+    LBretract_and_stop.whileTrue(Commands.parallel(m_pushout.RetractCommand(), m_intake.stopIntakeCommand()));
 
     // Pushout Commands
     // Y_extendIntake.whileTrue(m_pushout.PushCommand());
