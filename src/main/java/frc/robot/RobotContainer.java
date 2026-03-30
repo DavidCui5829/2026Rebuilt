@@ -439,9 +439,8 @@ public class RobotContainer {
 
 
     // Hopper Commands
-    PRtransfer.whileTrue(Commands.parallel(
-      m_hopper.runHopperToShooterCommand(), 
-      m_kicker.kickCommand()));
+    PRtransfer.whileTrue(m_hopper.runHopperToShooterCommand());//,
+      // m_kicker.kickCommand()));
     
     PLunjam.whileTrue(Commands.parallel(
       m_hopper.runReverseHopperCommand(),
