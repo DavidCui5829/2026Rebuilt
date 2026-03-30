@@ -199,7 +199,7 @@ public class RobotContainer {
   // Parallel Commands
   private final Trigger RTtransfer_kick_shoot = driverXbox.rightTrigger(); // twindex to kicker, kick, agitate, and
                                                                            // shoot only when up to speed
-  private final Trigger RBpushout_and_intake = driverXbox.rightBumper(); // pushout the intake and intake fuel
+  private final Trigger RBShootAgitatePull = driverXbox.rightBumper(); // pushout the intake and intake fuel
   private final Trigger LBretract_and_stop = driverXbox.leftBumper(); // retract 4 bar and stop intake
   private final Trigger PRtransfer = driverXbox.povRight(); // transfers with hopper to kicker and kicks
   private final Trigger PLunjam = driverXbox.povLeft(); // run hopper in reverse and kick backwards to unjam
@@ -435,9 +435,25 @@ public class RobotContainer {
       RTtransfer_kick_shoot.onTrue(Commands.runOnce(() -> driveAngularVelocity.scaleTranslation(0.4)));
       RTtransfer_kick_shoot.onFalse(Commands.runOnce(() -> driveAngularVelocity.scaleTranslation(1)));
       
+    RBShootAgitatePull.whileTrue(
+        Commands.parallel(
+          // keep running the VariableShoot command while we wait for the shooter to reach
+          // speed
+          m_shooter.shootFuelCommand(),
+
+          // once at speed, run hopper + kicker
+          Commands.sequence(
+              Commands.waitUntil(m_shooter::isShooterFast),
+              Commands.parallel(
+                  m_hopper.runHopperToShooterCommand(),
+                  m_intake.runIntakeCommand(),
+                  m_kicker.kickCommand(),
+                  m_pushout.PullCommand()))));
+
+      
     LT_Intake.whileTrue(Commands.parallel(m_pushout.PushCommand(), m_intake.runIntakeCommand()));
-
-
+    
+    
     // Hopper Commands
     PRtransfer.whileTrue(m_hopper.runHopperToShooterCommand());//,
       // m_kicker.kickCommand()));
@@ -480,6 +496,7 @@ public class RobotContainer {
                     m_intake.runIntakeCommand(),
                     m_kicker.kickCommand(),
                     m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(2.5)).repeatedly()))));
+
     LT_OPshootFuel.whileTrue(m_shooter.shootFuelCommand());
 
     // get to shooter
