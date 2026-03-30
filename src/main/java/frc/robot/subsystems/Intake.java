@@ -40,8 +40,8 @@ public class Intake extends SubsystemBase {
     public void runOuttake() {
         // IntakeRightMotor.set(IntakeConstants.INTAKE_SPEED);
         // desiredPercent = IntakeConstants.OUTTAKE_SPEED;
-        // IntakeMotor.set(IntakeConstants.OUTTAKE_SPEED);
-        intakeController.setSetpoint(IntakeConstants.OUTTAKE_RPM, ControlType.kMAXMotionVelocityControl);
+        IntakeMotor.set(-0.8);
+        // intakeController.setSetpoint(IntakeConstants.OUTTAKE_RPM, ControlType.kMAXMotionVelocityControl);
 
     }
 
@@ -49,8 +49,8 @@ public class Intake extends SubsystemBase {
         // desiredPercent = IntakeConstants.INTAKE_SPEED;
         // IntakeMotor.set(IntakeConstants.INTAKE_SPEED);
 
-        // IntakeRightMotor.set(IntakeConstants.INTAKE_SPEED);
-         intakeController.setSetpoint(IntakeConstants.INTAKE_RPM, ControlType.kMAXMotionVelocityControl);
+        IntakeMotor.set(0.8);
+        //  intakeController.setSetpoint(IntakeConstants.INTAKE_RPM, ControlType.kMAXMotionVelocityControl);
     }
 
     public void stopIntake() {
