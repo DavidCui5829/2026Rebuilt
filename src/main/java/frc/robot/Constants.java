@@ -137,8 +137,8 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
 
     public static final double OUTTAKE_SPEED = -1;
     public static final double INTAKE_SPEED = 1;
-     public static final double OUTTAKE_RPM = -30000;
-    public static final double INTAKE_RPM = 30000;
+     public static final double OUTTAKE_RPM = -10000;
+    public static final double INTAKE_RPM = 10000;
 
   }
 

@@ -16,6 +16,7 @@ import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.MAXMotionConfig.MAXMotionPositionMode;
 
+import frc.robot.Constants.HopperConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Configs;
 import org.littletonrobotics.junction.Logger;
@@ -41,12 +42,14 @@ public class Intake extends SubsystemBase {
     }
 
     public void runOuttake() {
-        IntakeLeftMotor.set(-0.8);
+        IntakeLeftController.setSetpoint(IntakeConstants.INTAKE_RPM,
+                ControlType.kMAXMotionVelocityControl);
 
     }
 
     public void runIntake() {
-        IntakeLeftMotor.set(0.8);
+        IntakeLeftController.setSetpoint(IntakeConstants.OUTTAKE_RPM,
+                ControlType.kMAXMotionVelocityControl);
     }
 
     public void stopIntake() {
