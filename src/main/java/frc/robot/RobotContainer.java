@@ -452,6 +452,11 @@ public class RobotContainer {
 
       
     LT_Intake.whileTrue(Commands.parallel(m_pushout.PushCommand(), m_intake.runIntakeCommand()));
+    A_runOuttake.whileTrue(drivebase.antiPushDefense(     
+                            driverXbox::getLeftX,
+                            driverXbox::getLeftY,
+                            driverXbox::getRightX,
+                            driveAngularVelocity::get));
     
     
     // // Hopper Commands
