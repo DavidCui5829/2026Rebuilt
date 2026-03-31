@@ -81,10 +81,10 @@ public class RobotContainer {
 
   // Instantiate Subsystems
   private final Intake m_intake = new Intake();
-  private final Hopper m_hopper = new Hopper();
-  private final Shooter m_shooter = new Shooter();
-  private final Climber m_climber = new Climber();
-  private final Kicker m_kicker = new Kicker();
+  // private final Hopper m_hopper = new Hopper();
+  // private final Shooter m_shooter = new Shooter();
+  // private final Climber m_climber = new Climber();
+  // private final Kicker m_kicker = new Kicker();
   private final Pushout m_pushout = new Pushout();
 
   // Helper Subsystems
@@ -94,14 +94,14 @@ public class RobotContainer {
 
   // Factory for ControlAllShooting instances. Create a fresh instance for each
   // composition to avoid WPILib's "composed commands may not be reused" error.
-  private ControlAllShooting makeVariableShoot() {
-    return new ControlAllShooting(drivebase::getDynamicHubLocation, m_shooter, drivebase::getPose);
-  }
+  // private ControlAllShooting makeVariableShoot() {
+  //   return new ControlAllShooting(drivebase::getDynamicHubLocation, m_shooter, drivebase::getPose);
+  // }
 
-  private ControllAllPassing makeVariablePass() {
-    return new ControllAllPassing(drivebase::getDynamicFerryLocation,
-        m_shooter, drivebase::getPose);
-  }
+  // private ControllAllPassing makeVariablePass() {
+  //   return new ControllAllPassing(drivebase::getDynamicFerryLocation,
+  //       m_shooter, drivebase::getPose);
+  // }
 
    
 
@@ -266,69 +266,69 @@ public class RobotContainer {
     // SmartDashboard.putNumber("Heading Bias Gain", 0);
 
     // Create the NamedCommands that will be used in PathPlanner
-    NamedCommands.registerCommand("test", Commands.print("I EXIST"));
+    // NamedCommands.registerCommand("test", Commands.print("I EXIST"));
 
-    // pushout
-    NamedCommands.registerCommand("extend", m_pushout.PushCommand());
-    NamedCommands.registerCommand("extend and intake",
-        Commands.parallel(m_pushout.PushCommand(), m_intake.runIntakeCommand()).withTimeout(4));
-    NamedCommands.registerCommand("retract intake", m_pushout.RetractCommand().withTimeout(4));
+    // // pushout
+    // NamedCommands.registerCommand("extend", m_pushout.PushCommand());
+    // NamedCommands.registerCommand("extend and intake",
+    //     Commands.parallel(m_pushout.PushCommand(), m_intake.runIntakeCommand()).withTimeout(4));
+    // NamedCommands.registerCommand("retract intake", m_pushout.RetractCommand().withTimeout(4));
 
-    // kicker
-    NamedCommands.registerCommand("kick", m_kicker.kickCommand().withTimeout(8));
-    NamedCommands.registerCommand("kick backwards", m_kicker.kickBackwardsCommand().withTimeout(8));
+    // // kicker
+    // NamedCommands.registerCommand("kick", m_kicker.kickCommand().withTimeout(8));
+    // NamedCommands.registerCommand("kick backwards", m_kicker.kickBackwardsCommand().withTimeout(8));
 
-    // shooter
-    NamedCommands.registerCommand("Control All Shooting", Commands.defer(() -> {
-      ControlAllShooting shootCmd = makeVariableShoot();
-      return Commands.parallel(
-          shootCmd,
-          drivebase.driveFieldOriented(aimAtHubStream),
-          // Continuously update aim target for shoot-on-the-move
-          // Commands.run(() -> aimAtHubStream.aim(drivebase.getDynamicHubLocation())),
-          Commands.sequence(
-              Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
-                  && aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
-              Commands.parallel(
-                  m_hopper.runHopperToShooterCommand(),
-                  m_kicker.kickCommand(),
-                  m_pushout.AgitateCommand().repeatedly(),
+    // // shooter
+    // NamedCommands.registerCommand("Control All Shooting", Commands.defer(() -> {
+    //   ControlAllShooting shootCmd = makeVariableShoot();
+    //   return Commands.parallel(
+    //       shootCmd,
+    //       drivebase.driveFieldOriented(aimAtHubStream),
+    //       // Continuously update aim target for shoot-on-the-move
+    //       // Commands.run(() -> aimAtHubStream.aim(drivebase.getDynamicHubLocation())),
+    //       Commands.sequence(
+    //           Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
+    //               && aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
+    //           Commands.parallel(
+    //               m_hopper.runHopperToShooterCommand(),
+    //               m_kicker.kickCommand(),
+    //               m_pushout.AgitateCommand().repeatedly(),
                   
-                  m_intake.runIntakeCommand()
-              ).onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)))
-          ).finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(4.75))
-      );
-    }, java.util.Collections.emptySet()).withTimeout(5));
-    NamedCommands.registerCommand("speed up shooter", m_shooter.SpeedUpShooterCommand().withTimeout(15));
-    // NamedCommands.registerCommand("aim at hub", drivebase.aimAtPose(Constants.DrivebaseConstants.getHubPose2D()));
+    //               m_intake.runIntakeCommand()
+    //           ).onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)))
+    //       ).finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(4.75))
+    //   );
+    // }, java.util.Collections.emptySet()).withTimeout(5));
+    // NamedCommands.registerCommand("speed up shooter", m_shooter.SpeedUpShooterCommand().withTimeout(15));
+    // // NamedCommands.registerCommand("aim at hub", drivebase.aimAtPose(Constants.DrivebaseConstants.getHubPose2D()));
+    // // NamedCommands.registerCommand("aim at ferry",
+    // //     drivebase.aimAtPose(Constants.DrivebaseConstants.getFerryPose(drivebase.getPose().getTranslation())));
+
+    // // hopper
+    // NamedCommands.registerCommand("transfer", m_hopper.runHopperToShooterCommand().withTimeout(6.7));
+    // NamedCommands.registerCommand("reverse hopper", m_hopper.runReverseHopperCommand().withTimeout(6.7));
+
+    // // intake
+    // NamedCommands.registerCommand("intake", m_intake.runIntakeCommand());
+    // NamedCommands.registerCommand("outtake", m_intake.runOuttakeCommand().withTimeout(4));
+
+    // // climber
+    // NamedCommands.registerCommand("climb up", m_climber.runClimbCommand().withTimeout(4));
+    // NamedCommands.registerCommand("climb down", m_climber.runClimberDownCommand().withTimeout(4));
+
+    // NamedCommands.registerCommand("aim at hub",
+    //         Commands.sequence
+    //         (Commands.runOnce(() -> drivebase.shouldAimAtHubAuto = true),
+    //         Commands.waitUntil(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees))),(Commands.runOnce(() -> drivebase.shouldAimAtHubAuto = false))));
+
+
+    //         // Commands.sequence
+    //         // (Commands.runOnce(() -> drivebase.shouldAimAtHubAuto = true), drivebase.driveFieldOriented(aimAtHubStream)
+    //         // .until(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees))),(Commands.runOnce(() -> drivebase.shouldAimAtHubAuto = false))));
+
     // NamedCommands.registerCommand("aim at ferry",
-    //     drivebase.aimAtPose(Constants.DrivebaseConstants.getFerryPose(drivebase.getPose().getTranslation())));
-
-    // hopper
-    NamedCommands.registerCommand("transfer", m_hopper.runHopperToShooterCommand().withTimeout(6.7));
-    NamedCommands.registerCommand("reverse hopper", m_hopper.runReverseHopperCommand().withTimeout(6.7));
-
-    // intake
-    NamedCommands.registerCommand("intake", m_intake.runIntakeCommand());
-    NamedCommands.registerCommand("outtake", m_intake.runOuttakeCommand().withTimeout(4));
-
-    // climber
-    NamedCommands.registerCommand("climb up", m_climber.runClimbCommand().withTimeout(4));
-    NamedCommands.registerCommand("climb down", m_climber.runClimberDownCommand().withTimeout(4));
-
-    NamedCommands.registerCommand("aim at hub",
-            Commands.sequence
-            (Commands.runOnce(() -> drivebase.shouldAimAtHubAuto = true),
-            Commands.waitUntil(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees))),(Commands.runOnce(() -> drivebase.shouldAimAtHubAuto = false))));
-
-
-            // Commands.sequence
-            // (Commands.runOnce(() -> drivebase.shouldAimAtHubAuto = true), drivebase.driveFieldOriented(aimAtHubStream)
-            // .until(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees))),(Commands.runOnce(() -> drivebase.shouldAimAtHubAuto = false))));
-
-    NamedCommands.registerCommand("aim at ferry",
-        drivebase.driveFieldOriented(aimAtFerryStream)
-            .until(aimAtFerryStream.aimLock(Angle.ofBaseUnits(1, Degrees))));
+    //     drivebase.driveFieldOriented(aimAtFerryStream)
+    //         .until(aimAtFerryStream.aimLock(Angle.ofBaseUnits(1, Degrees))));
 
     // Have the autoChooser pull in all PathPlanner autos as options
     autoChooser = AutoBuilder.buildAutoChooser();
@@ -534,7 +534,7 @@ public class RobotContainer {
     // // SysId: run shooter dynamic reverse.
     // operatorXbox.y().whileTrue(m_shooter.sysIdDynamicReverse());
 
-    new Trigger(() -> isInAllianceZone() && !m_shooter.isShooterFast()).onTrue(m_shooter.setAllianceIdle());
+    // new Trigger(() -> isInAllianceZone() && !m_shooter.isShooterFast()).onTrue(m_shooter.setAllianceIdle());
 
     if (RobotBase.isSimulation()) {
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngleKeyboard);
@@ -544,7 +544,7 @@ public class RobotContainer {
             drivebase.run(() -> drivebase.drive(driveRobotOriented.get())));
       } else {
         drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
-        m_shooter.setDefaultCommand(m_shooter.SpeedUpShooterCommand());
+        // m_shooter.setDefaultCommand(m_shooter.SpeedUpShooterCommand());
       }
     }
 
