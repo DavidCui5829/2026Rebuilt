@@ -13,10 +13,9 @@ Shooter,Primary Motor,Right Shooter L,9,SparkFlex,11
 Shooter,Primary Motor,Right Shooter R,21,SparkFlex,12
 Kicker,Secondary Motor,Kicker L,11,SparkFlex,13
 Kicker,Secondary Motor,Kicker R,12,SparkFlex,14
-Intake,Drive Motor,Intake L,16,SparkFlex,15
-Intake,Drive Motor,Intake R,13,SparkFlex,16
-Intake_Extension,Drive Motor,R_Pushout,0,SparkFlex,17
-Intake_Extension,Drive Motor,L_Pushout,0,SparkFlex,21
-Twindexer,Drive Motor,Twindexer L,19,SparkFlex,18
-Twindexer,Drive Motor,Twindexer R,15,SparkFlex,19
+Twindexer,Drive Motor,Twindexer L,19,SparkFlex,15
+Twindexer,Drive Motor,Twindexer R,15,SparkFlex,16
+Intake_Extension,Drive Motor,Pushout,0,SparkFlex,17
+Intake,Drive Motor,Intake L,18,SparkFlex,18
+Intake,Drive Motor,Intake R,13,SparkFlex,19
 Climber,Drive Motor,Climber,20,SparkFlex,20

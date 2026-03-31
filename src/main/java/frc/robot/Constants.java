@@ -122,8 +122,18 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
   }
 
   public static class IntakeConstants {
-    public static final int INTAKE_ID = 18; // unknown
-    // public static final int INTAKE_RIGHT_ID = 16; // unknown
+    public static final int INTAKE_LEFT_ID = 18; // unknown
+    public static final int INTAKE_RIGHT_ID = 19; // unknown
+
+    // PID Constants
+    public static final double p = 0.0002155;
+    public static final double i = 0.000;
+    public static final double d = 0.000;
+
+    // Feed-Forward Constants
+    public static final double s = 0.100;
+    public static final double v = 0.177;
+    public static final double a = 0.177;
 
     public static final double OUTTAKE_SPEED = -1;
     public static final double INTAKE_SPEED = 1;
@@ -133,8 +143,7 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
   }
 
   public static class PushoutConstants {
-    public static final int PUSHOUT_ID = 17; // Unknown
-    // public static final int PUSHOUT_RIGHT_ID = 17;
+    public static final int PUSHOUT_ID = 17; // Correct
 
     public static final double PUSHOUT_RETRACTED_POS = 4.693; // it was 4.693
     public static final double PUSHOUT_EXTENDED_POS = 16; // TUNE THIS!!!
