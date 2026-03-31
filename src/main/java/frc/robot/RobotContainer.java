@@ -473,8 +473,8 @@ public class RobotContainer {
     //     // Rotation2d.fromDegrees(0))));
     // // driverXbox.povUp().whileTrue(driveFieldOrientedDirectAngle).toggleOnFalse(driveFieldOrientedAnglularVelocity);
 
-    // // Swerve Drive Commands
-    // driverXbox.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
+    // Swerve Drive Commands
+    driverXbox.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
 
     LBretract_and_stop.whileTrue(Commands.parallel(m_pushout.RetractCommand(), m_intake.stopIntakeCommand()));
 
