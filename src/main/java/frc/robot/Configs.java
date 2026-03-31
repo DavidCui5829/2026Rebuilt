@@ -149,8 +149,8 @@ public final class Configs
                         PushoutMotorConfig.closedLoop
                         .maxMotion
                                 .allowedProfileError(0.5)
-                                .cruiseVelocity(100000)
-                                .maxAcceleration(100000);   
+                                .cruiseVelocity(400000)
+                                .maxAcceleration(400000);   
                         
                         // PushoutMotorAgitateConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40).voltageCompensation(12);
                         // PushoutMotorAgitateConfig.closedLoop
