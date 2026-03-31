@@ -10,6 +10,7 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.KickerConstants;
 import frc.robot.Constants.ShooterConstants;
 
+import com.ctre.phoenix6.swerve.utility.WheelForceCalculator.Feedforwards;
 // import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.FeedbackSensor;
 
@@ -141,7 +142,14 @@ public final class Configs
                         .p(3.3)
                         .i(0.0)
                         .d(0.001)
-                        .outputRange(-1.0, 1.0);
+                        .outputRange(-1.0, 1.0)
+                        .feedForward
+                        .kS(0.1)
+                        .kV(0.0177)
+                        .kA(0.05)
+                        ;
+
+                        
 
                         PushoutMotorConfig.closedLoop
                         .maxMotion
