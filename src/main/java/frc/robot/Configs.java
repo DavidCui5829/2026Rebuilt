@@ -142,12 +142,7 @@ public final class Configs
                         .p(3.3)
                         .i(0.0)
                         .d(0.001)
-                        .outputRange(-1.0, 1.0)
-                        .feedForward
-                        .kS(0.1)
-                        .kV(0.0177)
-                        .kA(0.05)
-                        ;
+                        .outputRange(-1.0, 1.0);
 
                         
 
