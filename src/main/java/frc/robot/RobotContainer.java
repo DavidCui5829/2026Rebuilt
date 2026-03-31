@@ -452,7 +452,8 @@ public class RobotContainer {
 
       
     LT_Intake.whileTrue(Commands.parallel(m_pushout.PushCommand(), m_intake.runIntakeCommand()));
-    A_runOuttake.whileTrue(drivebase.antiPushDefense());    
+    A_runOuttake.whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
+
     // // Hopper Commands
     // PRtransfer.whileTrue(m_hopper.runHopperToShooterCommand());//,
     //   // m_kicker.kickCommand()));
