@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.912777748531944,
-        "y": 7.502963440067057
+        "x": 4.700530226831332,
+        "y": 7.477258857520966
       },
       "isLocked": false,
       "linkedName": "LT Start Spc"
@@ -20,60 +20,60 @@
         "y": 7.510700753904882
       },
       "prevControl": {
-        "x": 4.958336256700053,
-        "y": 7.619075189285268
+        "x": 4.739967549530432,
+        "y": 7.661492192996072
       },
       "nextControl": {
-        "x": 5.925708885755064,
-        "y": 7.458689266781732
+        "x": 5.8583441392121705,
+        "y": 7.468103041808868
       },
       "isLocked": false,
       "linkedName": "LT Exit Spc"
     },
     {
       "anchor": {
-        "x": 8.112,
-        "y": 6.376502859288355
+        "x": 8.224991174768519,
+        "y": 6.368963469328704
       },
       "prevControl": {
-        "x": 7.7281866016246115,
-        "y": 6.915762781460711
+        "x": 7.746547369145942,
+        "y": 6.935837337387737
       },
       "nextControl": {
-        "x": 8.410711679621093,
-        "y": 5.956811317027766
+        "x": 8.976766664578715,
+        "y": 5.478238425316198
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.3,
-        "y": 5.187860167613681
+        "x": 8.31855179398148,
+        "y": 2.292253038194444
       },
       "prevControl": {
-        "x": 8.211253869187317,
-        "y": 5.429594847754939
+        "x": 8.436369962936126,
+        "y": 2.671815379606235
       },
       "nextControl": {
-        "x": 8.386157860866806,
-        "y": 4.953175649566886
+        "x": 8.0443368690691,
+        "y": 1.4088437994218839
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.112,
-        "y": 4.420338782347505
+        "x": 7.570657335069445,
+        "y": 2.0953558304398157
       },
       "prevControl": {
-        "x": 8.384488981299121,
-        "y": 4.620336250878465
+        "x": 8.41044880386288,
+        "y": 2.027696226838164
       },
       "nextControl": {
-        "x": 7.768860357951802,
-        "y": 4.168486177390521
+        "x": 6.8959910685839265,
+        "y": 2.1497117674195048
       },
       "isLocked": false,
       "linkedName": null
@@ -84,12 +84,12 @@
         "y": 4.898082904921442
       },
       "prevControl": {
-        "x": 7.532338036679068,
-        "y": 4.4979424648313735
+        "x": 7.411119829854156,
+        "y": 4.65069913969868
       },
       "nextControl": {
-        "x": 7.38760144943491,
-        "y": 5.178134235123597
+        "x": 7.511571466824014,
+        "y": 5.339579897087527
       },
       "isLocked": false,
       "linkedName": null
@@ -100,28 +100,28 @@
         "y": 6.008453240526803
       },
       "prevControl": {
-        "x": 7.509628502303741,
-        "y": 4.627976655241801
+        "x": 7.326914439269889,
+        "y": 5.692608233793427
       },
       "nextControl": {
-        "x": 7.000228102653949,
-        "y": 6.558772931492293
+        "x": 6.980530794947145,
+        "y": 6.295396055970479
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.837532097004279,
-        "y": 7.32
+        "x": 5.612,
+        "y": 7.358
       },
       "prevControl": {
-        "x": 6.4272960900389,
-        "y": 7.155061642316548
+        "x": 6.275096289770967,
+        "y": 7.18880671626997
       },
       "nextControl": {
-        "x": 5.4157912503877785,
-        "y": 7.437947591630727
+        "x": 5.0167428906506135,
+        "y": 7.509883680467062
       },
       "isLocked": false,
       "linkedName": null
@@ -132,12 +132,12 @@
         "y": 7.358
       },
       "prevControl": {
-        "x": 4.899157127931341,
-        "y": 7.398350364670951
+        "x": 4.842086553788165,
+        "y": 7.383862213375182
       },
       "nextControl": {
-        "x": 3.8815028690497457,
-        "y": 7.306359879566853
+        "x": 3.888432843285365,
+        "y": 7.320510060058444
       },
       "isLocked": false,
       "linkedName": null
@@ -148,8 +148,8 @@
         "y": 7.32
       },
       "prevControl": {
-        "x": 4.244352549076572,
-        "y": 7.323936286211899
+        "x": 4.350072389346024,
+        "y": 7.376363952938314
       },
       "nextControl": null,
       "isLocked": false,
@@ -163,15 +163,15 @@
     },
     {
       "waypointRelativePos": 2,
-      "rotationDegrees": -105.9
+      "rotationDegrees": -90.0
     },
     {
       "waypointRelativePos": 3,
-      "rotationDegrees": -117.0
+      "rotationDegrees": -90.0
     },
     {
       "waypointRelativePos": 4,
-      "rotationDegrees": -156.58
+      "rotationDegrees": 179.73130205028238
     },
     {
       "waypointRelativePos": 5,
@@ -190,34 +190,7 @@
       "rotationDegrees": 90.0
     }
   ],
-  "constraintZones": [
-    {
-      "name": "Slow for intake",
-      "minWaypointRelativePos": 2.0,
-      "maxWaypointRelativePos": 5.55,
-      "constraints": {
-        "maxVelocity": 2.25,
-        "maxAcceleration": 2.25,
-        "maxAngularVelocity": 540.0,
-        "maxAngularAcceleration": 720.0,
-        "nominalVoltage": 12.0,
-        "unlimited": false
-      }
-    },
-    {
-      "name": "Little Bit Slow for Trench",
-      "minWaypointRelativePos": 6.806212018906144,
-      "maxWaypointRelativePos": 9.0,
-      "constraints": {
-        "maxVelocity": 3.125,
-        "maxAcceleration": 3.125,
-        "maxAngularVelocity": 540.0,
-        "maxAngularAcceleration": 720.0,
-        "nominalVoltage": 12.0,
-        "unlimited": false
-      }
-    }
-  ],
+  "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [
     {
@@ -234,13 +207,8 @@
     {
       "name": "intake",
       "waypointRelativePos": 1.3884966777408616,
-      "endWaypointRelativePos": 7.112886235955057,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "intake"
-        }
-      }
+      "endWaypointRelativePos": 9.0,
+      "command": null
     }
   ],
   "globalConstraints": {

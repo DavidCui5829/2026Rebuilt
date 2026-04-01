@@ -11,6 +11,12 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "Through RT"
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "aim at hub"
@@ -26,6 +32,12 @@
           "type": "path",
           "data": {
             "pathName": "RT Second Swipe"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Through RT"
           }
         },
         {
