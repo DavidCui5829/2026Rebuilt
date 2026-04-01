@@ -1,21 +1,21 @@
-System,Motor Type,Motor Name,CAN ID,Type,CAN ID (IDEAL)
-Swerve Drive,Drive Motor,Front Left Drive,1,SparkFlex Vortex,1
-Swerve Drive,Drive Motor,Front Right Drive,3,SparkFlex Vortex,3
-Swerve Drive,Drive Motor,Back Left Drive,5,SparkFlex Vortex,5
-Swerve Drive,Drive Motor,Back Right Drive,7,SparkFlex Vortex,7
-Swerve Drive,Steering Motor,Front Left Angle,2,SparkMax Neo550,2
-Swerve Drive,Steering Motor,Front Right Angle,4,SparkMax Neo550,4
-Swerve Drive,Steering Motor,Back Left Angle,6,SparkMax Neo550,6
-Swerve Drive,Steering Motor,Back Right Angle,8,SparkMax Neo550,8
-Shooter,Primary Motor,Right Shooter R,20,SparkFlex,9  
-Shooter,Primary Motor,Right Shooter L,17,SparkFlex,10
-Shooter,Primary Motor,Left Shooter R,9,SparkFlex,11
-Shooter,Primary Motor,Left Shooter L,21,SparkFlex,12
-Kicker,Secondary Motor,Kicker L,11,SparkFlex,13
-Kicker,Secondary Motor,Kicker R,12,SparkFlex,14
-Twindexer,Drive Motor,Twindexer L,19,SparkFlex,15
-Twindexer,Drive Motor,Twindexer R,15,SparkFlex,16
-Intake_Extension,Drive Motor,Pushout,0,SparkFlex,17
-Intake,Drive Motor,Intake L,18,SparkFlex,18
-Intake,Drive Motor,Intake R,13,SparkFlex,19
-Climber,Drive Motor,Climber,20,SparkFlex,20
+System,Motor Type,Motor Name, Type,CAN ID (IDEAL)
+Swerve Drive,Drive Motor,Front Left Drive,SparkFlex Vortex,1
+Swerve Drive,Drive Motor,Front Right Drive,SparkFlex Vortex,3
+Swerve Drive,Drive Motor,Back Left Drive,SparkFlex Vortex,5
+Swerve Drive,Drive Motor,Back Right Drive,SparkFlex Vortex,7
+Swerve Drive,Steering Motor,Front Left Angle,SparkMax Neo550,2
+Swerve Drive,Steering Motor,Front Right Angle,SparkMax Neo550,4
+Swerve Drive,Steering Motor,Back Left Angle,SparkMax Neo550,6
+Swerve Drive,Steering Motor,Back Right Angle,SparkMax Neo550,8
+Shooter,Primary Motor,Right Shooter R,SparkFlex,9  
+Shooter,Primary Motor,Right Shooter L,SparkFlex,10
+Shooter,Primary Motor,Left Shooter R,SparkFlex,11
+Shooter,Primary Motor,Left Shooter L,SparkFlex,12
+Kicker,Secondary Motor,Kicker L,SparkFlex,13
+Kicker,Secondary Motor,Kicker R,SparkFlex,14
+Twindexer,Drive Motor,Twindexer L,SparkFlex,15
+Twindexer,Drive Motor,Twindexer R,SparkFlex,16
+Intake_Extension,Drive Motor,Pushout,SparkFlex,17
+Intake,Drive Motor,Intake L,SparkFlex,18
+Intake,Drive Motor,Intake R,SparkFlex,19
+Climber,Drive Motor,Climber,SparkFlex,20
