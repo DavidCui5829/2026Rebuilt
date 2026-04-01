@@ -131,6 +131,7 @@ public class RobotContainer {
       // .aimWhile(driverXbox.leftTrigger())
       .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
       .aimFeedforward(0.0001, 0.0001, 0.00013)
+      .aimHeadingOffset(Rotation2d.fromDegrees(180))
       .driveToPose(() -> GetDriveToPose(), null, null)
   ;
 
@@ -184,6 +185,7 @@ public class RobotContainer {
       .aim(() -> drivebase.getDynamicHubLocation())
       .aimWhile(true)
       .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
+      .aimHeadingOffset(Rotation2d.fromDegrees(180))
       .aimFeedforward(0.0001, 0.0001, 0.00013);
 
   SwerveInputStream aimAtFerryStream = SwerveInputStream.of(drivebase.getSwerveDrive(),
@@ -192,6 +194,7 @@ public class RobotContainer {
       .aim(() -> drivebase.getDynamicFerryLocation())
       .aimWhile(true)
       .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
+      .aimHeadingOffset(Rotation2d.fromDegrees(180))
       .aimFeedforward(0.0001, 0.0001, 0.00013);
 
 
@@ -761,9 +764,12 @@ public class RobotContainer {
 
   private <Supplier>Pose2d GetDriveToPose()
   {
-      if(isInAllianceZone())
+      boolean isInAllianceZone = isInAllianceZone();
+      boolean IsOnLeftSide = IsOnLeftSide();
+      
+      if(isInAllianceZone)
       {
-          if(IsOnLeftSide())
+          if(IsOnLeftSide)
           {
             return new Pose2d(new Translation2d(5.945, 7.388),
                 Rotation2d.fromDegrees(90));
@@ -777,7 +783,7 @@ public class RobotContainer {
 
       else
       {
-        if(IsOnLeftSide())
+        if(IsOnLeftSide)
         {
           return new Pose2d(new Translation2d(5.945, 7.388),
               Rotation2d.fromDegrees(90));
