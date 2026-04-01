@@ -132,7 +132,6 @@ public class RobotContainer {
       .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
       .aimFeedforward(0.0001, 0.0001, 0.00013)
       .aimHeadingOffset(Rotation2d.fromDegrees(180))
-      .driveToPose(() -> GetDriveToPose(), null, null)
   ;
 
   /**
@@ -392,7 +391,6 @@ public class RobotContainer {
     // Shooter
     // transfer + kick + shoot/pass command, switches based on zone
 
-    driveAngularVelocity.driveToPoseEnabled(PLDriveToPose);
 
     RTtransfer_kick_shoot.whileTrue(
 
@@ -454,8 +452,10 @@ public class RobotContainer {
       m_kicker.kickBackwardsCommand()));
       
     // Drive to Left Trench  
-    PLDriveToPose.whileTrue(drivebase.driveToPose(new Pose2d(new Translation2d(5.945, 7.388),
-        Rotation2d.fromDegrees(90))));
+    // PLDriveToPose.whileTrue(drivebase.driveToPose(new Pose2d(new Translation2d(5.945, 7.388),
+    //     Rotation2d.fromDegrees(90))));
+
+    PLDriveToPose.whileTrue(driveToPoseDeffered());
 
     // Drive to Right Trench  
     PRDrivetoRightTrench.whileTrue(drivebase.driveToPose(new Pose2d(new Translation2d(5.945, 0.83),
@@ -766,18 +766,18 @@ public class RobotContainer {
   {
       boolean isInAllianceZone = isInAllianceZone();
       boolean IsOnLeftSide = IsOnLeftSide();
-      
+
       if(isInAllianceZone)
       {
           if(IsOnLeftSide)
           {
-            return new Pose2d(new Translation2d(5.945, 7.388),
-                Rotation2d.fromDegrees(90));
+            return new Pose2d(new Translation2d(3.478, 7.432),
+              Rotation2d.fromDegrees(108.773));
           }
           else
           {
-            return new Pose2d(new Translation2d(5.945, 7.388),
-                Rotation2d.fromDegrees(90));
+            return new Pose2d(new Translation2d(3.478, 0.432),
+              Rotation2d.fromDegrees(-108.773));
           }
       }
 
@@ -785,14 +785,19 @@ public class RobotContainer {
       {
         if(IsOnLeftSide)
         {
-          return new Pose2d(new Translation2d(5.945, 7.388),
-              Rotation2d.fromDegrees(90));
+          return new Pose2d(new Translation2d(5.789, 7.432),
+              new Rotation2d());
         }
         else
         {
-          return new Pose2d(new Translation2d(5.945, 7.388),
-              Rotation2d.fromDegrees(90));
+          return new Pose2d(new Translation2d(5.789, 0.432),
+              new Rotation2d());
         }
       }
+  }
+
+  public Command driveToPoseDeffered()
+  {
+    return Commands.defer(() -> drivebase.driveToPose(GetDriveToPose()), java.util.Collections.emptySet());
   }
 }
