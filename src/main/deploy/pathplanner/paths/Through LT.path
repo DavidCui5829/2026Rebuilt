@@ -1,0 +1,70 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.8476496110882685,
+        "y": 7.24065977933114
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.095744968771169,
+        "y": 7.209858910898681
+      },
+      "isLocked": false,
+      "linkedName": "LT End"
+    },
+    {
+      "anchor": {
+        "x": 4.957660190515351,
+        "y": 7.3332159745065795
+      },
+      "prevControl": {
+        "x": 5.228351432388869,
+        "y": 7.313545832179288
+      },
+      "nextControl": {
+        "x": 4.694039974880508,
+        "y": 7.352372291223732
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.9943835396956926,
+        "y": 7.32
+      },
+      "prevControl": {
+        "x": 3.7448086603998503,
+        "y": 7.305426749694539
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "LT Shoot Spc"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.5,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 100.489
+  },
+  "reversed": false,
+  "folder": "Space City Paths",
+  "idealStartingState": {
+    "velocity": 2.5,
+    "rotation": 90.0
+  },
+  "useDefaultConstraints": true
+}
