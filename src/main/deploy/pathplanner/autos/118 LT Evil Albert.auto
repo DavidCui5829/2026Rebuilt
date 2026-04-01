@@ -7,13 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RT Swipe"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Through RT"
+            "pathName": "118 LT"
           }
         },
         {
@@ -31,19 +25,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "HP from RT Shoot"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "HP Shoot"
+            "pathName": "LT Second Swipe"
           }
         },
         {
@@ -62,6 +44,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Space City Autos",
+  "folder": "118 Destroyer",
   "choreoAuto": false
 }

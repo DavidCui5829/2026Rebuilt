@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.177208520806469,
-        "y": 0.4582020479577916
+        "x": 5.50510894841189,
+        "y": 0.5110740622141007
       },
       "isLocked": false,
       "linkedName": null
@@ -20,63 +20,63 @@
         "y": 0.6
       },
       "prevControl": {
-        "x": 5.573940609277578,
-        "y": 0.4999427850817764
+        "x": 5.834807054516319,
+        "y": 0.5405656600663318
       },
       "nextControl": {
-        "x": 6.524363127748108,
-        "y": 0.6727275513540532
+        "x": 6.592110024362654,
+        "y": 0.6960346727697693
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.097706741898149,
-        "y": 1.566797381365741
+        "x": 8.583224681712963,
+        "y": 1.7544435040509256
       },
       "prevControl": {
-        "x": 7.68773810378413,
-        "y": 0.9868574586576093
+        "x": 8.222296158955269,
+        "y": 0.9985260854614747
       },
       "nextControl": {
-        "x": 8.344825054495665,
-        "y": 1.9163699139547097
+        "x": 8.934251075839132,
+        "y": 2.4896222138885937
       },
       "isLocked": false,
-      "linkedName": "ballz 1"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.299470165203326,
-        "y": 2.667518845309612
+        "x": 8.591294777199074,
+        "y": 5.580128038194444
       },
       "prevControl": {
-        "x": 8.23642238969057,
-        "y": 2.289249686419692
+        "x": 8.99474454173463,
+        "y": 5.322308854172064
       },
       "nextControl": {
-        "x": 8.379350661822333,
-        "y": 3.146779660176385
+        "x": 8.380634835378459,
+        "y": 5.714747460686651
       },
       "isLocked": false,
-      "linkedName": "ballz 2"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.971726328433917,
-        "y": 3.6898416279107638
+        "x": 7.988662037037038,
+        "y": 5.497524377893519
       },
       "prevControl": {
-        "x": 8.203060187412664,
-        "y": 3.595054256969264
+        "x": 8.596874288984413,
+        "y": 5.800024712292284
       },
       "nextControl": {
-        "x": 7.740392469455171,
-        "y": 3.7846289988522632
+        "x": 7.207692168804917,
+        "y": 5.109101347053264
       },
       "isLocked": false,
-      "linkedName": "ballz 3"
+      "linkedName": null
     },
     {
       "anchor": {
@@ -84,12 +84,12 @@
         "y": 3.2389063532497597
       },
       "prevControl": {
-        "x": 7.536620098370666,
-        "y": 3.7558035044407285
+        "x": 7.511551099778809,
+        "y": 3.6628441124585587
       },
       "nextControl": {
-        "x": 7.332643561172039,
-        "y": 2.879192646991166
+        "x": 7.3045360444907805,
+        "y": 2.741043485991848
       },
       "isLocked": false,
       "linkedName": null
@@ -100,28 +100,60 @@
         "y": 2.027350864205181
       },
       "prevControl": {
-        "x": 7.536691347336836,
-        "y": 3.7589816390098485
+        "x": 7.429129573144064,
+        "y": 2.581946800393032
       },
       "nextControl": {
-        "x": 7.141803513103406,
-        "y": 1.6259633909238642
+        "x": 7.098963539923569,
+        "y": 1.7223491099954202
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.838505066044486,
-        "y": 0.8231537713004491
+        "x": 5.704015217917921,
+        "y": 0.7290875787629421
       },
       "prevControl": {
-        "x": 6.631147185245851,
-        "y": 0.980500308561195
+        "x": 6.840632127313275,
+        "y": 1.058922955809283
+      },
+      "nextControl": {
+        "x": 5.432711491019299,
+        "y": 0.6503578270620914
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.458911568326952,
+        "y": 0.7290875787629421
+      },
+      "prevControl": {
+        "x": 5.351010378468595,
+        "y": 0.7416373169285537
+      },
+      "nextControl": {
+        "x": 3.821020303366287,
+        "y": 0.7201139446067479
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.021972416302811,
+        "y": 0.7290875787629421
+      },
+      "prevControl": {
+        "x": 4.271937015169568,
+        "y": 0.7332946339540644
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RT Swipe End"
+      "linkedName": "RT shoot spc"
     }
   ],
   "rotationTargets": [
@@ -131,15 +163,15 @@
     },
     {
       "waypointRelativePos": 2.0,
-      "rotationDegrees": 109.20509701824605
+      "rotationDegrees": 90.0
     },
     {
       "waypointRelativePos": 3,
-      "rotationDegrees": 116.9524790227177
+      "rotationDegrees": 90.0
     },
     {
       "waypointRelativePos": 4,
-      "rotationDegrees": 156.58
+      "rotationDegrees": -146.57214336381074
     },
     {
       "waypointRelativePos": 5,
@@ -154,25 +186,11 @@
       "rotationDegrees": -90.0
     },
     {
-      "waypointRelativePos": 7.5,
+      "waypointRelativePos": 8,
       "rotationDegrees": -90.0
     }
   ],
-  "constraintZones": [
-    {
-      "name": "Intake Slow",
-      "minWaypointRelativePos": 2.0,
-      "maxWaypointRelativePos": 5.547446013289036,
-      "constraints": {
-        "maxVelocity": 2.25,
-        "maxAcceleration": 2.25,
-        "maxAngularVelocity": 540.0,
-        "maxAngularAcceleration": 720.0,
-        "nominalVoltage": 12.0,
-        "unlimited": false
-      }
-    }
-  ],
+  "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [
     {
@@ -207,8 +225,8 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 2.5,
-    "rotation": -90.0
+    "velocity": 0,
+    "rotation": -100.629
   },
   "reversed": false,
   "folder": "Space City Paths",
