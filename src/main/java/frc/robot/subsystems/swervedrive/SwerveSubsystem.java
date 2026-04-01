@@ -415,36 +415,6 @@ public class SwerveSubsystem extends SubsystemBase {
     );
   }
 
-  // public Command antiPushDefense(DoubleSupplier leftX, DoubleSupplier leftY, DoubleSupplier rightX, Supplier<ChassisSpeeds> fieldOrientedSpeeds) {
-  //     return run(() -> {
-  //         double leftMag = Math.hypot(leftX.getAsDouble(), leftY.getAsDouble());
-  //         double rightMag = Math.abs(rightX.getAsDouble());
-  //         if ((leftMag + rightMag) > Constants.OperatorConstants.DEADBAND) {
-  //             driveFieldOriented(fieldOrientedSpeeds.get());
-  //         } else {
-  //             swerveDrive.setModuleStates(new SwerveModuleState[]{
-  //                 new SwerveModuleState(0, Rotation2d.fromDegrees(45)),
-  //                 new SwerveModuleState(0, Rotation2d.fromDegrees(135)),
-  //                 new SwerveModuleState(0, Rotation2d.fromDegrees(-45)),
-  //                 new SwerveModuleState(0, Rotation2d.fromDegrees(-135))
-  //             }, false);
-  //         }
-  //     }).finallyDo(interrupted -> stop());
-  // }
-    public Command antiPushDefense() {
-    return run(() -> {
-        // put all swerve modules facing inwards
-        SwerveModuleState[] states = new SwerveModuleState[] {
-            new SwerveModuleState(0, Rotation2d.fromDegrees(45)), // FL
-            new SwerveModuleState(0, Rotation2d.fromDegrees(135)), // FR
-            new SwerveModuleState(0, Rotation2d.fromDegrees(-45)), //BL
-            new SwerveModuleState(0, Rotation2d.fromDegrees(-135)) // BR
-        };
-        swerveDrive.setModuleStates(states, false);
-    }).finallyDo(interrupted -> stop()); // when David trys to drive -> stop
-  }
-
-
 
 
   public Command aimAtPose(Pose2d targetPose) {
