@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.9943835396956926,
+        "x": 3.52151212553495,
         "y": 7.32
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.27327557737615,
+        "x": 3.8004041632154077,
         "y": 7.29901684017974
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "LT Shoot Spc"
     },
     {
       "anchor": {
@@ -176,16 +176,16 @@
     },
     {
       "anchor": {
-        "x": 3.9943835396956926,
+        "x": 3.52151212553495,
         "y": 7.32
       },
       "prevControl": {
-        "x": 3.7468013938177553,
+        "x": 3.2739299796570127,
         "y": 7.285314541339695
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "LT Shoot"
+      "linkedName": "LT Shoot Spc"
     }
   ],
   "rotationTargets": [
