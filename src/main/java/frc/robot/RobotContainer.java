@@ -269,7 +269,7 @@ public class RobotContainer {
     // NamedCommands.registerCommand("test", Commands.print("I EXIST"));
 
     // // pushout
-    // NamedCommands.registerCommand("extend", m_pushout.PushCommand());
+    NamedCommands.registerCommand("extend", m_pushout.PushCommand());
     // NamedCommands.registerCommand("extend and intake",
     //     Commands.parallel(m_pushout.PushCommand(), m_intake.runIntakeCommand()).withTimeout(4));
     // NamedCommands.registerCommand("retract intake", m_pushout.RetractCommand().withTimeout(4));
@@ -309,7 +309,7 @@ public class RobotContainer {
     // NamedCommands.registerCommand("reverse hopper", m_hopper.runReverseHopperCommand().withTimeout(6.7));
 
     // // intake
-    // NamedCommands.registerCommand("intake", m_intake.runIntakeCommand());
+    NamedCommands.registerCommand("intake", m_intake.runIntakeCommand());
     // NamedCommands.registerCommand("outtake", m_intake.runOuttakeCommand().withTimeout(4));
 
     // // climber
