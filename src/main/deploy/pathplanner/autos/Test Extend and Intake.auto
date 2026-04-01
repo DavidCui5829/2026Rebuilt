@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "Donald Trump"
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "extend"
