@@ -102,7 +102,6 @@ public class RobotContainer {
     return new ControllAllPassing(drivebase::getDynamicFerryLocation,
         m_shooter, drivebase::getPose);
   }
-
    
 
   public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of FuelSim
@@ -113,6 +112,7 @@ public class RobotContainer {
   private LoggedDashboardChooser<Command> loggedAutoChooser;
 
   
+
 
   /**
    * Converts driver input into a field-relative ChassisSpeeds that is controlled
@@ -131,7 +131,7 @@ public class RobotContainer {
       // .aimWhile(driverXbox.leftTrigger())
       .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
       .aimFeedforward(0.0001, 0.0001, 0.00013)
-
+      .driveToPose(() -> GetDriveToPose(), null, null)
   ;
 
   /**
@@ -202,7 +202,7 @@ public class RobotContainer {
   private final Trigger RBunjam = driverXbox.rightBumper(); // Run hopper and kicker in reverse
   private final Trigger LBretract_and_stop = driverXbox.leftBumper(); // retract 4 bar and stop intake
   private final Trigger PRDrivetoRightTrench= driverXbox.povRight(); // Drive to right trench
-  private final Trigger PLDrivetoLeftTrench = driverXbox.povLeft(); // run hopper in reverse and kick backwards to unjam
+  private final Trigger PLDriveToPose = driverXbox.povLeft(); // run hopper in reverse and kick backwards to unjam
 
   // Shooter
   private final Trigger LT_Intake = driverXbox.leftTrigger();
@@ -388,6 +388,9 @@ public class RobotContainer {
 
     // Shooter
     // transfer + kick + shoot/pass command, switches based on zone
+
+    driveAngularVelocity.driveToPoseEnabled(PLDriveToPose);
+
     RTtransfer_kick_shoot.whileTrue(
 
       Commands.defer(() -> { 
@@ -448,7 +451,7 @@ public class RobotContainer {
       m_kicker.kickBackwardsCommand()));
       
     // Drive to Left Trench  
-    PLDrivetoLeftTrench.whileTrue(drivebase.driveToPose(new Pose2d(new Translation2d(5.945, 7.388),
+    PLDriveToPose.whileTrue(drivebase.driveToPose(new Pose2d(new Translation2d(5.945, 7.388),
         Rotation2d.fromDegrees(90))));
 
     // Drive to Right Trench  
@@ -749,5 +752,41 @@ public class RobotContainer {
     } else {
       driveAngularVelocity.aim(drivebase.getDynamicFerryLocation());
     }
+  }
+
+  private boolean IsOnLeftSide()
+  {
+      return drivebase.getPose().getX() > 4;
+  }
+
+  private <Supplier>Pose2d GetDriveToPose()
+  {
+      if(isInAllianceZone())
+      {
+          if(IsOnLeftSide())
+          {
+            return new Pose2d(new Translation2d(5.945, 7.388),
+                Rotation2d.fromDegrees(90));
+          }
+          else
+          {
+            return new Pose2d(new Translation2d(5.945, 7.388),
+                Rotation2d.fromDegrees(90));
+          }
+      }
+
+      else
+      {
+        if(IsOnLeftSide())
+        {
+          return new Pose2d(new Translation2d(5.945, 7.388),
+              Rotation2d.fromDegrees(90));
+        }
+        else
+        {
+          return new Pose2d(new Translation2d(5.945, 7.388),
+              Rotation2d.fromDegrees(90));
+        }
+      }
   }
 }
