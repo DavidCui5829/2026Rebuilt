@@ -87,9 +87,9 @@ public class SwerveSubsystem extends SubsystemBase {
   public boolean shouldAimAtHubAuto = false;
 
 
-  public boolean useBLeftLimelight = true;
-  public boolean useBRightLimelight = true;
-  public boolean useClimberLimelight = true;
+  public boolean useFrontLimelight = true;
+  public boolean useBackLimelight = true;
+  public boolean useLeftLimelight = true;
 
   public boolean visionToggleAll = false;
 
@@ -193,35 +193,35 @@ public class SwerveSubsystem extends SubsystemBase {
   {
     return run(() ->
     {
-      useBLeftLimelight = visionToggleAll;
-      useBRightLimelight = visionToggleAll;
-      useClimberLimelight = visionToggleAll;
+      useFrontLimelight = visionToggleAll;
+      useBackLimelight = visionToggleAll;
+      useLeftLimelight = visionToggleAll;
 
       visionToggleAll = !visionToggleAll;
     });
   }
 
-  public Command ClimberToggle()
+  public Command FrontToggle()
   {
     return run(() ->
     {
-      useClimberLimelight = !useClimberLimelight;
+      useFrontLimelight = !useFrontLimelight;
     });
   }
 
-  public Command BLeftToggle()
+  public Command BackToggle()
   {
     return run(() ->
     {
-      useBLeftLimelight = !useBLeftLimelight;
+      useBackLimelight = !useBackLimelight;
     });
   }
 
-  public Command BRightToggle()
+  public Command LeftToggle()
   {
     return run(() ->
     {
-      useBRightLimelight = !useBRightLimelight;
+      useLeftLimelight = !useLeftLimelight;
     });
   }
 
@@ -777,9 +777,9 @@ public class SwerveSubsystem extends SubsystemBase {
   public void updateOdometry() {
 
 
-    if(useBLeftLimelight) updateLimelight(LimelightConstants.LIMELIGHT_BACK, 1);
-    if(useBRightLimelight) updateLimelight(LimelightConstants.LIMELIGHT_FRONT, 1);
-    if(useClimberLimelight) updateLimelight(LimelightConstants.LIMELIGHT_LEFT, 2);
+    if(useBackLimelight) updateLimelight(LimelightConstants.LIMELIGHT_BACK, 1);
+    if(useFrontLimelight) updateLimelight(LimelightConstants.LIMELIGHT_FRONT, 2);
+    if(useLeftLimelight) updateLimelight(LimelightConstants.LIMELIGHT_LEFT, 1);
     
     swerveDrive.updateOdometry();
   }

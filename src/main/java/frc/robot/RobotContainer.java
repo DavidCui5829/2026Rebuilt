@@ -240,10 +240,10 @@ public class RobotContainer {
   private final Trigger POVLEFT_OP_agitate = operatorXbox.povLeft(); // agitate
 
   // Climber
-  private final Trigger POVUP_OP_ClimberLimelight = operatorXbox.povUp();
+  private final Trigger POVUP_OP_FrontLimelight = operatorXbox.povUp();
   private final Trigger POVLEFT_OP_LeftLimelight = operatorXbox.povLeft();
-  private final Trigger POVRIGHT_OP_RightLimelight = operatorXbox.povRight();
-  private final Trigger POVDOwn_OP_ToggleVision = operatorXbox.povDown(); // toggle vision
+  private final Trigger POVRIGHT_OP_VisionToggle = operatorXbox.povRight();
+  private final Trigger POVDown_OP_BackLimelight = operatorXbox.povDown(); // toggle vision
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -502,10 +502,10 @@ public class RobotContainer {
     //POVLEFT_OP_agitate.whileTrue(m_pushout.AgitateCommand());
 
     // vision
-    POVUP_OP_ClimberLimelight.onTrue(drivebase.ClimberToggle());
-    POVLEFT_OP_LeftLimelight.onTrue(drivebase.BLeftToggle());
-    POVRIGHT_OP_RightLimelight.onTrue(drivebase.BRightToggle());
-    POVDOwn_OP_ToggleVision.onTrue(drivebase.VisionToggle());
+    POVUP_OP_FrontLimelight.onTrue(drivebase.FrontToggle());
+    POVLEFT_OP_LeftLimelight.onTrue(drivebase.LeftToggle());
+    POVRIGHT_OP_VisionToggle.onTrue(drivebase.VisionToggle());
+    POVDown_OP_BackLimelight.onTrue(drivebase.BackToggle());
 
     // ========================
  
