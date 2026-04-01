@@ -112,6 +112,13 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
     public static final double WHEEL_LOCK_TIME = 10; // seconds
   }
 
+  public static class LimelightConstants
+  {
+    public static final String LIMELIGHT_FRONT = "limelight-front";
+    public static final String LIMELIGHT_BACK = "limelight-back";
+    public static final String LIMELIGHT_LEFT = "limelight-left";
+  }
+
   public static class OperatorConstants {
 
     // Joystick Deadband

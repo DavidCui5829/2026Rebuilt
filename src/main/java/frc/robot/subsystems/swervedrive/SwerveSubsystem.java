@@ -43,6 +43,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Config;
 import frc.robot.Constants;
+import frc.robot.Constants.LimelightConstants;
 import frc.robot.LimelightHelpers;
 
 import java.io.File;
@@ -776,9 +777,9 @@ public class SwerveSubsystem extends SubsystemBase {
   public void updateOdometry() {
 
 
-    if(useBLeftLimelight) updateLimelight("limelight-bleft", 1);
-    if(useBRightLimelight) updateLimelight("limelight-bright", 1);
-    if(useClimberLimelight) updateLimelight("limelight-climber", 2);
+    if(useBLeftLimelight) updateLimelight(LimelightConstants.LIMELIGHT_BACK, 1);
+    if(useBRightLimelight) updateLimelight(LimelightConstants.LIMELIGHT_FRONT, 1);
+    if(useClimberLimelight) updateLimelight(LimelightConstants.LIMELIGHT_LEFT, 2);
     
     swerveDrive.updateOdometry();
   }
