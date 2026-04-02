@@ -131,7 +131,6 @@ public class RobotContainer {
       // .aimWhile(driverXbox.leftTrigger())
       .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
       .aimFeedforward(0.0001, 0.0001, 0.00013)
-      .aimHeadingOffset(Rotation2d.fromDegrees(180))
   ;
 
   /**
@@ -184,7 +183,6 @@ public class RobotContainer {
       .aim(() -> drivebase.getDynamicHubLocation())
       .aimWhile(true)
       .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
-      // .aimHeadingOffset(Rotation2d.fromDegrees(180))
       .aimFeedforward(0.0001, 0.0001, 0.00013);
 
   SwerveInputStream aimAtFerryStream = SwerveInputStream.of(drivebase.getSwerveDrive(),
@@ -193,7 +191,6 @@ public class RobotContainer {
       .aim(() -> drivebase.getDynamicFerryLocation())
       .aimWhile(true)
       .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
-      // .aimHeadingOffset(Rotation2d.fromDegrees(180))
       .aimFeedforward(0.0001, 0.0001, 0.00013);
 
 
@@ -414,9 +411,8 @@ public class RobotContainer {
                             driveAngularVelocity::get),
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
-                        m_pushout.AgitateCommand().repeatedly().onlyWhile(() -> !LT_Intake.getAsBoolean()),
-                        m_intake.runIntakeCommand()).onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees))))
-                        // .onlyWhile(drivebase.canShoot()::get)
+                        m_pushout.AgitateCommand().onlyWhile(() -> !LT_Intake.getAsBoolean()),
+                        m_intake.runIntakeCommand()).onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees)))).onlyWhile(drivebase.canShoot()::get)
                 .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
         }
         else
