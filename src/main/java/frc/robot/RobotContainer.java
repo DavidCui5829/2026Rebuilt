@@ -131,6 +131,8 @@ public class RobotContainer {
       // .aimWhile(driverXbox.leftTrigger())
       .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
       .aimFeedforward(0.0001, 0.0001, 0.00013)
+       .aimHeadingOffset(Rotation2d.fromDegrees(180))
+       .aimHeadingOffset(true)
   ;
 
   /**
@@ -183,7 +185,10 @@ public class RobotContainer {
       .aim(() -> drivebase.getDynamicHubLocation())
       .aimWhile(true)
       .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
-      .aimFeedforward(0.0001, 0.0001, 0.00013);
+      .aimFeedforward(0.0001, 0.0001, 0.00013)
+      .aimHeadingOffset(Rotation2d.fromDegrees(180))
+       .aimHeadingOffset(true)
+      ;
 
   SwerveInputStream aimAtFerryStream = SwerveInputStream.of(drivebase.getSwerveDrive(),
       () -> 0.0, () -> 0.0)
@@ -191,7 +196,10 @@ public class RobotContainer {
       .aim(() -> drivebase.getDynamicFerryLocation())
       .aimWhile(true)
       .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
-      .aimFeedforward(0.0001, 0.0001, 0.00013);
+      .aimFeedforward(0.0001, 0.0001, 0.00013)
+      .aimHeadingOffset(Rotation2d.fromDegrees(180))
+       .aimHeadingOffset(true);
+      
 
 
   // ========= DRIVER TRIGGERS ===========
@@ -261,7 +269,7 @@ public class RobotContainer {
 
     DriverStation.silenceJoystickConnectionWarning(true);
     SmartDashboard.putNumber("Heading Bias Deg", 0.0);
-    SmartDashboard.putBoolean("Shooter Running", m_shooter.isShooterRunning());
+    SmartDashboard.putBoolean("Is Shooter Running", m_shooter.isShooterRunning());
     // Tunable gain: radians of bias -> radians/sec of angular velocity
     SmartDashboard.putNumber("Heading Bias Gain", 0);
 

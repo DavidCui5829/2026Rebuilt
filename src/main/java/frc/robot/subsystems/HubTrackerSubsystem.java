@@ -32,6 +32,7 @@ public class HubTrackerSubsystem extends SubsystemBase
     private double radius = 1; // radius to represent time left (circle gets smaller when shift ending)
 
     boolean show = false;
+    
     int x = 0;
     
     public HubTrackerSubsystem(SwerveSubsystem drivebase, CommandXboxController driverController)
@@ -190,7 +191,7 @@ public class HubTrackerSubsystem extends SubsystemBase
     Translation2d targetVec = goalLocation.minus(robotLocation);
     double        dist         = targetVec.getNorm();
 
-    SmartDashboard.putNumber("ShooterDistance", dist);
+    SmartDashboard.putNumber("Distance to Hub", dist);
   }
 
   @Override
