@@ -467,7 +467,7 @@ public class RobotContainer {
 
     // ======== Operator ========
     // shooter
-    RT_OP_1900Shot.whileTrue( Commands.parallel(
+    RT_OP_1900Shot.whileTrue(Commands.parallel(
             // keep running the VariableShoot command while we wait for the shooter to reach
             // speed
             m_shooter.shootFuelCommand(),
@@ -479,7 +479,7 @@ public class RobotContainer {
                     m_hopper.runHopperToShooterCommand(),
                     m_intake.runIntakeCommand(),
                     m_kicker.kickCommand(),
-                    m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(2.5)).repeatedly()))));
+                    m_pushout.AgitateCommand().repeatedly().beforeStarting(Commands.waitSeconds(1.5))))));
 
     LT_OPshootFuel.whileTrue(m_shooter.shootFuelCommand());
 
