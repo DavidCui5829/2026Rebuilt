@@ -193,7 +193,7 @@ public class HubTrackerSubsystem extends SubsystemBase
     double        dist         = targetVec.getNorm();
 
     SmartDashboard.putNumber("Distance to Hub", dist);
-    SmartDashboard.putNumber("LUTRPM", ControlAllShooting.getRPM(dist));
+    // SmartDashboard.putNumber("LUTRPM", ControlAllShooting.getRPM(dist));
   }
 
   @Override
