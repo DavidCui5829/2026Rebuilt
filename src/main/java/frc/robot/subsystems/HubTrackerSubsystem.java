@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -183,6 +184,13 @@ public class HubTrackerSubsystem extends SubsystemBase
     SmartDashboard.putBoolean("HubActivity", active);
     if(!active || x == 0) circle.setPoses(createCircle(hubPose, radius, 20));
     else circle.setPoses(); // clears circle when not showing
+
+    Translation2d goalLocation = drivebase.getDynamicHubLocation().getTranslation();
+    Translation2d robotLocation = drivebase.getPose().getTranslation();
+    Translation2d targetVec = goalLocation.minus(robotLocation);
+    double        dist         = targetVec.getNorm();
+
+    SmartDashboard.putNumber("ShooterDistance", dist);
   }
 
   @Override

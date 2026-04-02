@@ -7,6 +7,7 @@ import edu.wpi.first.math.Pair;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 // import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -196,7 +197,7 @@ public class ControlAllShooting extends Command
      
      Logger.recordOutput("Shooter/LUTCurrentTargetRPM", RecordedidealHorizontalSpeed);
      Logger.recordOutput("Shooter/LUTDistance", dist);
-    
+
     // m_hopper.runReverseHopperCommand().onlyIf(m_shooter::isShooterFast);
     // m_kicker.kickBackwardsCommand().onlyIf(m_shooter::isShooterFast);
     
