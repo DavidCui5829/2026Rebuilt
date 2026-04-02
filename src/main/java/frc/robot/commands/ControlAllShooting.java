@@ -56,7 +56,7 @@ public class ControlAllShooting extends Command
   /**
    * Maps Distance to RPM
    */
-  private final InterpolatingDoubleTreeMap shooterTable = new InterpolatingDoubleTreeMap();
+  private static final InterpolatingDoubleTreeMap shooterTable = new InterpolatingDoubleTreeMap();
   
   
 
@@ -137,7 +137,7 @@ public class ControlAllShooting extends Command
     double        dist         = targetVec.getNorm();
     // 3. CALCULATE IDEAL SHOT (Stationary)
     // Note: This returns HORIZONTAL velocity component
-    double idealHorizontalSpeed = shooterTable.get(dist);
+    double idealHorizontalSpeed = getRPM(dist);
 
     // Local predicate to check if shooter is at the desired speed (methods cannot be declared inside methods)
     BooleanSupplier isAtSpeed = () -> Math.abs(idealHorizontalSpeed - m_shooter.getRPM()) <= ShooterConstants.ERROR_MARGIN;
@@ -203,6 +203,11 @@ public class ControlAllShooting extends Command
     
 
 
+  }
+
+  public static double getRPM(double dist)
+  {
+    return shooterTable.get(dist);
   }
 
   @Override
