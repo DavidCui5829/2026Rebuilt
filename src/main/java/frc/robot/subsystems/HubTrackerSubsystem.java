@@ -12,7 +12,11 @@ import java.util.Optional;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -26,6 +30,7 @@ public class HubTrackerSubsystem extends SubsystemBase
     private Field2d field = new Field2d();
     private final SwerveSubsystem drivebase;
     private FieldObject2d circle;
+    private FieldObject2d traj;
 
     final CommandXboxController driverController;
 
@@ -40,6 +45,7 @@ public class HubTrackerSubsystem extends SubsystemBase
     {
         this.drivebase = drivebase;
         circle = field.getObject("Circle"); 
+        traj = field.getObject("Trajectory"); 
         Alliance alliance = DriverStation.getAlliance().orElse(Alliance.Blue);
         hubPose = switch (alliance)
         {
@@ -171,13 +177,17 @@ public class HubTrackerSubsystem extends SubsystemBase
         circle.add(new Pose2d(center.getX() + xOffset, center.getY() + yOffset, new Rotation2d()));
     }
 
+
     return circle;
   }
 
   public void runPeriodic()
   {
+    Pose2d robotPose = drivebase.getPose();
+    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(robotPose, null, robotPose.plus(new Transform2d(2, 0, new Rotation2d())), new TrajectoryConfig(1.0, 1.0));
+    traj.setTrajectory(trajectory);
 
-    field.setRobotPose(drivebase.getPose());
+    field.setRobotPose(robotPose);
     boolean active = isHubActive();
     x = (x == 1) ? 0 : 1;
     // Ok so this is a really weird (but genius) line of code i came up with (yk it aint AI because AI wouldn't make something like this lol)
@@ -188,7 +198,7 @@ public class HubTrackerSubsystem extends SubsystemBase
     else circle.setPoses(); // clears circle when not showing
 
     Translation2d goalLocation = drivebase.getDynamicHubLocation().getTranslation();
-    Translation2d robotLocation = drivebase.getPose().getTranslation();
+    Translation2d robotLocation = robotPose.getTranslation();
     Translation2d targetVec = goalLocation.minus(robotLocation);
     double        dist         = targetVec.getNorm();
 
