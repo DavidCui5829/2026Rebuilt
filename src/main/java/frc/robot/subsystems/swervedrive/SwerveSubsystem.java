@@ -935,6 +935,26 @@ public class SwerveSubsystem extends SubsystemBase {
     return swerveDrive.swerveDriveConfiguration;
   }
 
+  public Supplier<Boolean> canShoot() {
+    // Zone bounds in meters - adjust these to the desired shooting area
+    final double minX = 2.0;
+    final double maxX = 6.0;
+    final double minY = 0.5;
+    final double maxY = 3.0;
+
+    Pose2d pose = getPose();
+    boolean inZone = pose.getX() >= minX && pose.getX() <= maxX
+        && pose.getY() >= minY && pose.getY() <= maxY;
+
+
+    if (inZone) {
+      return () -> false;
+    } else {
+      return () -> true;
+      }
+    }
+  
+
   /**
    * Lock the swerve drive to prevent it from moving.
    */
