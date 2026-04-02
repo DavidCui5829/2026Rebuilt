@@ -937,10 +937,10 @@ public class SwerveSubsystem extends SubsystemBase {
 
   public Supplier<Boolean> canShoot() {
     // Zone bounds in meters - adjust these to the desired shooting area
-    final double minX = 2.0;
-    final double maxX = 6.0;
-    final double minY = 0.5;
-    final double maxY = 3.0;
+    final double minX = 3.0;
+    final double maxX = 3.5;
+    final double minY = 3.5;
+    final double maxY = 4.5;
 
     Pose2d pose = getPose();
     boolean inZone = pose.getX() >= minX && pose.getX() <= maxX
