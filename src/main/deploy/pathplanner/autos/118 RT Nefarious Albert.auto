@@ -11,6 +11,12 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "Through RT"
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "aim at hub"
