@@ -75,8 +75,16 @@ public class Intake extends SubsystemBase {
     public void periodic() {
         // AdvantageKit Logging
         // Commanded intake motor percent output.
+        double RightRPM = IntakeRightMotor.getEncoder().getVelocity();
+        double LeftRPM = IntakeLeftMotor.getEncoder().getVelocity();
+
         Logger.recordOutput("Intake/DesiredPercent", desiredPercent);
         // Applied voltage to intake motor.
         Logger.recordOutput("Intake/AppliedVolts", IntakeLeftMotor.getAppliedOutput() * IntakeLeftMotor.getBusVoltage());
+        Logger.recordOutput("IntakeRightRPM", RightRPM);
+        Logger.recordOutput("IntakeLeftRPM", LeftRPM);
+        Logger.recordOutput("IntakeTargetRPM", IntakeConstants.INTAKE_RPM);
+
+
     }
 }

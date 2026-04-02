@@ -133,13 +133,13 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
     public static final int INTAKE_RIGHT_ID = 19; // unknown
 
     // PID Constants
-    public static final double p = 0.005155;
+    public static final double p = 0.01;
     public static final double i = 0.000;
     public static final double d = 0.01;
 
     // Feed-Forward Constants
     public static final double s = 1.0;
-    public static final double v = 0.5;
+    public static final double v = 0.8;
     public static final double a = 0.5;
 
     public static final double OUTTAKE_SPEED = -1;
@@ -152,8 +152,8 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
   public static class PushoutConstants {
     public static final int PUSHOUT_ID = 17; // Correct
 
-    public static final double PUSHOUT_RETRACTED_POS = 2; // it was 4.693
-    public static final double PUSHOUT_EXTENDED_POS = 14.45; // TUNE THIS!!!
+    public static final double PUSHOUT_RETRACTED_POS = 2; // 
+    public static final double PUSHOUT_EXTENDED_POS = 14; // TUNE THIS!!!
 
     public static final double PUSHOUT_RETRACTED_AGITATE_POS = 2; // it was 4.693
     public static final double PUSHOUT_EXTENDED_AGITATE_POS = 11; // TUNE THIS!!!
@@ -177,14 +177,14 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
     public static final double NEUTRAL_IDLE_RPM = -500;
 
     // PID Constants For Shooter
-    public static final double p = 0.0002355;
+    public static final double p = 0.0003;
     public static final double i = 0.000;
-    public static final double d = 0;
+    public static final double d = 0.01;
 
     // Feed-Forward Constants for Shooter
     public static final double s = 0.0;
-    public static final double v = 0.0019;
-    public static final double leftv = 0.0021;
+    public static final double v = 0.007;
+    public static final double leftv = 0.007;
     public static final double a = 0.0;
 
     public final static InterpolatingDoubleTreeMap TOF = new InterpolatingDoubleTreeMap();
