@@ -102,7 +102,6 @@ public class RobotContainer {
     return new ControllAllPassing(drivebase::getDynamicFerryLocation,
         m_shooter, drivebase::getPose);
   }
-   
 
   public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of FuelSim
 
@@ -111,149 +110,114 @@ public class RobotContainer {
   private final SendableChooser<Command> autoChooser;
   private LoggedDashboardChooser<Command> loggedAutoChooser;
 
-  
+  // Driver chooser: "David" = port 0 drives, "Asier" = port 1 drives
+  private final SendableChooser<String> driverChooser = new SendableChooser<>();
 
+  // -----------------------------------------------------------------------
+  // SwerveInputStreams — built in configureBindings() so they reference
+  // whichever controller was selected as driver via dc().
+  // -----------------------------------------------------------------------
 
   /**
    * Converts driver input into a field-relative ChassisSpeeds that is controlled
    * by angular velocity.
    */
-  SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(),
-      () -> driverXbox.getLeftY() * -1,
-      () -> driverXbox.getLeftX() * -1)
-      .withControllerRotationAxis(() -> driverXbox.getRightX() * -1)
-      .deadband(OperatorConstants.DEADBAND)
-      .scaleTranslation(1.0)
-      .allianceRelativeControl(true)
-      .aim(()-> isInAllianceZone() ? drivebase.getDynamicHubLocation() : drivebase.getDynamicFerryLocation())
-      // .aimLock(Angle.ofBaseUnits(1, Degrees))
-      .aimWhile(driverXbox.rightTrigger())
-      // .aimWhile(driverXbox.leftTrigger())
-      .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
-      .aimFeedforward(0.0001, 0.0001, 0.00013)
-       .aimHeadingOffset(Rotation2d.fromDegrees(180))
-       .aimHeadingOffset(true)
-  ;
+  SwerveInputStream driveAngularVelocity;
 
   /**
    * Clone's the angular velocity input stream and converts it to a fieldRelative
    * input stream.
    */
-  SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerHeadingAxis(driverXbox::getRightX,
-      driverXbox::getRightY)
-      .headingWhile(true);
+  SwerveInputStream driveDirectAngle;
 
   /**
    * Clone's the angular velocity input stream and converts it to a robotRelative
    * input stream.
    */
-  SwerveInputStream driveRobotOriented = driveAngularVelocity.copy().robotRelative(true)
-      .allianceRelativeControl(false);
+  SwerveInputStream driveRobotOriented;
 
-  SwerveInputStream driveAngularVelocityKeyboard = SwerveInputStream.of(drivebase.getSwerveDrive(),
-      () -> -driverXbox.getLeftY(),
-      () -> -driverXbox.getLeftX())
-      .withControllerRotationAxis(() -> driverXbox.getRawAxis(
-          2))
-      .deadband(OperatorConstants.DEADBAND)
-      .scaleTranslation(0.8)
-      .allianceRelativeControl(true);
+  SwerveInputStream driveAngularVelocityKeyboard;
   // Derive the heading axis with math!
-  SwerveInputStream driveDirectAngleKeyboard = driveAngularVelocityKeyboard.copy()
-      .withControllerHeadingAxis(() -> Math.sin(
-          driverXbox.getRawAxis(
-              2) *
-              Math.PI)
-          *
-          (Math.PI *
-              2),
-          () -> Math.cos(
-              driverXbox.getRawAxis(
-                  2) *
-                  Math.PI)
-              *
-              (Math.PI *
-                  2))
-      .headingWhile(true)
-      .translationHeadingOffset(true)
-      .translationHeadingOffset(Rotation2d.fromDegrees(
-          0));
+  SwerveInputStream driveDirectAngleKeyboard;
 
-  SwerveInputStream aimAtHubStream = SwerveInputStream.of(drivebase.getSwerveDrive(),
-      () -> 0.0, () -> 0.0)
-      .withControllerRotationAxis(() -> 0.0)
-      .aim(() -> drivebase.getDynamicHubLocation())
-      .aimWhile(true)
-      .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
-      .aimFeedforward(0.0001, 0.0001, 0.00013)
-      .aimHeadingOffset(Rotation2d.fromDegrees(180))
-       .aimHeadingOffset(true)
-      ;
-
-  SwerveInputStream aimAtFerryStream = SwerveInputStream.of(drivebase.getSwerveDrive(),
-      () -> 0.0, () -> 0.0)
-      .withControllerRotationAxis(() -> 0.0)
-      .aim(() -> drivebase.getDynamicFerryLocation())
-      .aimWhile(true)
-      .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
-      .aimFeedforward(0.0001, 0.0001, 0.00013)
-      .aimHeadingOffset(Rotation2d.fromDegrees(180))
-       .aimHeadingOffset(true);
-      
-
+  SwerveInputStream aimAtHubStream;
+  SwerveInputStream aimAtFerryStream;
 
   // ========= DRIVER TRIGGERS ===========
   // Parallel Commands
-  private final Trigger RTtransfer_kick_shoot = driverXbox.rightTrigger(); // twindex to kicker, kick, agitate, and
-                                                                           // shoot only when up to speed
-  private final Trigger RBunjam = driverXbox.rightBumper(); // Run hopper and kicker in reverse
-  private final Trigger LBretract_and_stop = driverXbox.leftBumper(); // retract 4 bar and stop intake
-  private final Trigger PRDrivetoRightTrench= driverXbox.povRight(); // Drive to right trench
-  private final Trigger PLDriveToPose = driverXbox.povLeft(); // run hopper in reverse and kick backwards to unjam
+  private Trigger RTtransfer_kick_shoot; // index to kicker, kick, agitate, and shoot only when up to speed
+  private Trigger RBunjam;              // Run hopper and kicker in reverse
+  private Trigger LBretract_and_stop;   // retract 4 bar and stop intake
+  private Trigger PRDrivetoRightTrench; // Drive to right trench
+  private Trigger PLDriveToPose;        // run hopper in reverse and kick backwards to unjam
 
   // Shooter
-  private final Trigger LT_Intake = driverXbox.leftTrigger();
+  private Trigger LT_Intake;
 
   // Intake
-  private final Trigger X_runIntake = driverXbox.x();
-  private final Trigger A_runOuttake = driverXbox.a();
+  private Trigger X_runIntake;
+  private Trigger A_runOuttake;
 
   // Pushout
-  private final Trigger Y_extendIntake = driverXbox.y();
-  private final Trigger B_agitate = driverXbox.b();
+  private Trigger Y_extendIntake;
+  private Trigger B_agitate;
 
   // Climber
-  private final Trigger Climb = driverXbox.povUp();
-  private final Trigger ClimbDown = driverXbox.povDown();
+  private Trigger Climb;
+  private Trigger ClimbDown;
 
   // ========= OPERATOR TRIGGERS ===========
   // Shooter
-  private final Trigger LT_OPshootFuel = operatorXbox.leftTrigger(); // just shoot
-  private final Trigger RT_OP_1900Shot = operatorXbox.rightTrigger(); // Shoot, Kick, Index, Agitatie, and Run Intake
+  private Trigger LT_OPshootFuel; // just shoot
+  private Trigger RT_OP_1900Shot; // Shoot, Kick, Index, Agitate, and Run Intake
 
   // Get to Shooter
-  private final Trigger RB_OP_kickIndex = operatorXbox.rightBumper(); // kick, index
-  private final Trigger LB_OP_unjam = operatorXbox.leftBumper(); // unjam
+  private Trigger RB_OP_kickIndex; // kick, index
+  private Trigger LB_OP_unjam;     // unjam
 
   // Intake
-  private final Trigger X_OP_intake = operatorXbox.x(); // intake fuel
-  private final Trigger A_OP_outtake = operatorXbox.a(); // outtake fuel
+  private Trigger X_OP_intake;  // intake fuel
+  private Trigger A_OP_outtake; // outtake fuel
 
   // Pushout
-  private final Trigger Y_OP_extendIntake = operatorXbox.y(); // push out
-  private final Trigger B_OP_reteactIntake = operatorXbox.b(); // pull in
-  private final Trigger POVLEFT_OP_agitate = operatorXbox.povLeft(); // agitate
+  private Trigger Y_OP_extendIntake;  // push out
+  private Trigger B_OP_reteactIntake; // pull in
+  private Trigger POVLEFT_OP_agitate; // agitate
 
-  // Climber
-  private final Trigger POVUP_OP_FrontLimelight = operatorXbox.povUp();
-  private final Trigger POVLEFT_OP_LeftLimelight = operatorXbox.povLeft();
-  private final Trigger POVRIGHT_OP_VisionToggle = operatorXbox.povRight();
-  private final Trigger POVDown_OP_BackLimelight = operatorXbox.povDown(); // toggle vision
+  // Climber / Vision
+  private Trigger POVUP_OP_FrontLimelight;
+  private Trigger POVLEFT_OP_LeftLimelight;
+  private Trigger POVRIGHT_OP_VisionToggle;
+  private Trigger POVDown_OP_BackLimelight; // toggle vision
+
+  // -----------------------------------------------------------------------
+  // Helpers: resolve which physical controller acts as "driver" vs "operator"
+  // based on the SmartDashboard chooser selection.
+  // -----------------------------------------------------------------------
+  private boolean isAsierSelected() {
+    String selected = driverChooser.getSelected();
+    return selected != null && selected.equals("Asier");
+  }
+
+  /** Returns the controller that should be treated as the driving controller. */
+  private CommandXboxController dc() {
+    return isAsierSelected() ? operatorXbox : driverXbox;
+  }
+
+  /** Returns the controller that should be treated as the operator controller. */
+  private CommandXboxController oc() {
+    return isAsierSelected() ? driverXbox : operatorXbox;
+  }
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+
+    // ---- Driver chooser: put on SmartDashboard before configureBindings() ----
+    driverChooser.setDefaultOption("David", "David");
+    driverChooser.addOption("Asier", "Asier");
+    SmartDashboard.putData("Driver:", driverChooser);
 
     // Configure the trigger bindings
     configureBindings();
@@ -301,7 +265,7 @@ public class RobotContainer {
                   m_hopper.runHopperToShooterCommand(),
                   m_kicker.kickCommand(),
                   m_pushout.AgitateCommand().repeatedly(),
-                  
+
                   m_intake.runIntakeCommand()
               ).onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)))
           ).finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(4.75))
@@ -371,6 +335,116 @@ public class RobotContainer {
    */
   private void configureBindings() {
 
+    // Build all SwerveInputStreams here using dc() so they reference the
+    // correct driver controller based on the chooser selection.
+    driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(),
+        () -> dc().getLeftY() * -1,
+        () -> dc().getLeftX() * -1)
+        .withControllerRotationAxis(() -> dc().getRightX() * -1)
+        .deadband(OperatorConstants.DEADBAND)
+        .scaleTranslation(1.0)
+        .allianceRelativeControl(true)
+        .aim(() -> isInAllianceZone() ? drivebase.getDynamicHubLocation() : drivebase.getDynamicFerryLocation())
+        // .aimLock(Angle.ofBaseUnits(1, Degrees))
+        .aimWhile(dc().rightTrigger())
+        // .aimWhile(driverXbox.leftTrigger())
+        .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
+        .aimFeedforward(0.0001, 0.0001, 0.00013)
+        .aimHeadingOffset(Rotation2d.fromDegrees(180))
+        .aimHeadingOffset(true);
+
+    driveDirectAngle = driveAngularVelocity.copy()
+        .withControllerHeadingAxis(dc()::getRightX, dc()::getRightY)
+        .headingWhile(true);
+
+    driveRobotOriented = driveAngularVelocity.copy()
+        .robotRelative(true)
+        .allianceRelativeControl(false);
+
+    driveAngularVelocityKeyboard = SwerveInputStream.of(drivebase.getSwerveDrive(),
+        () -> -dc().getLeftY(),
+        () -> -dc().getLeftX())
+        .withControllerRotationAxis(() -> dc().getRawAxis(2))
+        .deadband(OperatorConstants.DEADBAND)
+        .scaleTranslation(0.8)
+        .allianceRelativeControl(true);
+
+    // Derive the heading axis with math!
+    driveDirectAngleKeyboard = driveAngularVelocityKeyboard.copy()
+        .withControllerHeadingAxis(
+            () -> Math.sin(dc().getRawAxis(2) * Math.PI) * (Math.PI * 2),
+            () -> Math.cos(dc().getRawAxis(2) * Math.PI) * (Math.PI * 2))
+        .headingWhile(true)
+        .translationHeadingOffset(true)
+        .translationHeadingOffset(Rotation2d.fromDegrees(0));
+
+    aimAtHubStream = SwerveInputStream.of(drivebase.getSwerveDrive(),
+        () -> 0.0, () -> 0.0)
+        .withControllerRotationAxis(() -> 0.0)
+        .aim(() -> drivebase.getDynamicHubLocation())
+        .aimWhile(true)
+        .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
+        .aimFeedforward(0.0001, 0.0001, 0.00013)
+        .aimHeadingOffset(Rotation2d.fromDegrees(180))
+        .aimHeadingOffset(true);
+
+    aimAtFerryStream = SwerveInputStream.of(drivebase.getSwerveDrive(),
+        () -> 0.0, () -> 0.0)
+        .withControllerRotationAxis(() -> 0.0)
+        .aim(() -> drivebase.getDynamicFerryLocation())
+        .aimWhile(true)
+        .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
+        .aimFeedforward(0.0001, 0.0001, 0.00013)
+        .aimHeadingOffset(Rotation2d.fromDegrees(180))
+        .aimHeadingOffset(true);
+
+    // ========= DRIVER TRIGGERS ===========
+    // Parallel Commands
+    RTtransfer_kick_shoot = dc().rightTrigger(); // index to kicker, kick, agitate, and shoot only when up to speed
+    RBunjam               = dc().rightBumper();  // Run hopper and kicker in reverse
+    LBretract_and_stop    = dc().leftBumper();   // retract 4 bar and stop intake
+    PRDrivetoRightTrench  = dc().povRight();     // Drive to right trench
+    PLDriveToPose         = dc().povLeft();      // run hopper in reverse and kick backwards to unjam
+
+    // Shooter
+    LT_Intake = dc().leftTrigger();
+
+    // Intake
+    X_runIntake  = dc().x();
+    A_runOuttake = dc().a();
+
+    // Pushout
+    Y_extendIntake = dc().y();
+    B_agitate      = dc().b();
+
+    // Climber
+    Climb     = dc().povUp();
+    ClimbDown = dc().povDown();
+
+    // ========= OPERATOR TRIGGERS ===========
+    // Shooter
+    LT_OPshootFuel = oc().leftTrigger(); // just shoot
+    RT_OP_1900Shot = oc().rightTrigger(); // Shoot, Kick, Index, Agitate, and Run Intake
+
+    // Get to Shooter
+    RB_OP_kickIndex = oc().rightBumper(); // kick, index
+    LB_OP_unjam     = oc().leftBumper();  // unjam
+
+    // Intake
+    X_OP_intake  = oc().x(); // intake fuel
+    A_OP_outtake = oc().a(); // outtake fuel
+
+    // Pushout
+    Y_OP_extendIntake  = oc().y();       // push out
+    B_OP_reteactIntake = oc().b();       // pull in
+    POVLEFT_OP_agitate = oc().povLeft(); // agitate
+
+    // Climber / Vision
+    POVUP_OP_FrontLimelight  = oc().povUp();
+    POVLEFT_OP_LeftLimelight = oc().povLeft();
+    POVRIGHT_OP_VisionToggle = oc().povRight();
+    POVDown_OP_BackLimelight = oc().povDown(); // toggle vision
+
     Command driveFieldOrientedDirectAngle = drivebase
         .driveFieldOriented(() -> applyHeadingBias(driveDirectAngle.get()));
     Command driveFieldOrientedAnglularVelocity = drivebase.driveFieldOriented(
@@ -388,9 +462,7 @@ public class RobotContainer {
     // ======================================
     // ====================================== ALL CONTROLS
     // ======================================
-    
-   
-     
+
 
     // ======= Driver =======
 
@@ -398,30 +470,30 @@ public class RobotContainer {
     // transfer + kick + shoot/pass command, switches based on zone
     RTtransfer_kick_shoot.whileTrue(
 
-      Commands.defer(() -> { 
-        if(isInAllianceZone()) // In alliance zone → shoot at hub
+      Commands.defer(() -> {
+        if (isInAllianceZone()) // In alliance zone → shoot at hub
         {
-         ControlAllShooting shootCmd = makeVariableShoot();
-        return Commands.parallel(
-                shootCmd,
-                // Continuously update aim target for shoot-on-the-move
-                // Commands.run(() -> driveAngularVelocity.aim(drivebase.getDynamicHubLocation())),
-                // Commands.runOnce(() -> driveAngularVelocity.aim(() -> drivebase.getDynamicHubLocation())),
-                Commands.sequence(
-                      Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
-                        && driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
-                      Commands.waitSeconds(0.5),
-                    Commands.parallel(
-                        drivebase.lockCommand(
-                            driverXbox::getLeftX,
-                            driverXbox::getLeftY,
-                            driverXbox::getRightX,
-                            driveAngularVelocity::get),
-                        m_hopper.runHopperToShooterCommand(),
-                        m_kicker.kickCommand(),
-                        m_pushout.AgitateCommand().repeatedly().onlyWhile(() -> !LT_Intake.getAsBoolean()),
-                        m_intake.runIntakeCommand()).onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees)))).onlyWhile(drivebase.canShoot()::get)
-                .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
+          ControlAllShooting shootCmd = makeVariableShoot();
+          return Commands.parallel(
+                  shootCmd,
+                  // Continuously update aim target for shoot-on-the-move
+                  // Commands.run(() -> driveAngularVelocity.aim(drivebase.getDynamicHubLocation())),
+                  // Commands.runOnce(() -> driveAngularVelocity.aim(() -> drivebase.getDynamicHubLocation())),
+                  Commands.sequence(
+                        Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
+                          && driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
+                        Commands.waitSeconds(0.5),
+                      Commands.parallel(
+                          drivebase.lockCommand(
+                              dc()::getLeftX,
+                              dc()::getLeftY,
+                              dc()::getRightX,
+                              driveAngularVelocity::get),
+                          m_hopper.runHopperToShooterCommand(),
+                          m_kicker.kickCommand(),
+                          m_pushout.AgitateCommand().repeatedly().onlyWhile(() -> !LT_Intake.getAsBoolean()),
+                          m_intake.runIntakeCommand()).onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees)))).onlyWhile(drivebase.canShoot()::get)
+                  .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
         }
         else
         {
@@ -458,7 +530,7 @@ public class RobotContainer {
     PLDriveToPose.whileTrue(drivebase.driveToPoseDeffered());
 
     // Swerve Drive Commands
-    driverXbox.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
+    dc().start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
 
     // ======== Operator ========
     // shooter
@@ -503,22 +575,20 @@ public class RobotContainer {
     POVDown_OP_BackLimelight.onTrue(drivebase.BackToggle());
 
     // ========================
- 
+
     // SysId: run shooter quasistatic forward.
-    // operatorXbox.a().whileTrue(m_shooter.sysIdQuasistaticForward());
+    // oc().a().whileTrue(m_shooter.sysIdQuasistaticForward());
     // // SysId: run shooter quasistatic reverse.
-    // operatorXbox.b().whileTrue(m_shooter.sysIdQuasistaticReverse());
+    // oc().b().whileTrue(m_shooter.sysIdQuasistaticReverse());
     // // SysId: run shooter dynamic forward.
-    // operatorXbox.x().whileTrue(m_shooter.sysIdDynamicForward());
+    // oc().x().whileTrue(m_shooter.sysIdDynamicForward());
     // // SysId: run shooter dynamic reverse.
-    // operatorXbox.y().whileTrue(m_shooter.sysIdDynamicReverse());
+    // oc().y().whileTrue(m_shooter.sysIdDynamicReverse());
 
     new Trigger(() -> isInAllianceZone()).onTrue(Commands.runOnce(() -> m_shooter.setDefaultCommand(m_shooter.setAllianceIdle())));
     new Trigger(() -> !isInAllianceZone()).onTrue(Commands.runOnce(() -> m_shooter.setDefaultCommand(m_shooter.setNeutralIdle())));
 
     m_shooter.setDefaultCommand(m_shooter.setAllianceIdle());
-
-    
 
     if (RobotBase.isSimulation()) {
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngleKeyboard);
@@ -546,9 +616,9 @@ public class RobotContainer {
               0,
               new Constraints(Units.degreesToRadians(360),
                   Units.degreesToRadians(180))));
-      driverXbox.start().onTrue(Commands.runOnce(() -> drivebase.resetOdometry(new Pose2d(3, 3, new Rotation2d()))));
-      driverXbox.button(1).whileTrue(drivebase.sysIdDriveMotorCommand());
-      driverXbox.button(2).whileTrue(Commands.runEnd(() -> driveDirectAngleKeyboard.driveToPoseEnabled(true),
+      dc().start().onTrue(Commands.runOnce(() -> drivebase.resetOdometry(new Pose2d(3, 3, new Rotation2d()))));
+      dc().button(1).whileTrue(drivebase.sysIdDriveMotorCommand());
+      dc().button(2).whileTrue(Commands.runEnd(() -> driveDirectAngleKeyboard.driveToPoseEnabled(true),
           () -> driveDirectAngleKeyboard.driveToPoseEnabled(false)));
 
       // driverXbox.b().whileTrue(
@@ -591,8 +661,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // Pass in the selected auto from the SmartDashboard as our desired autnomous
-    // commmand
+    // Pass in the selected auto from the SmartDashboard as our desired autonomous
+    // command
     return loggedAutoChooser.get();
   }
 
