@@ -152,7 +152,7 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
   public static class PushoutConstants {
     public static final int PUSHOUT_ID = 17; // Correct
 
-    public static final double PUSHOUT_RETRACTED_POS = 2; // it was 4.693
+    public static final double PUSHOUT_RETRACTED_POS = 2; // 
     public static final double PUSHOUT_EXTENDED_POS = 14; // TUNE THIS!!!
 
     public static final double PUSHOUT_RETRACTED_AGITATE_POS = 2; // it was 4.693
@@ -179,7 +179,7 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
     // PID Constants For Shooter
     public static final double p = 0.0002355;
     public static final double i = 0.000;
-    public static final double d = 0;
+    public static final double d = 0.01;
 
     // Feed-Forward Constants for Shooter
     public static final double s = 0.0;
