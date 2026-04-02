@@ -177,14 +177,13 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
     public static final double NEUTRAL_IDLE_RPM = -500;
 
     // PID Constants For Shooter
-    public static final double p = 0.00025;
+    public static final double p = 0.00022125;
     public static final double i = 0.000;
-    public static final double d = 0.05;
+    public static final double d = 0.02;
 
     // Feed-Forward Constants for Shooter
     public static final double s = 0.0;
     public static final double v = 0.0017;
-    // public static final double leftv = 0.007;
     public static final double a = 0.0;
 
     public final static InterpolatingDoubleTreeMap TOF = new InterpolatingDoubleTreeMap();
