@@ -68,7 +68,7 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
 
     public static final Pose3d redHubPose = new Pose3d(Units.inchesToMeters(469.09488), Units.inchesToMeters(158.6614),
         Units.inchesToMeters(72.0), new Rotation3d());
-    public static final Pose3d blueHubPose = new Pose3d(Units.inchesToMeters(181.102), Units.inchesToMeters(158.6614),
+    public static final Pose3d blueHubPose = new Pose3d(Units.inchesToMeters(182.12598), Units.inchesToMeters(158.6614),
         Units.inchesToMeters(72.0), new Rotation3d());
 
     public static final Pose3d redFerryPoseDepot = new Pose3d(14.3, 6, 0, Rotation3d.kZero);
