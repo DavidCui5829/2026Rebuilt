@@ -264,6 +264,7 @@ public class RobotContainer {
 
     DriverStation.silenceJoystickConnectionWarning(true);
     SmartDashboard.putNumber("Heading Bias Deg", 0.0);
+    SmartDashboard.putBoolean("Shooter Running", m_shooter.isShooterRunning());
     // Tunable gain: radians of bias -> radians/sec of angular velocity
     SmartDashboard.putNumber("Heading Bias Gain", 0);
 
@@ -390,8 +391,6 @@ public class RobotContainer {
 
     // Shooter
     // transfer + kick + shoot/pass command, switches based on zone
-
-
     RTtransfer_kick_shoot.whileTrue(
 
       Commands.defer(() -> { 
@@ -436,8 +435,8 @@ public class RobotContainer {
                 .finallyDo(() -> m_shooter.setTargetRPMCommand(passCmd.RecordedidealHorizontalSpeed).withTimeout(1));
         }
             }, java.util.Collections.emptySet()));
-      RTtransfer_kick_shoot.onTrue(Commands.runOnce(() -> driveAngularVelocity.scaleTranslation(0.4)));
-      RTtransfer_kick_shoot.onFalse(Commands.runOnce(() -> driveAngularVelocity.scaleTranslation(1)));
+    RTtransfer_kick_shoot.onTrue(Commands.runOnce(() -> driveAngularVelocity.scaleTranslation(0.4)));
+    RTtransfer_kick_shoot.onFalse(Commands.runOnce(() -> driveAngularVelocity.scaleTranslation(1)));
 
     // Intake
     LT_Intake.whileTrue(Commands.parallel(m_pushout.PushCommand(), m_intake.runIntakeCommand()));
