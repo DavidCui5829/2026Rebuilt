@@ -183,7 +183,7 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
 
     // Feed-Forward Constants for Shooter
     public static final double s = 0.0;
-    public static final double v = 0.0019;
+    public static final double v = 0.0015;
     public static final double leftv = 0.0021;
     public static final double a = 0.0;
 
