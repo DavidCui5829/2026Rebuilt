@@ -168,12 +168,12 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
     public static final int SHOOTER_R1_ID = 11;
     public static final int SHOOTER_R2_ID = 12;
 
-    public static final double SHOOTER_SPEED = 1200; // RPM 3 meters 1900 4 meters 2200
+    public static final double SHOOTER_SPEED = -1200; // RPM 3 meters 1900 4 meters 2200
     public static final double ERROR_MARGIN = 100; // RPM
     public static final double STOP = 0;
     public static final double IDLE = 0.1; // % voltage -1 --> 1
 
-    public static final double ALLIANCE_IDLE_RPM = 1000;
+    public static final double ALLIANCE_IDLE_RPM = -1000;
 
     // PID Constants For Shooter
     public static final double p = 0.0002355;
