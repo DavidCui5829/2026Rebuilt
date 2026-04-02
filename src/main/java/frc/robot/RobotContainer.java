@@ -438,7 +438,6 @@ public class RobotContainer {
             }, java.util.Collections.emptySet()));
       RTtransfer_kick_shoot.onTrue(Commands.runOnce(() -> driveAngularVelocity.scaleTranslation(0.4)));
       RTtransfer_kick_shoot.onFalse(Commands.runOnce(() -> driveAngularVelocity.scaleTranslation(1)));
-      
 
     // Intake
     LT_Intake.whileTrue(Commands.parallel(m_pushout.PushCommand(), m_intake.runIntakeCommand()));
@@ -450,20 +449,12 @@ public class RobotContainer {
     RBunjam.whileTrue(Commands.parallel(
       m_hopper.runReverseHopperCommand(),
       m_kicker.kickBackwardsCommand()));
-      
-    // Drive to Left Trench  
-    // PLDriveToPose.whileTrue(drivebase.driveToPose(new Pose2d(new Translation2d(5.945, 7.388),
-    //     Rotation2d.fromDegrees(90))));
 
+    // Drive to Pose
     PLDriveToPose.whileTrue(drivebase.driveToPoseDeffered());
-
-    // Drive to Right Trench  
-    PRDrivetoRightTrench.whileTrue(drivebase.driveToPose(new Pose2d(new Translation2d(5.945, 0.83),
-        Rotation2d.fromDegrees(-90))));
 
     // Swerve Drive Commands
     driverXbox.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
-
 
     // ======== Operator ========
     // shooter
