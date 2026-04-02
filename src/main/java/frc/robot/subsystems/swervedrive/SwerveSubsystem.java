@@ -87,7 +87,7 @@ public class SwerveSubsystem extends SubsystemBase {
   public boolean shouldAimAtHubAuto = false;
 
 
-  public boolean useFrontLimelight = true;
+  public boolean useFrontLimelight = false;
   public boolean useBackLimelight = false;
   public boolean useLeftLimelight = false;
 
