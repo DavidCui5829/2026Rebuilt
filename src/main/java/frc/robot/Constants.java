@@ -190,11 +190,11 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
 
     static {
       for (var entry : List.of(
-          Pair.of(Meters.of(2), Seconds.of(1.0)),
-          Pair.of(Meters.of(3), Seconds.of(1.16)),
-          Pair.of(Meters.of(4), Seconds.of(1.28)),
-          Pair.of(Meters.of(5), Seconds.of(1.4)),
-          Pair.of(Meters.of(6), Seconds.of(1.6)))) {
+          Pair.of(Meters.of(2), Seconds.of(0.85)),
+          Pair.of(Meters.of(3), Seconds.of(0.9)),
+          Pair.of(Meters.of(4), Seconds.of(1.08)),
+          Pair.of(Meters.of(5), Seconds.of(1.2)),
+          Pair.of(Meters.of(6), Seconds.of(1.4)))) {
         TOF.put(entry.getFirst().in(Meters), entry.getSecond().in(Seconds));
       }
     }
