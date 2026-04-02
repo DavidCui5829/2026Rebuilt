@@ -83,7 +83,7 @@ public class RobotContainer {
   private final Intake m_intake = new Intake();
   private final Hopper m_hopper = new Hopper();
   private final Shooter m_shooter = new Shooter();
-  private final Climber m_climber = new Climber();
+  // private final Climber m_climber = new Climber();
   private final Kicker m_kicker = new Kicker();
   private final Pushout m_pushout = new Pushout();
 
@@ -315,8 +315,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("outtake", m_intake.runOuttakeCommand().withTimeout(4));
 
     // climber
-    NamedCommands.registerCommand("climb up", m_climber.runClimbCommand().withTimeout(4));
-    NamedCommands.registerCommand("climb down", m_climber.runClimberDownCommand().withTimeout(4));
+    // NamedCommands.registerCommand("climb up", m_climber.runClimbCommand().withTimeout(4));
+    // NamedCommands.registerCommand("climb down", m_climber.runClimberDownCommand().withTimeout(4));
 
     NamedCommands.registerCommand("aim at hub",
             Commands.sequence
