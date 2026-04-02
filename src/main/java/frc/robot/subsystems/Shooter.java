@@ -182,6 +182,14 @@ public class Shooter extends SubsystemBase {
         });
     }
 
+    public Command setNeutralIdle()
+    {
+        return new RunCommand(() -> 
+        {
+            setTargetRPM(ShooterConstants.NEUTRAL_IDLE_RPM);
+        });
+    }
+
     public Command setTargetRPMCommand(double rpm) {
         return new RunCommand(() -> setTargetRPM(rpm), this)
                 .finallyDo(interrupted -> setTargetRPM(0.0));
