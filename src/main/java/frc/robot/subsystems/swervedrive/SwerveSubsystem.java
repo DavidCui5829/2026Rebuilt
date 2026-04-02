@@ -1044,7 +1044,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
   private boolean IsOnLeftSide()
   {
-      return getPose().getX() > 4;
+      return getPose().getY() > 4;
   }
 
   private Alliance getAlliance() {
