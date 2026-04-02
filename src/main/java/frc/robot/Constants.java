@@ -177,9 +177,9 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
     public static final double NEUTRAL_IDLE_RPM = -500;
 
     // PID Constants For Shooter
-    public static final double p = 0.0003;
+    public static final double p = 0.00025;
     public static final double i = 0.000;
-    public static final double d = 0.01;
+    public static final double d = 0.0;
 
     // Feed-Forward Constants for Shooter
     public static final double s = 0.0;
