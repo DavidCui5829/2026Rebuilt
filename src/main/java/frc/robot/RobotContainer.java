@@ -83,7 +83,7 @@ public class RobotContainer {
   private final Intake m_intake = new Intake();
   private final Hopper m_hopper = new Hopper();
   private final Shooter m_shooter = new Shooter();
-  private final Climber m_climber = new Climber();
+  // private final Climber m_climber = new Climber();
   private final Kicker m_kicker = new Kicker();
   private final Pushout m_pushout = new Pushout();
 
@@ -132,7 +132,6 @@ public class RobotContainer {
       .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
       .aimFeedforward(0.0001, 0.0001, 0.00013)
       .aimHeadingOffset(Rotation2d.fromDegrees(180))
-      .driveToPose(() -> GetDriveToPose(), null, null)
   ;
 
   /**
@@ -241,10 +240,10 @@ public class RobotContainer {
   private final Trigger POVLEFT_OP_agitate = operatorXbox.povLeft(); // agitate
 
   // Climber
-  private final Trigger POVUP_OP_ClimberLimelight = operatorXbox.povUp();
+  private final Trigger POVUP_OP_FrontLimelight = operatorXbox.povUp();
   private final Trigger POVLEFT_OP_LeftLimelight = operatorXbox.povLeft();
-  private final Trigger POVRIGHT_OP_RightLimelight = operatorXbox.povRight();
-  private final Trigger POVDOwn_OP_ToggleVision = operatorXbox.povDown(); // toggle vision
+  private final Trigger POVRIGHT_OP_VisionToggle = operatorXbox.povRight();
+  private final Trigger POVDown_OP_BackLimelight = operatorXbox.povDown(); // toggle vision
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -316,8 +315,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("outtake", m_intake.runOuttakeCommand().withTimeout(4));
 
     // climber
-    NamedCommands.registerCommand("climb up", m_climber.runClimbCommand().withTimeout(4));
-    NamedCommands.registerCommand("climb down", m_climber.runClimberDownCommand().withTimeout(4));
+    // NamedCommands.registerCommand("climb up", m_climber.runClimbCommand().withTimeout(4));
+    // NamedCommands.registerCommand("climb down", m_climber.runClimberDownCommand().withTimeout(4));
 
     NamedCommands.registerCommand("aim at hub",
             Commands.sequence
@@ -392,7 +391,6 @@ public class RobotContainer {
     // Shooter
     // transfer + kick + shoot/pass command, switches based on zone
 
-    driveAngularVelocity.driveToPoseEnabled(PLDriveToPose);
 
     RTtransfer_kick_shoot.whileTrue(
 
@@ -454,8 +452,10 @@ public class RobotContainer {
       m_kicker.kickBackwardsCommand()));
       
     // Drive to Left Trench  
-    PLDriveToPose.whileTrue(drivebase.driveToPose(new Pose2d(new Translation2d(5.945, 7.388),
-        Rotation2d.fromDegrees(90))));
+    // PLDriveToPose.whileTrue(drivebase.driveToPose(new Pose2d(new Translation2d(5.945, 7.388),
+    //     Rotation2d.fromDegrees(90))));
+
+    PLDriveToPose.whileTrue(drivebase.driveToPoseDeffered());
 
     // Drive to Right Trench  
     PRDrivetoRightTrench.whileTrue(drivebase.driveToPose(new Pose2d(new Translation2d(5.945, 0.83),
@@ -467,7 +467,7 @@ public class RobotContainer {
 
     // ======== Operator ========
     // shooter
-    RT_OP_1900Shot.whileTrue( Commands.parallel(
+    RT_OP_1900Shot.whileTrue(Commands.parallel(
             // keep running the VariableShoot command while we wait for the shooter to reach
             // speed
             m_shooter.shootFuelCommand(),
@@ -479,7 +479,7 @@ public class RobotContainer {
                     m_hopper.runHopperToShooterCommand(),
                     m_intake.runIntakeCommand(),
                     m_kicker.kickCommand(),
-                    m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(2.5)).repeatedly()))));
+                    m_pushout.AgitateCommand().repeatedly().beforeStarting(Commands.waitSeconds(1.5))))));
 
     LT_OPshootFuel.whileTrue(m_shooter.shootFuelCommand());
 
@@ -502,10 +502,10 @@ public class RobotContainer {
     //POVLEFT_OP_agitate.whileTrue(m_pushout.AgitateCommand());
 
     // vision
-    POVUP_OP_ClimberLimelight.onTrue(drivebase.ClimberToggle());
-    POVLEFT_OP_LeftLimelight.onTrue(drivebase.BLeftToggle());
-    POVRIGHT_OP_RightLimelight.onTrue(drivebase.BRightToggle());
-    POVDOwn_OP_ToggleVision.onTrue(drivebase.VisionToggle());
+    POVUP_OP_FrontLimelight.onTrue(drivebase.FrontToggle());
+    POVLEFT_OP_LeftLimelight.onTrue(drivebase.LeftToggle());
+    POVRIGHT_OP_VisionToggle.onTrue(drivebase.VisionToggle());
+    POVDown_OP_BackLimelight.onTrue(drivebase.BackToggle());
 
     // ========================
  
@@ -755,44 +755,5 @@ public class RobotContainer {
     } else {
       driveAngularVelocity.aim(drivebase.getDynamicFerryLocation());
     }
-  }
-
-  private boolean IsOnLeftSide()
-  {
-      return drivebase.getPose().getX() > 4;
-  }
-
-  private <Supplier>Pose2d GetDriveToPose()
-  {
-      boolean isInAllianceZone = isInAllianceZone();
-      boolean IsOnLeftSide = IsOnLeftSide();
-      
-      if(isInAllianceZone)
-      {
-          if(IsOnLeftSide)
-          {
-            return new Pose2d(new Translation2d(5.945, 7.388),
-                Rotation2d.fromDegrees(90));
-          }
-          else
-          {
-            return new Pose2d(new Translation2d(5.945, 7.388),
-                Rotation2d.fromDegrees(90));
-          }
-      }
-
-      else
-      {
-        if(IsOnLeftSide)
-        {
-          return new Pose2d(new Translation2d(5.945, 7.388),
-              Rotation2d.fromDegrees(90));
-        }
-        else
-        {
-          return new Pose2d(new Translation2d(5.945, 7.388),
-              Rotation2d.fromDegrees(90));
-        }
-      }
   }
 }

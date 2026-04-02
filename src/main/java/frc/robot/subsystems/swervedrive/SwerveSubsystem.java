@@ -43,6 +43,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Config;
 import frc.robot.Constants;
+import frc.robot.Constants.LimelightConstants;
 import frc.robot.LimelightHelpers;
 
 import java.io.File;
@@ -86,9 +87,9 @@ public class SwerveSubsystem extends SubsystemBase {
   public boolean shouldAimAtHubAuto = false;
 
 
-  public boolean useBLeftLimelight = true;
-  public boolean useBRightLimelight = true;
-  public boolean useClimberLimelight = true;
+  public boolean useFrontLimelight = true;
+  public boolean useBackLimelight = false;
+  public boolean useLeftLimelight = false;
 
   public boolean visionToggleAll = false;
 
@@ -192,35 +193,35 @@ public class SwerveSubsystem extends SubsystemBase {
   {
     return run(() ->
     {
-      useBLeftLimelight = visionToggleAll;
-      useBRightLimelight = visionToggleAll;
-      useClimberLimelight = visionToggleAll;
+      useFrontLimelight = visionToggleAll;
+      useBackLimelight = visionToggleAll;
+      useLeftLimelight = visionToggleAll;
 
       visionToggleAll = !visionToggleAll;
     });
   }
 
-  public Command ClimberToggle()
+  public Command FrontToggle()
   {
     return run(() ->
     {
-      useClimberLimelight = !useClimberLimelight;
+      useFrontLimelight = !useFrontLimelight;
     });
   }
 
-  public Command BLeftToggle()
+  public Command BackToggle()
   {
     return run(() ->
     {
-      useBLeftLimelight = !useBLeftLimelight;
+      useBackLimelight = !useBackLimelight;
     });
   }
 
-  public Command BRightToggle()
+  public Command LeftToggle()
   {
     return run(() ->
     {
-      useBRightLimelight = !useBRightLimelight;
+      useLeftLimelight = !useLeftLimelight;
     });
   }
 
@@ -776,9 +777,9 @@ public class SwerveSubsystem extends SubsystemBase {
   public void updateOdometry() {
 
 
-    if(useBLeftLimelight) updateLimelight("limelight-bleft", 1);
-    if(useBRightLimelight) updateLimelight("limelight-bright", 1);
-    if(useClimberLimelight) updateLimelight("limelight-climber", 2);
+    if(useBackLimelight) updateLimelight(LimelightConstants.LIMELIGHT_BACK, 1);
+    if(useFrontLimelight) updateLimelight(LimelightConstants.LIMELIGHT_FRONT, 2);
+    if(useLeftLimelight) updateLimelight(LimelightConstants.LIMELIGHT_LEFT, 1);
     
     swerveDrive.updateOdometry();
   }
@@ -1019,5 +1020,67 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     return new Pose2d(CompensatedFerry, new Rotation2d());
+  }
+
+  private boolean IsOnLeftSide()
+  {
+      return getPose().getX() > 4;
+  }
+
+  private Alliance getAlliance() {
+    return DriverStation.getAlliance().orElse(Alliance.Red);
+  }
+
+  private boolean isInAllianceZone() {
+    Alliance alliance = getAlliance();
+    Distance blueZone = Inches.of(182);
+    Distance redZone = Inches.of(469);
+
+    if (alliance == Alliance.Blue && getPose().getMeasureX().lt(blueZone)) {
+      return true;
+    } else if (alliance == Alliance.Red && getPose().getMeasureX().gt(redZone)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  private Pose2d GetDriveToPose()
+  {
+      boolean isInAllianceZone = isInAllianceZone();
+      boolean IsOnLeftSide = IsOnLeftSide();
+
+      if(isInAllianceZone)
+      {
+          if(IsOnLeftSide)
+          {
+            return new Pose2d(new Translation2d(3.478, 7.432),
+              Rotation2d.fromDegrees(108.773));
+          }
+          else
+          {
+            return new Pose2d(new Translation2d(3.478, 0.432),
+              Rotation2d.fromDegrees(-108.773));
+          }
+      }
+
+      else
+      {
+        if(IsOnLeftSide)
+        {
+          return new Pose2d(new Translation2d(5.789, 7.432),
+              new Rotation2d());
+        }
+        else
+        {
+          return new Pose2d(new Translation2d(5.789, 0.432),
+              new Rotation2d());
+        }
+      }
+  }
+
+  public Command driveToPoseDeffered()
+  {
+    return defer(() -> driveToPose(GetDriveToPose()));
   }
 }
