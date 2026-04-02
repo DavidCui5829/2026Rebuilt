@@ -223,8 +223,8 @@ public class RobotContainer {
 
   // ========= OPERATOR TRIGGERS ===========
   // Shooter
-  private final Trigger LT_OPshootFuel = operatorXbox.rightTrigger(); // just shoot
-  private final Trigger RT_OP_1900Shot = operatorXbox.povRight(); // variable shoot full command
+  private final Trigger LT_OPshootFuel = operatorXbox.leftTrigger(); // just shoot
+  private final Trigger RT_OP_1900Shot = operatorXbox.rightTrigger(); // Shoot, Kick, Index, Agitatie, and Run Intake
 
   // Get to Shooter
   private final Trigger RB_OP_kickIndex = operatorXbox.rightBumper(); // kick, index
