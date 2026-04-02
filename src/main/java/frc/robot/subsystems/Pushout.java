@@ -173,9 +173,9 @@ public class Pushout extends SubsystemBase {
             Commands.waitSeconds(PushoutConstants.PUSHOUT_AGITATE_WAIT),
 
             runOnce(() -> {
-                PushoutRetractedAgitate -= 0.5;   // retract by 3 encoder each cycle
+                PushoutRetractedAgitate -= 2.5;   // retract by 3 encoder each cycle
 
-                if (PushoutRetractedAgitate <= 0) {
+                if (PushoutRetractedAgitate <= 3) {
                     Commands.waitSeconds(PushoutConstants.PUSHOUT_AGITATE_WAIT*2);
                     PushoutRetractedAgitate = 10;   // reset
                 }
