@@ -122,12 +122,19 @@ public class Shooter extends SubsystemBase {
         return Math.abs(avgShooterRPM - ShooterConstants.SHOOTER_SPEED) <= ShooterConstants.ERROR_MARGIN;
     }
 
-    
-
     public double getRPM() {
 
         return (shooterLeft1Encoder.getVelocity() + shooterLeft2Encoder.getVelocity()
                 + shooterRight1Encoder.getVelocity() + shooterRight2Encoder.getVelocity()) / 4.0;
+    }
+
+    public boolean isShooterRunning() {
+        if (getRPM() >= 800) {
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     // Alright so essentially we made a method to make the motor speed up (a few
