@@ -266,7 +266,7 @@ public class RobotContainer {
                   m_kicker.kickCommand(),
                   m_pushout.AgitateCommand().repeatedly(),
                   m_intake.runIntakeCommand()
-              ).onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(3, Degrees)))
+              )
           ).finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1))
       );
     }, java.util.Collections.emptySet()).withTimeout(4.75));
@@ -352,7 +352,7 @@ public class RobotContainer {
         // .aimWhile(driverXbox.leftTrigger())
         .aimLookahead(Time.ofBaseUnits(0, Seconds))
         .aimFeedforward(0.0001, 0.0001, 0.00013)
-        .aimHeadingOffset(Rotation2d.fromDegrees(170))
+        .aimHeadingOffset(Rotation2d.fromDegrees(180))
         .aimHeadingOffset(true);
 
     driveDirectAngle = driveAngularVelocity.copy()
@@ -494,7 +494,7 @@ public class RobotContainer {
                           m_hopper.runHopperToShooterCommand(),
                           m_kicker.kickCommand(),
                           m_pushout.AgitateCommand().repeatedly().onlyWhile(() -> !LT_Intake.getAsBoolean()),
-                          m_intake.runIntakeCommand())).onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(3, Degrees)))
+                          m_intake.runIntakeCommand())).onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees)))
                   .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
         }
         else
