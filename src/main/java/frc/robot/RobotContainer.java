@@ -34,6 +34,7 @@ import static edu.wpi.first.units.Units.Meters;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.Dimensions;
+import frc.robot.Constants.DrivebaseConstants;
 // import frc.robot.Configs.ShooterSubsystem;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ControlAllShooting;
@@ -344,7 +345,7 @@ public class RobotContainer {
         .deadband(OperatorConstants.DEADBAND)
         .scaleTranslation(1.0)
         .allianceRelativeControl(true)
-        .aim(() -> isInAllianceZone() ? drivebase.getDynamicHubLocation() : drivebase.getDynamicFerryLocation())
+        .aim(() -> isInAllianceZone() ? DrivebaseConstants.getHubPose2D() : drivebase.getDynamicFerryLocation())
         // .aimLock(Angle.ofBaseUnits(1, Degrees))
         .aimWhile(dc().rightTrigger())
         // .aimWhile(driverXbox.leftTrigger())
@@ -519,7 +520,7 @@ public class RobotContainer {
     LT_Intake.whileTrue(Commands.parallel(m_pushout.PushCommand(), m_intake.runIntakeCommand()));
     LBretract_and_stop.whileTrue(Commands.parallel(m_pushout.RetractCommand(), m_intake.stopIntakeCommand()));
 
-    A_runOuttake.whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
+    // A_runOuttake.whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
 
     // Hopper
     RBunjam.whileTrue(Commands.parallel(
