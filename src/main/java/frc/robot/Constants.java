@@ -168,7 +168,7 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
     public static final int SHOOTER_R1_ID = 11;
     public static final int SHOOTER_R2_ID = 12;
 
-    public static final double SHOOTER_SPEED = -1900; // RPM 3 meters 1900 4 meters 2200
+    public static final double SHOOTER_SPEED = -1735; // RPM 3 meters 1900 4 meters 2200
     public static final double ERROR_MARGIN = 100; // RPM
     public static final double STOP = 0;
     public static final double IDLE = 0.1; // % voltage -1 --> 1
