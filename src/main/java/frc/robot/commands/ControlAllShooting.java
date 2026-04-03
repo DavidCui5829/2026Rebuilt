@@ -209,7 +209,6 @@ public class ControlAllShooting extends Command
   // {
   //   return shooterTable.get(dist);
   // }
-
   @Override
   public boolean isFinished()
   {

@@ -367,14 +367,14 @@ public class SwerveSubsystem extends SubsystemBase {
           this
       // Reference to this subsystem to set requirements
       );
-      PPHolonomicDriveController.setRotationTargetOverride(() ->
-      {
-        if (shouldAimAtHubAuto)
-        {
-          return Optional.of(getDynamicHubLocation().getRotation());
-        }
-        return Optional.empty();
-      });
+      // PPHolonomicDriveController.setRotationTargetOverride(() ->
+      // {
+      //   if (shouldAimAtHubAuto)
+      //   {
+      //     return Optional.of(getDynamicHubLocation().getRotation());
+      //   }
+      //   return Optional.empty();
+      // });
 
     } catch (Exception e) {
       // Handle exception as needed
