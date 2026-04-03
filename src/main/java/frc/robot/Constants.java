@@ -177,13 +177,13 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
     public static final double NEUTRAL_IDLE_RPM = -500;
 
     // PID Constants For Shooter
-    public static final double p = 0.00025125;
+    public static final double p = 0.0002355;
     public static final double i = 0.000;
-    public static final double d = 0.025;
+    public static final double d = 0;
 
     // Feed-Forward Constants for Shooter
     public static final double s = 0.0;
-    public static final double v = 0.0017;
+    public static final double v = 0.0019;
     public static final double a = 0.0;
 
     public final static InterpolatingDoubleTreeMap TOF = new InterpolatingDoubleTreeMap();
@@ -281,7 +281,6 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
                                                                                   // speed to PID control
   public static final double AUTO_ALIGNMENT_FAST_APPROACH_SPEED = 1.2; // Fast approach speed in m/s when far from the
                                                                        // reef
-
   // Shift these setpoints when the robot stops short, crashes the reef, or parks
   // off-center.
   public static final double ROT_SETPOINT_REEF_ALIGNMENT = 0; // Desired robot heading when aligned to the reef
