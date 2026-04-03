@@ -937,24 +937,24 @@ public class SwerveSubsystem extends SubsystemBase {
     return swerveDrive.swerveDriveConfiguration;
   }
 
-  public Supplier<Boolean> canShoot() {
-    // Zone bounds in meters - adjust these to the desired shooting area
-    final double minX = 3.0;
-    final double maxX = 3.5;
-    final double minY = 3.5;
-    final double maxY = 4.5;
+  // public Supplier<Boolean> canShoot() {
+  //   // Zone bounds in meters - adjust these to the desired shooting area
+  //   final double minX = 3.0;
+  //   final double maxX = 3.5;
+  //   final double minY = 3.5;
+  //   final double maxY = 4.5;
 
-    Pose2d pose = getPose();
-    boolean inZone = pose.getX() >= minX && pose.getX() <= maxX
-        && pose.getY() >= minY && pose.getY() <= maxY;
+  //   Pose2d pose = getPose();
+  //   boolean inZone = pose.getX() >= minX && pose.getX() <= maxX
+  //       && pose.getY() >= minY && pose.getY() <= maxY;
 
 
-    if (inZone) {
-      return () -> false;
-    } else {
-      return () -> true;
-      }
-    }
+    // if (inZone) {
+    //   return () -> false;
+    // } else {
+    //   return () -> true;
+    //   }
+    // }
   
 
   /**

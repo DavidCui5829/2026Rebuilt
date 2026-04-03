@@ -492,7 +492,7 @@ public class RobotContainer {
                           m_hopper.runHopperToShooterCommand(),
                           m_kicker.kickCommand(),
                           m_pushout.AgitateCommand().repeatedly().onlyWhile(() -> !LT_Intake.getAsBoolean()),
-                          m_intake.runIntakeCommand()).onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees)))).onlyWhile(drivebase.canShoot()::get)
+                          m_intake.runIntakeCommand()).onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees))))
                   .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
         }
         else
@@ -546,7 +546,7 @@ public class RobotContainer {
                     m_hopper.runHopperToShooterCommand(),
                     m_intake.runIntakeCommand(),
                     m_kicker.kickCommand(),
-                    m_pushout.AgitateCommand().repeatedly().beforeStarting(Commands.waitSeconds(1.5))))));
+                    m_pushout.AgitateCommand().repeatedly().beforeStarting(Commands.waitSeconds(1))))));
 
     LT_OPshootFuel.whileTrue(m_shooter.shootFuelCommand());
 
