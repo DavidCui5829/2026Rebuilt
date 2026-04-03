@@ -100,41 +100,26 @@ public class HubTrackerSubsystem extends SubsystemBase
 
         if (matchTime >= 130) // transition shift, always active
         {
-            int seconds = (140 - (int)matchTime);
-            SmartDashboard.putNumber("TimeLeft", seconds);
-            radius = seconds / 10.0;
-            vibrate(radius);
+            publish(140, (int)matchTime, 10.0);
             return true;
         } 
         else if (matchTime >= 105) { // shift 1
-            int seconds = (130 - (int)matchTime);
-            SmartDashboard.putNumber("TimeLeft", seconds);
-            radius = seconds / 15.0;
-            vibrate(radius);
+            publish(130, (int)matchTime, 25.0);
             return shiftOneActive;
         } 
         else if (matchTime >= 80) // shift 2
         {
-            int seconds = (105 - (int)matchTime);
-            SmartDashboard.putNumber("TimeLeft", seconds);
-            radius = seconds / 15.0;
-            vibrate(radius);
+            publish(105, (int)matchTime, 25.0);
             return !shiftOneActive;
         } 
         else if (matchTime >= 55) // shift 3
         {
-            int seconds = (80 - (int)matchTime);
-            SmartDashboard.putNumber("TimeLeft", seconds);
-            radius = seconds / 15.0;
-            vibrate(radius);
+            publish(80, (int)matchTime, 25.0);
             return shiftOneActive;
         } 
         else if (matchTime >= 30) // shift 4
         {
-            int seconds = (55 - (int)matchTime);
-            SmartDashboard.putNumber("TimeLeft", seconds);
-            radius = seconds / 15.0;
-            vibrate(radius);
+            publish(55, (int)matchTime, 25.0);
             return !shiftOneActive;
         } 
         else
@@ -145,6 +130,15 @@ public class HubTrackerSubsystem extends SubsystemBase
             vibrate(radius);
             return true; // Endgame, always active
         }
+  }
+
+
+  private void publish(int time, int matchTime, double shiftTime)
+  {
+    int seconds = (time - matchTime);
+    SmartDashboard.putNumber("TimeLeft", seconds);
+    radius = seconds / shiftTime;
+    vibrate(radius);
   }
 
 //   public Command isHubActiveCommand()

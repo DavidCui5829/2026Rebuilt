@@ -1014,9 +1014,9 @@ public class SwerveSubsystem extends SubsystemBase {
       CompensatedHub = hubVec.minus(robotVel.times(tof));
     }
 
-    Rotation2d aimRotation = CompensatedHub.minus(robotVec).getAngle();
+    // Rotation2d aimRotation = CompensatedHub.minus(robotVec).getAngle();
 
-    return new Pose2d(CompensatedHub, aimRotation);
+    return new Pose2d(CompensatedHub, new Rotation2d(0));
   }
 
   /**
