@@ -91,6 +91,8 @@ public class SwerveSubsystem extends SubsystemBase {
   public boolean useBackLimelight = true;
   public boolean useLeftLimelight = true;
 
+  boolean locked = false;
+
   public boolean visionToggleAll = false;
 
   private final SendableChooser<Boolean> megaTagChooser = new SendableChooser<Boolean>();
@@ -777,7 +779,7 @@ public class SwerveSubsystem extends SubsystemBase {
   public void updateOdometry() {
 
 
-    if(useBackLimelight) updateLimelight(LimelightConstants.LIMELIGHT_BACK, 2);
+    if(useBackLimelight) updateLimelight(LimelightConstants.LIMELIGHT_BACK, 1);
     if(useFrontLimelight) updateLimelight(LimelightConstants.LIMELIGHT_FRONT, 1);
     if(useLeftLimelight) updateLimelight(LimelightConstants.LIMELIGHT_LEFT, 1);
     
@@ -968,9 +970,11 @@ public class SwerveSubsystem extends SubsystemBase {
         double rightMag = Math.abs(rightX.getAsDouble());
         if ((leftMag + rightMag) > Constants.OperatorConstants.DEADBAND) {
             driveFieldOriented(fieldOrientedSpeeds.get());
+            locked = false;
         } 
         else {
           lock();
+          locked = true;
         }
     }).finallyDo(interrupted -> stop());
   }
@@ -1002,6 +1006,12 @@ public class SwerveSubsystem extends SubsystemBase {
    * @return A Pose2d representing the compensated aim point.
    */
   public Pose2d getDynamicHubLocation() {
+
+    if(locked)
+    {
+      return new Pose2d(Constants.DrivebaseConstants.getHubPose2D().getTranslation(), new Rotation2d(0));
+    }
+
     Translation2d hubVec = Constants.DrivebaseConstants.getHubPose2D().getTranslation();
     Translation2d robotVec = getPose().getTranslation();
     ChassisSpeeds vel = getFieldVelocity();
