@@ -265,8 +265,8 @@ public final class Configs
                                 ShooterRightMotor2Config.idleMode(IdleMode.kCoast).smartCurrentLimit(55).voltageCompensation(12)
                                 .follow(ShooterConstants.SHOOTER_R1_ID, true);
                                 
-                                ShooterLeftMotor1Config.idleMode(IdleMode.kCoast).smartCurrentLimit(55).voltageCompensation(12);
-                                ShooterLeftMotor2Config.idleMode(IdleMode.kCoast).smartCurrentLimit(55).voltageCompensation(12)
+                                ShooterLeftMotor1Config.idleMode(IdleMode.kCoast).smartCurrentLimit(50).voltageCompensation(12);
+                                ShooterLeftMotor2Config.idleMode(IdleMode.kCoast).smartCurrentLimit(50).voltageCompensation(12)
                                 .follow(ShooterConstants.SHOOTER_L1_ID, true);
                                 
                                 
