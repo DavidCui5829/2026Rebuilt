@@ -266,12 +266,14 @@ public class RobotContainer {
                   m_hopper.runHopperToShooterCommand(),
                   m_kicker.kickCommand(),
                   m_pushout.AgitateCommand().repeatedly(),
-
                   m_intake.runIntakeCommand()
               ).onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)))
-          ).finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(4.75))
+          ).finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1))
       );
     }, java.util.Collections.emptySet()).withTimeout(5));
+
+   
+
     NamedCommands.registerCommand("speed up shooter", m_shooter.SpeedUpShooterCommand().withTimeout(15));
     NamedCommands.registerCommand("aim at hub", drivebase.aimAtPose(Constants.DrivebaseConstants.getHubPose2D()));
     NamedCommands.registerCommand("aim at ferry",
@@ -345,7 +347,7 @@ public class RobotContainer {
         .deadband(OperatorConstants.DEADBAND)
         .scaleTranslation(1.0)
         .allianceRelativeControl(true)
-        .aim(() -> isInAllianceZone() ? DrivebaseConstants.getHubPose2D() : drivebase.getDynamicFerryLocation())
+        .aim(() -> isInAllianceZone() ? drivebase.getDynamicHubLocation() : drivebase.getDynamicFerryLocation())
         // .aimLock(Angle.ofBaseUnits(1, Degrees))
         .aimWhile(dc().rightTrigger())
         // .aimWhile(driverXbox.leftTrigger())
@@ -382,7 +384,7 @@ public class RobotContainer {
     aimAtHubStream = SwerveInputStream.of(drivebase.getSwerveDrive(),
         () -> 0.0, () -> 0.0)
         .withControllerRotationAxis(() -> 0.0)
-        .aim(() -> DrivebaseConstants.getHubPose2D())
+        .aim(() -> drivebase.getDynamicHubLocation())
         .aimWhile(true)
         .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
         .aimFeedforward(0.0001, 0.0001, 0.00013)
