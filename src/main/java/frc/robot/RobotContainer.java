@@ -590,7 +590,7 @@ public class RobotContainer {
     // new Trigger(() -> isInAllianceZone()).onTrue(Commands.runOnce(() -> m_shooter.setDefaultCommand(m_shooter.setAllianceIdle())));
     // new Trigger(() -> !isInAllianceZone()).onTrue(Commands.runOnce(() -> m_shooter.setDefaultCommand(m_shooter.setNeutralIdle())));
 
-    m_shooter.setDefaultCommand(m_shooter.setAllianceIdle());
+    // m_shooter.setDefaultCommand(m_shooter.setAllianceIdle());
 
     if (RobotBase.isSimulation()) {
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngleKeyboard);
