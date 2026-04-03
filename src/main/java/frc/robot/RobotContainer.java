@@ -481,7 +481,8 @@ public class RobotContainer {
                   // Commands.runOnce(() -> driveAngularVelocity.aim(() -> drivebase.getDynamicHubLocation())),
                   Commands.sequence(
                         Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
-                          && driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean())),
+                          && driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
+                        Commands.waitSeconds(0.5),
                       Commands.parallel(
                           drivebase.lockCommand(
                               dc()::getLeftX,
@@ -492,7 +493,7 @@ public class RobotContainer {
                           m_kicker.kickCommand(),
                           m_pushout.AgitateCommand().repeatedly().onlyWhile(() -> !LT_Intake.getAsBoolean()),
                           m_intake.runIntakeCommand()).onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees)))).onlyWhile(drivebase.canShoot()::get)
-                  .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1));
+                  .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
         }
         else
         {
