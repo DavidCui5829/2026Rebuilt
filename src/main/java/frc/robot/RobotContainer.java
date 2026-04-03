@@ -228,7 +228,6 @@ public class RobotContainer {
     // Triggers for auto aim/pass poses
     new Trigger(() -> isInAllianceZone())
         .onChange(Commands.runOnce(() -> onZoneChanged()).ignoringDisable(true));
-
     new Trigger(() -> isOnAllianceOutpostSide())
         .onChange(Commands.runOnce(() -> onZoneChanged()).ignoringDisable(true));
 
@@ -353,7 +352,7 @@ public class RobotContainer {
         // .aimWhile(driverXbox.leftTrigger())
         .aimLookahead(Time.ofBaseUnits(0, Seconds))
         .aimFeedforward(0.0001, 0.0001, 0.00013)
-        .aimHeadingOffset(Rotation2d.fromDegrees(180))
+        .aimHeadingOffset(Rotation2d.fromDegrees(190))
         .aimHeadingOffset(true);
 
     driveDirectAngle = driveAngularVelocity.copy()
