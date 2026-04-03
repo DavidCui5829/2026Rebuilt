@@ -186,7 +186,7 @@ public class HubTrackerSubsystem extends SubsystemBase
     // essentially, the circle will be shown either when it is an INACTIVE hub, or every other frame of active shift
     // this way, if it is active, it blinks. this is my workaround for not being able to change color of circle
     SmartDashboard.putBoolean("HubActivity", active);
-    if(!active || x == 0) circle.setPoses(createCircle(hubPose, radius, 20));
+    if(!active || x == 0) circle.setPoses(createCircle(hubPose, radius, 10));
     else circle.setPoses(); // clears circle when not showing
 
     Translation2d goalLocation = drivebase.getDynamicHubLocation().getTranslation();
@@ -194,7 +194,7 @@ public class HubTrackerSubsystem extends SubsystemBase
     Translation2d targetVec = goalLocation.minus(robotLocation);
     double        dist         = targetVec.getNorm();
 
-    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(robotPose, List.of(), robotPose.plus(new Transform2d(-dist, 0, new Rotation2d())), new TrajectoryConfig(1.0, 1.0));
+    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(robotPose, List.of(), robotPose.plus(new Transform2d(-2, 0, new Rotation2d())), new TrajectoryConfig(1.0, 1.0));
     traj.setTrajectory(trajectory);
 
     SmartDashboard.putNumber("Distance to Hub", dist);
