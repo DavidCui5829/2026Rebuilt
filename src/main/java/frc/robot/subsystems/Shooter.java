@@ -156,7 +156,7 @@ public class Shooter extends SubsystemBase {
 
     // Speeds up shooter (runs all motors except kicker) so it's faster
     public void SpeedUpShooter() {
-        shooterright1Controller.setSetpoint(ShooterConstants.SHOOTER_SPEED + 100, ControlType.kMAXMotionVelocityControl);
+        shooterright1Controller.setSetpoint(ShooterConstants.SHOOTER_SPEED - 100, ControlType.kMAXMotionVelocityControl);
         // shooterright2Controller.setSetpoint(ShooterConstants.SHOOTER_SPEED,
         // ControlType.kMAXMotionVelocityControl);
         shooterleft1Controller.setSetpoint(ShooterConstants.SHOOTER_SPEED, ControlType.kMAXMotionVelocityControl);
