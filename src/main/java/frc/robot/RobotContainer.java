@@ -495,7 +495,7 @@ public class RobotContainer {
                           m_hopper.runHopperToShooterCommand(),
                           m_kicker.kickCommand(),
                           m_pushout.AgitateCommand().repeatedly().onlyWhile(() -> !LT_Intake.getAsBoolean()),
-                          m_intake.runIntakeCommand()).onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees))))
+                          m_intake.runIntakeCommand()))
                   .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
         }
         else
