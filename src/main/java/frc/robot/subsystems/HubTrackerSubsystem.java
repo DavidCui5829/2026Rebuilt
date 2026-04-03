@@ -60,8 +60,16 @@ public class HubTrackerSubsystem extends SubsystemBase
     public boolean isHubActive() {
         Optional<Alliance> alliance = DriverStation.getAlliance();
 
-        if (alliance.isEmpty()) return false;
-        if(!DriverStation.isFMSAttached()) return false;
+        if (alliance.isEmpty())
+        {
+          SmartDashboard.putNumber("TimeLeft", -1);
+          return false;
+        }
+        if(!DriverStation.isFMSAttached())
+        {
+          SmartDashboard.putNumber("TimeLeft", -1);
+          return false;
+        }
 
         double matchTime = DriverStation.getMatchTime();
 
@@ -74,7 +82,7 @@ public class HubTrackerSubsystem extends SubsystemBase
             return true;
         }
 
-        if (!DriverStation.isTeleopEnabled()) return false; // If we're disabled then were probably not playing
+        if (!DriverStation.isTeleopEnabled()) {SmartDashboard.putNumber("TimeLeft", -1);return false;} // If we're disabled then were probably not playing
 
         
         String gameData = DriverStation.getGameSpecificMessage();
@@ -90,6 +98,7 @@ public class HubTrackerSubsystem extends SubsystemBase
             isRedActiveFirst = true;
             break;
         default:
+            SmartDashboard.putNumber("TimeLeft", -1);
             return false;
         }
 
