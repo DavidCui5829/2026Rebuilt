@@ -147,10 +147,10 @@ public class RobotContainer {
   // ========= DRIVER TRIGGERS ===========
   // Parallel Commands
   private Trigger RTtransfer_kick_shoot; // index to kicker, kick, agitate, and shoot only when up to speed
-  private Trigger RBFerry;              // Run hopper and kicker in reverse
-  private Trigger LBretract_and_stop;   // retract 4 bar and stop intake
+  private Trigger RBFerry; // Run hopper and kicker in reverse
+  private Trigger LBretract_and_stop; // retract 4 bar and stop intake
   private Trigger PRDrivetoRightTrench; // Drive to right trench
-  private Trigger PLDriveToPose;        // run hopper in reverse and kick backwards to unjam
+  private Trigger PLDriveToPose; // run hopper in reverse and kick backwards to unjam
 
   // Shooter
   private Trigger LT_Intake;
@@ -174,14 +174,14 @@ public class RobotContainer {
 
   // Get to Shooter
   private Trigger RB_OP_kickIndex; // kick, index
-  private Trigger LB_OP_unjam;     // unjam
+  private Trigger LB_OP_unjam; // unjam
 
   // Intake
-  private Trigger X_OP_intake;  // intake fuel
+  private Trigger X_OP_intake; // intake fuel
   private Trigger A_OP_outtake; // outtake fuel
 
   // Pushout
-  private Trigger Y_OP_extendIntake;  // push out
+  private Trigger Y_OP_extendIntake; // push out
   private Trigger B_OP_reteactIntake; // pull in
   private Trigger POVLEFT_OP_agitate; // agitate
 
@@ -252,7 +252,8 @@ public class RobotContainer {
 
     // shooter
     NamedCommands.registerCommand("Control All Shooting", Commands.defer(() -> {
-      ControlAllShooting shootCmd = new ControlAllShooting(drivebase::getDynamicHubLocation, m_shooter, drivebase::getPose, true);
+      ControlAllShooting shootCmd = new ControlAllShooting(drivebase::getDynamicHubLocation, m_shooter,
+          drivebase::getPose, true);
       return Commands.parallel(
           shootCmd,
           drivebase.driveFieldOriented(aimAtHubStream),
@@ -265,13 +266,9 @@ public class RobotContainer {
                   m_hopper.runHopperToShooterCommand(),
                   m_kicker.kickCommand(),
                   m_pushout.AgitateCommand().repeatedly(),
-                  m_intake.runIntakeCommand()
-              )
-          ).finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1))
-      );
+                  m_intake.runIntakeCommand()))
+              .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
     }, java.util.Collections.emptySet()).withTimeout(5.75));
-
-   
 
     NamedCommands.registerCommand("speed up shooter", m_shooter.SpeedUpShooterCommand().withTimeout(15));
     NamedCommands.registerCommand("aim at hub", drivebase.aimAtPose(Constants.DrivebaseConstants.getHubPose2D()));
@@ -287,18 +284,21 @@ public class RobotContainer {
     NamedCommands.registerCommand("outtake", m_intake.runOuttakeCommand().withTimeout(4));
 
     // climber
-    // NamedCommands.registerCommand("climb up", m_climber.runClimbCommand().withTimeout(4));
-    // NamedCommands.registerCommand("climb down", m_climber.runClimberDownCommand().withTimeout(4));
+    // NamedCommands.registerCommand("climb up",
+    // m_climber.runClimbCommand().withTimeout(4));
+    // NamedCommands.registerCommand("climb down",
+    // m_climber.runClimberDownCommand().withTimeout(4));
 
     NamedCommands.registerCommand("aim at hub",
-            Commands.sequence
-            (Commands.runOnce(() -> drivebase.shouldAimAtHubAuto = true),
-            Commands.waitUntil(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees))),(Commands.runOnce(() -> drivebase.shouldAimAtHubAuto = false))));
+        Commands.sequence(Commands.runOnce(() -> drivebase.shouldAimAtHubAuto = true),
+            Commands.waitUntil(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees))),
+            (Commands.runOnce(() -> drivebase.shouldAimAtHubAuto = false))));
 
-
-            // Commands.sequence
-            // (Commands.runOnce(() -> drivebase.shouldAimAtHubAuto = true), drivebase.driveFieldOriented(aimAtHubStream)
-            // .until(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees))),(Commands.runOnce(() -> drivebase.shouldAimAtHubAuto = false))));
+    // Commands.sequence
+    // (Commands.runOnce(() -> drivebase.shouldAimAtHubAuto = true),
+    // drivebase.driveFieldOriented(aimAtHubStream)
+    // .until(aimAtHubStream.aimLock(Angle.ofBaseUnits(1,
+    // Degrees))),(Commands.runOnce(() -> drivebase.shouldAimAtHubAuto = false))));
 
     NamedCommands.registerCommand("aim at ferry",
         drivebase.driveFieldOriented(aimAtFerryStream)
@@ -347,7 +347,8 @@ public class RobotContainer {
         .scaleTranslation(1.0)
         .allianceRelativeControl(true)
         .aim(() -> drivebase.getDynamicHubLocation())
-        // .aim(() -> isInAllianceZone() ? drivebase.getDynamicHubLocation() : drivebase.getDynamicFerryLocation())
+        // .aim(() -> isInAllianceZone() ? drivebase.getDynamicHubLocation() :
+        // drivebase.getDynamicFerryLocation())
         // .aimLock(Angle.ofBaseUnits(1, Degrees))
         .aimWhile(dc().rightTrigger())
         // .aimWhile(driverXbox.leftTrigger())
@@ -355,7 +356,7 @@ public class RobotContainer {
         .aimFeedforward(0.0001, 0.0001, 0.00013)
         .aimHeadingOffset(Rotation2d.fromDegrees(180))
         .aimHeadingOffset(true);
-            
+
     driveDirectAngle = driveAngularVelocity.copy()
         .withControllerHeadingAxis(dc()::getRightX, dc()::getRightY)
         .headingWhile(true);
@@ -404,24 +405,24 @@ public class RobotContainer {
     // ========= DRIVER TRIGGERS ===========
     // Parallel Commands
     RTtransfer_kick_shoot = dc().rightTrigger(); // index to kicker, kick, agitate, and shoot only when up to speed
-    RBFerry               = dc().rightBumper();  // Run hopper and kicker in reverse
-    LBretract_and_stop    = dc().leftBumper();   // retract 4 bar and stop intake
-    PRDrivetoRightTrench  = dc().povRight();     // Drive to right trench
-    PLDriveToPose         = dc().povLeft();      // run hopper in reverse and kick backwards to unjam
+    RBFerry = dc().rightBumper(); // Run hopper and kicker in reverse
+    LBretract_and_stop = dc().leftBumper(); // retract 4 bar and stop intake
+    PRDrivetoRightTrench = dc().povRight(); // Drive to right trench
+    PLDriveToPose = dc().povLeft(); // run hopper in reverse and kick backwards to unjam
 
     // Shooter
     LT_Intake = dc().leftTrigger();
 
     // Intake
-    X_runIntake  = dc().x();
+    X_runIntake = dc().x();
     A_runOuttake = dc().a();
 
     // Pushout
     Y_extendIntake = dc().y();
-    B_agitate      = dc().b();
+    B_agitate = dc().b();
 
     // Climber
-    Climb     = dc().povUp();
+    Climb = dc().povUp();
     ClimbDown = dc().povDown();
 
     // ========= OPERATOR TRIGGERS ===========
@@ -431,19 +432,19 @@ public class RobotContainer {
 
     // Get to Shooter
     RB_OP_kickIndex = oc().rightBumper(); // kick, index
-    LB_OP_unjam     = oc().leftBumper();  // unjam
+    LB_OP_unjam = oc().leftBumper(); // unjam
 
     // Intake
-    X_OP_intake  = oc().x(); // intake fuel
+    X_OP_intake = oc().x(); // intake fuel
     A_OP_outtake = oc().a(); // outtake fuel
 
     // Pushout
-    Y_OP_extendIntake  = oc().y();       // push out
-    B_OP_reteactIntake = oc().b();       // pull in
+    Y_OP_extendIntake = oc().y(); // push out
+    B_OP_reteactIntake = oc().b(); // pull in
     POVLEFT_OP_agitate = oc().povLeft(); // agitate
 
     // Climber / Vision
-    POVUP_OP_FrontLimelight  = oc().povUp();
+    POVUP_OP_FrontLimelight = oc().povUp();
     POVLEFT_OP_LeftLimelight = oc().povLeft();
     POVRIGHT_OP_VisionToggle = oc().povRight();
     POVDown_OP_BackLimelight = oc().povDown(); // toggle vision
@@ -466,39 +467,35 @@ public class RobotContainer {
     // ====================================== ALL CONTROLS
     // ======================================
 
-
     // ======= Driver =======
 
     // Shooter
     // transfer + kick + shoot/pass command, switches based on zone
-    
+
     RTtransfer_kick_shoot.whileTrue(
         Commands.defer(() -> {
-            ControlAllShooting shootCmd = makeVariableShoot();
-            return Commands.parallel(
-                shootCmd,
-                Commands.sequence(
-                    Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
-                        && driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees)).getAsBoolean()),
-                    Commands.parallel(
-                        m_hopper.runHopperToShooterCommand(),
-                        m_kicker.kickCommand(),
-                        m_pushout.AgitateCommand().repeatedly().onlyWhile(() -> !LT_Intake.getAsBoolean()),
-                        m_intake.runIntakeCommand()
-                    ).onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees)))
-                ).finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1))
-            );
-        }, java.util.Collections.emptySet())
-    );
+          ControlAllShooting shootCmd = makeVariableShoot();
+          return Commands.parallel(
+              shootCmd,
+              Commands.sequence(
+                  Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
+                      && driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees)).getAsBoolean()),
+                  Commands.parallel(
+                      m_hopper.runHopperToShooterCommand(),
+                      m_kicker.kickCommand(),
+                      m_pushout.AgitateCommand().repeatedly().onlyWhile(() -> !LT_Intake.getAsBoolean()),
+                      m_intake.runIntakeCommand())
+                      .onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees))))
+                  .finallyDo(
+                      () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
+        }, java.util.Collections.emptySet()));
     RTtransfer_kick_shoot.onTrue(Commands.runOnce(() -> driveAngularVelocity.scaleTranslation(0.4)));
     RTtransfer_kick_shoot.onFalse(Commands.runOnce(() -> driveAngularVelocity.scaleTranslation(1)));
 
-
-    
-   // Intake
+    // Intake
     LT_Intake.whileTrue(Commands.parallel(m_pushout.PushCommand(), m_intake.runIntakeCommand()));
     LBretract_and_stop.whileTrue(Commands.parallel(m_pushout.RetractCommand(), m_intake.stopIntakeCommand()));
-   
+
     // Drive to Pose
     PLDriveToPose.whileTrue(drivebase.driveToPoseDeffered());
 
@@ -508,27 +505,42 @@ public class RobotContainer {
     // ======== Operator ========
     // shooter
     RT_OP_1900Shot.whileTrue(Commands.parallel(
-            // keep running the VariableShoot command while we wait for the shooter to reach
-            // speed
-            m_shooter.shootFuelCommand(),
+        // keep running the VariableShoot command while we wait for the shooter to reach
+        // speed
+        m_shooter.shootFuelCommand(),
 
-            // once at speed, run hopper + kicker
-            Commands.sequence(
-                Commands.waitUntil(m_shooter::isShooterFast),
-                Commands.parallel(
-                    m_hopper.runHopperToShooterCommand(),
-                    m_intake.runIntakeCommand(),
-                    m_kicker.kickCommand(),
-                    m_pushout.AgitateCommand().repeatedly().beforeStarting(Commands.waitSeconds(1))))));
+        // once at speed, run hopper + kicker
+        Commands.sequence(
+            Commands.waitUntil(m_shooter::isShooterFast),
+            Commands.parallel(
+                m_hopper.runHopperToShooterCommand(),
+                m_intake.runIntakeCommand(),
+                m_kicker.kickCommand(),
+                m_pushout.AgitateCommand().repeatedly().beforeStarting(Commands.waitSeconds(1))))));
 
-    LT_OPshootFuel.whileTrue(m_shooter.shootFuelCommand());
+    LT_OPshootFuel.whileTrue(
+        Commands.defer(() -> {
+          ControlAllShooting shootCmd = makeVariableShoot();
+          return Commands.parallel(
+              shootCmd,
+              Commands.sequence(
+                  Commands.waitUntil(() -> shootCmd.isCASAtSpeed()),
+                  Commands.parallel(
+                      m_hopper.runHopperToShooterCommand(),
+                      m_kicker.kickCommand(),
+                      m_pushout.AgitateCommand().repeatedly().onlyWhile(() -> !LT_Intake.getAsBoolean()),
+                      m_intake.runIntakeCommand()))
+                  .finallyDo(
+                      () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
+        }, java.util.Collections.emptySet())
+    );
 
     // get to shooter
     RB_OP_kickIndex.whileTrue(Commands.parallel(
-              m_hopper.runHopperToShooterCommand(),
-              m_intake.runIntakeCommand(),
-              m_kicker.kickCommand(),
-              m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(2.5)).repeatedly()));
+        m_hopper.runHopperToShooterCommand(),
+        m_intake.runIntakeCommand(),
+        m_kicker.kickCommand(),
+        m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(2.5)).repeatedly()));
 
     LB_OP_unjam.whileTrue(Commands.parallel(m_hopper.runReverseHopperCommand(), m_kicker.kickBackwardsCommand()));
 
@@ -539,7 +551,7 @@ public class RobotContainer {
     // pushout
     Y_OP_extendIntake.whileTrue(m_pushout.PushCommand());
     B_OP_reteactIntake.whileTrue(m_pushout.RetractCommand());
-    //POVLEFT_OP_agitate.whileTrue(m_pushout.AgitateCommand());
+    // POVLEFT_OP_agitate.whileTrue(m_pushout.AgitateCommand());
 
     // vision
     POVUP_OP_FrontLimelight.onTrue(drivebase.FrontToggle());
@@ -558,10 +570,15 @@ public class RobotContainer {
     // // SysId: run shooter dynamic reverse.
     // oc().y().whileTrue(m_shooter.sysIdDynamicReverse());
 
-    // new Trigger(() -> isInAllianceZone() && DriverStation.isTeleopEnabled()).onTrue(Commands.runOnce(() -> m_shooter.setDefaultCommand(m_shooter.setAllianceIdle())));
-    // new Trigger(() -> !isInAllianceZone() && DriverStation.isTeleopEnabled()).onTrue(Commands.runOnce(() -> m_shooter.setDefaultCommand(m_shooter.setNeutralIdle())));
+    // new Trigger(() -> isInAllianceZone() &&
+    // DriverStation.isTeleopEnabled()).onTrue(Commands.runOnce(() ->
+    // m_shooter.setDefaultCommand(m_shooter.setAllianceIdle())));
+    // new Trigger(() -> !isInAllianceZone() &&
+    // DriverStation.isTeleopEnabled()).onTrue(Commands.runOnce(() ->
+    // m_shooter.setDefaultCommand(m_shooter.setNeutralIdle())));
 
-    // m_shooter.setDefaultCommand(m_shooter.setAllianceIdle().onlyWhile(() -> DriverStation.isTeleopEnabled()));
+    // m_shooter.setDefaultCommand(m_shooter.setAllianceIdle().onlyWhile(() ->
+    // DriverStation.isTeleopEnabled()));
 
     if (RobotBase.isSimulation()) {
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngleKeyboard);
@@ -600,15 +617,15 @@ public class RobotContainer {
       // );
 
     }
-    if (DriverStation.isTest())
-    {
-    if (Constants.USE_ROBOT_RELATIVE) {
-    drivebase.setDefaultCommand(
-    drivebase.run(() -> drivebase.drive(driveRobotOriented.get())));
-    } else {
-    drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity); // Overrides
-    // drive command above!
-    }}
+    if (DriverStation.isTest()) {
+      if (Constants.USE_ROBOT_RELATIVE) {
+        drivebase.setDefaultCommand(
+            drivebase.run(() -> drivebase.drive(driveRobotOriented.get())));
+      } else {
+        drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity); // Overrides
+        // drive command above!
+      }
+    }
 
     // driverXbox.x().whileTrue(Commands.runOnce(drivebase::lock,
     // drivebase).repeatedly());
@@ -778,7 +795,8 @@ public class RobotContainer {
   }
 
   /**
-   * Checks if the robot heading is within a tolerance of the angle toward a target pose.
+   * Checks if the robot heading is within a tolerance of the angle toward a
+   * target pose.
    */
   private boolean isAimedAt(Pose2d target, double toleranceDegrees) {
     Pose2d robot = drivebase.getPose();
@@ -788,7 +806,8 @@ public class RobotContainer {
     double currentAngle = robot.getRotation().getDegrees();
     double error = Math.abs(currentAngle - targetAngle);
     error = error % 360;
-    if (error > 180) error = 360 - error;
+    if (error > 180)
+      error = 360 - error;
     return error <= toleranceDegrees;
   }
 
