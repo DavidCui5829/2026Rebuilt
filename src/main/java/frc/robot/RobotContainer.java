@@ -269,7 +269,7 @@ public class RobotContainer {
               )
           ).finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1))
       );
-    }, java.util.Collections.emptySet()).withTimeout(4.75));
+    }, java.util.Collections.emptySet()).withTimeout(5.75));
 
    
 
@@ -346,7 +346,8 @@ public class RobotContainer {
         .deadband(OperatorConstants.DEADBAND)
         .scaleTranslation(1.0)
         .allianceRelativeControl(true)
-        .aim(() -> isInAllianceZone() ? drivebase.getDynamicHubLocation() : drivebase.getDynamicFerryLocation())
+        .aim(() -> drivebase.getDynamicHubLocation())
+        // .aim(() -> isInAllianceZone() ? drivebase.getDynamicHubLocation() : drivebase.getDynamicFerryLocation())
         // .aimLock(Angle.ofBaseUnits(1, Degrees))
         .aimWhile(dc().rightTrigger())
         // .aimWhile(driverXbox.leftTrigger())
@@ -492,34 +493,7 @@ public class RobotContainer {
     RTtransfer_kick_shoot.onTrue(Commands.runOnce(() -> driveAngularVelocity.scaleTranslation(0.4)));
     RTtransfer_kick_shoot.onFalse(Commands.runOnce(() -> driveAngularVelocity.scaleTranslation(1)));
 
-      RBFerry.whileTrue(
-        Commands.defer(() -> {
-            ControllAllPassing passCmd = makeVariablePass();
-            return Commands.parallel(
-                passCmd,
-                Commands.sequence(
-                    Commands.waitUntil(() -> passCmd.isCASAtSpeed()
-                        && driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees)).getAsBoolean()),
-                    Commands.parallel(
-                        m_hopper.runHopperToShooterCommand(),
-                        m_kicker.kickCommand(),
-                        m_pushout.AgitateCommand().repeatedly().onlyWhile(() -> !LT_Intake.getAsBoolean()),
-                        m_intake.runIntakeCommand()
-                    ).onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees)))
-                ).finallyDo(() -> m_shooter.setTargetRPMCommand(passCmd.RecordedidealHorizontalSpeed).withTimeout(1))
-            );
-        }, java.util.Collections.emptySet())
-    );
-    RBFerry.onTrue(Commands.runOnce(() -> {
-        driveAngularVelocity.scaleTranslation(0.4);
-        driveAngularVelocity.aim(() -> drivebase.getDynamicFerryLocation());
-    }));
-    RBFerry.onFalse(Commands.runOnce(() -> {
-        driveAngularVelocity.scaleTranslation(1);
-        driveAngularVelocity.aim(() -> isInAllianceZone()
-            ? drivebase.getDynamicHubLocation()
-            : drivebase.getDynamicFerryLocation());
-    }));   
+
     
    // Intake
     LT_Intake.whileTrue(Commands.parallel(m_pushout.PushCommand(), m_intake.runIntakeCommand()));
