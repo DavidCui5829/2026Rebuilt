@@ -18,6 +18,7 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.Time;
 import edu.wpi.first.wpilibj.DriverStation;
+import frc.robot.commands.AutoAimCommand;
 import java.util.Optional;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Filesystem;
@@ -345,17 +346,9 @@ public class RobotContainer {
         .withControllerRotationAxis(() -> dc().getRightX() * -1)
         .deadband(OperatorConstants.DEADBAND)
         .scaleTranslation(1.0)
-        .allianceRelativeControl(true)
-        .aim(() -> drivebase.getDynamicHubLocation())
-        // .aim(() -> isInAllianceZone() ? drivebase.getDynamicHubLocation() :
-        // drivebase.getDynamicFerryLocation())
-        // .aimLock(Angle.ofBaseUnits(1, Degrees))
-        .aimWhile(dc().rightTrigger())
-        // .aimWhile(driverXbox.leftTrigger())
-        .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
-        .aimFeedforward(0.0001, 0.0001, 0.00018)
-        .aimHeadingOffset(Rotation2d.fromDegrees(183))
-        .aimHeadingOffset(true);
+        .allianceRelativeControl(true);
+
+    dc().rightTrigger().whileTrue(new AutoAimCommand(drivebase, driveAngularVelocity));
 
     driveDirectAngle = driveAngularVelocity.copy()
         .withControllerHeadingAxis(dc()::getRightX, dc()::getRightY)
