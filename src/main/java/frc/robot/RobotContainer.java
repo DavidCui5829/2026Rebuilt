@@ -353,7 +353,7 @@ public class RobotContainer {
         .aimWhile(dc().rightTrigger())
         // .aimWhile(driverXbox.leftTrigger())
         .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
-        .aimFeedforward(0.0001, 0.0001, 0.00013)
+        .aimFeedforward(0.0001, 0.0001, 0.00016)
         .aimHeadingOffset(Rotation2d.fromDegrees(180))
         .aimHeadingOffset(true);
 
