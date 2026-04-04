@@ -354,7 +354,7 @@ public class RobotContainer {
         // .aimWhile(driverXbox.leftTrigger())
         .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
         .aimFeedforward(0.0001, 0.0001, 0.00013)
-        .aimHeadingOffset(Rotation2d.fromDegrees(170))
+        .aimHeadingOffset(Rotation2d.fromDegrees(190))
         .aimHeadingOffset(true);
 
     driveDirectAngle = driveAngularVelocity.copy()
