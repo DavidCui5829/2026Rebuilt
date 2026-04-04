@@ -200,8 +200,8 @@ public class HubTrackerSubsystem extends SubsystemBase
     Translation2d targetVec = goalLocation.minus(robotLocation);
     double        dist         = targetVec.getNorm();
 
-    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(robotPose, List.of(), robotPose.plus(new Transform2d(-2, 0, new Rotation2d())), new TrajectoryConfig(1.0, 1.0));
-    traj.setTrajectory(trajectory);
+    // Trajectory trajectory = TrajectoryGenerator.generateTrajectory(robotPose, List.of(), robotPose.plus(new Transform2d(-2, 0, new Rotation2d())), new TrajectoryConfig(1.0, 1.0));
+    // traj.setTrajectory(trajectory);
 
     SmartDashboard.putNumber("Distance to Hub", dist);
     // SmartDashboard.putNumber("LUTRPM", ControlAllShooting.getRPM(dist));
