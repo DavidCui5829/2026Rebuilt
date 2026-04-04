@@ -166,7 +166,7 @@ public class Shooter extends SubsystemBase {
 
     public void setTargetRPM(double rpm) {
         targetRPM = rpm;
-        shooterright1Controller.setSetpoint(rpm-20, ControlType.kMAXMotionVelocityControl);
+        shooterright1Controller.setSetpoint(rpm, ControlType.kMAXMotionVelocityControl);
         // shooterright2Controller.setSetpoint(rpm,
         // ControlType.kMAXMotionVelocityControl);
         shooterleft1Controller.setSetpoint(rpm+30, ControlType.kMAXMotionVelocityControl);
