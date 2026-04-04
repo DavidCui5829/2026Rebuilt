@@ -169,7 +169,7 @@ public class RobotContainer {
 
   // ========= OPERATOR TRIGGERS ===========
   // Shooter
-  private Trigger LT_OPshootFuel; // just shoot
+  private Trigger LT_OP_VariableShoot; // just shoot
   private Trigger RT_OP_1900Shot; // Shoot, Kick, Index, Agitate, and Run Intake
 
   // Get to Shooter
@@ -425,7 +425,7 @@ public class RobotContainer {
 
     // ========= OPERATOR TRIGGERS ===========
     // Shooter
-    LT_OPshootFuel = oc().leftTrigger(); // just shoot
+    LT_OP_VariableShoot = oc().leftTrigger(); // just shoot
     RT_OP_1900Shot = oc().rightTrigger(); // Shoot, Kick, Index, Agitate, and Run Intake
 
     // Get to Shooter
@@ -550,7 +550,28 @@ public class RobotContainer {
                     m_kicker.kickCommand(),
                     m_pushout.AgitateCommand().repeatedly().beforeStarting(Commands.waitSeconds(1))))));
 
-    LT_OPshootFuel.whileTrue(m_shooter.shootFuelCommand());
+    LT_OP_VariableShoot.whileTrue(
+      Commands.defer(() -> {
+                ControlAllShooting shootCmd = makeVariableShoot();
+          return Commands.parallel(
+                  shootCmd,
+                  Commands.sequence(
+                        Commands.waitUntil(() -> shootCmd.isCASAtSpeed()),
+                        Commands.waitSeconds(0.5),
+                      Commands.parallel(
+                          // drivebase.lockCommand(
+                          //     dc()::getLeftX,
+                          //     dc()::getLeftY,
+                          //     dc()::getRightX,
+                          //     driveAngularVelocity::get),
+                          m_hopper.runHopperToShooterCommand(),
+                          m_kicker.kickCommand(),
+                          m_pushout.AgitateCommand().repeatedly().onlyWhile(() -> !LT_Intake.getAsBoolean()),
+                          m_intake.runIntakeCommand()))
+                  .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
+                      }, java.util.Collections.emptySet())
+
+    );
 
     // get to shooter
     RB_OP_kickIndex.whileTrue(Commands.parallel(
@@ -629,15 +650,15 @@ public class RobotContainer {
       // );
 
     }
-    if (DriverStation.isTest())
-    {
-    if (Constants.USE_ROBOT_RELATIVE) {
-    drivebase.setDefaultCommand(
-    drivebase.run(() -> drivebase.drive(driveRobotOriented.get())));
-    } else {
-    drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity); // Overrides
-    // drive command above!
-    }}
+    // if (DriverStation.isTest())
+    // {
+    // if (Constants.USE_ROBOT_RELATIVE) {
+    // drivebase.setDefaultCommand(
+    // drivebase.run(() -> drivebase.drive(driveRobotOriented.get())));
+    // } else {
+    // drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity); // Overrides
+    // // drive command above!
+    // }}
 
     // driverXbox.x().whileTrue(Commands.runOnce(drivebase::lock,
     // drivebase).repeatedly());
