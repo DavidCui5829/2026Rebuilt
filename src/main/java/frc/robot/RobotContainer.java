@@ -354,7 +354,7 @@ public class RobotContainer {
         // .aimWhile(driverXbox.leftTrigger())
         .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
         .aimFeedforward(0.0001, 0.0001, 0.00018)
-        .aimHeadingOffset(Rotation2d.fromDegrees(180))
+        .aimHeadingOffset(Rotation2d.fromDegrees(186))
         .aimHeadingOffset(true);
 
     driveDirectAngle = driveAngularVelocity.copy()
@@ -487,7 +487,7 @@ public class RobotContainer {
                 // drivebase.getDynamicHubLocation())),
                 Commands.sequence(
                     Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
-                        && driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
+                        && driveAngularVelocity.aimLock(Degrees.of(1.0)).getAsBoolean()),
                     Commands.parallel(
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
