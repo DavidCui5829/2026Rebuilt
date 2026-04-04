@@ -252,7 +252,7 @@ public class RobotContainer {
 
     // shooter
     NamedCommands.registerCommand("Control All Shooting", Commands.defer(() -> {
-      ControlAllShooting shootCmd = makeVariableShoot();
+      ControlAllShooting shootCmd = new ControlAllShooting(drivebase::getDynamicHubLocation, m_shooter, drivebase::getPose, true);
       return Commands.parallel(
           shootCmd,
           drivebase.driveFieldOriented(aimAtHubStream),
@@ -269,7 +269,7 @@ public class RobotContainer {
               )
           ).finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1))
       );
-    }, java.util.Collections.emptySet()).withTimeout(5.75));
+    }, java.util.Set.of(drivebase)).withTimeout(4.75));
 
    
 

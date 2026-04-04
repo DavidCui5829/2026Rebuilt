@@ -61,6 +61,11 @@ public class ControlAllShooting extends Command
   
 
   public ControlAllShooting(Supplier<Pose2d> goalPoseSupplier, Shooter shooter, Supplier<Pose2d> robotPoseSupplier)
+  {
+    this(goalPoseSupplier, shooter, robotPoseSupplier, false);
+  }
+
+  public ControlAllShooting(Supplier<Pose2d> goalPoseSupplier, Shooter shooter, Supplier<Pose2d> robotPoseSupplier, boolean requireShooter)
 
   {
 
@@ -106,7 +111,7 @@ public class ControlAllShooting extends Command
     )
     {shooterTable.put(entry.getFirst().in(Meters), entry.getSecond().in(RPM));}
 
-    addRequirements();
+    if(requireShooter) addRequirements(m_shooter);
   }
 
   @Override
