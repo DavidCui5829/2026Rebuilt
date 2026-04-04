@@ -8,53 +8,69 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.11180829111698,
-        "y": 7.203537593084617
+        "x": 6.145189646472476,
+        "y": 7.18328534791371
       },
       "isLocked": false,
       "linkedName": "LT End"
     },
     {
       "anchor": {
-        "x": 4.867132667617689,
+        "x": 4.9318259629101275,
         "y": 7.35376604850214
       },
       "prevControl": {
-        "x": 5.320712622453389,
-        "y": 7.298066649973786
+        "x": 5.20963108752712,
+        "y": 7.337498361303162
       },
       "nextControl": {
-        "x": 4.618996578582192,
-        "y": 7.384237039922962
+        "x": 4.621979264475665,
+        "y": 7.371910023264008
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.9943835396956926,
-        "y": 7.32
+        "x": 3.922610556348074,
+        "y": 7.35376604850214
       },
       "prevControl": {
-        "x": 3.745885746836943,
-        "y": 7.292634932042295
+        "x": 4.299600713456739,
+        "y": 7.404923270626735
+      },
+      "nextControl": {
+        "x": 3.5590276933668608,
+        "y": 7.304428184020801
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.3274322396576315,
+        "y": 7.224379457917262
+      },
+      "prevControl": {
+        "x": 3.085191468544941,
+        "y": 7.162578092149755
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "LT Shoot Spc"
+      "linkedName": null
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1,
+      "waypointRelativePos": 2,
       "rotationDegrees": 90.0
     }
   ],
   "constraintZones": [
     {
       "name": "Little Slow for Trench",
-      "minWaypointRelativePos": 0.1,
-      "maxWaypointRelativePos": 0.4,
+      "minWaypointRelativePos": 0.17825793382849142,
+      "maxWaypointRelativePos": 0.7184334908845372,
       "constraints": {
         "maxVelocity": 3.125,
         "maxAcceleration": 3.125,
@@ -77,7 +93,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 100.489
+    "rotation": 111.841
   },
   "reversed": false,
   "folder": "Space City Paths",
