@@ -354,7 +354,7 @@ public class RobotContainer {
         // .aimWhile(driverXbox.leftTrigger())
         .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
         .aimFeedforward(0.0001, 0.0001, 0.00018)
-        .aimHeadingOffset(Rotation2d.fromDegrees(186))
+        .aimHeadingOffset(Rotation2d.fromDegrees(183))
         .aimHeadingOffset(true);
 
     driveDirectAngle = driveAngularVelocity.copy()
@@ -535,7 +535,7 @@ public class RobotContainer {
         m_shooter.shootFuelCommand(),
 
         // once at speed, run hopper + kicke
-        // Commands.waitUntil(m_shooter::isShooterFast),
+        Commands.waitUntil(m_shooter::isShooterFast),
         Commands.parallel(
             m_hopper.runHopperToShooterCommand(),
             m_intake.runIntakeCommand(),
