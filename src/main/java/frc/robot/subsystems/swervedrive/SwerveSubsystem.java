@@ -95,6 +95,9 @@ public class SwerveSubsystem extends SubsystemBase {
 
   public boolean visionToggleAll = false;
 
+  // Toggle between dynamic std devs (new) and flat std devs (old)
+  private final SendableChooser<Boolean> dynamicVisionChooser = new SendableChooser<>();
+
   private final SendableChooser<Boolean> megaTagChooser = new SendableChooser<Boolean>();
   private LoggedDashboardChooser<Boolean> loggedMegaTagChooser;
 
@@ -128,6 +131,12 @@ public class SwerveSubsystem extends SubsystemBase {
       throw new RuntimeException(e);
     }
     swerveDrive.stopOdometryThread();
+
+    // Vision std dev chooser: Dynamic (new filtering) vs Static (old flat 0.6)
+    dynamicVisionChooser.setDefaultOption("Dynamic (New)", true);
+    dynamicVisionChooser.addOption("Static (Old)", false);
+    SmartDashboard.putData("Vision StdDev Mode", dynamicVisionChooser);
+
     // Enable heading correction to reduce drift when rotation input is near zero.
     swerveDrive.setHeadingCorrection(false);
     swerveDrive.setCosineCompensator(false);// !SwerveDriveTelemetry.isSimulation); // Disables cosine compensation for
@@ -717,59 +726,109 @@ public class SwerveSubsystem extends SubsystemBase {
 
   private void updateLimelight(String cameraName, int megaTag)
   {
+    boolean useDynamicStdDevs = dynamicVisionChooser.getSelected();
     boolean doRejectUpdate = false;
     if(megaTag == 1) // If using mega tag 1
     {
-      LimelightHelpers.PoseEstimate mt1bleft = LimelightHelpers.getBotPoseEstimate_wpiBlue(cameraName);
-      
-      if(mt1bleft.tagCount == 1 && mt1bleft.rawFiducials.length == 1)
+      LimelightHelpers.PoseEstimate mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue(cameraName);
+
+      if(mt1.tagCount == 0)
       {
-        if(mt1bleft.rawFiducials[0].ambiguity > .7)
+        doRejectUpdate = true;
+      }
+      else if(mt1.tagCount == 1 && mt1.rawFiducials.length == 1)
+      {
+        double ambiguityThreshold = useDynamicStdDevs ? 0.3 : 0.7;
+        if(mt1.rawFiducials[0].ambiguity > ambiguityThreshold)
         {
           doRejectUpdate = true;
         }
-        if(mt1bleft.rawFiducials[0].distToCamera > 3)
+        if(mt1.rawFiducials[0].distToCamera > 3)
         {
           doRejectUpdate = true;
         }
       }
-      if(mt1bleft.tagCount == 0)
+      else if(useDynamicStdDevs)
+      {
+        // Multi-tag: reject if average distance is too far
+        if(mt1.avgTagDist > 3)
+        {
+          doRejectUpdate = true;
+        }
+      }
+
+      // Reject if spinning fast
+      if(useDynamicStdDevs && Math.abs(swerveDrive.getGyro().getYawAngularVelocity().in(DegreesPerSecond)) > 360)
       {
         doRejectUpdate = true;
       }
 
       if(!doRejectUpdate)
       {
-        swerveDrive.setVisionMeasurementStdDevs(VecBuilder.fill(.6,.6,9999999));
+        double xyStd;
+        if(useDynamicStdDevs)
+        {
+          // Scale std devs by distance: close tags = more trust, far tags = less trust
+          double dist = mt1.avgTagDist;
+          xyStd = 0.3 + (dist * dist * 0.15);
+          // Multi-tag is more reliable, so reduce std devs
+          if(mt1.tagCount >= 2) xyStd *= 0.5;
+          // Trust vision more while disabled to lock in pose before match
+          if(DriverStation.isDisabled()) xyStd *= 0.25;
+        }
+        else
+        {
+          xyStd = 0.6;
+        }
+        swerveDrive.setVisionMeasurementStdDevs(VecBuilder.fill(xyStd, xyStd, 9999999));
         swerveDrive.addVisionMeasurement(
-            mt1bleft.pose,
-            mt1bleft.timestampSeconds);
+            mt1.pose,
+            mt1.timestampSeconds);
       }
     }
     else  // If using mega tag 2
     {
-      LimelightHelpers.SetRobotOrientation(cameraName, 
-      swerveDrive.getOdometryHeading().getDegrees(), //swerveDrive.getGyro().getRotation3d().getRotation2d().getDegrees(), //swerveDrive.getOdometryHeading().getDegrees(),
+      LimelightHelpers.SetRobotOrientation(cameraName,
+      swerveDrive.getOdometryHeading().getDegrees(),
       0.0, 0.0, 0.0, 0.0, 0.0);
-      //first try raw, then delete raw, if both dont work try getHeading and stuff
-      LimelightHelpers.PoseEstimate mt2bleft = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(cameraName);
-      // double omegaDegPerSec = Units.radiansToDegrees(swerveDrive.getFieldVelocity().omegaRadiansPerSecond);
-      //or we can do omegaDegPerSec
-      
-      if(Math.abs(swerveDrive.getGyro().getYawAngularVelocity().in(DegreesPerSecond)) > 720) // if our angular velocity is greater than 720 degrees per second, ignore vision updates
+      LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(cameraName);
+
+      if(Math.abs(swerveDrive.getGyro().getYawAngularVelocity().in(DegreesPerSecond)) > 720)
       {
         doRejectUpdate = true;
       }
-      if(mt2bleft.tagCount == 0)
+      if(mt2.tagCount == 0)
       {
         doRejectUpdate = true;
+      }
+      if(useDynamicStdDevs)
+      {
+        // Reject if average tag distance is too far for reliable MT2
+        if(mt2.avgTagDist > 3)
+        {
+          doRejectUpdate = true;
+        }
       }
       if(!doRejectUpdate)
       {
-        swerveDrive.setVisionMeasurementStdDevs(VecBuilder.fill(.6,.6,9999999));
+        double xyStd;
+        if(useDynamicStdDevs)
+        {
+          // Scale std devs by distance and tag count
+          double dist = mt2.avgTagDist;
+          xyStd = 0.3 + (dist * dist * 0.1);
+          if(mt2.tagCount >= 2) xyStd *= 0.5;
+          // Trust vision more while disabled to lock in pose before match
+          if(DriverStation.isDisabled()) xyStd *= 0.25;
+        }
+        else
+        {
+          xyStd = 0.6;
+        }
+        swerveDrive.setVisionMeasurementStdDevs(VecBuilder.fill(xyStd, xyStd, 9999999));
         swerveDrive.addVisionMeasurement(
-            mt2bleft.pose,
-            mt2bleft.timestampSeconds);
+            mt2.pose,
+            mt2.timestampSeconds);
       }
     }
   }
