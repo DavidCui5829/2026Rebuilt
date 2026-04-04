@@ -269,7 +269,7 @@ public class RobotContainer {
               )
           ).finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1))
       );
-    }, java.util.Set.of(drivebase)).withTimeout(4.75));
+    }, java.util.Set.of(drivebase)).withTimeout(5.75));
 
    
 
