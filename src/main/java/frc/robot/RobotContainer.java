@@ -472,33 +472,36 @@ public class RobotContainer {
     // Shooter
     // transfer + kick + shoot/pass command, switches based on zone
 
-RTtransfer_kick_shoot.whileTrue(
+    RTtransfer_kick_shoot.whileTrue(
 
-      Commands.defer(() -> { 
-        if(isInAllianceZone()) // In alliance zone → shoot at hub
-        {      
-         ControlAllShooting shootCmd = makeVariableShoot();
-        return Commands.parallel(
+        Commands.defer(() -> {
+          if (isInAllianceZone()) // In alliance zone → shoot at hub
+          {
+            ControlAllShooting shootCmd = makeVariableShoot();
+            return Commands.parallel(
                 shootCmd,
                 // Continuously update aim target for shoot-on-the-move
-                // Commands.run(() -> driveAngularVelocity.aim(drivebase.getDynamicHubLocation())),
-                // Commands.runOnce(() -> driveAngularVelocity.aim(() -> drivebase.getDynamicHubLocation())),
+                // Commands.run(() ->
+                // driveAngularVelocity.aim(drivebase.getDynamicHubLocation())),
+                // Commands.runOnce(() -> driveAngularVelocity.aim(() ->
+                // drivebase.getDynamicHubLocation())),
                 Commands.sequence(
-                      Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
+                    Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
                         && driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
                     Commands.parallel(
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(1.5)).repeatedly(),
-                        m_intake.runIntakeCommand()).onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees))))
-                .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
-        }
-        else
-        {
-          ControllAllPassing passCmd = makeVariablePass();
+                        m_intake.runIntakeCommand())
+                        .onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees))))
+                    .finallyDo(
+                        () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
+          } else {
+            ControllAllPassing passCmd = makeVariablePass();
             return Commands.parallel(
                 passCmd,
-                // Commands.runOnce(() -> driveAngularVelocity.aim(() -> drivebase.getDynamicFerryLocation())),
+                // Commands.runOnce(() -> driveAngularVelocity.aim(() ->
+                // drivebase.getDynamicFerryLocation())),
                 Commands.sequence(
                     Commands.waitUntil(() -> passCmd.isCASAtSpeed()
                         && driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees)).getAsBoolean()),
@@ -506,12 +509,13 @@ RTtransfer_kick_shoot.whileTrue(
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand().repeatedly(),
-                        m_intake.runIntakeCommand()).onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)))))
+                        m_intake.runIntakeCommand())
+                        .onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)))))
                 .finallyDo(() -> m_shooter.setTargetRPMCommand(passCmd.RecordedidealHorizontalSpeed).withTimeout(1));
-        }
-            }, java.util.Collections.emptySet()));
-      RTtransfer_kick_shoot.onTrue(Commands.runOnce(() -> driveAngularVelocity.scaleTranslation(0.4)));
-      RTtransfer_kick_shoot.onFalse(Commands.runOnce(() -> driveAngularVelocity.scaleTranslation(1)));
+          }
+        }, java.util.Collections.emptySet()));
+    RTtransfer_kick_shoot.onTrue(Commands.runOnce(() -> driveAngularVelocity.scaleTranslation(0.4)));
+    RTtransfer_kick_shoot.onFalse(Commands.runOnce(() -> driveAngularVelocity.scaleTranslation(1)));
 
     // Intake
     LT_Intake.whileTrue(Commands.parallel(m_pushout.PushCommand(), m_intake.runIntakeCommand()));
@@ -530,13 +534,14 @@ RTtransfer_kick_shoot.whileTrue(
         // speed
         m_shooter.shootFuelCommand(),
 
-        // once at speed, run hopper + kicke        Commands.waitUntil(m_shooter::isShooterFast),
-            Commands.parallel(
-                m_hopper.runHopperToShooterCommand(),
-                m_intake.runIntakeCommand(),
-                m_kicker.kickCommand(),
-                m_pushout.AgitateCommand().repeatedly().beforeStarting(Commands.waitSeconds(1)))));
-                
+        // once at speed, run hopper + kicke
+        // Commands.waitUntil(m_shooter::isShooterFast),
+        Commands.parallel(
+            m_hopper.runHopperToShooterCommand(),
+            m_intake.runIntakeCommand(),
+            m_kicker.kickCommand(),
+            m_pushout.AgitateCommand().repeatedly().beforeStarting(Commands.waitSeconds(1)))));
+
     LT_OPshootFuel.whileTrue(
         Commands.defer(() -> {
           ControlAllShooting shootCmd = makeVariableShoot();
@@ -551,8 +556,7 @@ RTtransfer_kick_shoot.whileTrue(
                       m_intake.runIntakeCommand()))
                   .finallyDo(
                       () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
-        }, java.util.Collections.emptySet())
-    );
+        }, java.util.Collections.emptySet()));
 
     // get to shooter
     RB_OP_kickIndex.whileTrue(Commands.parallel(
