@@ -330,7 +330,6 @@ public class SwerveSubsystem extends SubsystemBase {
   public void simulationPeriodic() {
   }
 
-  
   /**
    * Setup AutoBuilder for PathPlanner.
    */
