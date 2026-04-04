@@ -307,6 +307,23 @@ public class SwerveSubsystem extends SubsystemBase {
         swerveDrive.kinematics.toSwerveModuleStates(lastCommandedRobotVelocity));
     // Measured module positions (drive distance + angle).
     Logger.recordOutput("Drive/ModulePositions", swerveDrive.getModulePositions());
+
+    // --- Aim debugging ---
+    Pose2d dynamicHub = getDynamicHubLocation();
+    Translation2d robotToHub = dynamicHub.getTranslation().minus(pose.getTranslation());
+    Rotation2d targetAngle = robotToHub.getAngle().plus(Rotation2d.fromDegrees(180));
+    double aimError = targetAngle.minus(getHeading()).getDegrees();
+    double distanceToHub = robotToHub.getNorm();
+
+    Logger.recordOutput("Drive/Aim/DynamicHubPose", dynamicHub);
+    Logger.recordOutput("Drive/Aim/StaticHubPose", Constants.DrivebaseConstants.getHubPose2D());
+    Logger.recordOutput("Drive/Aim/TargetAngleDeg", targetAngle.getDegrees());
+    Logger.recordOutput("Drive/Aim/CurrentHeadingDeg", getHeading().getDegrees());
+    Logger.recordOutput("Drive/Aim/ErrorDeg", aimError);
+    Logger.recordOutput("Drive/Aim/DistanceToHubM", distanceToHub);
+    Logger.recordOutput("Drive/Aim/RobotVelX", fieldVel.vxMetersPerSecond);
+    Logger.recordOutput("Drive/Aim/RobotVelY", fieldVel.vyMetersPerSecond);
+    Logger.recordOutput("Drive/Aim/IsLocked", locked);
   }
 
   @Override
