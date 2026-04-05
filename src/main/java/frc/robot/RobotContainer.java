@@ -533,18 +533,20 @@ public class RobotContainer {
                       m_hopper.runHopperToShooterCommand(),
                       m_kicker.kickCommand(),
                       m_pushout.AgitateCommand().repeatedly().onlyWhile(() -> !LT_Intake.getAsBoolean()),
-                      m_intake.runIntakeCommand())),
                       drivebase.lockCommand(
-                        driverXbox::getLeftX,
-                        driverXbox::getLeftY,
-                        driverXbox::getRightX,
-                        driveAngularVelocity::get)
+                          driverXbox::getLeftX,
+                          driverXbox::getLeftY,
+                          driverXbox::getRightX,
+                          driveAngularVelocity::get),
+                      m_intake.runIntakeCommand()))
                   .finallyDo(
                       () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
         }, java.util.Collections.emptySet()));
 
     LT_OP_1900Shot.whileTrue(
         Commands.parallel(
+            // keep running the VariableShoot command while we wait for the shooter to reach
+            // speed
             m_shooter.shootFuelCommand(),
 
             // once at speed, run hopper + kicke
@@ -554,11 +556,11 @@ public class RobotContainer {
                 m_intake.runIntakeCommand(),
                 m_kicker.kickCommand(),
                 drivebase.lockCommand(
-                  driverXbox::getLeftX,
-                  driverXbox::getLeftY,
-                  driverXbox::getRightX,
-                  driveAngularVelocity::get),
-                m_pushout.AgitateCommand().repeatedly().onlyWhile(() -> !LT_Intake.getAsBoolean()))));
+                          driverXbox::getLeftX,
+                          driverXbox::getLeftY,
+                          driverXbox::getRightX,
+                          driveAngularVelocity::get),
+                m_pushout.AgitateCommand().repeatedly().beforeStarting(Commands.waitSeconds(1)))));
 
     // get to shooter
     RB_OP_kickIndex.whileTrue(Commands.parallel(
