@@ -486,7 +486,7 @@ public class RobotContainer {
                           driverXbox::getLeftY,
                           driverXbox::getRightX,
                           driveAngularVelocity::get)
-                        .onlyWhile(driveAngularVaelocity.aimLock(Angle.ofBaseUnits(3, Degrees))))
+                        .onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees))))
                     .finallyDo(
                         () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
           } else {
@@ -553,12 +553,12 @@ public class RobotContainer {
                 m_hopper.runHopperToShooterCommand(),
                 m_intake.runIntakeCommand(),
                 m_kicker.kickCommand(),
-                m_pushout.AgitateCommand().repeatedly().beforeStarting(Commands.waitSeconds(1))))),
                 drivebase.lockCommand(
                   driverXbox::getLeftX,
                   driverXbox::getLeftY,
                   driverXbox::getRightX,
-                  driveAngularVelocity::get);
+                  driveAngularVelocity::get),
+                m_pushout.AgitateCommand().repeatedly().onlyWhile(() -> !LT_Intake.getAsBoolean()))));
 
     // get to shooter
     RB_OP_kickIndex.whileTrue(Commands.parallel(
