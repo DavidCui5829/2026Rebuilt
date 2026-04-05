@@ -34,7 +34,7 @@ public class AutoAimCommand extends Command
     swerveSubsystem.getField().getObject("AimTarget").setPose(targetPose);
 
     swerveInputStream.aim(targetPose)
-                     .aimHeadingOffset(Rotation2d.kZero)
+                     .aimHeadingOffset(Rotation2d.fromDegrees(180))
                      .aimHeadingOffset(true)
                      .aimWhile(true);
     /*
