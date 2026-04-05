@@ -270,7 +270,7 @@ public class RobotContainer {
                   m_pushout.AgitateCommand().repeatedly(),
                   m_intake.runIntakeCommand()))
               .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)))
-              .onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)));
+              .onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)));
       } else {
         // Not in alliance zone: no-op command to satisfy return type
         return Commands.none();
