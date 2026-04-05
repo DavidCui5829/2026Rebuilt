@@ -253,12 +253,13 @@ public class RobotContainer {
 
     // shooter
     NamedCommands.registerCommand("Control All Shooting", Commands.defer(() -> {
-      ControlAllShooting shootCmd = new ControlAllShooting(drivebase::getDynamicHubLocation, m_shooter,
-          drivebase::getPose, true);
-      return Commands.parallel(
-          shootCmd,
-          drivebase.driveFieldOriented(aimAtHubStream),
-          // Continuously update aim target for shoot-on-the-move
+      if (isInAllianceZone()) {
+        ControlAllShooting shootCmd = new ControlAllShooting(drivebase::getDynamicHubLocation, m_shooter,
+            drivebase::getPose, true);
+        return Commands.parallel(
+            shootCmd,
+            drivebase.driveFieldOriented(aimAtHubStream),
+            // Continuously update aim target for shoot-on-the-move
           // Commands.run(() -> aimAtHubStream.aim(drivebase.getDynamicHubLocation())),
           Commands.sequence(
               Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
@@ -268,8 +269,13 @@ public class RobotContainer {
                   m_kicker.kickCommand(),
                   m_pushout.AgitateCommand().repeatedly(),
                   m_intake.runIntakeCommand()))
-              .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
-    }, java.util.Collections.emptySet()).withTimeout(5.75));
+              .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)))
+              .onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)));
+      } else {
+        // Not in alliance zone: no-op command to satisfy return type
+        return Commands.none();
+      }
+    }, java.util.Collections.<edu.wpi.first.wpilibj2.command.Subsystem>emptySet()).withTimeout(5.75));
 
     NamedCommands.registerCommand("speed up shooter", m_shooter.SpeedUpShooterCommand().withTimeout(15));
     NamedCommands.registerCommand("aim at hub", drivebase.aimAtPose(Constants.DrivebaseConstants.getHubPose2D()));
