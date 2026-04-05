@@ -170,8 +170,8 @@ public class RobotContainer {
 
   // ========= OPERATOR TRIGGERS ===========
   // Shooter
-  private Trigger LT_OPshootFuel; // just shoot
-  private Trigger RT_OP_1900Shot; // Shoot, Kick, Index, Agitate, and Run Intake
+  private Trigger LT_OP_1900Shot; // just shoot
+  private Trigger RT_OP_VariableShoot; // Shoot, Kick, Index, Agitate, and Run Intake
 
   // Get to Shooter
   private Trigger RB_OP_kickIndex; // kick, index
@@ -420,8 +420,8 @@ public class RobotContainer {
 
     // ========= OPERATOR TRIGGERS ===========
     // Shooter
-    LT_OPshootFuel = oc().leftTrigger(); // just shoot
-    RT_OP_1900Shot = oc().rightTrigger(); // Shoot, Kick, Index, Agitate, and Run Intake
+    LT_OP_1900Shot = oc().leftTrigger(); // just shoot
+    RT_OP_VariableShoot = oc().rightTrigger(); // Shoot, Kick, Index, Agitate, and Run Intake
 
     // Get to Shooter
     RB_OP_kickIndex = oc().rightBumper(); // kick, index
@@ -522,20 +522,7 @@ public class RobotContainer {
 
     // ======== Operator ========
     // shooter
-    RT_OP_1900Shot.whileTrue(Commands.parallel(
-        // keep running the VariableShoot command while we wait for the shooter to reach
-        // speed
-        m_shooter.shootFuelCommand(),
-
-        // once at speed, run hopper + kicke
-        Commands.waitUntil(m_shooter::isShooterFast),
-        Commands.parallel(
-            m_hopper.runHopperToShooterCommand(),
-            m_intake.runIntakeCommand(),
-            m_kicker.kickCommand(),
-            m_pushout.AgitateCommand().repeatedly().beforeStarting(Commands.waitSeconds(1)))));
-
-    LT_OPshootFuel.whileTrue(
+    RT_OP_VariableShoot.whileTrue(
         Commands.defer(() -> {
           ControlAllShooting shootCmd = makeVariableShoot();
           return Commands.parallel(
@@ -550,6 +537,20 @@ public class RobotContainer {
                   .finallyDo(
                       () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
         }, java.util.Collections.emptySet()));
+
+    LT_OP_1900Shot.whileTrue(
+        Commands.parallel(
+            // keep running the VariableShoot command while we wait for the shooter to reach
+            // speed
+            m_shooter.shootFuelCommand(),
+
+            // once at speed, run hopper + kicke
+            Commands.waitUntil(m_shooter::isShooterFast),
+            Commands.parallel(
+                m_hopper.runHopperToShooterCommand(),
+                m_intake.runIntakeCommand(),
+                m_kicker.kickCommand(),
+                m_pushout.AgitateCommand().repeatedly().beforeStarting(Commands.waitSeconds(1)))));
 
     // get to shooter
     RB_OP_kickIndex.whileTrue(Commands.parallel(
