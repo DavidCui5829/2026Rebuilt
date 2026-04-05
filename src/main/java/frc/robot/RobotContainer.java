@@ -473,11 +473,6 @@ public class RobotContainer {
             ControlAllShooting shootCmd = makeVariableShoot();
             return Commands.parallel(
                 shootCmd,
-                // Continuously update aim target for shoot-on-the-move
-                // Commands.run(() ->
-                // driveAngularVelocity.aim(drivebase.getDynamicHubLocation())),
-                // Commands.runOnce(() -> driveAngularVelocity.aim(() ->
-                // drivebase.getDynamicHubLocation())),
                 Commands.sequence(
                     Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
                         && driveAngularVelocity.aimLock(Degrees.of(1.0)).getAsBoolean()),
@@ -485,7 +480,12 @@ public class RobotContainer {
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(1.5)).repeatedly(),
-                        m_intake.runIntakeCommand())
+                        m_intake.runIntakeCommand()),
+                        drivebase.lockCommand(
+                          driverXbox::getLeftX,
+                          driverXbox::getLeftY,
+                          driverXbox::getRightX,
+                          driveAngularVelocity::get)
                         .onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees))))
                     .finallyDo(
                         () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
