@@ -220,49 +220,45 @@ public class RobotContainer {
 
   private Command followWithRecovery(String pathName, String recoveryPathName) {
     return Commands.defer(() -> {
-        try {
-            PathPlannerPath path = PathPlannerPath.fromPathFile(pathName);
-            PathPlannerPath recoveryPath = PathPlannerPath.fromPathFile(recoveryPathName);
+      try {
+        PathPlannerPath path = PathPlannerPath.fromPathFile(pathName);
+        PathPlannerPath recoveryPath = PathPlannerPath.fromPathFile(recoveryPathName);
 
-            return AutoBuilder.followPath(path)
-                .raceWith(
-                    Commands.sequence(
-                        Commands.waitUntil(() -> drivebase.isOffPath(0.15)),
-                        AutoBuilder.pathfindThenFollowPath(recoveryPath, autoConstraints)
-                    )
-                );
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Commands.none();
-        }
+        return AutoBuilder.followPath(path)
+            .raceWith(
+                Commands.waitUntil(() -> drivebase.isOffPath(0.15)),
+                AutoBuilder.pathfindThenFollowPath(recoveryPath, autoConstraints));
+      } catch (Exception e) {
+        e.printStackTrace();
+        return Commands.none();
+      }
     }, java.util.Collections.emptySet());
   }
 
   private Command makeAutoShootCommand() {
-      return Commands.defer(() -> {
-          if (isInAllianceZone()) {
-              ControlAllShooting shootCmd = new ControlAllShooting(
-                  drivebase::getDynamicHubLocation, m_shooter, drivebase::getPose, true);
-              return Commands.parallel(
-                  shootCmd,
-                  drivebase.driveFieldOriented(aimAtHubStream),
-                  Commands.sequence(
-                      Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
-                          && aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
-                      Commands.parallel(
-                          m_hopper.runHopperToShooterCommand(),
-                          m_kicker.kickCommand(),
-                          m_pushout.AgitateCommand().repeatedly(),
-                          m_intake.runIntakeCommand()))
-                      .finallyDo(() -> m_shooter.setTargetRPMCommand(
-                          shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)))
-                  .onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)));
-          } else {
-              return Commands.none();
-          }
-      }, java.util.Collections.<edu.wpi.first.wpilibj2.command.Subsystem>emptySet()).withTimeout(5.75);
+    return Commands.defer(() -> {
+      if (isInAllianceZone()) {
+        ControlAllShooting shootCmd = new ControlAllShooting(
+            drivebase::getDynamicHubLocation, m_shooter, drivebase::getPose, true);
+        return Commands.parallel(
+            shootCmd,
+            drivebase.driveFieldOriented(aimAtHubStream),
+            Commands.sequence(
+                Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
+                    && aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
+                Commands.parallel(
+                    m_hopper.runHopperToShooterCommand(),
+                    m_kicker.kickCommand(),
+                    m_pushout.AgitateCommand().repeatedly(),
+                    m_intake.runIntakeCommand()))
+                .finallyDo(() -> m_shooter.setTargetRPMCommand(
+                    shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)))
+            .onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)));
+      } else {
+        return Commands.none();
+      }
+    }, java.util.Collections.<edu.wpi.first.wpilibj2.command.Subsystem>emptySet()).withTimeout(5.75);
   }
-
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -305,26 +301,26 @@ public class RobotContainer {
     NamedCommands.registerCommand("kick backwards", m_kicker.kickBackwardsCommand().withTimeout(8));
 
     // NamedCommands.registerCommand("Correct Path",
-    //     Commands.defer(() -> {
+    // Commands.defer(() -> {
 
-    //         if (!drivebase.isOffPath(0.15)) {
-    //             return Commands.none();
-    //         }
+    // if (!drivebase.isOffPath(0.15)) {
+    // return Commands.none();
+    // }
 
-    //         Pose2d shootPose = drivebase.getPose().getY() > 4
-    //             ? Constants.DrivebaseConstants.LT_ENTER_POS
-    //             : Constants.DrivebaseConstants.RT_ENTER_POS;
+    // Pose2d shootPose = drivebase.getPose().getY() > 4
+    // ? Constants.DrivebaseConstants.LT_ENTER_POS
+    // : Constants.DrivebaseConstants.RT_ENTER_POS;
 
-    //         PathConstraints constraints = new PathConstraints(
-    //             drivebase.getSwerveDrive().getMaximumChassisVelocity(), 3.5,
-    //             drivebase.getSwerveDrive().getMaximumChassisAngularVelocity(),
-    //             Units.degreesToRadians(720));
+    // PathConstraints constraints = new PathConstraints(
+    // drivebase.getSwerveDrive().getMaximumChassisVelocity(), 3.5,
+    // drivebase.getSwerveDrive().getMaximumChassisAngularVelocity(),
+    // Units.degreesToRadians(720));
 
-    //         return AutoBuilder.pathfindToPose(shootPose, constraints);
+    // return AutoBuilder.pathfindToPose(shootPose, constraints);
 
-    //     }, java.util.Collections.emptySet())
+    // }, java.util.Collections.emptySet())
     // );
-   
+
     // shooter
     NamedCommands.registerCommand("Control All Shooting", Commands.defer(() -> {
       if (isInAllianceZone()) {
@@ -638,18 +634,17 @@ public class RobotContainer {
 
             // once at speed, run hopper + kicker
             Commands.sequence(
-            Commands.waitUntil(m_shooter::isShooterFast),
-            Commands.parallel(
-                m_hopper.runHopperToShooterCommand(),
-                m_intake.runIntakeCommand(),
-                m_kicker.kickCommand(),
-                drivebase.lockCommand(
-                    driverXbox::getLeftX,
-                    driverXbox::getLeftY,
-                    driverXbox::getRightX,
-                    driveAngularVelocity::get),
-                m_pushout.AgitateCommand().repeatedly().beforeStarting(Commands.waitSeconds(1))))))
-                ;
+                Commands.waitUntil(m_shooter::isShooterFast),
+                Commands.parallel(
+                    m_hopper.runHopperToShooterCommand(),
+                    m_intake.runIntakeCommand(),
+                    m_kicker.kickCommand(),
+                    drivebase.lockCommand(
+                        driverXbox::getLeftX,
+                        driverXbox::getLeftY,
+                        driverXbox::getRightX,
+                        driveAngularVelocity::get),
+                    m_pushout.AgitateCommand().repeatedly().beforeStarting(Commands.waitSeconds(1))))));
 
     // get to shooter
     RB_OP_kickIndex.whileTrue(Commands.parallel(
@@ -767,24 +762,25 @@ public class RobotContainer {
    */
 
   public Command getAutonomousCommand() {
-      Command selected = loggedAutoChooser.get();
-      if (selected == null) return Commands.none();
+    Command selected = loggedAutoChooser.get();
+    if (selected == null)
+      return Commands.none();
 
-      
-      String selectedName = loggedAutoChooser.get().getName();
+    String selectedName = loggedAutoChooser.get().getName();
 
     // put the main path (swipe) and the recovery path
     if (selectedName.equals("LT Auto")) {
-        return Commands.sequence(
-            // First swipe — if knocked off, pathfinds to start of "Through LT" and follows it
-            followWithRecovery("LT Swipe", "Through LT"),
-            makeAutoShootCommand(),
-            // Second if knocked off, pathfinds to start of "Through LT Second Swipe" and follows it  
-            followWithRecovery("LT Second Swipe", "Through LT Second Swipe"),
-            makeAutoShootCommand()
-        );
+      return Commands.sequence(
+          // First swipe — if knocked off, pathfinds to start of "Through LT" and follows
+          // it
+          followWithRecovery("LT Swipe", "Through LT"),
+          makeAutoShootCommand(),
+          // Second if knocked off, pathfinds to start of "Through LT Second Swipe" and
+          // follows it
+          followWithRecovery("LT Second Swipe", "Through LT Second Swipe"),
+          makeAutoShootCommand());
     }
-      return selected;
+    return selected;
   }
 
   public void setMotorBrake(boolean brake) {
