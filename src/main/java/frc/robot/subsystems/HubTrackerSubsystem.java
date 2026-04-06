@@ -46,7 +46,8 @@ public class HubTrackerSubsystem extends SubsystemBase
     {
         this.drivebase = drivebase;
         circle = field.getObject("Circle"); 
-        traj = field.getObject("Trajectory"); 
+        traj = field.getObject("Trajectory");
+        dynamicHubCircle = field.getObject("DynamicHubCircle");
         Alliance alliance = DriverStation.getAlliance().orElse(Alliance.Blue);
         hubPose = switch (alliance)
         {
