@@ -3,10 +3,10 @@
   "robotLength": 0.87,
   "holonomicMode": true,
   "pathFolders": [
+    "Test",
     "McAllen Paths",
-    "New Folder",
-    "Space City Paths",
-    "DCMP Paths"
+    "DCMP Paths",
+    "Space City Paths"
   ],
   "autoFolders": [
     "118 Destroyer",
