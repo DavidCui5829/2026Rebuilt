@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.5473894436519258,
-        "y": 3.9897146932952925
+        "x": 3.5356462160232933,
+        "y": 4.0699051762379
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.5886110987656585,
-        "y": 3.9742917270362925
+        "x": 2.707570708097821,
+        "y": 4.101476608969739
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.9947503566333804,
-        "y": 3.9897146932952925
+        "x": 2.3565708106308905,
+        "y": 4.0699051762379
       },
       "prevControl": {
-        "x": 2.3270631128267327,
-        "y": 4.004045515672724
+        "x": 2.7777018522036774,
+        "y": 4.057027297062975
       },
       "nextControl": null,
       "isLocked": false,
@@ -41,14 +41,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": 180.0
+    "velocity": 0,
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": "McAllen Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

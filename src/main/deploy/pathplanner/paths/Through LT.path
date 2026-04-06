@@ -8,63 +8,44 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.11180829111698,
-        "y": 7.203537593084617
+        "x": 6.095744968771169,
+        "y": 7.209858910898681
       },
       "isLocked": false,
       "linkedName": "LT End"
     },
     {
       "anchor": {
-        "x": 4.867132667617689,
-        "y": 7.35376604850214
+        "x": 4.957660190515351,
+        "y": 7.3332159745065795
       },
       "prevControl": {
-        "x": 5.320712622453389,
-        "y": 7.298066649973786
+        "x": 5.228351432388869,
+        "y": 7.313545832179288
       },
       "nextControl": {
-        "x": 4.618996578582192,
-        "y": 7.384237039922962
+        "x": 4.694039974880508,
+        "y": 7.352372291223732
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.9943835396956926,
+        "x": 3.994,
         "y": 7.32
       },
       "prevControl": {
-        "x": 3.745885746836943,
-        "y": 7.292634932042295
+        "x": 3.744425120704158,
+        "y": 7.305426749694539
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "LT Shoot Spc"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 1,
-      "rotationDegrees": 90.0
-    }
-  ],
-  "constraintZones": [
-    {
-      "name": "Little Slow for Trench",
-      "minWaypointRelativePos": 0.1,
-      "maxWaypointRelativePos": 0.4,
-      "constraints": {
-        "maxVelocity": 3.125,
-        "maxAcceleration": 3.125,
-        "maxAngularVelocity": 540.0,
-        "maxAngularAcceleration": 720.0,
-        "nominalVoltage": 12.0,
-        "unlimited": false
-      }
-    }
-  ],
+  "rotationTargets": [],
+  "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {

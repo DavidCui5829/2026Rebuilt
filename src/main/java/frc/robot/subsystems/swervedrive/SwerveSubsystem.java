@@ -17,6 +17,7 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.DriveFeedforwards;
+import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.swerve.SwerveSetpoint;
 import com.pathplanner.lib.util.swerve.SwerveSetpointGenerator;
 
@@ -75,6 +76,9 @@ public class SwerveSubsystem extends SubsystemBase {
    * Swerve drive object.
    */
   private final SwerveDrive swerveDrive;
+
+  // Auton Pose tracking for Correction
+  private Pose2d targetPathPose = new Pose2d();
 
   // AdvantageKit: last commanded chassis speeds (used for logging)
   private volatile ChassisSpeeds lastCommandedRobotVelocity = new ChassisSpeeds();
@@ -434,7 +438,7 @@ public class SwerveSubsystem extends SubsystemBase {
   public Command driveToPose(Pose2d pose) {
     // Create the constraints to use while pathfinding
     PathConstraints constraints = new PathConstraints(
-        swerveDrive.getMaximumChassisVelocity(), 4.0,
+        swerveDrive.getMaximumChassisVelocity(), 3.5,
         swerveDrive.getMaximumChassisAngularVelocity(), Units.degreesToRadians(720));
 
     // Since AutoBuilder is configured, we can use it to build pathfinding commands
@@ -443,6 +447,21 @@ public class SwerveSubsystem extends SubsystemBase {
         constraints,
         edu.wpi.first.units.Units.MetersPerSecond.of(0) // Goal end velocity in meters/sec
     );
+  }
+
+  public void configurePathPlannerLogging() {
+      PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
+          targetPathPose = pose;
+      });
+  }
+
+  public double getPathFollowingError() {
+      return getPose().getTranslation()
+                    .getDistance(targetPathPose.getTranslation());
+  }
+
+  public boolean isOffPath(double thresholdMeters) {
+      return getPathFollowingError() > thresholdMeters;
   }
 
 

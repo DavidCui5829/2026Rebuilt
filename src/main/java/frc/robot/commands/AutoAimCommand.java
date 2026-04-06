@@ -13,9 +13,9 @@ import swervelib.SwerveInputStream;
 public class AutoAimCommand extends Command
 {
 
-  private final SwerveSubsystem   swerveSubsystem;
-  private final SwerveInputStream swerveInputStream;
-  private Pose2d targetPose;
+  public final SwerveSubsystem   swerveSubsystem;
+  public final SwerveInputStream swerveInputStream;
+  public Pose2d targetPose;
 
   public AutoAimCommand(SwerveSubsystem swerveSubsystem, SwerveInputStream swerveInputStream)
   {

@@ -11,6 +11,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Correct Path"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Through RT"
@@ -26,6 +32,12 @@
           "type": "path",
           "data": {
             "pathName": "RT Second Swipe"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Correct Path"
           }
         },
         {

@@ -10,6 +10,7 @@ import java.util.Optional;
 import edu.wpi.first.math.Pair;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -76,6 +77,10 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
     public static final Pose3d blueFerryPoseDepot = new Pose3d(2.1, 2, 0, Rotation3d.kZero);
     public static final Pose3d blueFerryPoseOutpost = new Pose3d(2.1, 6, 0, Rotation3d.kZero);
 
+    public static final Pose2d LT_SHOOT_POS = new Pose2d
+    (3.994, 7.320, Rotation2d.fromDegrees(100.489));
+    public static final Pose2d RT_SHOOT_POS = new Pose2d
+    (4.022, 0.729, Rotation2d.fromDegrees(79.511));
     // public static final Angle epsilonAngleToGoal = Degrees.of(1.0);
 
     public static final Pose2d getHubPose2D() {

@@ -7,6 +7,8 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.path.PathConstraints;
+
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -26,6 +28,7 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 
 import static edu.wpi.first.units.Units.Degrees;
@@ -73,6 +76,7 @@ import frc.robot.subsystems.ObjectDetection;
  * trigger mappings) should be declared here.
  */
 public class RobotContainer {
+  private AutoAimCommand autoAimCommand;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   final CommandXboxController driverXbox = new CommandXboxController(0);
@@ -251,6 +255,50 @@ public class RobotContainer {
     NamedCommands.registerCommand("kick", m_kicker.kickCommand().withTimeout(8));
     NamedCommands.registerCommand("kick backwards", m_kicker.kickBackwardsCommand().withTimeout(8));
 
+    NamedCommands.registerCommand("Correct Path",
+        Commands.defer(() -> {
+          // Pick shoot pose based on current side at runtime
+          Pose2d shootPose = drivebase.getPose().getY() > 4
+              ? Constants.DrivebaseConstants.LT_SHOOT_POS
+              : Constants.DrivebaseConstants.RT_SHOOT_POS;
+
+          PathConstraints constraints = new PathConstraints(
+              drivebase.getSwerveDrive().getMaximumChassisVelocity(), 3.5,
+              drivebase.getSwerveDrive().getMaximumChassisAngularVelocity(),
+              Units.degreesToRadians(720));
+
+          return Commands.either(
+              // Off path → pathfind to correct side then shoot
+              Commands.sequence(
+                  AutoBuilder.pathfindToPose(shootPose, constraints),
+                  Commands.defer(() -> {
+                    if (isInAllianceZone()) {
+                      ControlAllShooting shootCmd = new ControlAllShooting(
+                          drivebase::getDynamicHubLocation, m_shooter, drivebase::getPose, true);
+                      return Commands.parallel(
+                          shootCmd,
+                          drivebase.driveFieldOriented(aimAtHubStream),
+                          Commands.sequence(
+                              Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
+                                  && aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
+                              Commands.parallel(
+                                  m_hopper.runHopperToShooterCommand(),
+                                  m_kicker.kickCommand(),
+                                  m_pushout.AgitateCommand().repeatedly(),
+                                  m_intake.runIntakeCommand()))
+                              .finallyDo(() -> m_shooter.setTargetRPMCommand(
+                                  shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)))
+                          .onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)));
+                    } else {
+                      return Commands.none();
+                    }
+                  }, java.util.Collections.<edu.wpi.first.wpilibj2.command.Subsystem>emptySet()).withTimeout(5.75)),
+              // On path → do nothing
+              Commands.none(),
+              // Condition
+              () -> drivebase.isOffPath(0.25));
+        }, java.util.Collections.<edu.wpi.first.wpilibj2.command.Subsystem>emptySet()));
+
     // shooter
     NamedCommands.registerCommand("Control All Shooting", Commands.defer(() -> {
       if (isInAllianceZone()) {
@@ -260,17 +308,17 @@ public class RobotContainer {
             shootCmd,
             drivebase.driveFieldOriented(aimAtHubStream),
             // Continuously update aim target for shoot-on-the-move
-          // Commands.run(() -> aimAtHubStream.aim(drivebase.getDynamicHubLocation())),
-          Commands.sequence(
-              Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
-                  && aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
-              Commands.parallel(
-                  m_hopper.runHopperToShooterCommand(),
-                  m_kicker.kickCommand(),
-                  m_pushout.AgitateCommand().repeatedly(),
-                  m_intake.runIntakeCommand()))
-              .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)))
-              .onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)));
+            // Commands.run(() -> aimAtHubStream.aim(drivebase.getDynamicHubLocation())),
+            Commands.sequence(
+                Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
+                    && aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
+                Commands.parallel(
+                    m_hopper.runHopperToShooterCommand(),
+                    m_kicker.kickCommand(),
+                    m_pushout.AgitateCommand().repeatedly(),
+                    m_intake.runIntakeCommand()))
+                .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)))
+            .onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)));
       } else {
         // Not in alliance zone: no-op command to satisfy return type
         return Commands.none();
@@ -354,7 +402,8 @@ public class RobotContainer {
         .scaleTranslation(1.0)
         .allianceRelativeControl(true);
 
-    dc().rightTrigger().whileTrue(new AutoAimCommand(drivebase, driveAngularVelocity));
+    autoAimCommand = new AutoAimCommand(drivebase, driveAngularVelocity);
+    dc().rightTrigger().whileTrue(autoAimCommand);
 
     driveDirectAngle = driveAngularVelocity.copy()
         .withControllerHeadingAxis(dc()::getRightX, dc()::getRightY)
@@ -481,18 +530,18 @@ public class RobotContainer {
                 shootCmd,
                 Commands.sequence(
                     Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
-                        && driveAngularVelocity.aimLock(Degrees.of(1.0)).getAsBoolean()),
+                        && autoAimCommand.swerveInputStream.aimLock(Degrees.of(1.0)).getAsBoolean()),
                     Commands.parallel(
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(1.5)).repeatedly(),
                         m_intake.runIntakeCommand()),
-                        drivebase.lockCommand(
-                          driverXbox::getLeftX,
-                          driverXbox::getLeftY,
-                          driverXbox::getRightX,
-                          driveAngularVelocity::get)
-                        .onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees))))
+                    drivebase.lockCommand(
+                        driverXbox::getLeftX,
+                        driverXbox::getLeftY,
+                        driverXbox::getRightX,
+                        driveAngularVelocity::get)
+                        .onlyWhile(autoAimCommand.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees))))
                     .finallyDo(
                         () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
           } else {
@@ -562,10 +611,10 @@ public class RobotContainer {
                 m_intake.runIntakeCommand(),
                 m_kicker.kickCommand(),
                 drivebase.lockCommand(
-                          driverXbox::getLeftX,
-                          driverXbox::getLeftY,
-                          driverXbox::getRightX,
-                          driveAngularVelocity::get),
+                    driverXbox::getLeftX,
+                    driverXbox::getLeftY,
+                    driverXbox::getRightX,
+                    driveAngularVelocity::get),
                 m_pushout.AgitateCommand().repeatedly().beforeStarting(Commands.waitSeconds(1)))));
 
     // get to shooter
@@ -683,9 +732,8 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
+
   public Command getAutonomousCommand() {
-    // Pass in the selected auto from the SmartDashboard as our desired autonomous
-    // command
     return loggedAutoChooser.get();
   }
 
