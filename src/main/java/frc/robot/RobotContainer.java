@@ -9,6 +9,8 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.PathConstraints;
 
+import com.pathplanner.lib.path.PathPlannerPath;
+
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -77,6 +79,7 @@ import frc.robot.subsystems.ObjectDetection;
  */
 public class RobotContainer {
   private AutoAimCommand autoAimCommand;
+  private PathConstraints autoConstraints;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   final CommandXboxController driverXbox = new CommandXboxController(0);
@@ -215,6 +218,52 @@ public class RobotContainer {
     return isAsierSelected() ? driverXbox : operatorXbox;
   }
 
+  private Command followWithRecovery(String pathName, String recoveryPathName) {
+    return Commands.defer(() -> {
+        try {
+            PathPlannerPath path = PathPlannerPath.fromPathFile(pathName);
+            PathPlannerPath recoveryPath = PathPlannerPath.fromPathFile(recoveryPathName);
+
+            return AutoBuilder.followPath(path)
+                .raceWith(
+                    Commands.sequence(
+                        Commands.waitUntil(() -> drivebase.isOffPath(0.15)),
+                        AutoBuilder.pathfindThenFollowPath(recoveryPath, autoConstraints)
+                    )
+                );
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Commands.none();
+        }
+    }, java.util.Collections.emptySet());
+  }
+
+  private Command makeAutoShootCommand() {
+      return Commands.defer(() -> {
+          if (isInAllianceZone()) {
+              ControlAllShooting shootCmd = new ControlAllShooting(
+                  drivebase::getDynamicHubLocation, m_shooter, drivebase::getPose, true);
+              return Commands.parallel(
+                  shootCmd,
+                  drivebase.driveFieldOriented(aimAtHubStream),
+                  Commands.sequence(
+                      Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
+                          && aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
+                      Commands.parallel(
+                          m_hopper.runHopperToShooterCommand(),
+                          m_kicker.kickCommand(),
+                          m_pushout.AgitateCommand().repeatedly(),
+                          m_intake.runIntakeCommand()))
+                      .finallyDo(() -> m_shooter.setTargetRPMCommand(
+                          shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)))
+                  .onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)));
+          } else {
+              return Commands.none();
+          }
+      }, java.util.Collections.<edu.wpi.first.wpilibj2.command.Subsystem>emptySet()).withTimeout(5.75);
+  }
+
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -255,27 +304,27 @@ public class RobotContainer {
     NamedCommands.registerCommand("kick", m_kicker.kickCommand().withTimeout(8));
     NamedCommands.registerCommand("kick backwards", m_kicker.kickBackwardsCommand().withTimeout(8));
 
-    NamedCommands.registerCommand("Correct Path",
-        Commands.defer(() -> {
+    // NamedCommands.registerCommand("Correct Path",
+    //     Commands.defer(() -> {
 
-            if (!drivebase.isOffPath(0.15)) {
-                return Commands.none();
-            }
+    //         if (!drivebase.isOffPath(0.15)) {
+    //             return Commands.none();
+    //         }
 
-            Pose2d shootPose = drivebase.getPose().getY() > 4
-                ? Constants.DrivebaseConstants.LT_ENTER_POS
-                : Constants.DrivebaseConstants.RT_ENTER_POS;
+    //         Pose2d shootPose = drivebase.getPose().getY() > 4
+    //             ? Constants.DrivebaseConstants.LT_ENTER_POS
+    //             : Constants.DrivebaseConstants.RT_ENTER_POS;
 
-            PathConstraints constraints = new PathConstraints(
-                drivebase.getSwerveDrive().getMaximumChassisVelocity(), 3.5,
-                drivebase.getSwerveDrive().getMaximumChassisAngularVelocity(),
-                Units.degreesToRadians(720));
+    //         PathConstraints constraints = new PathConstraints(
+    //             drivebase.getSwerveDrive().getMaximumChassisVelocity(), 3.5,
+    //             drivebase.getSwerveDrive().getMaximumChassisAngularVelocity(),
+    //             Units.degreesToRadians(720));
 
-            return AutoBuilder.pathfindToPose(shootPose, constraints);
+    //         return AutoBuilder.pathfindToPose(shootPose, constraints);
 
-        }, java.util.Collections.emptySet())
-    );
-
+    //     }, java.util.Collections.emptySet())
+    // );
+   
     // shooter
     NamedCommands.registerCommand("Control All Shooting", Commands.defer(() -> {
       if (isInAllianceZone()) {
@@ -335,6 +384,12 @@ public class RobotContainer {
     NamedCommands.registerCommand("aim at ferry",
         drivebase.driveFieldOriented(aimAtFerryStream)
             .until(aimAtFerryStream.aimLock(Angle.ofBaseUnits(1, Degrees))));
+
+    // Auto constraints for correcting paths
+    autoConstraints = new PathConstraints(
+        drivebase.getSwerveDrive().getMaximumChassisVelocity(), 3.5,
+        drivebase.getSwerveDrive().getMaximumChassisAngularVelocity(),
+        Units.degreesToRadians(720));
 
     // Have the autoChooser pull in all PathPlanner autos as options
     autoChooser = AutoBuilder.buildAutoChooser();
@@ -703,7 +758,6 @@ public class RobotContainer {
     // drivebase).repeatedly());
     // driverXbox.rightBumper().onTrue(Commands.none());
     // }
-
   }
 
   /**
@@ -713,7 +767,24 @@ public class RobotContainer {
    */
 
   public Command getAutonomousCommand() {
-    return loggedAutoChooser.get();
+      Command selected = loggedAutoChooser.get();
+      if (selected == null) return Commands.none();
+
+      String selectedName = loggedAutoChooser.get().getName();
+
+      // Autos that use recovery — add your auto names here
+      // For each, specify the swipe path and the recovery path (which continues from re-entry)
+    if (selectedName.equals("LT Auto")) {
+        return Commands.sequence(
+            // First swipe — if knocked off, pathfinds to start of "Through LT" and follows it
+            followWithRecovery("LT Swipe", "Through LT"),
+            makeAutoShootCommand(),
+            // Second if knocked off, pathfinds to start of "Through LT Second Swipe" and follows it  
+            followWithRecovery("LT Second Swipe", "Through LT Second Swipe"),
+            makeAutoShootCommand()
+        );
+    }
+      return selected;
   }
 
   public void setMotorBrake(boolean brake) {
