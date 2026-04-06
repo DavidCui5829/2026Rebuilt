@@ -257,47 +257,25 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("Correct Path",
         Commands.defer(() -> {
-          // Pick shoot pose based on current side at runtime
-          Pose2d shootPose = drivebase.getPose().getY() > 4
-              ? Constants.DrivebaseConstants.LT_SHOOT_POS
-              : Constants.DrivebaseConstants.RT_SHOOT_POS;
-
-          PathConstraints constraints = new PathConstraints(
-              drivebase.getSwerveDrive().getMaximumChassisVelocity(), 3.5,
-              drivebase.getSwerveDrive().getMaximumChassisAngularVelocity(),
-              Units.degreesToRadians(720));
-
-          return Commands.either(
-              // Off path → pathfind to correct side then shoot
-              Commands.sequence(
-                  AutoBuilder.pathfindToPose(shootPose, constraints),
-                  Commands.defer(() -> {
-                    if (isInAllianceZone()) {
-                      ControlAllShooting shootCmd = new ControlAllShooting(
-                          drivebase::getDynamicHubLocation, m_shooter, drivebase::getPose, true);
-                      return Commands.parallel(
-                          shootCmd,
                           drivebase.driveFieldOriented(aimAtHubStream),
-                          Commands.sequence(
-                              Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
-                                  && aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
-                              Commands.parallel(
-                                  m_hopper.runHopperToShooterCommand(),
-                                  m_kicker.kickCommand(),
-                                  m_pushout.AgitateCommand().repeatedly(),
-                                  m_intake.runIntakeCommand()))
-                              .finallyDo(() -> m_shooter.setTargetRPMCommand(
-                                  shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)))
-                          .onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)));
-                    } else {
-                      return Commands.none();
-                    }
-                  }, java.util.Collections.<edu.wpi.first.wpilibj2.command.Subsystem>emptySet()).withTimeout(5.75)),
-              // On path → do nothing
-              Commands.none(),
-              // Condition
-              () -> drivebase.isOffPath(0.25));
-        }, java.util.Collections.<edu.wpi.first.wpilibj2.command.Subsystem>emptySet()));
+
+            if (!drivebase.isOffPath(0.15)) {
+                return Commands.none();
+            }
+
+            Pose2d shootPose = drivebase.getPose().getY() > 4
+                ? Constants.DrivebaseConstants.LT_ENTER_POS
+                : Constants.DrivebaseConstants.RT_ENTER_POS;
+
+            PathConstraints constraints = new PathConstraints(
+                drivebase.getSwerveDrive().getMaximumChassisVelocity(), 3.5,
+                drivebase.getSwerveDrive().getMaximumChassisAngularVelocity(),
+                Units.degreesToRadians(720));
+
+            return AutoBuilder.pathfindToPose(shootPose, constraints);
+
+        }, java.util.Collections.emptySet())
+    );
 
     // shooter
     NamedCommands.registerCommand("Control All Shooting", Commands.defer(() -> {

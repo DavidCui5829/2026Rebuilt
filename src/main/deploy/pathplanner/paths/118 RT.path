@@ -214,7 +214,7 @@
   },
   "goalEndState": {
     "velocity": 2.5,
-    "rotation": -100.629
+    "rotation": -90.0
   },
   "reversed": false,
   "folder": "Space City Paths",

@@ -112,11 +112,11 @@
     },
     {
       "anchor": {
-        "x": 5.838505066044486,
+        "x": 5.839,
         "y": 0.8231537713004491
       },
       "prevControl": {
-        "x": 6.809771688153211,
+        "x": 6.810266622108726,
         "y": 1.188444426093393
       },
       "nextControl": null,
@@ -221,7 +221,7 @@
   },
   "goalEndState": {
     "velocity": 2.5,
-    "rotation": -100.629
+    "rotation": -90.0
   },
   "reversed": false,
   "folder": "Space City Paths",

@@ -53,7 +53,7 @@
       },
       "prevControl": {
         "x": 7.379024879652125,
-        "y": 0.4457249614720775
+        "y": 0.44572496147207763
       },
       "nextControl": {
         "x": 7.7270972389318455,
@@ -248,7 +248,7 @@
   },
   "goalEndState": {
     "velocity": 2.5,
-    "rotation": -100.629
+    "rotation": -90.0
   },
   "reversed": false,
   "folder": "Space City Paths",

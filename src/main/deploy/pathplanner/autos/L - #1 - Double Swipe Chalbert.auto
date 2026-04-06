@@ -5,15 +5,22 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "race",
           "data": {
-            "pathName": "LT Swipe"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Correct Path"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "LT Swipe"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Correct Path"
+                }
+              }
+            ]
           }
         },
         {
@@ -29,15 +36,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "race",
           "data": {
-            "pathName": "LT Second Swipe"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Correct Path"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "LT Second Swipe"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Correct Path"
+                }
+              }
+            ]
           }
         },
         {
