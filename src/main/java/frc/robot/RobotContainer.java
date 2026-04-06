@@ -770,10 +770,10 @@ public class RobotContainer {
       Command selected = loggedAutoChooser.get();
       if (selected == null) return Commands.none();
 
+      
       String selectedName = loggedAutoChooser.get().getName();
 
-      // Autos that use recovery — add your auto names here
-      // For each, specify the swipe path and the recovery path (which continues from re-entry)
+    // put the main path (swipe) and the recovery path
     if (selectedName.equals("LT Auto")) {
         return Commands.sequence(
             // First swipe — if knocked off, pathfinds to start of "Through LT" and follows it
