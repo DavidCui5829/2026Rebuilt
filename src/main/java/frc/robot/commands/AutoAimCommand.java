@@ -70,6 +70,6 @@ public class AutoAimCommand extends Command
   public void end(boolean interrupted)
   {
     swerveInputStream.aimWhile(false);
-    swerveSubsystem.getField().getObject("AimTarget").setPoses(List.of());
+    // swerveSubsystem.getField().getObject("AimTarget").setPoses(List.of());
   }
 }
