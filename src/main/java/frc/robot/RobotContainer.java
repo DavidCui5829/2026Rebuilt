@@ -604,7 +604,8 @@ public class RobotContainer {
             // speed
             m_shooter.shootFuelCommand(),
 
-            // once at speed, run hopper + kicke
+            // once at speed, run hopper + kicker
+            Commands.sequence(
             Commands.waitUntil(m_shooter::isShooterFast),
             Commands.parallel(
                 m_hopper.runHopperToShooterCommand(),
@@ -615,7 +616,8 @@ public class RobotContainer {
                     driverXbox::getLeftY,
                     driverXbox::getRightX,
                     driveAngularVelocity::get),
-                m_pushout.AgitateCommand().repeatedly().beforeStarting(Commands.waitSeconds(1)))));
+                m_pushout.AgitateCommand().repeatedly().beforeStarting(Commands.waitSeconds(1))))))
+                ;
 
     // get to shooter
     RB_OP_kickIndex.whileTrue(Commands.parallel(
