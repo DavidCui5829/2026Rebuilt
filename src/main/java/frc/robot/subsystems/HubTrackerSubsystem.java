@@ -30,6 +30,7 @@ public class HubTrackerSubsystem extends SubsystemBase
     private Field2d field = new Field2d();
     private final SwerveSubsystem drivebase;
     private FieldObject2d circle;
+    private FieldObject2d dynamicHubCircle;
     private FieldObject2d traj;
 
     final CommandXboxController driverController;
@@ -187,21 +188,31 @@ public class HubTrackerSubsystem extends SubsystemBase
 
     field.setRobotPose(robotPose);
     boolean active = isHubActive();
+
     x = (x == 1) ? 0 : 1;
-    // Ok so this is a really weird (but genius) line of code i came up with (yk it aint AI because AI wouldn't make something like this lol)
-    // essentially, the circle will be shown either when it is an INACTIVE hub, or every other frame of active shift
-    // this way, if it is active, it blinks. this is my workaround for not being able to change color of circle
+
     SmartDashboard.putBoolean("HubActivity", active);
-    // if(!active || x == 0) circle.setPoses(createCircle(drivebase.getDynamicHubLocation(), radius, 20));
-    // else circle.setPoses(); // clears circle when not showing
+    if(!active || x == 0) circle.setPoses(createCircle(hubPose, radius, 20));
+    else circle.setPoses(); // clears circle when not showing
+
+    dynamicHubCircle.setPoses(createCircle(drivebase.getDynamicHubLocation(), 0.25, 10));
 
     Translation2d goalLocation = drivebase.getDynamicHubLocation().getTranslation();
     Translation2d robotLocation = robotPose.getTranslation();
     Translation2d targetVec = goalLocation.minus(robotLocation);
     double        dist         = targetVec.getNorm();
 
-    // Trajectory trajectory = TrajectoryGenerator.generateTrajectory(robotPose, List.of(), robotPose.plus(new Transform2d(-2, 0, new Rotation2d())), new TrajectoryConfig(1.0, 1.0));
-    // traj.setTrajectory(trajectory);
+
+    Translation2d back = new Translation2d(-dist, 0);
+    Transform2d t = new Transform2d(back, new Rotation2d());
+
+    TrajectoryConfig config = new TrajectoryConfig(1.0, 1.0).setReversed(true);
+
+    Pose2d start = robotPose;
+    Pose2d end = robotPose.plus(t);
+
+    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(start, List.of(), end, config);
+    traj.setTrajectory(trajectory);
 
     SmartDashboard.putNumber("Distance to Hub", dist);
     // SmartDashboard.putNumber("LUTRPM", ControlAllShooting.getRPM(dist));
