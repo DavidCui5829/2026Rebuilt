@@ -257,7 +257,6 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("Correct Path",
         Commands.defer(() -> {
-                          drivebase.driveFieldOriented(aimAtHubStream),
 
             if (!drivebase.isOffPath(0.15)) {
                 return Commands.none();
