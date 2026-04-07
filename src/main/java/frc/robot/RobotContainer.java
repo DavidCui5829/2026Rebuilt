@@ -22,8 +22,11 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.Time;
 import edu.wpi.first.wpilibj.DriverStation;
-import frc.robot.commands.AutoAimCommand;
+import frc.robot.commands.AimAtHub;
+import frc.robot.commands.AimAtFerry;
 import java.util.Optional;
+import java.util.Set;
+
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -78,7 +81,8 @@ import frc.robot.subsystems.ObjectDetection;
  * trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  private AutoAimCommand autoAimCommand;
+  private AimAtHub aimAtHub;
+  private AimAtFerry aimAtFerry;
   private PathConstraints autoConstraints;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -430,8 +434,17 @@ public class RobotContainer {
         .scaleTranslation(1.0)
         .allianceRelativeControl(true);
 
-    autoAimCommand = new AutoAimCommand(drivebase, driveAngularVelocity);
-    dc().rightTrigger().whileTrue(autoAimCommand);
+    aimAtHub = new AimAtHub(drivebase, driveAngularVelocity);
+    aimAtFerry = new AimAtFerry(drivebase, driveAngularVelocity);
+    dc().rightTrigger().whileTrue(
+        Commands.defer(() -> {
+            if (isInAllianceZone()) {
+                return aimAtHub;
+            } else {
+                return aimAtFerry;
+            }
+        }, Set.of(drivebase))
+    );
 
     driveDirectAngle = driveAngularVelocity.copy()
         .withControllerHeadingAxis(dc()::getRightX, dc()::getRightY)
@@ -558,7 +571,7 @@ public class RobotContainer {
                 shootCmd,
                 Commands.sequence(
                     Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
-                        && autoAimCommand.swerveInputStream.aimLock(Degrees.of(1.0)).getAsBoolean()),
+                        && aimAtHub.swerveInputStream.aimLock(Degrees.of(1.0)).getAsBoolean()),
                     Commands.parallel(
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
@@ -572,7 +585,7 @@ public class RobotContainer {
                         driverXbox::getLeftY,
                         driverXbox::getRightX,
                         driveAngularVelocity::get)
-                        .onlyWhile(autoAimCommand.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees))))
+                        .onlyWhile(aimAtHub.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees))))
                     .finallyDo(
                         () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
           } else {
@@ -583,7 +596,7 @@ public class RobotContainer {
                 // drivebase.getDynamicFerryLocation())),
                 Commands.sequence(
                     Commands.waitUntil(() -> passCmd.isCASAtSpeed()
-                        && driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees)).getAsBoolean()),
+                        && aimAtFerry.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees)).getAsBoolean()),
                     Commands.parallel(
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
