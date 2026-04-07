@@ -109,7 +109,7 @@ public class RobotContainer {
   // Factory for ControlAllShooting instances. Create a fresh instance for each
   // composition to avoid WPILib's "composed commands may not be reused" error.
   private ControlAllShooting makeVariableShoot() {
-    return new ControlAllShooting(drivebase::getDynamicHubLocation, m_shooter, drivebase::getPose);
+    return new ControlAllShooting(drivebase::getCachedDynamicHubLocation, m_shooter, drivebase::getPose);
   }
 
   private ControllAllPassing makeVariablePass() {
@@ -249,7 +249,7 @@ public class RobotContainer {
     return Commands.defer(() -> {
       if (isInAllianceZone()) {
         ControlAllShooting shootCmd = new ControlAllShooting(
-            drivebase::getDynamicHubLocation, m_shooter, drivebase::getPose, true);
+            drivebase::getCachedDynamicHubLocation, m_shooter, drivebase::getPose, true);
         return Commands.parallel(
             shootCmd,
             drivebase.driveFieldOriented(aimAtHubStream),
@@ -330,7 +330,7 @@ public class RobotContainer {
     // shooter
     NamedCommands.registerCommand("Control All Shooting", Commands.defer(() -> {
       if (isInAllianceZone()) {
-        ControlAllShooting shootCmd = new ControlAllShooting(drivebase::getDynamicHubLocation, m_shooter,
+        ControlAllShooting shootCmd = new ControlAllShooting(drivebase::getCachedDynamicHubLocation, m_shooter,
             drivebase::getPose, true);
         return Commands.parallel(
             shootCmd,
@@ -477,7 +477,7 @@ public class RobotContainer {
     aimAtHubStream = SwerveInputStream.of(drivebase.getSwerveDrive(),
         () -> 0.0, () -> 0.0)
         .withControllerRotationAxis(() -> 0.0)
-        .aim(() -> drivebase.getDynamicHubLocation())
+        .aim(() -> drivebase.getCachedDynamicHubLocation())
         .aimWhile(true)
         .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
         .aimFeedforward(0.0001, 0.0001, 0.00013)
