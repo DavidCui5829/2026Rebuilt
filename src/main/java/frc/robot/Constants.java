@@ -196,8 +196,8 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
     static { // 7-12 are estimates - Aditya
       for (var entry : List.of(
           Pair.of(Meters.of(2), Seconds.of(0.85)),
-          Pair.of(Meters.of(3), Seconds.of(0.9)),
-          Pair.of(Meters.of(4), Seconds.of(1.08)),
+          Pair.of(Meters.of(3), Seconds.of(0.95)),
+          Pair.of(Meters.of(4), Seconds.of(1.13)),
           Pair.of(Meters.of(5), Seconds.of(1.2)),
           Pair.of(Meters.of(6), Seconds.of(1.4)),
           Pair.of(Meters.of(7), Seconds.of(1.6)),
