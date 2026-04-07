@@ -102,10 +102,9 @@ public class SwerveSubsystem extends SubsystemBase {
   private Pose2d cachedDynamicHub = new Pose2d();
   private Pose2d cachedDynamicFerry = new Pose2d();
 
-  public boolean visionToggleAll = false;
+  public boolean isAiming = false;
 
-  // Toggle between dynamic std devs (new) and flat std devs (old)
-  private final SendableChooser<Boolean> dynamicVisionChooser = new SendableChooser<>();
+  public boolean visionToggleAll = false;
 
   private final SendableChooser<Boolean> megaTagChooser = new SendableChooser<Boolean>();
   private LoggedDashboardChooser<Boolean> loggedMegaTagChooser;
@@ -140,11 +139,6 @@ public class SwerveSubsystem extends SubsystemBase {
       throw new RuntimeException(e);
     }
     swerveDrive.stopOdometryThread();
-
-    // Vision std dev chooser: Dynamic (new filtering) vs Static (old flat 0.6)
-    dynamicVisionChooser.setDefaultOption("Dynamic (New)", true);
-    dynamicVisionChooser.addOption("Static (Old)", false);
-    SmartDashboard.putData("Vision StdDev Mode", dynamicVisionChooser);
 
     // Enable heading correction to reduce drift when rotation input is near zero.
     swerveDrive.setHeadingCorrection(false);
@@ -317,35 +311,38 @@ public class SwerveSubsystem extends SubsystemBase {
     // Measured module positions (drive distance + angle).
     Logger.recordOutput("Drive/ModulePositions", swerveDrive.getModulePositions());
 
-    // --- Aim debugging ---
-    cachedDynamicHub = getDynamicHubLocation();
-    cachedDynamicFerry = getDynamicFerryLocation();
-    Pose2d dynamicHub = cachedDynamicHub;
-    Translation2d robotToHub = dynamicHub.getTranslation().minus(pose.getTranslation());
-    Rotation2d targetAngle = robotToHub.getAngle().plus(Rotation2d.fromDegrees(180));
-    double aimError = targetAngle.minus(getHeading()).getDegrees();
-    double distanceToHub = robotToHub.getNorm();
+    if(isAiming)
+    {
+      // --- Aim debugging ---
+      cachedDynamicHub = getDynamicHubLocation();
+      cachedDynamicFerry = getDynamicFerryLocation();
+      Pose2d dynamicHub = cachedDynamicHub;
+      Translation2d robotToHub = dynamicHub.getTranslation().minus(pose.getTranslation());
+      Rotation2d targetAngle = robotToHub.getAngle().plus(Rotation2d.fromDegrees(180));
+      double aimError = targetAngle.minus(getHeading()).getDegrees();
+      double distanceToHub = robotToHub.getNorm();
 
-    Logger.recordOutput("Drive/Aim/DynamicHubPose", dynamicHub);
-    Logger.recordOutput("Drive/Aim/StaticHubPose", Constants.DrivebaseConstants.getHubPose2D());
-    Logger.recordOutput("Drive/Aim/TargetAngleDeg", targetAngle.getDegrees());
-    Logger.recordOutput("Drive/Aim/CurrentHeadingDeg", getHeading().getDegrees());
-    Logger.recordOutput("Drive/Aim/ErrorDegHub", aimError);
-    Logger.recordOutput("Drive/Aim/DistanceToHubM", distanceToHub);
-    Logger.recordOutput("Drive/Aim/RobotVelX", fieldVel.vxMetersPerSecond);
-    Logger.recordOutput("Drive/Aim/RobotVelY", fieldVel.vyMetersPerSecond);
-    Logger.recordOutput("Drive/Aim/IsLocked", locked);
+      Logger.recordOutput("Drive/Aim/DynamicHubPose", dynamicHub);
+      Logger.recordOutput("Drive/Aim/StaticHubPose", Constants.DrivebaseConstants.getHubPose2D());
+      Logger.recordOutput("Drive/Aim/TargetAngleDeg", targetAngle.getDegrees());
+      Logger.recordOutput("Drive/Aim/CurrentHeadingDeg", getHeading().getDegrees());
+      Logger.recordOutput("Drive/Aim/ErrorDegHub", aimError);
+      Logger.recordOutput("Drive/Aim/DistanceToHubM", distanceToHub);
+      Logger.recordOutput("Drive/Aim/RobotVelX", fieldVel.vxMetersPerSecond);
+      Logger.recordOutput("Drive/Aim/RobotVelY", fieldVel.vyMetersPerSecond);
+      Logger.recordOutput("Drive/Aim/IsLocked", locked);
 
-    // --- Ferry aim debugging ---
-    Pose2d dynamicFerry = cachedDynamicFerry;
-    Translation2d robotToFerry = dynamicFerry.getTranslation().minus(pose.getTranslation());
-    Rotation2d ferryTargetAngle = robotToFerry.getAngle().plus(Rotation2d.fromDegrees(180));
-    double ferryAimError = ferryTargetAngle.minus(getHeading()).getDegrees();
-    double distanceToFerry = robotToFerry.getNorm();
+      // --- Ferry aim debugging ---
+      Pose2d dynamicFerry = cachedDynamicFerry;
+      Translation2d robotToFerry = dynamicFerry.getTranslation().minus(pose.getTranslation());
+      Rotation2d ferryTargetAngle = robotToFerry.getAngle().plus(Rotation2d.fromDegrees(180));
+      double ferryAimError = ferryTargetAngle.minus(getHeading()).getDegrees();
+      double distanceToFerry = robotToFerry.getNorm();
 
-    Logger.recordOutput("Drive/Aim/DynamicFerryPose", dynamicFerry);
-    Logger.recordOutput("Drive/Aim/ErrorDegFerry", ferryAimError);
-    Logger.recordOutput("Drive/Aim/DistanceToFerryM", distanceToFerry);
+      Logger.recordOutput("Drive/Aim/DynamicFerryPose", dynamicFerry);
+      Logger.recordOutput("Drive/Aim/ErrorDegFerry", ferryAimError);
+      Logger.recordOutput("Drive/Aim/DistanceToFerryM", distanceToFerry);
+    }
 
     // --- Auto recovery debugging ---
     Logger.recordOutput("Drive/Auto/TargetPathPose", targetPathPose);
@@ -785,7 +782,6 @@ public class SwerveSubsystem extends SubsystemBase {
 
   private void updateLimelight(String cameraName, int megaTag)
   {
-    boolean useDynamicStdDevs = dynamicVisionChooser.getSelected();
     boolean doRejectUpdate = false;
     if(megaTag == 1) // If using mega tag 1
     {
@@ -797,8 +793,7 @@ public class SwerveSubsystem extends SubsystemBase {
       }
       else if(mt1.tagCount == 1 && mt1.rawFiducials.length == 1)
       {
-        double ambiguityThreshold = useDynamicStdDevs ? 0.3 : 0.7;
-        if(mt1.rawFiducials[0].ambiguity > ambiguityThreshold)
+        if(mt1.rawFiducials[0].ambiguity > 0.3)
         {
           doRejectUpdate = true;
         }
@@ -807,7 +802,7 @@ public class SwerveSubsystem extends SubsystemBase {
           doRejectUpdate = true;
         }
       }
-      else if(useDynamicStdDevs)
+      else
       {
         // Multi-tag: reject if average distance is too far
         if(mt1.avgTagDist > 3)
@@ -817,28 +812,21 @@ public class SwerveSubsystem extends SubsystemBase {
       }
 
       // Reject if spinning fast
-      if(useDynamicStdDevs && Math.abs(swerveDrive.getGyro().getYawAngularVelocity().in(DegreesPerSecond)) > 360)
+      if(Math.abs(swerveDrive.getGyro().getYawAngularVelocity().in(DegreesPerSecond)) > 360)
       {
         doRejectUpdate = true;
       }
 
       if(!doRejectUpdate)
       {
-        double xyStd;
-        if(useDynamicStdDevs)
-        {
-          // Scale std devs by distance: close tags = more trust, far tags = less trust
-          double dist = mt1.avgTagDist;
-          xyStd = 0.3 + (dist * dist * 0.15);
-          // Multi-tag is more reliable, so reduce std devs
-          if(mt1.tagCount >= 2) xyStd *= 0.5;
-          // Trust vision more while disabled to lock in pose before match
-          if(DriverStation.isDisabled()) xyStd *= 0.25;
-        }
-        else
-        {
-          xyStd = 0.6;
-        }
+        // Scale std devs by distance: close tags = more trust, far tags = less trust
+        double dist = mt1.avgTagDist;
+        double xyStd = 0.3 + (dist * dist * 0.15);
+        // Multi-tag is more reliable, so reduce std devs
+        if(mt1.tagCount >= 2) xyStd *= 0.5;
+        // Trust vision more while disabled to lock in pose before match
+        if(DriverStation.isDisabled()) xyStd *= 0.25;
+
         swerveDrive.setVisionMeasurementStdDevs(VecBuilder.fill(xyStd, xyStd, 9999999));
         swerveDrive.addVisionMeasurement(
             mt1.pose,
@@ -860,30 +848,20 @@ public class SwerveSubsystem extends SubsystemBase {
       {
         doRejectUpdate = true;
       }
-      if(useDynamicStdDevs)
+      // Reject if average tag distance is too far for reliable MT2
+      if(mt2.avgTagDist > 3)
       {
-        // Reject if average tag distance is too far for reliable MT2
-        if(mt2.avgTagDist > 3)
-        {
-          doRejectUpdate = true;
-        }
+        doRejectUpdate = true;
       }
       if(!doRejectUpdate)
       {
-        double xyStd;
-        if(useDynamicStdDevs)
-        {
-          // Scale std devs by distance and tag count
-          double dist = mt2.avgTagDist;
-          xyStd = 0.3 + (dist * dist * 0.1);
-          if(mt2.tagCount >= 2) xyStd *= 0.5;
-          // Trust vision more while disabled to lock in pose before match
-          if(DriverStation.isDisabled()) xyStd *= 0.25;
-        }
-        else
-        {
-          xyStd = 0.6;
-        }
+        // Scale std devs by distance and tag count
+        double dist = mt2.avgTagDist;
+        double xyStd = 0.3 + (dist * dist * 0.1);
+        if(mt2.tagCount >= 2) xyStd *= 0.5;
+        // Trust vision more while disabled to lock in pose before match
+        if(DriverStation.isDisabled()) xyStd *= 0.25;
+
         swerveDrive.setVisionMeasurementStdDevs(VecBuilder.fill(xyStd, xyStd, 9999999));
         swerveDrive.addVisionMeasurement(
             mt2.pose,
