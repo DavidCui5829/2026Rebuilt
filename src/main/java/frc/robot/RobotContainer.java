@@ -51,7 +51,7 @@ import frc.robot.commands.ControllAllPassing;
 // import frc.robot.Constants.DrivebaseConstants;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.util.HubTracker;
-import frc.robot.utils.FuelSim;
+// import frc.robot.utils.FuelSim;
 
 import static edu.wpi.first.units.Units.Seconds;
 
@@ -68,7 +68,7 @@ import frc.robot.subsystems.Kicker;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.HubTrackerSubsystem;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Climber;
+// import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Pushout;
 import frc.robot.subsystems.ObjectDetection;
 
@@ -116,7 +116,7 @@ public class RobotContainer {
         m_shooter, drivebase::getPose);
   }
 
-  public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of FuelSim
+  // public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of FuelSim
 
   // Establish a Sendable Chooser that will be able to be sent to the
   // SmartDashboard, allowing selection of desired auto
@@ -277,8 +277,8 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
 
-    configureFuelSim();
-    configureFuelSimRobot();
+    // configureFuelSim();
+    // configureFuelSimRobot();
     // Triggers for auto aim/pass poses
 
     DriverStation.silenceJoystickConnectionWarning(true);
@@ -894,35 +894,35 @@ public class RobotContainer {
     return false;
   }
 
-  private void configureFuelSim() {
-    fuelSim = new FuelSim();
-    fuelSim.spawnStartingFuel();
+  // private void configureFuelSim() {
+  //   fuelSim = new FuelSim();
+  //   fuelSim.spawnStartingFuel();
 
-    fuelSim.start();
-    SmartDashboard.putData(Commands.runOnce(() -> {
-      fuelSim.clearFuel();
-      fuelSim.spawnStartingFuel();
-    })
-        .withName("Reset Fuel")
-        .ignoringDisable(true));
-  }
+  //   fuelSim.start();
+  //   SmartDashboard.putData(Commands.runOnce(() -> {
+  //     fuelSim.clearFuel();
+  //     fuelSim.spawnStartingFuel();
+  //   })
+  //       .withName("Reset Fuel")
+  //       .ignoringDisable(true));
+  // }
 
-  private void configureFuelSimRobot() {
-    fuelSim.registerRobot(
-        Dimensions.FULL_WIDTH.in(Meters),
-        Dimensions.FULL_LENGTH.in(Meters),
-        Dimensions.BUMPER_HEIGHT.in(Meters),
-        drivebase::getPose,
-        drivebase::getFieldVelocity);
+  // private void configureFuelSimRobot() {
+  //   fuelSim.registerRobot(
+  //       Dimensions.FULL_WIDTH.in(Meters),
+  //       Dimensions.FULL_LENGTH.in(Meters),
+  //       Dimensions.BUMPER_HEIGHT.in(Meters),
+  //       drivebase::getPose,
+  //       drivebase::getFieldVelocity);
 
-    // fuelSim.registerIntake(
-    // -Dimensions.FULL_LENGTH.div(2).in(Meters),
-    // Dimensions.FULL_LENGTH.div(2).in(Meters),
-    // -Dimensions.FULL_WIDTH.div(2).plus(Inches.of(7)).in(Meters),
-    // -Dimensions.FULL_WIDTH.div(2).in(Meters),
-    // () -> m_pushout.isRightDeployed() && ableToIntake.getAsBoolean(),
-    // intakeCallback);
-  }
+  //   // fuelSim.registerIntake(
+  //   // -Dimensions.FULL_LENGTH.div(2).in(Meters),
+  //   // Dimensions.FULL_LENGTH.div(2).in(Meters),
+  //   // -Dimensions.FULL_WIDTH.div(2).plus(Inches.of(7)).in(Meters),
+  //   // -Dimensions.FULL_WIDTH.div(2).in(Meters),
+  //   // () -> m_pushout.isRightDeployed() && ableToIntake.getAsBoolean(),
+  //   // intakeCallback);
+  // }
 
   private double computeDynamicLookaheadSeconds() {
     // Read robot field velocities (from SwerveSubsystem)
