@@ -372,6 +372,54 @@ public class RobotContainer {
     // NamedCommands.registerCommand("climb down",
     // m_climber.runClimberDownCommand().withTimeout(4));
 
+    NamedCommands.registerCommand("Shoot and Aim",
+        Commands.defer(() -> {
+          if (isInAllianceZone()) // In alliance zone → shoot at hub
+          {
+            aimAtHub = new AimAtHub(drivebase, driveAngularVelocity);
+            ControlAllShooting shootCmd = makeVariableShoot();
+            return Commands.parallel(
+                aimAtHub,
+                shootCmd,
+                Commands.sequence(
+                    Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
+                        && aimAtHub.swerveInputStream.aimLock(Degrees.of(2)).getAsBoolean()),
+                    Commands.parallel(
+                        m_hopper.runHopperToShooterCommand(),
+                        m_kicker.kickCommand(),
+                        m_pushout.AgitateCommand()
+                          .beforeStarting(Commands.waitSeconds(1))
+                          .repeatedly()
+                          .onlyWhile(() -> !LT_Intake.getAsBoolean()),
+                        m_intake.runIntakeCommand(),
+                        drivebase.lockCommand(
+                            driverXbox::getLeftX,
+                            driverXbox::getLeftY,
+                            driverXbox::getRightX,
+                            driveAngularVelocity::get))
+                        .onlyWhile(aimAtHub.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees))))
+                    .finallyDo(
+                        () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
+          } else {
+            aimAtFerry = new AimAtFerry(drivebase, driveAngularVelocity);
+            ControllAllPassing passCmd = makeVariablePass();
+            return Commands.parallel(
+                aimAtFerry,
+                passCmd,
+                // Commands.runOnce(() -> driveAngularVelocity.aim(() ->
+                // drivebase.getDynamicFerryLocation())),
+                Commands.sequence(
+                    Commands.waitUntil(() -> passCmd.isCASAtSpeed()
+                        && aimAtFerry.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees)).getAsBoolean()),
+                    Commands.parallel(
+                        m_hopper.runHopperToShooterCommand(),
+                        m_kicker.kickCommand(),
+                        m_pushout.AgitateCommand().repeatedly(),
+                        m_intake.runIntakeCommand())
+                        .onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees)))))
+                .finallyDo(() -> m_shooter.setTargetRPMCommand(passCmd.RecordedidealHorizontalSpeed).withTimeout(1));
+          }
+        }, java.util.Collections.emptySet()));
 
     NamedCommands.registerCommand("aim at ferry",
         drivebase.driveFieldOriented(aimAtFerryStream)
@@ -444,52 +492,6 @@ public class RobotContainer {
               }
           }, Set.of(drivebase))
         );
-
-      NamedCommands.registerCommand("Shoot and Aim",
-        Commands.defer(() -> {
-          if (isInAllianceZone()) // In alliance zone → shoot at hub
-          {
-            ControlAllShooting shootCmd = makeVariableShoot();
-            return Commands.parallel(
-                shootCmd,
-                Commands.sequence(
-                    Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
-                        && aimAtHub.swerveInputStream.aimLock(Degrees.of(2)).getAsBoolean()),
-                    Commands.parallel(
-                        m_hopper.runHopperToShooterCommand(),
-                        m_kicker.kickCommand(),
-                        m_pushout.AgitateCommand()
-                          .beforeStarting(Commands.waitSeconds(1))
-                          .repeatedly()
-                          .onlyWhile(() -> !LT_Intake.getAsBoolean()),
-                        m_intake.runIntakeCommand(),
-                        drivebase.lockCommand(
-                            driverXbox::getLeftX,
-                            driverXbox::getLeftY,
-                            driverXbox::getRightX,
-                            driveAngularVelocity::get))
-                        .onlyWhile(aimAtHub.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees))))
-                    .finallyDo(
-                        () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
-          } else {
-            ControllAllPassing passCmd = makeVariablePass();
-            return Commands.parallel(
-                passCmd,
-                // Commands.runOnce(() -> driveAngularVelocity.aim(() ->
-                // drivebase.getDynamicFerryLocation())),
-                Commands.sequence(
-                    Commands.waitUntil(() -> passCmd.isCASAtSpeed()
-                        && aimAtFerry.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees)).getAsBoolean()),
-                    Commands.parallel(
-                        m_hopper.runHopperToShooterCommand(),
-                        m_kicker.kickCommand(),
-                        m_pushout.AgitateCommand().repeatedly(),
-                        m_intake.runIntakeCommand())
-                        .onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees)))))
-                .finallyDo(() -> m_shooter.setTargetRPMCommand(passCmd.RecordedidealHorizontalSpeed).withTimeout(1));
-          }
-        }, java.util.Collections.emptySet()));
-
 
     driveDirectAngle = driveAngularVelocity.copy()
         .withControllerHeadingAxis(dc()::getRightX, dc()::getRightY)
