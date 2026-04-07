@@ -574,20 +574,20 @@ public class RobotContainer {
                 shootCmd,
                 Commands.sequence(
                     Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
-                        && aimAtHub.swerveInputStream.aimLock(Degrees.of(1.0)).getAsBoolean()),
+                        && aimAtHub.swerveInputStream.aimLock(Degrees.of(2)).getAsBoolean()),
                     Commands.parallel(
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand()
-                          .beforeStarting(Commands.waitSeconds(1.5))
+                          .beforeStarting(Commands.waitSeconds(1))
                           .repeatedly()
                           .onlyWhile(() -> !LT_Intake.getAsBoolean()),
-                        m_intake.runIntakeCommand()),
-                    drivebase.lockCommand(
-                        driverXbox::getLeftX,
-                        driverXbox::getLeftY,
-                        driverXbox::getRightX,
-                        driveAngularVelocity::get)
+                        m_intake.runIntakeCommand(),
+                        drivebase.lockCommand(
+                            driverXbox::getLeftX,
+                            driverXbox::getLeftY,
+                            driverXbox::getRightX,
+                            driveAngularVelocity::get))
                         .onlyWhile(aimAtHub.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees))))
                     .finallyDo(
                         () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
@@ -605,7 +605,7 @@ public class RobotContainer {
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand().repeatedly(),
                         m_intake.runIntakeCommand())
-                        .onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)))))
+                        .onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees)))))
                 .finallyDo(() -> m_shooter.setTargetRPMCommand(passCmd.RecordedidealHorizontalSpeed).withTimeout(1));
           }
         }, java.util.Collections.emptySet()));
