@@ -7,6 +7,7 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.PathConstraints;
 
 import com.pathplanner.lib.path.PathPlannerPath;
@@ -120,8 +121,10 @@ public class RobotContainer {
 
   // Establish a Sendable Chooser that will be able to be sent to the
   // SmartDashboard, allowing selection of desired auto
-  private final SendableChooser<Command> autoChooser;
+  private SendableChooser<Command> autoChooser;
   private LoggedDashboardChooser<Command> loggedAutoChooser;
+  // Add this field at the top of RobotContainer (alongside your other fields)
+  private SendableChooser<Boolean> flipChooser = new SendableChooser<>();
 
   // Driver chooser: "David" = port 0 drives, "Asier" = port 1 drives
   private final SendableChooser<String> driverChooser = new SendableChooser<>();
@@ -374,14 +377,6 @@ public class RobotContainer {
             Commands.waitUntil(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees))),
             (Commands.runOnce(() -> drivebase.shouldAimAtHubAuto = false))));
 
-            
-
-    // Commands.sequence
-    // (Commands.runOnce(() -> drivebase.shouldAimAtHubAuto = true),
-    // drivebase.driveFieldOriented(aimAtHubStream)
-    // .until(aimAtHubStream.aimLock(Angle.ofBaseUnits(1,
-    // Degrees))),(Commands.runOnce(() -> drivebase.shouldAimAtHubAuto = false))));
-
     NamedCommands.registerCommand("aim at ferry",
         drivebase.driveFieldOriented(aimAtFerryStream)
             .until(aimAtFerryStream.aimLock(Angle.ofBaseUnits(1, Degrees))));
@@ -392,22 +387,30 @@ public class RobotContainer {
         drivebase.getSwerveDrive().getMaximumChassisAngularVelocity(),
         Units.degreesToRadians(720));
 
-    // Have the autoChooser pull in all PathPlanner autos as options
-    autoChooser = AutoBuilder.buildAutoChooser();
+    // setup the flip chooser
+    flipChooser.setDefaultOption("Not Flipped", false);
+    flipChooser.addOption("Flipped", true);
+    SmartDashboard.putData("Flip Auto", flipChooser);
 
-    // Set the default auto (do nothing)
+    flipChooser.onChange((Boolean flip) -> {
+        autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
+            autoStream -> autoStream.map(auto -> {
+                auto = new PathPlannerAuto(auto.getName(), flip);
+                return auto;
+            }));
+        autoChooser.setDefaultOption("Do Nothing", Commands.none());
+        SmartDashboard.putData("Auto Chooser", autoChooser);
+        loggedAutoChooser = new LoggedDashboardChooser<>("Auto Routine", autoChooser);
+    });
+
+    autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
+        autoStream -> autoStream.map(auto -> {
+            auto = new PathPlannerAuto(auto.getName(), flipChooser.getSelected());
+            return auto;
+        }));
     autoChooser.setDefaultOption("Do Nothing", Commands.none());
-
-    // // Add a simple auto option to have the robot drive forward for 1 second then
-    // // stop
-    // autoChooser.addOption("Drive Forward",
-    // drivebase.driveForward().withTimeout(1));
-
-    // Put the autoChooser on the SmartDashboard
     SmartDashboard.putData("Auto Chooser", autoChooser);
-
     loggedAutoChooser = new LoggedDashboardChooser<>("Auto Routine", autoChooser);
-
   }
 
   /**
