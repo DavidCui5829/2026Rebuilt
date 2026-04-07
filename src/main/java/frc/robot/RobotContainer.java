@@ -619,6 +619,13 @@ public class RobotContainer {
     // Swerve Drive Commands
     dc().start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
 
+    A_runOuttake.whileTrue(drivebase.lockCommand(
+        driverXbox::getLeftX,
+        driverXbox::getLeftY,
+        driverXbox::getRightX,
+        driveAngularVelocity::get)
+        .onlyWhile(autoAimCommand.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees))));
+
     // ======== Operator ========
     // shooter
     RT_OP_VariableShoot.whileTrue(
@@ -698,14 +705,13 @@ public class RobotContainer {
     // oc().y().whileTrue(m_shooter.sysIdDynamicReverse());
 
     new Trigger(() -> isInAllianceZone() &&
-    DriverStation.isTeleopEnabled()).onTrue(Commands.runOnce(() ->
-    m_shooter.setDefaultCommand(m_shooter.setAllianceIdle())));
+        DriverStation.isTeleopEnabled())
+        .onTrue(Commands.runOnce(() -> m_shooter.setDefaultCommand(m_shooter.setAllianceIdle())));
     new Trigger(() -> !isInAllianceZone() &&
-    DriverStation.isTeleopEnabled()).onTrue(Commands.runOnce(() ->
-    m_shooter.setDefaultCommand(m_shooter.setNeutralIdle())));
+        DriverStation.isTeleopEnabled())
+        .onTrue(Commands.runOnce(() -> m_shooter.setDefaultCommand(m_shooter.setNeutralIdle())));
 
-    m_shooter.setDefaultCommand(m_shooter.setAllianceIdle().onlyWhile(() ->
-    DriverStation.isTeleopEnabled()));
+    m_shooter.setDefaultCommand(m_shooter.setAllianceIdle().onlyWhile(() -> DriverStation.isTeleopEnabled()));
 
     if (RobotBase.isSimulation()) {
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngleKeyboard);
