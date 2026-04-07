@@ -117,7 +117,8 @@ public class RobotContainer {
         m_shooter, drivebase::getPose);
   }
 
-  // public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of FuelSim
+  // public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of
+  // FuelSim
 
   // Establish a Sendable Chooser that will be able to be sent to the
   // SmartDashboard, allowing selection of desired auto
@@ -354,9 +355,10 @@ public class RobotContainer {
     }, java.util.Collections.<edu.wpi.first.wpilibj2.command.Subsystem>emptySet()).withTimeout(5.75));
 
     NamedCommands.registerCommand("speed up shooter", m_shooter.SpeedUpShooterCommand().withTimeout(15));
-    // NamedCommands.registerCommand("aim at hub", drivebase.aimAtPose(Constants.DrivebaseConstants.getHubPose2D()));
+    // NamedCommands.registerCommand("aim at hub",
+    // drivebase.aimAtPose(Constants.DrivebaseConstants.getHubPose2D()));
     // NamedCommands.registerCommand("aim at ferry",
-    //     drivebase.aimAtPose(Constants.DrivebaseConstants.getFerryPose(drivebase.getPose().getTranslation())));
+    // drivebase.aimAtPose(Constants.DrivebaseConstants.getFerryPose(drivebase.getPose().getTranslation())));
 
     // hopper
     NamedCommands.registerCommand("transfer", m_hopper.runHopperToShooterCommand().withTimeout(6.7));
@@ -393,20 +395,20 @@ public class RobotContainer {
     SmartDashboard.putData("Flip Auto", flipChooser);
 
     flipChooser.onChange((Boolean flip) -> {
-        autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
-            autoStream -> autoStream.map(auto -> {
-                auto = new PathPlannerAuto(auto.getName(), flip);
-                return auto;
-            }));
-        autoChooser.setDefaultOption("Do Nothing", Commands.none());
-        SmartDashboard.putData("Auto Chooser", autoChooser);
-        loggedAutoChooser = new LoggedDashboardChooser<>("Auto Routine", autoChooser);
+      autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
+          autoStream -> autoStream.map(auto -> {
+            auto = new PathPlannerAuto(auto.getName(), flip);
+            return auto;
+          }));
+      autoChooser.setDefaultOption("Do Nothing", Commands.none());
+      SmartDashboard.putData("Auto Chooser", autoChooser);
+      loggedAutoChooser = new LoggedDashboardChooser<>("Auto Routine", autoChooser);
     });
 
     autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
         autoStream -> autoStream.map(auto -> {
-            auto = new PathPlannerAuto(auto.getName(), flipChooser.getSelected());
-            return auto;
+          auto = new PathPlannerAuto(auto.getName(), flipChooser.getSelected());
+          return auto;
         }));
     autoChooser.setDefaultOption("Do Nothing", Commands.none());
     SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -438,16 +440,16 @@ public class RobotContainer {
         .scaleTranslation(1.0)
         .allianceRelativeControl(true);
 
-    aimAtHub = new AimAtHub(drivebase, driveAngularVelocity);
-    aimAtFerry = new AimAtFerry(drivebase, driveAngularVelocity);
     dc().rightTrigger().whileTrue(
-        Commands.defer(() -> {
-            if (isInAllianceZone()) {
-                return aimAtHub;
-            } else {
-                return aimAtFerry;
-            }
-        }, Set.of(drivebase))
+      aimAtHub = new AimAtHub(drivebase, driveAngularVelocity);
+      aimAtFerry = new AimAtFerry(drivebase, driveAngularVelocity);
+
+          ands.defer(() -> {
+            isInAllianceZone
+              retu
+            se {
+              return aimAtFerry;
+            }    }, Set.of(drivebase))
     );
 
     driveDirectAngle = driveAngularVelocity.copy()
@@ -579,9 +581,9 @@ public class RobotContainer {
                     Commands.parallel(
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
-                        m_pushout.AgitateCommand()
-                          .beforeStarting(Commands.waitSeconds(1.5))
-                          .repeatedly()
+                            pushout.AgitateCommand()
+                            .beforeStarti
+                            .repeatedly()
                           .onlyWhile(() -> !LT_Intake.getAsBoolean()),
                         m_intake.runIntakeCommand()),
                     drivebase.lockCommand(
@@ -623,11 +625,12 @@ public class RobotContainer {
     // Swerve Drive Commands
     dc().start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
 
-    // A_runOuttake.whileTrue(drivebase.lockCommand(
-    //     driverXbox::getLeftX,
-    //     driverXbox::getLeftY,
-    //     driverXbox::getRightX,
-    //     driveAngularVelocity::get)
+    // nOuttake.whileTrue(drivebase.lockCommand(
+    // driverXbox::getLeftX,
+    // driverXbox::getLeftY,
+    // driverXbox::getRightX,
+    // driveAngularVelocity::get)
+    // 
     //     .onlyWhile(autoAimCommand.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees))));
 
     // ======== Operator ========
@@ -900,33 +903,33 @@ public class RobotContainer {
     return false;
   }
 
-  // private void configureFuelSim() {
-  //   fuelSim = new FuelSim();
+  // ivate void configureFuelSim() {
+  // fuelSim = new FuelSim();
   //   fuelSim.spawnStartingFuel();
-
-  //   fuelSim.start();
-  //   SmartDashboard.putData(Commands.runOnce(() -> {
-  //     fuelSim.clearFuel();
-  //     fuelSim.spawnStartingFuel();
-  //   })
-  //       .withName("Reset Fuel")
+ 
+  // fuelSim.start();
+  // artDashboard.putData(Commands.runOnce(() -> {
+  // fuelSim.clearFuel();
+  //   fuelSim.spawnStartingFuel();
+  // 
+  // .withName("Reset Fuel")
   //       .ignoringDisable(true));
   // }
 
-  // private void configureFuelSimRobot() {
-  //   fuelSim.registerRobot(
-  //       Dimensions.FULL_WIDTH.in(Meters),
-  //       Dimensions.FULL_LENGTH.in(Meters),
-  //       Dimensions.BUMPER_HEIGHT.in(Meters),
-  //       drivebase::getPose,
+  // ivate void configureFuelSimRobot() {
+  // Sim.registerRobot(
+  // Dimensions.FULL_WIDTH.in(Meters),
+  // Dimensions.FULL_LENGTH.in(Meters),
+  // Dimensions.BUMPER_HEIGHT.in(Meters),
+  // drivebase::getPose,
   //       drivebase::getFieldVelocity);
-
-  //   // fuelSim.registerIntake(
-  //   // -Dimensions.FULL_LENGTH.div(2).in(Meters),
-  //   // Dimensions.FULL_LENGTH.div(2).in(Meters),
-  //   // -Dimensions.FULL_WIDTH.div(2).plus(Inches.of(7)).in(Meters),
-  //   // -Dimensions.FULL_WIDTH.div(2).in(Meters),
-  //   // () -> m_pushout.isRightDeployed() && ableToIntake.getAsBoolean(),
+ 
+  // // fuelSim.registerIntake(
+  // // -Dimensions.FULL_LENGTH.div(2).in(Meters),
+  // // Dimensions.FULL_LENGTH.div(2).in(Meters),
+  // // -Dimensions.FULL_WIDTH.div(2).plus(Inches.of(7)).in(Meters),
+  // // -Dimensions.FULL_WIDTH.div(2).in(Meters),
+  // // () -> m_pushout.isRightDeployed() && ableToIntake.getAsBoolean(),
   //   // intakeCallback);
   // }
 
