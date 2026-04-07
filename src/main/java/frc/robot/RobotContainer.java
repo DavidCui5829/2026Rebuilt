@@ -372,7 +372,7 @@ public class RobotContainer {
     // NamedCommands.registerCommand("climb down",
     // m_climber.runClimberDownCommand().withTimeout(4));
 
-    NamedCommands.registerCommand("aim at hub",
+    NamedCommands.registerCommand("Shoot and Aim",
         Commands.defer(() -> {
           if (isInAllianceZone()) // In alliance zone → shoot at hub
           {
