@@ -626,7 +626,7 @@ public class RobotContainer {
                             driverXbox::getLeftY,
                             driverXbox::getRightX,
                             driveAngularVelocity::get))
-                    ).onlyWhile(aimAtHub.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees))))
+                    .onlyWhile(aimAtHub.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees)))))
                     .finallyDo(
                           () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1))
                     ;
