@@ -169,7 +169,7 @@ public class Shooter extends SubsystemBase {
         shooterright1Controller.setSetpoint(rpm, ControlType.kMAXMotionVelocityControl);
         // shooterright2Controller.setSetpoint(rpm,
         // ControlType.kMAXMotionVelocityControl);
-        shooterleft1Controller.setSetpoint(rpm+30, ControlType.kMAXMotionVelocityControl);
+        shooterleft1Controller.setSetpoint(rpm, ControlType.kMAXMotionVelocityControl);
         // shooterleft2Controller.setSetpoint(rpm,
         // ControlType.kMAXMotionVelocityControl);
     }
