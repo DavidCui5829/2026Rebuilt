@@ -567,15 +567,14 @@ public class RobotContainer {
                             .beforeStarting(Commands.waitSeconds(1.5))
                             .repeatedly()
                             .onlyWhile(() -> !LT_Intake.getAsBoolean()),
-                        m_intake.runIntakeCommand(),
-                        drivebase.lockCommand(
-                            driverXbox::getLeftX,
-                            driverXbox::getLeftY,
-                            driverXbox::getRightX,
-                            driveAngularVelocity::get))
-                        .onlyWhile(autoAimCommand.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees))))
+                        m_intake.runIntakeCommand()
+                        // ,drivebase.lockCommand(
+                        //     driverXbox::getLeftX,
+                        //     driverXbox::getLeftY,
+                        //     driverXbox::getRightX,
+                        //     driveAngularVelocity::get)
+                    ).onlyWhile(autoAimCommand.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees))))
                     .finallyDo(
-
                         () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
           } else {
             ControllAllPassing passCmd = makeVariablePass();
