@@ -626,9 +626,10 @@ public class RobotContainer {
                             driverXbox::getLeftY,
                             driverXbox::getRightX,
                             driveAngularVelocity::get))
+                        .finallyDo(
+                          () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1))
                         .onlyWhile(aimAtHub.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees))))
-                    .finallyDo(
-                        () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
+                    );
           } else {
             ControllAllPassing passCmd = makeVariablePass();
             return Commands.parallel(
