@@ -5,22 +5,9 @@
     "data": {
       "commands": [
         {
-          "type": "race",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "LT Swipe"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Correct Path"
-                }
-              }
-            ]
+            "pathName": "LT Swipe"
           }
         },
         {
@@ -36,22 +23,9 @@
           }
         },
         {
-          "type": "race",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "LT Second Swipe"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Correct Path"
-                }
-              }
-            ]
+            "pathName": "LT Second Swipe"
           }
         },
         {

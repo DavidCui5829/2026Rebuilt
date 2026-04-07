@@ -619,12 +619,12 @@ public class RobotContainer {
     // Swerve Drive Commands
     dc().start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
 
-    A_runOuttake.whileTrue(drivebase.lockCommand(
-        driverXbox::getLeftX,
-        driverXbox::getLeftY,
-        driverXbox::getRightX,
-        driveAngularVelocity::get)
-        .onlyWhile(autoAimCommand.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees))));
+    // A_runOuttake.whileTrue(drivebase.lockCommand(
+    //     driverXbox::getLeftX,
+    //     driverXbox::getLeftY,
+    //     driverXbox::getRightX,
+    //     driveAngularVelocity::get)
+    //     .onlyWhile(autoAimCommand.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees))));
 
     // ======== Operator ========
     // shooter
