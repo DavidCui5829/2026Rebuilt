@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.291635399754502,
-        "y": 7.3108634396487995
+        "x": 4.297718054886198,
+        "y": 7.351664691680059
       },
       "isLocked": false,
       "linkedName": "LT Shoot Spc"
@@ -20,124 +20,124 @@
         "y": 7.32
       },
       "prevControl": {
-        "x": 3.983073337198545,
-        "y": 7.307598201931725
+        "x": 4.051146640147416,
+        "y": 7.312967917877418
       },
       "nextControl": {
-        "x": 6.272390969641679,
-        "y": 7.369969362392652
+        "x": 5.875352431396498,
+        "y": 7.34610385034683
       },
       "isLocked": false,
       "linkedName": "LT Start"
     },
     {
       "anchor": {
-        "x": 5.86,
-        "y": 7.32
+        "x": 5.852745494055681,
+        "y": 7.325
       },
       "prevControl": {
-        "x": 5.41734429809833,
-        "y": 7.299748568053428
+        "x": 5.43248008515,
+        "y": 7.335603083702884
       },
       "nextControl": {
-        "x": 6.605575517131137,
-        "y": 7.354109968043664
+        "x": 6.102665966097665,
+        "y": 7.318694632896328
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.0,
-        "y": 6.966299098890943
+        "x": 5.889149953073602,
+        "y": 6.29717920165342
       },
       "prevControl": {
-        "x": 6.857775069796726,
-        "y": 7.179924670827882
+        "x": 5.577287891157006,
+        "y": 7.408937735327233
       },
       "nextControl": {
-        "x": 7.2305681418701635,
-        "y": 6.619979708141
+        "x": 6.190284329120427,
+        "y": 5.223663845873681
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 6.83,
-        "y": 6.187762823475047
+        "x": 5.816731401755761,
+        "y": 4.77869365077353
       },
       "prevControl": {
-        "x": 6.844248274764189,
-        "y": 6.557524078319106
+        "x": 5.702243268501331,
+        "y": 5.414062049879567
       },
       "nextControl": {
-        "x": 6.795158256003027,
-        "y": 5.283574267702853
+        "x": 5.885328723829658,
+        "y": 4.3980029235328875
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 6.83,
-        "y": 5.228934626270796
+        "x": 6.5054210282569205,
+        "y": 4.336581928964497
       },
       "prevControl": {
-        "x": 6.926350467639706,
-        "y": 6.407923745464465
+        "x": 5.934606358872983,
+        "y": 4.167817866984337
       },
       "nextControl": {
-        "x": 6.7669833586892185,
-        "y": 4.457833704255923
+        "x": 6.7451624094372065,
+        "y": 4.407462604397008
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 6.420370421684989,
-        "y": 4.268450843490435
+        "x": 6.89381908275463,
+        "y": 5.182003327546297
       },
       "prevControl": {
-        "x": 6.650131738905422,
-        "y": 4.16991284518962
+        "x": 7.0456478420240005,
+        "y": 4.594600043090576
       },
       "nextControl": {
-        "x": 6.044550641940085,
-        "y": 4.42962910128388
+        "x": 6.794257878458342,
+        "y": 5.567191079125357
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.749901364058689,
-        "y": 4.940052450200564
+        "x": 6.937939258538116,
+        "y": 6.372527804457829
       },
       "prevControl": {
-        "x": 5.831904933488433,
-        "y": 4.688827554910237
+        "x": 6.808470837719358,
+        "y": 6.034095797774275
       },
       "nextControl": {
-        "x": 5.6282381775198616,
-        "y": 5.312777948754514
+        "x": 7.027264524084999,
+        "y": 6.606025121219669
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.740859252956016,
-        "y": 6.081357403881981
+        "x": 6.869386349690521,
+        "y": 7.215971916741829
       },
       "prevControl": {
-        "x": 5.759165341233626,
-        "y": 5.353764168074221
+        "x": 7.206226790133684,
+        "y": 7.062426058369796
       },
       "nextControl": {
-        "x": 5.734571296954377,
-        "y": 6.331278314590392
+        "x": 6.614288860593268,
+        "y": 7.332255943922339
       },
       "isLocked": false,
       "linkedName": null
@@ -148,8 +148,8 @@
         "y": 7.24065977933114
       },
       "prevControl": {
-        "x": 5.584095842281686,
-        "y": 6.896643914310694
+        "x": 6.208881664508552,
+        "y": 7.41879126976455
       },
       "nextControl": null,
       "isLocked": false,
@@ -167,7 +167,7 @@
     },
     {
       "waypointRelativePos": 3,
-      "rotationDegrees": -102.0
+      "rotationDegrees": -87.13245917415051
     },
     {
       "waypointRelativePos": 4,
@@ -175,11 +175,11 @@
     },
     {
       "waypointRelativePos": 5.0,
-      "rotationDegrees": -101.0
+      "rotationDegrees": 9.105803460545383
     },
     {
       "waypointRelativePos": 6,
-      "rotationDegrees": 174.02777546134766
+      "rotationDegrees": 98.99473651381827
     },
     {
       "waypointRelativePos": 7,
@@ -187,23 +187,10 @@
     },
     {
       "waypointRelativePos": 8,
-      "rotationDegrees": 85.65458622129307
+      "rotationDegrees": 90.0
     }
   ],
   "constraintZones": [
-    {
-      "name": "Intake Slow",
-      "minWaypointRelativePos": 3.0,
-      "maxWaypointRelativePos": 4.3,
-      "constraints": {
-        "maxVelocity": 2.25,
-        "maxAcceleration": 2.25,
-        "maxAngularVelocity": 540.0,
-        "maxAngularAcceleration": 720.0,
-        "nominalVoltage": 12.0,
-        "unlimited": false
-      }
-    },
     {
       "name": "Little Bit Slow for Trench",
       "minWaypointRelativePos": 8.15,
@@ -218,14 +205,14 @@
       }
     },
     {
-      "name": "Slow Turn",
-      "minWaypointRelativePos": 2.017555705604335,
-      "maxWaypointRelativePos": 3.8406482106684545,
+      "name": "Turn and Intake Slow",
+      "minWaypointRelativePos": 1.125275735294117,
+      "maxWaypointRelativePos": 3.0100643382352943,
       "constraints": {
-        "maxVelocity": 3.5,
-        "maxAcceleration": 3.5,
-        "maxAngularVelocity": 340.0,
-        "maxAngularAcceleration": 600.0,
+        "maxVelocity": 2.7,
+        "maxAcceleration": 2.7,
+        "maxAngularVelocity": 45.0,
+        "maxAngularAcceleration": 10.0,
         "nominalVoltage": 12.0,
         "unlimited": false
       }
@@ -269,7 +256,7 @@
     "rotation": 90.0
   },
   "reversed": false,
-  "folder": "Space City Paths",
+  "folder": "DCMP Paths",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 100.489
