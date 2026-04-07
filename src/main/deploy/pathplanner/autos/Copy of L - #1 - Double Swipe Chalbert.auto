@@ -5,27 +5,15 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "extend"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.4
+            "pathName": "LT Swipe"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Start-Intake Path"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "aim at hub"
+            "pathName": "Through LT"
           }
         },
         {
@@ -37,19 +25,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Extra Intake 1"
+            "pathName": "LT Second Swipe"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Shoot Depot Fuel"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "aim at hub"
+            "pathName": "Through LT Second Swipe"
           }
         },
         {
@@ -62,6 +44,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "McAllen Autos",
+  "folder": "DCMP Autos",
   "choreoAuto": false
 }
