@@ -34,6 +34,7 @@ public class AimAtHub extends Command
   {
     Pose2d targetPose = swerveSubsystem.getCachedDynamicHubLocation();
     swerveInputStream.aim(() -> targetPose);
+    swerveInputStream.aimFeedforward(0.0001, 0.0001, 0.00018);
 
     swerveSubsystem.getField()
                    .getObject("AimTarget")
