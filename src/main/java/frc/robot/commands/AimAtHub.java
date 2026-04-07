@@ -37,9 +37,9 @@ public class AimAtHub extends Command
     swerveInputStream.aim(() -> targetPose);
     swerveInputStream.aimFeedforward(0.0001, 0.0001, 0.00018);
 
-    swerveSubsystem.getField()
-                   .getObject("AimTarget")
-                   .setPose(targetPose);
+    // swerveSubsystem.getField()
+    //                .getObject("AimTarget")
+    //                .setPose(targetPose);
 
     swerveSubsystem.driveFieldOriented(swerveInputStream.get());
   }
@@ -55,6 +55,6 @@ public class AimAtHub extends Command
   {
     swerveSubsystem.isAiming = false;
     swerveInputStream.aimWhile(false);
-    swerveSubsystem.getField().getObject("AimTarget").setPoses(List.of());
+    // swerveSubsystem.getField().getObject("AimTarget").setPoses(List.of());
   }
 }

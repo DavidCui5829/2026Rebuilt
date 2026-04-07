@@ -525,7 +525,7 @@ public class RobotContainer {
     aimAtFerryStream = SwerveInputStream.of(drivebase.getSwerveDrive(),
         () -> 0.0, () -> 0.0)
         .withControllerRotationAxis(() -> 0.0)
-        .aim(() -> drivebase.getDynamicFerryLocation())
+        .aim(() -> drivebase.getCachedDynamicFerryLocation())
         .aimWhile(true)
         .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
         .aimFeedforward(0.0001, 0.0001, 0.00013)
