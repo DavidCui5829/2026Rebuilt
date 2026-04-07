@@ -29,12 +29,6 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "Through LT Second Swipe"
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "Control All Shooting"
