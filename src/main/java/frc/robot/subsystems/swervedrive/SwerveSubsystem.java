@@ -99,6 +99,9 @@ public class SwerveSubsystem extends SubsystemBase {
 
   boolean locked = false;
 
+  private Pose2d cachedDynamicHub = new Pose2d();
+  private Pose2d cachedDynamicFerry = new Pose2d();
+
   public boolean visionToggleAll = false;
 
   // Toggle between dynamic std devs (new) and flat std devs (old)
@@ -315,7 +318,9 @@ public class SwerveSubsystem extends SubsystemBase {
     Logger.recordOutput("Drive/ModulePositions", swerveDrive.getModulePositions());
 
     // --- Aim debugging ---
-    Pose2d dynamicHub = getDynamicHubLocation();
+    cachedDynamicHub = getDynamicHubLocation();
+    cachedDynamicFerry = getDynamicFerryLocation();
+    Pose2d dynamicHub = cachedDynamicHub;
     Translation2d robotToHub = dynamicHub.getTranslation().minus(pose.getTranslation());
     Rotation2d targetAngle = robotToHub.getAngle().plus(Rotation2d.fromDegrees(180));
     double aimError = targetAngle.minus(getHeading()).getDegrees();
@@ -325,11 +330,27 @@ public class SwerveSubsystem extends SubsystemBase {
     Logger.recordOutput("Drive/Aim/StaticHubPose", Constants.DrivebaseConstants.getHubPose2D());
     Logger.recordOutput("Drive/Aim/TargetAngleDeg", targetAngle.getDegrees());
     Logger.recordOutput("Drive/Aim/CurrentHeadingDeg", getHeading().getDegrees());
-    Logger.recordOutput("Drive/Aim/ErrorDeg", aimError);
+    Logger.recordOutput("Drive/Aim/ErrorDegHub", aimError);
     Logger.recordOutput("Drive/Aim/DistanceToHubM", distanceToHub);
     Logger.recordOutput("Drive/Aim/RobotVelX", fieldVel.vxMetersPerSecond);
     Logger.recordOutput("Drive/Aim/RobotVelY", fieldVel.vyMetersPerSecond);
     Logger.recordOutput("Drive/Aim/IsLocked", locked);
+
+    // --- Ferry aim debugging ---
+    Pose2d dynamicFerry = cachedDynamicFerry;
+    Translation2d robotToFerry = dynamicFerry.getTranslation().minus(pose.getTranslation());
+    Rotation2d ferryTargetAngle = robotToFerry.getAngle().plus(Rotation2d.fromDegrees(180));
+    double ferryAimError = ferryTargetAngle.minus(getHeading()).getDegrees();
+    double distanceToFerry = robotToFerry.getNorm();
+
+    Logger.recordOutput("Drive/Aim/DynamicFerryPose", dynamicFerry);
+    Logger.recordOutput("Drive/Aim/ErrorDegFerry", ferryAimError);
+    Logger.recordOutput("Drive/Aim/DistanceToFerryM", distanceToFerry);
+
+    // --- Auto recovery debugging ---
+    Logger.recordOutput("Drive/Auto/TargetPathPose", targetPathPose);
+    Logger.recordOutput("Drive/Auto/PathFollowingErrorM", getPathFollowingError());
+    Logger.recordOutput("Drive/Auto/IsOffPath", isOffPath(0.15));
   }
 
   @Override
@@ -1092,6 +1113,14 @@ public class SwerveSubsystem extends SubsystemBase {
    */
   public SwerveDrive getSwerveDrive() {
     return swerveDrive;
+  }
+
+  public Pose2d getCachedDynamicHubLocation() {
+    return cachedDynamicHub;
+  }
+
+  public Pose2d getCachedDynamicFerryLocation() {
+    return cachedDynamicFerry;
   }
 
   /**
