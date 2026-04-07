@@ -196,9 +196,9 @@ public class HubTrackerSubsystem extends SubsystemBase
     if(!active || x == 0) circle.setPoses(createCircle(hubPose, radius, 20));
     else circle.setPoses(); // clears circle when not showing
 
-    dynamicHubCircle.setPoses(createCircle(drivebase.getDynamicHubLocation(), 0.25, 10));
+    dynamicHubCircle.setPoses(createCircle(drivebase.getCachedDynamicHubLocation(), 0.25, 10));
 
-    Translation2d goalLocation = drivebase.getDynamicHubLocation().getTranslation();
+    Translation2d goalLocation = drivebase.getCachedDynamicHubLocation().getTranslation();
     Translation2d robotLocation = robotPose.getTranslation();
     Translation2d targetVec = goalLocation.minus(robotLocation);
     double        dist         = targetVec.getNorm();

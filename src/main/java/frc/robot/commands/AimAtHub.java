@@ -24,6 +24,7 @@ public class AimAtHub extends Command
   @Override
   public void initialize()
   {
+    swerveSubsystem.isAiming = true;
     swerveInputStream.aimHeadingOffset(Rotation2d.fromDegrees(180))
                      .aimHeadingOffset(true)
                      .aimWhile(true);
@@ -34,6 +35,7 @@ public class AimAtHub extends Command
   {
     Pose2d targetPose = swerveSubsystem.getCachedDynamicHubLocation();
     swerveInputStream.aim(() -> targetPose);
+    swerveInputStream.aimFeedforward(0.0001, 0.0001, 0.00018);
 
     swerveSubsystem.getField()
                    .getObject("AimTarget")
@@ -51,6 +53,7 @@ public class AimAtHub extends Command
   @Override
   public void end(boolean interrupted)
   {
+    swerveSubsystem.isAiming = false;
     swerveInputStream.aimWhile(false);
     swerveSubsystem.getField().getObject("AimTarget").setPoses(List.of());
   }
