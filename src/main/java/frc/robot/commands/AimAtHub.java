@@ -32,11 +32,12 @@ public class AimAtHub extends Command
   @Override
   public void execute()
   {
-    swerveInputStream.aim(swerveSubsystem::getDynamicHubLocation);
+    Pose2d targetPose = swerveSubsystem.getCachedDynamicHubLocation();
+    swerveInputStream.aim(() -> targetPose);
 
     swerveSubsystem.getField()
                    .getObject("AimTarget")
-                   .setPose(swerveSubsystem.getDynamicHubLocation());
+                   .setPose(targetPose);
 
     swerveSubsystem.driveFieldOriented(swerveInputStream.get());
   }
