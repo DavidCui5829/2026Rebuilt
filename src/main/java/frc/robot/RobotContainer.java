@@ -226,9 +226,8 @@ public class RobotContainer {
 
         return AutoBuilder.followPath(path)
             .raceWith(
-                Commands.sequence(
-                    Commands.waitUntil(() -> drivebase.isOffPath(0.15)),
-                    AutoBuilder.pathfindThenFollowPath(recoveryPath, autoConstraints)));
+                Commands.waitUntil(() -> drivebase.isOffPath(0.15)),
+                AutoBuilder.pathfindThenFollowPath(recoveryPath, autoConstraints));
       } catch (Exception e) {
         e.printStackTrace();
         return Commands.none();
