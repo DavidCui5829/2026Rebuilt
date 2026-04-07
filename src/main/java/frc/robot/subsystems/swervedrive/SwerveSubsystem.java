@@ -399,14 +399,14 @@ public class SwerveSubsystem extends SubsystemBase {
           this
       // Reference to this subsystem to set requirements
       );
-      // PPHolonomicDriveController.setRotationTargetOverride(() ->
-      // {
-      //   if (shouldAimAtHubAuto)
-      //   {
-      //     return Optional.of(getDynamicHubLocation().getRotation());
-      //   }
-      //   return Optional.empty();
-      // });
+      PPHolonomicDriveController.setRotationTargetOverride(() ->
+      {
+        if (shouldAimAtHubAuto)
+        {
+          return Optional.of(getDynamicHubLocation().getRotation());
+        }
+        return Optional.empty();
+      });
     } catch (Exception e) {
       // Handle exception as needed
       e.printStackTrace();
@@ -1120,9 +1120,9 @@ public class SwerveSubsystem extends SubsystemBase {
       CompensatedHub = hubVec.minus(robotVel.times(tof));
     }
 
-    // Rotation2d aimRotation = CompensatedHub.minus(robotVec).getAngle();
+    Rotation2d aimRotation = CompensatedHub.minus(robotVec).getAngle();
 
-    return new Pose2d(CompensatedHub, new Rotation2d());
+    return new Pose2d(CompensatedHub, aimRotation);
   }
 
   /**
