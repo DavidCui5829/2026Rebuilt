@@ -280,10 +280,6 @@ public class RobotContainer {
     configureFuelSim();
     configureFuelSimRobot();
     // Triggers for auto aim/pass poses
-    new Trigger(() -> isInAllianceZone())
-        .onChange(Commands.runOnce(() -> onZoneChanged()).ignoringDisable(true));
-    new Trigger(() -> isOnAllianceOutpostSide())
-        .onChange(Commands.runOnce(() -> onZoneChanged()).ignoringDisable(true));
 
     DriverStation.silenceJoystickConnectionWarning(true);
     SmartDashboard.putNumber("Heading Bias Deg", 0.0);
@@ -960,11 +956,4 @@ public class RobotContainer {
     return error <= toleranceDegrees;
   }
 
-  private void onZoneChanged() {
-    if (isInAllianceZone()) {
-      driveAngularVelocity.aim(drivebase.getDynamicHubLocation());
-    } else {
-      driveAngularVelocity.aim(drivebase.getDynamicFerryLocation());
-    }
-  }
 }

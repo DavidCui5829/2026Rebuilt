@@ -193,13 +193,19 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
 
     public final static InterpolatingDoubleTreeMap TOF = new InterpolatingDoubleTreeMap();
 
-    static {
+    static { // 7-12 are estimates - Aditya
       for (var entry : List.of(
           Pair.of(Meters.of(2), Seconds.of(0.85)),
           Pair.of(Meters.of(3), Seconds.of(0.9)),
           Pair.of(Meters.of(4), Seconds.of(1.08)),
           Pair.of(Meters.of(5), Seconds.of(1.2)),
-          Pair.of(Meters.of(6), Seconds.of(1.4)))) {
+          Pair.of(Meters.of(6), Seconds.of(1.4)),
+          Pair.of(Meters.of(7), Seconds.of(1.6)),
+          Pair.of(Meters.of(8), Seconds.of(1.75)),
+          Pair.of(Meters.of(9), Seconds.of(1.9)),
+          Pair.of(Meters.of(10), Seconds.of(2.05)),
+          Pair.of(Meters.of(11), Seconds.of(2.2)),
+          Pair.of(Meters.of(12), Seconds.of(2.4)))) {
         TOF.put(entry.getFirst().in(Meters), entry.getSecond().in(Seconds));
       }
     }

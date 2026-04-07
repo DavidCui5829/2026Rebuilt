@@ -32,9 +32,6 @@ public class AimAtHub extends Command
   @Override
   public void execute()
   {
-    // Recompute the compensated hub every loop cycle — this is what guarantees
-    // shoot-on-the-move. getDynamicHubLocation() reads current field velocity
-    // and iteratively solves for the correct lead target each periodic call.
     swerveInputStream.aim(swerveSubsystem::getDynamicHubLocation);
 
     swerveSubsystem.getField()
