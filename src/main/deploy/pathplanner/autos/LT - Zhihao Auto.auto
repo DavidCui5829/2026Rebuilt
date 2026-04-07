@@ -29,6 +29,12 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "Depot and shoot from LB"
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "Control All Shooting"
