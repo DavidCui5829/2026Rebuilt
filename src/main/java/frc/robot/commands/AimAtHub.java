@@ -52,7 +52,7 @@ public class AimAtHub extends Command {
             swerveSubsystem.driveFieldOriented(swerveInputStream.get());
             SmartDashboard.putBoolean("Wheel Lock", false);
         } else {
-            swerveSubsystem.lock();
+            // swerveSubsystem.lock();
             SmartDashboard.putBoolean("Wheel Lock", true);
         }
     }
