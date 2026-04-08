@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import edu.wpi.first.units.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
@@ -130,9 +131,11 @@ public class Shooter extends SubsystemBase {
 
     public boolean isShooterRunning() {
         if (getRPM() >= 800) {
+            SmartDashboard.putBoolean("Shooter Running", true);
             return true;
         }
-        else{
+        else{            
+            SmartDashboard.putBoolean("Shooter Running", false);
             return false;
         }
     }

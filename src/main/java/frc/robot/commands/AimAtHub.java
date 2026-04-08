@@ -5,6 +5,7 @@ import static edu.wpi.first.units.Units.Seconds;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.Time;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
@@ -49,8 +50,10 @@ public class AimAtHub extends Command {
 
         if ((leftMag + rightMag) > Constants.OperatorConstants.DEADBAND) {
             swerveSubsystem.driveFieldOriented(swerveInputStream.get());
+            SmartDashboard.putBoolean("Wheel Lock", false);
         } else {
             swerveSubsystem.lock();
+            SmartDashboard.putBoolean("Wheel Lock", true);
         }
     }
     
