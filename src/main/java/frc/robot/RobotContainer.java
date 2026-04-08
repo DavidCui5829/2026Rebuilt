@@ -336,7 +336,8 @@ public class RobotContainer {
       if (isInAllianceZone()) {
         ControlAllShooting shootCmd = new ControlAllShooting(drivebase::getCachedDynamicHubLocation, m_shooter,
             drivebase::getPose, true);
-        return Commands.parallel(
+        return Commands.sequence(
+          Commands.parallel(
             shootCmd,
             drivebase.driveFieldOriented(aimAtHubStream),
             // Continuously update aim target for shoot-on-the-move
@@ -351,8 +352,8 @@ public class RobotContainer {
                         .beforeStarting(Commands.waitSeconds(1.5)),
                     m_intake.runIntakeCommand()))
                 .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)))
-            .onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)));
-            
+            .onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees))),
+          m_pushout.RetractCommand());
       } else {
         // Not in alliance zone: no-op command to satisfy return type
         return Commands.none();
