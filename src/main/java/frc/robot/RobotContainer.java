@@ -612,12 +612,12 @@ public class RobotContainer {
                 shootCmd,
                 Commands.sequence(
                     Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
-                        && aimAtHub.swerveInputStream.aimLock(Degrees.of(2)).getAsBoolean()),
+                        && aimAtHub.swerveInputStream.aimLock(Degrees.of(1.0)).getAsBoolean()),
                     Commands.parallel(
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand()
-                          .beforeStarting(Commands.waitSeconds(1))
+                          .beforeStarting(Commands.waitSeconds(1.5))
                           .repeatedly()
                           .onlyWhile(() -> !LT_Intake.getAsBoolean()),
                         m_intake.runIntakeCommand(),
@@ -644,7 +644,7 @@ public class RobotContainer {
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand().repeatedly(),
                         m_intake.runIntakeCommand())
-                        .onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees)))))
+                        .onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)))))
                 .finallyDo(() -> m_shooter.setTargetRPMCommand(passCmd.RecordedidealHorizontalSpeed).withTimeout(1));
           }
         }, java.util.Collections.emptySet()));
