@@ -134,6 +134,20 @@ Quick reference for all `Logger.recordOutput()` keys. Open these in AdvantageSco
 
 ---
 
+## Shooting Sequence (RT Command)
+
+These log the state of the RT shooting/passing sequence — the gates that control when feeding starts and stops.
+
+| Key | Type | What it tells you |
+|---|---|---|
+| `Shooting/RTHeld` | boolean | Whether the driver right trigger is pressed |
+| `Shooting/InAllianceZone` | boolean | Which branch was taken — true = shooting at hub, false = passing to ferry |
+| `Shooting/AimLock1Deg` | boolean | True when aim error is within 1 deg of hub. This is the gate for feeding to start |
+| `Shooting/AimLock3Deg` | boolean | True when aim error is within 3 deg of hub. Feeding stops if this goes false |
+| `Shooting/FerryAimLock3Deg` | boolean | True when aim error is within 3 deg of ferry target. Gate for ferry feeding |
+
+---
+
 ## Controller Input
 
 ### Driver
@@ -160,11 +174,78 @@ Quick reference for all `Logger.recordOutput()` keys. Open these in AdvantageSco
 
 ---
 
-## Troubleshooting Tips
+## Important Notes
 
-- **Shots missing while moving**: Graph `Drive/Aim/ErrorDegHub` - if it oscillates instead of settling, heading PID needs tuning. Check `RobotVelX`/`RobotVelY` for noisy velocity readings that could throw off SOTM.
-- **Auto recovery triggering too early/late**: Graph `Drive/Auto/PathFollowingErrorM` and overlay `Drive/Auto/IsOffPath`. If error gradually climbs, path constraints may be too aggressive.
-- **Auto recovery flickering**: If `IsOffPath` rapidly toggles, the robot is hovering around the 0.15m threshold - may need hysteresis.
-- **Shooter not at speed**: Compare `Shooter/TargetRPM` vs actual RPM values. Large gap = spin-up too slow or mechanical issue.
-- **Robot not rotating to target**: Check `Drive/Aim/CurrentHeadingDeg` vs `TargetAngleDeg`. If they match but `ErrorDegHub` is nonzero, the 180-degree offset may be wrong.
-- **SOTM lead looks wrong**: Compare `DynamicHubPose` vs `StaticHubPose` on the field view. The offset should point opposite to robot velocity direction.
+- **Aim logs only appear when RT is held** (`isAiming = true`). If you don't see `Drive/Aim/` keys updating, the aim command isn't running.
+- **Auto recovery logs run always** during auto and teleop.
+- All `Drive/` logs come from `SwerveSubsystem.periodic()`. All `Shooter/` logs come from `Shooter.periodic()`. Controller input logs come from `RobotContainer`.
+
+---
+
+## Troubleshooting Guide
+
+### Drivetrain Issues
+
+| Symptom | What to check | What it means |
+|---|---|---|
+| Robot drifting when driving straight | `Drive/CommandedOmega` should be ~0, check `Drive/ActualOmega` | If actual omega is nonzero with zero commanded, heading correction may be off or gyro is drifting |
+| Robot not driving at full speed | `Drive/CommandedFieldVelocity` vs `Drive/FieldVelocity` | If commanded is low, check for `scaleTranslation`. If actual is low but commanded is high, mechanical issue |
+| Odometry jumping | `Drive/Pose` on field view, check for sudden teleports | Vision measurement with bad data got accepted. Check Limelight rejection thresholds |
+| Modules fighting each other | `Drive/CurrentModuleStates` vs `Drive/DesiredModuleStates` | If angles are far apart, module PID tuning issue or encoder offset wrong |
+
+### Aiming / SOTM Issues
+
+| Symptom | What to check | What it means |
+|---|---|---|
+| Aim lagging behind while moving | Check if `aimLookahead` is set in AimAtHub. Graph `ErrorDegHub` | Without lookahead, aim chases current position instead of leading. Should have 0.2s lookahead |
+| Aim oscillating, never settling | Graph `ErrorDegHub` — if it bounces +/- degrees | Heading PID gains too aggressive, or `aimFeedforward` values need tuning |
+| Aim not tracking at all | Check `Drive/Aim/DynamicHubPose` exists in log | If missing, `isAiming` is false — AimAtHub isn't running. Check command scheduling |
+| SOTM lead looks wrong | Compare `DynamicHubPose` vs `StaticHubPose` on field view | Lead should point opposite to robot velocity. If not, check `RobotVelX`/`RobotVelY` for noisy readings |
+| Aim stops when shooter reaches speed | Check if AimAtHub gets interrupted in command scheduler | `lockCommand` or another drivebase command may be taking over. AimAtHub should hold drivebase the entire time |
+| Shots missing at distance | Graph `DistanceToHubM` and correlate with `Shooter/LUTDistance` | If they don't match, the shooter RPM lookup is using a different distance than the aim system |
+| `IsLocked` is true unexpectedly | Check `Drive/Aim/IsLocked` | When locked, SOTM is bypassed and static hub pose is used. Robot must be stationary (no sticks) for this |
+
+### Shooting Sequence Issues
+
+| Symptom | What to check | What it means |
+|---|---|---|
+| Nothing happens when RT pressed | `Shooting/RTHeld` should be true | If false, trigger not registering. If true, check `Shooting/InAllianceZone` — may have taken wrong branch |
+| Shooter spins but never feeds | `Shooting/AimLock1Deg` — is it ever true? | Feeding waits for shooter at speed AND aim within 1 deg. If aim never locks, check `ErrorDegHub` |
+| Feeding starts then immediately stops | `Shooting/AimLock3Deg` — does it flicker? | Feeding has a 3 deg `onlyWhile` gate. If aim oscillates around 3 deg, feeding cuts in and out |
+| Shooting when not aimed at hub | `Shooting/AimLock1Deg` should be false until aimed | If true when not aimed, the aimLock threshold may be too loose or the error calculation is wrong |
+| Passing not working in opponent zone | `Shooting/InAllianceZone` should be false | If true, robot thinks it's in alliance zone. Check zone boundary thresholds (182in blue, 469in red) |
+| Ferry feeding cuts out | `Shooting/FerryAimLock3Deg` — is it stable? | Same as hub — if aim oscillates near 3 deg, feeding stops. May need wider threshold |
+
+### Shooter Motor Issues
+
+| Symptom | What to check | What it means |
+|---|---|---|
+| Shooter not spinning up | `Shooter/TargetRPM` — is it nonzero? | If zero, the shoot command isn't running. If nonzero, check `AppliedVolts` — motor may not be responding |
+| Shooter slow to reach speed | Graph `Shooter/TargetRPM` vs actual RPMs over time | Large gap = PID too slow, voltage sag, or mechanical drag |
+| Left/Right shooter mismatch | Compare `Left1RPM`/`Left2RPM` vs `Right1RPM`/`Right2RPM` | If one side lags, check for mechanical binding or motor issue on that side |
+| Kicker not feeding | `Shooter/KickerLeftRPM` and `KickerRightRPM` should be nonzero | If zero, kicker command isn't running. Check the shooting sequence composition |
+| Shots inconsistent at same distance | `Shooter/LUTCurrentTargetRPM` should be stable | If RPM fluctuates, the distance reading is noisy — check `LUTDistance` |
+
+### Intake / Hopper Issues
+
+| Symptom | What to check | What it means |
+|---|---|---|
+| Intake not running | `Intake/DesiredPercent` — should be nonzero when commanded | If zero, command isn't reaching the intake. If nonzero but `AppliedVolts` is zero, motor issue |
+| Fuel not transferring to shooter | `Hopper/TransferDesiredPercent` and `Hopper/PushdownDesiredPercent` | Both should be nonzero during the feed sequence |
+| Fuel jamming | Check if `Pushout/DesiredPercent` is cycling (agitate) | If not, the agitate command may not be running in the shooting sequence |
+
+### Auto Recovery Issues
+
+| Symptom | What to check | What it means |
+|---|---|---|
+| Recovery triggering too early | Graph `PathFollowingErrorM` — what's the normal tracking error? | If it regularly hits 0.12-0.14m during normal runs, the 0.15m threshold is too tight. Increase to 0.2-0.25m |
+| Recovery not triggering when knocked | `IsOffPath` should flip true when hit | If it stays false, the threshold is too loose or `targetPathPose` isn't updating (check `configurePathPlannerLogging`) |
+| Recovery flickering | `IsOffPath` rapidly toggles true/false | Robot is hovering at the threshold boundary. Need hysteresis or a wider threshold |
+| Robot recovers but ends up in wrong spot | Overlay `TargetPathPose` and `Drive/Pose` on field view | Recovery path may not end where the next auto step expects. Check recovery path endpoints |
+
+### Controller Input Issues
+
+| Symptom | What to check | What it means |
+|---|---|---|
+| Robot not responding to sticks | Check `Input/Driver/LeftX`, `LeftY`, `RightX` | If values change with sticks, the issue is downstream. If stuck at 0, controller not connected or wrong port |
+| Wrong controller is driving | Compare `Input/Driver/` vs `Input/Operator/` values while pressing sticks | Controller may be assigned to wrong role. Check the driver/operator chooser |

@@ -866,6 +866,22 @@ public class RobotContainer {
     Logger.recordOutput("Input/Operator/LeftTrigger", operatorXbox.getLeftTriggerAxis());
     // Operator right trigger (0..1).
     Logger.recordOutput("Input/Operator/RightTrigger", operatorXbox.getRightTriggerAxis());
+
+    // --- Shooting sequence state ---
+    boolean rtHeld = dc().rightTrigger().getAsBoolean();
+    Logger.recordOutput("Shooting/RTHeld", rtHeld);
+    Logger.recordOutput("Shooting/InAllianceZone", isInAllianceZone());
+
+    if (aimAtHub != null) {
+      Logger.recordOutput("Shooting/AimLock1Deg",
+          aimAtHub.swerveInputStream.aimLock(Degrees.of(1.0)).getAsBoolean());
+      Logger.recordOutput("Shooting/AimLock3Deg",
+          aimAtHub.swerveInputStream.aimLock(Degrees.of(3.0)).getAsBoolean());
+    }
+    if (aimAtFerry != null) {
+      Logger.recordOutput("Shooting/FerryAimLock3Deg",
+          aimAtFerry.swerveInputStream.aimLock(Degrees.of(3.0)).getAsBoolean());
+    }
   }
 
   private ChassisSpeeds applyHeadingBias(ChassisSpeeds speeds) {
