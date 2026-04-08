@@ -13,13 +13,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Through LT Second Swipe"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Correct Path"
+            "pathName": "Through LT"
           }
         },
         {

@@ -117,7 +117,8 @@ public class RobotContainer {
         m_shooter, drivebase::getPose);
   }
 
-  // public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of FuelSim
+  // public FuelSim fuelSim = new FuelSim("FuelSim"); // creates a new fuelSim of
+  // FuelSim
 
   // Establish a Sendable Chooser that will be able to be sent to the
   // SmartDashboard, allowing selection of desired auto
@@ -247,29 +248,31 @@ public class RobotContainer {
 
   private Command makeAutoShootCommand() {
     return Commands.defer(() -> {
-      if (isInAllianceZone()) {
-        ControlAllShooting shootCmd = new ControlAllShooting(
-            drivebase::getCachedDynamicHubLocation, m_shooter, drivebase::getPose, true);
-        return Commands.parallel(
-            shootCmd,
-            drivebase.driveFieldOriented(aimAtHubStream),
-            Commands.sequence(
-                Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
-                    && aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
-                Commands.parallel(
-                    m_hopper.runHopperToShooterCommand(),
-                    m_kicker.kickCommand(),
-                    m_pushout.AgitateCommand()
-                      .beforeStarting(Commands.waitSeconds(1.5)),
-                    m_intake.runIntakeCommand()))
-                .finallyDo(() -> m_shooter.setTargetRPMCommand(
-                    shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)))
-            .onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)));
-      } else {
-        return Commands.none();
-      }
-    }, java.util.Collections.<edu.wpi.first.wpilibj2.command.Subsystem>emptySet()).withTimeout(5.75);
-  }
+          if (isInAllianceZone()) {
+            ControlAllShooting shootCmd = new ControlAllShooting(drivebase::getCachedDynamicHubLocation, m_shooter,
+                drivebase::getPose, true);
+            return Commands.parallel(
+                shootCmd,
+                drivebase.driveFieldOriented(aimAtHubStream),
+                // Continuously update aim target for shoot-on-the-move
+                // Commands.run(() -> aimAtHubStream.aim(drivebase.getDynamicHubLocation())),
+                Commands.sequence(
+                    Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
+                        && aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
+                    Commands.parallel(
+                        m_hopper.runHopperToShooterCommand(),
+                        m_kicker.kickCommand(),
+                        m_pushout.AgitateCommand()
+                          .beforeStarting(Commands.waitSeconds(1.5)),
+                        m_intake.runIntakeCommand()))
+                    .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)))
+                .onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)));
+          } else {
+            // Not in alliance zone: no-op command to satisfy return type
+            return Commands.none();
+          }
+        }, java.util.Collections.<edu.wpi.first.wpilibj2.command.Subsystem>emptySet()).withTimeout(5.75);
+      };
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -345,7 +348,7 @@ public class RobotContainer {
                     m_hopper.runHopperToShooterCommand(),
                     m_kicker.kickCommand(),
                     m_pushout.AgitateCommand()
-                      .beforeStarting(Commands.waitSeconds(1.5)),
+                        .beforeStarting(Commands.waitSeconds(1.5)),
                     m_intake.runIntakeCommand()))
                 .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)))
             .onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)));
@@ -356,9 +359,10 @@ public class RobotContainer {
     }, java.util.Collections.<edu.wpi.first.wpilibj2.command.Subsystem>emptySet()).withTimeout(5.75));
 
     NamedCommands.registerCommand("speed up shooter", m_shooter.SpeedUpShooterCommand().withTimeout(15));
-    // NamedCommands.registerCommand("aim at hub", drivebase.aimAtPose(Constants.DrivebaseConstants.getHubPose2D()));
+    // NamedCommands.registerCommand("aim at hub",
+    // drivebase.aimAtPose(Constants.DrivebaseConstants.getHubPose2D()));
     // NamedCommands.registerCommand("aim at ferry",
-    //     drivebase.aimAtPose(Constants.DrivebaseConstants.getFerryPose(drivebase.getPose().getTranslation())));
+    // drivebase.aimAtPose(Constants.DrivebaseConstants.getFerryPose(drivebase.getPose().getTranslation())));
 
     // hopper
     NamedCommands.registerCommand("transfer", m_hopper.runHopperToShooterCommand().withTimeout(6.7));
@@ -409,7 +413,7 @@ public class RobotContainer {
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand()
-                          .beforeStarting(Commands.waitSeconds(1.5)),
+                            .beforeStarting(Commands.waitSeconds(1.5)),
                         m_intake.runIntakeCommand())
                         .onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees)))))
                 .finallyDo(() -> m_shooter.setTargetRPMCommand(passCmd.RecordedidealHorizontalSpeed).withTimeout(1));
@@ -432,20 +436,20 @@ public class RobotContainer {
     SmartDashboard.putData("Flip Auto", flipChooser);
 
     flipChooser.onChange((Boolean flip) -> {
-        autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
-            autoStream -> autoStream.map(auto -> {
-                auto = new PathPlannerAuto(auto.getName(), flip);
-                return auto;
-            }));
-        autoChooser.setDefaultOption("Do Nothing", Commands.none());
-        SmartDashboard.putData("Auto Chooser", autoChooser);
-        loggedAutoChooser = new LoggedDashboardChooser<>("Auto Routine", autoChooser);
+      autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
+          autoStream -> autoStream.map(auto -> {
+            auto = new PathPlannerAuto(auto.getName(), flip);
+            return auto;
+          }));
+      autoChooser.setDefaultOption("Do Nothing", Commands.none());
+      SmartDashboard.putData("Auto Chooser", autoChooser);
+      loggedAutoChooser = new LoggedDashboardChooser<>("Auto Routine", autoChooser);
     });
 
     autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
         autoStream -> autoStream.map(auto -> {
-            auto = new PathPlannerAuto(auto.getName(), flipChooser.getSelected());
-            return auto;
+          auto = new PathPlannerAuto(auto.getName(), flipChooser.getSelected());
+          return auto;
         }));
     autoChooser.setDefaultOption("Do Nothing", Commands.none());
     SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -478,16 +482,16 @@ public class RobotContainer {
         .allianceRelativeControl(true);
 
     dc().rightTrigger().whileTrue(Commands.defer(() -> {
-        if (isInAllianceZone()) {
-            aimAtHub = new AimAtHub(drivebase, driveAngularVelocity,
-                dc()::getLeftX, dc()::getLeftY, dc()::getRightX);
-            return aimAtHub;
-        } else {
-            aimAtFerry = new AimAtFerry(drivebase, driveAngularVelocity);
-            return aimAtFerry;
-        }
+      if (isInAllianceZone()) {
+        aimAtHub = new AimAtHub(drivebase, driveAngularVelocity,
+            dc()::getLeftX, dc()::getLeftY, dc()::getRightX);
+        return aimAtHub;
+      } else {
+        aimAtFerry = new AimAtFerry(drivebase, driveAngularVelocity);
+        return aimAtFerry;
+      }
     }, Set.of(drivebase)));
-    
+
     driveDirectAngle = driveAngularVelocity.copy()
         .withControllerHeadingAxis(dc()::getRightX, dc()::getRightY)
         .headingWhile(true);
@@ -614,13 +618,12 @@ public class RobotContainer {
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand()
-                          .beforeStarting(Commands.waitSeconds(1.5))
-                          .onlyWhile(() -> !LT_Intake.getAsBoolean()),
+                            .beforeStarting(Commands.waitSeconds(1.5))
+                            .onlyWhile(() -> !LT_Intake.getAsBoolean()),
                         m_intake.runIntakeCommand())
                         .finallyDo(
-                          () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1))
-                        .onlyWhile(aimAtHub.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees))))
-                    );
+                            () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1))
+                        .onlyWhile(aimAtHub.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees)))));
           } else {
             ControllAllPassing passCmd = makeVariablePass();
             return Commands.parallel(
@@ -634,7 +637,7 @@ public class RobotContainer {
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand()
-                          .beforeStarting(Commands.waitSeconds(1.5)),
+                            .beforeStarting(Commands.waitSeconds(1.5)),
                         m_intake.runIntakeCommand())
                         .onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)))))
                 .finallyDo(() -> m_shooter.setTargetRPMCommand(passCmd.RecordedidealHorizontalSpeed).withTimeout(1));
@@ -654,11 +657,12 @@ public class RobotContainer {
     dc().start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
 
     // A_runOuttake.whileTrue(drivebase.lockCommand(
-    //     driverXbox::getLeftX,
-    //     driverXbox::getLeftY,
-    //     driverXbox::getRightX,
-    //     driveAngularVelocity::get)
-    //     .onlyWhile(autoAimCommand.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees))));
+    // driverXbox::getLeftX,
+    // driverXbox::getLeftY,
+    // driverXbox::getRightX,
+    // driveAngularVelocity::get)
+    // .onlyWhile(autoAimCommand.swerveInputStream.aimLock(Angle.ofBaseUnits(3,
+    // Degrees))));
 
     // ======== Operator ========
     // shooter
@@ -673,8 +677,8 @@ public class RobotContainer {
                       m_hopper.runHopperToShooterCommand(),
                       m_kicker.kickCommand(),
                       m_pushout.AgitateCommand()
-                        .beforeStarting(Commands.waitSeconds(1.5))
-                        .onlyWhile(() -> !LT_Intake.getAsBoolean()),
+                          .beforeStarting(Commands.waitSeconds(1.5))
+                          .onlyWhile(() -> !LT_Intake.getAsBoolean()),
                       drivebase.lockCommand(
                           driverXbox::getLeftX,
                           driverXbox::getLeftY,
@@ -704,7 +708,7 @@ public class RobotContainer {
                         driverXbox::getRightX,
                         driveAngularVelocity::get),
                     m_pushout.AgitateCommand()
-                    .beforeStarting(Commands.waitSeconds(1.5))))));
+                        .beforeStarting(Commands.waitSeconds(1.5))))));
 
     // get to shooter
     RB_OP_kickIndex.whileTrue(Commands.parallel(
@@ -827,7 +831,7 @@ public class RobotContainer {
     String selectedName = loggedAutoChooser.get().getName();
 
     // put the main path (swipe) and the recovery path
-    if (selectedName.equals("LT Auto")) {
+    if (selectedName.equals("#1 - Double Swipe Chalbert")) {
       return Commands.sequence(
           // First swipe — if knocked off, pathfinds to start of "Through LT" and follows
           // it
@@ -835,7 +839,7 @@ public class RobotContainer {
           makeAutoShootCommand(),
           // Second if knocked off, pathfinds to start of "Through LT Second Swipe" and
           // follows it
-          followWithRecovery("LT Second Swipe", "Through LT Second Swipe"),
+          followWithRecovery("LT Second Swipe", "Through LT"),
           makeAutoShootCommand());
     }
     return selected;
@@ -933,33 +937,33 @@ public class RobotContainer {
   }
 
   // private void configureFuelSim() {
-  //   fuelSim = new FuelSim();
-  //   fuelSim.spawnStartingFuel();
+  // fuelSim = new FuelSim();
+  // fuelSim.spawnStartingFuel();
 
-  //   fuelSim.start();
-  //   SmartDashboard.putData(Commands.runOnce(() -> {
-  //     fuelSim.clearFuel();
-  //     fuelSim.spawnStartingFuel();
-  //   })
-  //       .withName("Reset Fuel")
-  //       .ignoringDisable(true));
+  // fuelSim.start();
+  // SmartDashboard.putData(Commands.runOnce(() -> {
+  // fuelSim.clearFuel();
+  // fuelSim.spawnStartingFuel();
+  // })
+  // .withName("Reset Fuel")
+  // .ignoringDisable(true));
   // }
 
   // private void configureFuelSimRobot() {
-  //   fuelSim.registerRobot(
-  //       Dimensions.FULL_WIDTH.in(Meters),
-  //       Dimensions.FULL_LENGTH.in(Meters),
-  //       Dimensions.BUMPER_HEIGHT.in(Meters),
-  //       drivebase::getPose,
-  //       drivebase::getFieldVelocity);
+  // fuelSim.registerRobot(
+  // Dimensions.FULL_WIDTH.in(Meters),
+  // Dimensions.FULL_LENGTH.in(Meters),
+  // Dimensions.BUMPER_HEIGHT.in(Meters),
+  // drivebase::getPose,
+  // drivebase::getFieldVelocity);
 
-  //   // fuelSim.registerIntake(
-  //   // -Dimensions.FULL_LENGTH.div(2).in(Meters),
-  //   // Dimensions.FULL_LENGTH.div(2).in(Meters),
-  //   // -Dimensions.FULL_WIDTH.div(2).plus(Inches.of(7)).in(Meters),
-  //   // -Dimensions.FULL_WIDTH.div(2).in(Meters),
-  //   // () -> m_pushout.isRightDeployed() && ableToIntake.getAsBoolean(),
-  //   // intakeCallback);
+  // // fuelSim.registerIntake(
+  // // -Dimensions.FULL_LENGTH.div(2).in(Meters),
+  // // Dimensions.FULL_LENGTH.div(2).in(Meters),
+  // // -Dimensions.FULL_WIDTH.div(2).plus(Inches.of(7)).in(Meters),
+  // // -Dimensions.FULL_WIDTH.div(2).in(Meters),
+  // // () -> m_pushout.isRightDeployed() && ableToIntake.getAsBoolean(),
+  // // intakeCallback);
   // }
 
   private double computeDynamicLookaheadSeconds() {
