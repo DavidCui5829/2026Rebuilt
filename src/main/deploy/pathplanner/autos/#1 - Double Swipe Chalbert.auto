@@ -7,13 +7,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RB Swipe"
+            "pathName": "LT Swipe"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Through LT"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "aim at hub"
+            "name": "Control All Shooting"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Second Swipe no Turn"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Through LT"
           }
         },
         {

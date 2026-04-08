@@ -7,19 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RT Swipe"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Correct Path"
+            "pathName": "LT Swipe"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Through RT"
+            "pathName": "Through LT"
           }
         },
         {
@@ -31,19 +25,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RT Second Swipe"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Correct Path"
+            "pathName": "LT Second Swipe"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Through RT"
+            "pathName": "Through LT"
           }
         },
         {

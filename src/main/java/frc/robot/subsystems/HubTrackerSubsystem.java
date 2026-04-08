@@ -14,9 +14,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -182,6 +180,7 @@ public class HubTrackerSubsystem extends SubsystemBase
 
     return circle;
   }
+  
 
   public void runPeriodic()
   {
@@ -207,13 +206,15 @@ public class HubTrackerSubsystem extends SubsystemBase
     Translation2d back = new Translation2d(-dist, 0);
     Transform2d t = new Transform2d(back, new Rotation2d());
 
-    TrajectoryConfig config = new TrajectoryConfig(1.0, 1.0).setReversed(true);
-
     Pose2d start = robotPose;
     Pose2d end = robotPose.plus(t);
 
-    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(start, List.of(), end, config);
-    traj.setTrajectory(trajectory);
+    Rotation2d angle = end.getTranslation().minus(start.getTranslation()).getAngle();
+    
+    start = new Pose2d(start.getX(), start.getY(), angle);
+    end = new Pose2d(end.getX(), end.getY(), angle);
+
+    traj.setPoses(start, end);
 
     SmartDashboard.putNumber("Distance to Hub", dist);
     // SmartDashboard.putNumber("LUTRPM", ControlAllShooting.getRPM(dist));

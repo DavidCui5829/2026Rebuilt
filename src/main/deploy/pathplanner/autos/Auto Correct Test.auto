@@ -7,19 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LB Swipe"
+            "pathName": "Auto Correct path 1"
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "aim at hub"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Control All Shooting"
+            "pathName": "Auto Correct path 2"
           }
         }
       ]

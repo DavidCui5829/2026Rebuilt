@@ -7,19 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RT Swipe"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Through RT"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "aim at hub"
+            "pathName": "LT Swipe with Depot"
           }
         },
         {

@@ -7,19 +7,37 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LT Swipe"
+            "pathName": "RT Swipe"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Through LT Second Swipe"
+            "pathName": "Through RT"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Correct Path"
+            "name": "Control All Shooting"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HP from RT Shoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HP Shoot"
           }
         },
         {

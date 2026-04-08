@@ -48,82 +48,38 @@ public class Pushout extends SubsystemBase {
     // PushoutRightMotor.getClosedLoopController();
 
     private RelativeEncoder pushoutEncoder = PushoutMotor.getEncoder();
+
+    double minVelocity = 1000.0;
     // private final RelativeEncoder pushoutRightEncoder =
     // PushoutRightMotor.getEncoder();
 
-    // private double PushoutRightExtended = PushoutConstants.PUSHOUT_EXTENDED_POS;
-    private double PushoutExtended = PushoutConstants.PUSHOUT_EXTENDED_POS;
-    // private double PushoutRightRetracted =
-    // PushoutConstants.PUSHOUT_RETRACTED_POS;
-    private double PushoutRetracted = PushoutConstants.PUSHOUT_RETRACTED_POS;
-    // private double PushoutRightExtendedAgitate =
-    // PushoutConstants.PUSHOUT_EXTENDED_AGITATE_POS;
-    private double PushoutExtendedAgitate = PushoutConstants.PUSHOUT_EXTENDED_AGITATE_POS;
-    // private double PushoutRightRetractedAgitate =
-    // PushoutConstants.PUSHOUT_RETRACTED_AGITATE_POS;
-    private double PushoutRetractedAgitate = PushoutConstants.PUSHOUT_RETRACTED_AGITATE_POS;
 
     public Pushout() {
         PushoutMotor.configure(Configs.PushoutSubsystem.PushoutMotorConfig, ResetMode.kResetSafeParameters,
                 PersistMode.kPersistParameters);
-        // PushoutRightMotor.configure(Configs.PushoutSubsystem.PushoutRightMotorConfig,
-        // ResetMode.kResetSafeParameters,
-        // PersistMode.kPersistParameters);
         pushoutEncoder.setPosition(0);
-        // pushoutRightEncoder.setPosition(0);
     }
 
     public void PushIntake() {
-        PushoutController.setSetpoint(PushoutExtended, ControlType.kMAXMotionPositionControl);
-        // PushoutRightController.setSetpoint(PushoutRightExtended,
-        // ControlType.kMAXMotionPositionControl);
-
+        PushoutController.setSetpoint(PushoutConstants.PUSHOUT_EXTENDED_POS, ControlType.kMAXMotionPositionControl);
     }
 
     public void RetractIntake() {
-        PushoutController.setSetpoint(PushoutRetracted, ControlType.kMAXMotionPositionControl);// PushoutRightController.setSetpoint( PushoutRightRetracted,
-        // ControlType.kMAXMotionPositionControl);
+        PushoutController.setSetpoint(PushoutConstants.PUSHOUT_RETRACTED_POS, ControlType.kMAXMotionPositionControl);
     }
-
-    public void SmallPush() {
-        // double leftNow = pushoutLeftEncoder.getPosition();
-        // double rightNow = pushoutRightEncoder.getPosition();
-        PushoutController.setSetpoint(PushoutExtendedAgitate, ControlType.kMAXMotionPositionControl);
-        // PushoutRightController.setSetpoint(PushoutRightExtendedAgitate,
-        // ControlType.kMAXMotionPositionControl);
-    }
-
-    public void SmallRetract() {
-        // double leftNow = pushoutLeftEncoder.getPosition();
-        // double rightNow = pushoutRightEncoder.getPosition();
-        PushoutController.setSetpoint(PushoutRetractedAgitate, ControlType.kMAXMotionPositionControl);
-        // PushoutRightController.setSetpoint(PushoutRightRetractedAgitate,
-        // ControlType.kMAXMotionPositionControl);
-    }
-
-    // public void PushoutDutyCycle() {
-    //     PushoutMotor.set(0.3);
-    // }
 
     public void StopPushout() {
         PushoutMotor.set(0);
     }
-
-    // public void StopPushing() {
-    // // PushoutLeftController.setSetpoint(0,
-    // ControlType.kMAXMotionPositionControl);
-    // PushoutRightController.setSetpoint(0, ControlType.kMAXMotionPositionControl);
-    // }
 
     public Command HomingCommand(double threshold)
     {
         Debouncer currentDebouncer = new Debouncer(0.2);
 
 
-        double velocity = 1000;
 
 
-        return new RunCommand(() -> PushoutController.setSetpoint(velocity, ControlType.kCurrent), this)
+        return new RunCommand(() -> PushoutController.setSetpoint(minVelocity, ControlType.kCurrent), this)
                 .until(() -> currentDebouncer.calculate((PushoutMotor.getEncoder().getVelocity() >= threshold)))
                 .finallyDo(() ->
                 {
@@ -145,25 +101,36 @@ public class Pushout extends SubsystemBase {
     }
 
     public Command AgitateCommand() {
-        // Commands.waitSeconds(2.5);
+        final double[] pushPositions = { 11, 9, 7}; // each time it pushes less far in
+        final double[] pullPositions = { 8, 6, 4 }; // each time it pulls further out
+        final double finalPos = 1; // pull to this position and idle there after agitation done
+        final double waitTime = PushoutConstants.PUSHOUT_AGITATE_WAIT;
+
         return Commands.sequence(
-            runOnce(() -> SmallPush()),
-            Commands.waitSeconds(PushoutConstants.PUSHOUT_AGITATE_WAIT),
+            // push to 11 & pull to 8
+            runOnce(() -> PushoutController.setSetpoint(pushPositions[0], ControlType.kMAXMotionPositionControl)),
+            Commands.waitSeconds(waitTime),
+            runOnce(() -> PushoutController.setSetpoint(pullPositions[0], ControlType.kMAXMotionPositionControl)),
+            Commands.waitSeconds(waitTime),
 
-            runOnce(() -> SmallRetract()),
-            Commands.waitSeconds(PushoutConstants.PUSHOUT_AGITATE_WAIT),
+            // push to 9 & pull to 6
+            runOnce(() -> PushoutController.setSetpoint(pushPositions[1], ControlType.kMAXMotionPositionControl)),
+            Commands.waitSeconds(waitTime),
+            runOnce(() -> PushoutController.setSetpoint(pullPositions[1], ControlType.kMAXMotionPositionControl)),
+            Commands.waitSeconds(waitTime),
 
-            runOnce(() -> {
-                PushoutRetractedAgitate -= 2.5;   // retract by 3 encoder each cycle
+            // push to 7 & pull to 4
+            runOnce(() -> PushoutController.setSetpoint(pushPositions[2], ControlType.kMAXMotionPositionControl)),
+            Commands.waitSeconds(waitTime),
+            runOnce(() -> PushoutController.setSetpoint(pullPositions[2], ControlType.kMAXMotionPositionControl)),
+            Commands.waitSeconds(waitTime),
 
-                if (PushoutRetractedAgitate <= 3) {
-                    Commands.waitSeconds(PushoutConstants.PUSHOUT_AGITATE_WAIT*2);
-                    PushoutRetractedAgitate = 10;   // reset
-                }
-            })
+            // end pos
+            runOnce(() -> PushoutController.setSetpoint(finalPos, ControlType.kMAXMotionPositionControl)),
+            Commands.idle(this)
+
         ).finallyDo(interrupted -> PushIntake());
     }
-    
 
     @Override
     public void periodic() { 

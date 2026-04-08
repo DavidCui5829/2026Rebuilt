@@ -7,31 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LB Swipe"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "aim at hub"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Control All Shooting"
+            "pathName": "LT Swipe"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Depot and shoot from LB"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "aim at hub"
+            "pathName": "Through LT"
           }
         },
         {

@@ -163,7 +163,7 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
     public static final double PUSHOUT_RETRACTED_AGITATE_POS = 2; // it was 4.693
     public static final double PUSHOUT_EXTENDED_AGITATE_POS = 11; // TUNE THIS!!!
 
-    public static final double PUSHOUT_AGITATE_WAIT = 0.2;
+    public static final double PUSHOUT_AGITATE_WAIT = 0.1; // seconds to wait between agitate cycles, TUNE THIS!!!
   }
 
   public static class ShooterConstants {
