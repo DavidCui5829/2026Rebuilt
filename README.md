@@ -60,7 +60,7 @@ Quick reference for all `Logger.recordOutput()` keys. Open these in AdvantageSco
 | `Drive/Aim/ErrorDegFerry` | double | Degrees off from ferry aim target. Same use as hub error |
 | `Drive/Aim/DistanceToFerryM` | double | Distance to ferry target. Useful if passes fall short or overshoot |
 
-### Auto Recovery
+### Autonomous Recovery
 
 | Key | Type | What it tells you |
 |---|---|---|
