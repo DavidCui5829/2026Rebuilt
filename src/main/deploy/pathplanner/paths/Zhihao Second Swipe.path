@@ -8,27 +8,27 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.177283766208467,
-        "y": 7.149566707649076
+        "x": 4.266117097388273,
+        "y": 7.351432425283848
       },
       "isLocked": false,
       "linkedName": "LT Shoot Spc"
     },
     {
       "anchor": {
-        "x": 4.438278191202928,
-        "y": 7.32
+        "x": 4.58168821100603,
+        "y": 7.418484871847587
       },
       "prevControl": {
-        "x": 3.818827995667212,
-        "y": 7.5341300695370705
+        "x": 3.6187436972617983,
+        "y": 7.367903973594909
       },
       "nextControl": {
-        "x": 4.6817017720066385,
-        "y": 7.235853915843254
+        "x": 5.093645228101786,
+        "y": 7.445376603844457
       },
       "isLocked": false,
-      "linkedName": "LT Start"
+      "linkedName": null
     },
     {
       "anchor": {
@@ -36,12 +36,12 @@
         "y": 7.321809005338108
       },
       "prevControl": {
-        "x": 5.036068758320009,
-        "y": 7.418668499849547
+        "x": 5.1207827815279545,
+        "y": 7.44811945497687
       },
       "nextControl": {
-        "x": 5.978724995226413,
-        "y": 7.207893119732134
+        "x": 5.825940245733946,
+        "y": 7.192522323427825
       },
       "isLocked": false,
       "linkedName": null
@@ -52,12 +52,12 @@
         "y": 6.818440259848922
       },
       "prevControl": {
-        "x": 5.593877054602322,
-        "y": 7.475506043255517
+        "x": 5.980024946572749,
+        "y": 7.307859970887748
       },
       "nextControl": {
-        "x": 6.184171396716032,
-        "y": 6.59139540306826
+        "x": 6.0603860932338405,
+        "y": 6.5594999938774095
       },
       "isLocked": false,
       "linkedName": null
@@ -68,12 +68,12 @@
         "y": 5.597232189025035
       },
       "prevControl": {
-        "x": 5.737955242445504,
-        "y": 5.8469797362572935
+        "x": 5.743497316689697,
+        "y": 5.89059744513048
       },
       "nextControl": {
-        "x": 5.704467465226957,
-        "y": 5.102381248778218
+        "x": 5.67207041441037,
+        "y": 4.641413571829993
       },
       "isLocked": false,
       "linkedName": null
@@ -84,12 +84,12 @@
         "y": 4.393284067803427
       },
       "prevControl": {
-        "x": 5.645837225996315,
-        "y": 4.364125723045626
+        "x": 5.6450955020370985,
+        "y": 4.47892421827536
       },
       "nextControl": {
-        "x": 6.299194812424517,
-        "y": 4.440852684710921
+        "x": 6.334803527109613,
+        "y": 4.2417423586279615
       },
       "isLocked": false,
       "linkedName": null
@@ -100,12 +100,12 @@
         "y": 5.422814380744309
       },
       "prevControl": {
-        "x": 6.508196571896475,
-        "y": 5.454975283935217
+        "x": 6.641270910020682,
+        "y": 5.48442446090592
       },
       "nextControl": {
-        "x": 5.401254725302662,
-        "y": 5.401153812777498
+        "x": 5.572053686665454,
+        "y": 5.401513846390857
       },
       "isLocked": false,
       "linkedName": null
@@ -116,12 +116,12 @@
         "y": 5.45990255136624
       },
       "prevControl": {
-        "x": 6.325507563915879,
-        "y": 5.394303026092153
+        "x": 6.247139167856366,
+        "y": 5.452837997111482
       },
       "nextControl": {
-        "x": 3.48924887332388,
-        "y": 5.509413306748123
+        "x": 3.4761882617156323,
+        "y": 5.465566156102328
       },
       "isLocked": false,
       "linkedName": null
@@ -132,8 +132,8 @@
         "y": 5.341699363425926
       },
       "prevControl": {
-        "x": 3.4970867138621364,
-        "y": 5.392032876531477
+        "x": 3.809403494475954,
+        "y": 5.28091763359068
       },
       "nextControl": null,
       "isLocked": false,
@@ -143,11 +143,11 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1,
-      "rotationDegrees": 90.47083380385666
+      "rotationDegrees": 45.63828511985442
     },
     {
       "waypointRelativePos": 2,
-      "rotationDegrees": 90.0
+      "rotationDegrees": -61.258420367058484
     },
     {
       "waypointRelativePos": 3,
@@ -167,7 +167,7 @@
     },
     {
       "waypointRelativePos": 7.0,
-      "rotationDegrees": 60.21698342310059
+      "rotationDegrees": 57.48563101611885
     }
   ],
   "constraintZones": [
@@ -180,6 +180,19 @@
         "maxAcceleration": 2.7,
         "maxAngularVelocity": 45.0,
         "maxAngularAcceleration": 10.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    },
+    {
+      "name": "Slow for Safety",
+      "minWaypointRelativePos": 3.5927962298025165,
+      "maxWaypointRelativePos": 5.796678635547579,
+      "constraints": {
+        "maxVelocity": 3.5,
+        "maxAcceleration": 3.5,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
         "nominalVoltage": 12.0,
         "unlimited": false
       }
