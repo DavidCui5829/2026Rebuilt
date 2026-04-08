@@ -251,7 +251,8 @@ public class RobotContainer {
           if (isInAllianceZone()) {
             ControlAllShooting shootCmd = new ControlAllShooting(drivebase::getCachedDynamicHubLocation, m_shooter,
                 drivebase::getPose, true);
-            return Commands.parallel(
+            return Commands.sequence(
+              Commands.parallel(
                 shootCmd,
                 drivebase.driveFieldOriented(aimAtHubStream),
                 // Continuously update aim target for shoot-on-the-move
@@ -263,17 +264,16 @@ public class RobotContainer {
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand()
-                          .beforeStarting(Commands.waitSeconds(1.5)),
+                            .beforeStarting(Commands.waitSeconds(1.5)),
                         m_intake.runIntakeCommand()))
                     .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)))
-                .onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)));
+                .onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees))),
+              m_pushout.RetractCommand());
           } else {
             // Not in alliance zone: no-op command to satisfy return type
             return Commands.none();
           }
-        }, java.util.Collections.<edu.wpi.first.wpilibj2.command.Subsystem>emptySet()).withTimeout(5.75);
-      };
-
+        }, java.util.Collections.<edu.wpi.first.wpilibj2.command.Subsystem>emptySet()).withTimeout(5.75);};
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -309,27 +309,6 @@ public class RobotContainer {
     // kicker
     NamedCommands.registerCommand("kick", m_kicker.kickCommand().withTimeout(8));
     NamedCommands.registerCommand("kick backwards", m_kicker.kickBackwardsCommand().withTimeout(8));
-
-    // NamedCommands.registerCommand("Correct Path",
-    // Commands.defer(() -> {
-
-    // if (!drivebase.isOffPath(0.15)) {
-    // return Commands.none();
-    // }
-
-    // Pose2d shootPose = drivebase.getPose().getY() > 4
-    // ? Constants.DrivebaseConstants.LT_ENTER_POS
-    // : Constants.DrivebaseConstants.RT_ENTER_POS;
-
-    // PathConstraints constraints = new PathConstraints(
-    // drivebase.getSwerveDrive().getMaximumChassisVelocity(), 3.5,
-    // drivebase.getSwerveDrive().getMaximumChassisAngularVelocity(),
-    // Units.degreesToRadians(720));
-
-    // return AutoBuilder.pathfindToPose(shootPose, constraints);
-
-    // }, java.util.Collections.emptySet())
-    // );
 
     // shooter
     NamedCommands.registerCommand("Control All Shooting", Commands.defer(() -> {
@@ -843,6 +822,12 @@ public class RobotContainer {
           // follows it
           followWithRecovery("LT Second Swipe", "Through LT"),
           makeAutoShootCommand());
+    }
+    else if (selectedName.equals("Auto Correct Test")){
+      return Commands.sequence(
+        followWithRecovery("Auto Correct path 1", "Auto Correct path 2"),
+        makeAutoShootCommand()
+      );
     }
     return selected;
   }
