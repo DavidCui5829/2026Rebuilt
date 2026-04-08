@@ -259,7 +259,8 @@ public class RobotContainer {
                 Commands.parallel(
                     m_hopper.runHopperToShooterCommand(),
                     m_kicker.kickCommand(),
-                    m_pushout.AgitateCommand().repeatedly(),
+                    m_pushout.AgitateCommand()
+                      .beforeStarting(Commands.waitSeconds(1.5)),
                     m_intake.runIntakeCommand()))
                 .finallyDo(() -> m_shooter.setTargetRPMCommand(
                     shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)))
@@ -343,7 +344,8 @@ public class RobotContainer {
                 Commands.parallel(
                     m_hopper.runHopperToShooterCommand(),
                     m_kicker.kickCommand(),
-                    m_pushout.AgitateCommand().repeatedly(),
+                    m_pushout.AgitateCommand()
+                      .beforeStarting(Commands.waitSeconds(1.5)),
                     m_intake.runIntakeCommand()))
                 .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)))
             .onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)));
@@ -406,7 +408,8 @@ public class RobotContainer {
                     Commands.parallel(
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
-                        m_pushout.AgitateCommand().repeatedly(),
+                        m_pushout.AgitateCommand()
+                          .beforeStarting(Commands.waitSeconds(1.5)),
                         m_intake.runIntakeCommand())
                         .onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees)))))
                 .finallyDo(() -> m_shooter.setTargetRPMCommand(passCmd.RecordedidealHorizontalSpeed).withTimeout(1));
@@ -596,10 +599,6 @@ public class RobotContainer {
     // ======================================
 
     // ======= Driver =======
-
-    // Shooter
-    // transfer + kick + shoot/pass command, switches based on zone
-
     RTtransfer_kick_shoot.whileTrue(
 
         Commands.defer(() -> {
@@ -616,7 +615,6 @@ public class RobotContainer {
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand()
                           .beforeStarting(Commands.waitSeconds(1.5))
-                          .repeatedly()
                           .onlyWhile(() -> !LT_Intake.getAsBoolean()),
                         m_intake.runIntakeCommand())
                         .finallyDo(
@@ -635,7 +633,8 @@ public class RobotContainer {
                     Commands.parallel(
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
-                        m_pushout.AgitateCommand().repeatedly(),
+                        m_pushout.AgitateCommand()
+                          .beforeStarting(Commands.waitSeconds(1.5)),
                         m_intake.runIntakeCommand())
                         .onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)))))
                 .finallyDo(() -> m_shooter.setTargetRPMCommand(passCmd.RecordedidealHorizontalSpeed).withTimeout(1));
@@ -673,7 +672,9 @@ public class RobotContainer {
                   Commands.parallel(
                       m_hopper.runHopperToShooterCommand(),
                       m_kicker.kickCommand(),
-                      m_pushout.AgitateCommand().repeatedly().onlyWhile(() -> !LT_Intake.getAsBoolean()),
+                      m_pushout.AgitateCommand()
+                        .beforeStarting(Commands.waitSeconds(1.5))
+                        .onlyWhile(() -> !LT_Intake.getAsBoolean()),
                       drivebase.lockCommand(
                           driverXbox::getLeftX,
                           driverXbox::getLeftY,
@@ -702,14 +703,15 @@ public class RobotContainer {
                         driverXbox::getLeftY,
                         driverXbox::getRightX,
                         driveAngularVelocity::get),
-                    m_pushout.AgitateCommand().repeatedly().beforeStarting(Commands.waitSeconds(1))))));
+                    m_pushout.AgitateCommand()
+                    .beforeStarting(Commands.waitSeconds(1.5))))));
 
     // get to shooter
     RB_OP_kickIndex.whileTrue(Commands.parallel(
         m_hopper.runHopperToShooterCommand(),
         m_intake.runIntakeCommand(),
         m_kicker.kickCommand(),
-        m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(2.5)).repeatedly()));
+        m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(1.5)).repeatedly()));
 
     LB_OP_unjam.whileTrue(Commands.parallel(m_hopper.runReverseHopperCommand(), m_kicker.kickBackwardsCommand()));
 
@@ -720,7 +722,6 @@ public class RobotContainer {
     // pushout
     Y_OP_extendIntake.whileTrue(m_pushout.PushCommand());
     B_OP_reteactIntake.whileTrue(m_pushout.RetractCommand());
-    // POVLEFT_OP_agitate.whileTrue(m_pushout.AgitateCommand());
 
     // vision
     POVUP_OP_FrontLimelight.onTrue(drivebase.FrontToggle());
