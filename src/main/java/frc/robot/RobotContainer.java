@@ -352,6 +352,7 @@ public class RobotContainer {
                     m_intake.runIntakeCommand()))
                 .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)))
             .onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)));
+            
       } else {
         // Not in alliance zone: no-op command to satisfy return type
         return Commands.none();
