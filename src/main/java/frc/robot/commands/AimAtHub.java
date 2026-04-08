@@ -1,7 +1,10 @@
 package frc.robot.commands;
 
+import static edu.wpi.first.units.Units.Seconds;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.units.measure.Time;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
@@ -32,6 +35,7 @@ public class AimAtHub extends Command {
         swerveSubsystem.isAiming = true;
         swerveInputStream
             .aim(swerveSubsystem::getCachedDynamicHubLocation)  // supplier, updates each loop
+            .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
             .aimFeedforward(0.0001, 0.0001, 0.00018)
             .aimHeadingOffset(Rotation2d.fromDegrees(180))
             .aimHeadingOffset(true)
