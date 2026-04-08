@@ -67,6 +67,12 @@ Quick reference for all `Logger.recordOutput()` keys. Open these in AdvantageSco
 | `Drive/Auto/TargetPathPose` | Pose2d | Where PathPlanner wants the robot to be right now |
 | `Drive/Auto/PathFollowingErrorM` | double | Distance (m) between robot and path target. Graph to see when error spikes |
 | `Drive/Auto/IsOffPath` | boolean | True when error > 0.15m. This is when `followWithRecovery` switches to recovery path |
+| `Auto/CurrentPath` | String | Name of the PathPlanner path currently executing. Changes to recovery path name when recovery fires |
+| `Auto/RecoveryPath` | String | Name of the configured recovery path for the current segment |
+| `Auto/RecoveryTriggered` | boolean | Flips to true when the robot actually takes the recovery branch (not just off-path) |
+| `Auto/PathLoadError` | String | Error message if a path file fails to load. Empty normally — if populated, that auto segment returned Commands.none() |
+| `Auto/ShootingAttempted` | boolean | True when `makeAutoShootCommand` fires during auto |
+| `Auto/InAllianceZone` | boolean | Which branch auto shooting took — true = shoot at hub, false = no-op |
 
 ---
 
@@ -242,6 +248,10 @@ These log the state of the RT shooting/passing sequence — the gates that contr
 | Recovery not triggering when knocked | `IsOffPath` should flip true when hit | If it stays false, the threshold is too loose or `targetPathPose` isn't updating (check `configurePathPlannerLogging`) |
 | Recovery flickering | `IsOffPath` rapidly toggles true/false | Robot is hovering at the threshold boundary. Need hysteresis or a wider threshold |
 | Robot recovers but ends up in wrong spot | Overlay `TargetPathPose` and `Drive/Pose` on field view | Recovery path may not end where the next auto step expects. Check recovery path endpoints |
+| Auto segment does nothing | Check `Auto/PathLoadError` for an error message | If populated, the path file failed to load and the segment silently returned a no-op. Verify path file names in PathPlanner |
+| Can't tell if recovery actually fired | Check `Auto/RecoveryTriggered` — should flip true | `IsOffPath` can be true without recovery running (e.g., checked twice). `RecoveryTriggered` confirms the recovery branch was taken |
+| Don't know which path is running | Check `Auto/CurrentPath` — updates at each segment start | Changes from main path name to recovery path name when recovery fires. Correlate with `RecoveryTriggered` |
+| Auto shooting not firing | Check `Auto/ShootingAttempted` and `Auto/InAllianceZone` | If `ShootingAttempted` is true but `InAllianceZone` is false, robot thinks it's outside alliance zone — check zone boundaries |
 
 ### Controller Input Issues
 

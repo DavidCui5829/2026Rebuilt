@@ -233,13 +233,23 @@ public class RobotContainer {
         PathPlannerPath recoveryPath = PathPlannerPath.fromPathFile(recoveryPathName);
 
         return AutoBuilder.followPath(path)
+            .beforeStarting(() -> {
+              Logger.recordOutput("Auto/CurrentPath", pathName);
+              Logger.recordOutput("Auto/RecoveryPath", recoveryPathName);
+              Logger.recordOutput("Auto/RecoveryTriggered", false);
+            })
             .until(() -> drivebase.isOffPath(0.15))
             .andThen(
                 Commands.either(
-                    AutoBuilder.pathfindThenFollowPath(recoveryPath, autoConstraints),
+                    AutoBuilder.pathfindThenFollowPath(recoveryPath, autoConstraints)
+                        .beforeStarting(() -> {
+                          Logger.recordOutput("Auto/RecoveryTriggered", true);
+                          Logger.recordOutput("Auto/CurrentPath", recoveryPathName);
+                        }),
                     Commands.none(),
                     () -> drivebase.isOffPath(0.15)));
       } catch (Exception e) {
+        Logger.recordOutput("Auto/PathLoadError", e.getMessage());
         e.printStackTrace();
         return Commands.none();
       }
@@ -248,6 +258,8 @@ public class RobotContainer {
 
   private Command makeAutoShootCommand() {
     return Commands.defer(() -> {
+          Logger.recordOutput("Auto/ShootingAttempted", true);
+          Logger.recordOutput("Auto/InAllianceZone", isInAllianceZone());
           if (isInAllianceZone()) {
             ControlAllShooting shootCmd = new ControlAllShooting(drivebase::getCachedDynamicHubLocation, m_shooter,
                 drivebase::getPose, true);
