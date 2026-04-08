@@ -73,10 +73,10 @@
   "constraintZones": [
     {
       "name": "Slow for intake",
-      "minWaypointRelativePos": 0.7601614410298997,
+      "minWaypointRelativePos": 0.0,
       "maxWaypointRelativePos": 3.0,
       "constraints": {
-        "maxVelocity": 2.0,
+        "maxVelocity": 1.0,
         "maxAcceleration": 2.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
@@ -89,7 +89,7 @@
   "eventMarkers": [
     {
       "name": "extend",
-      "waypointRelativePos": 0.43280211794019907,
+      "waypointRelativePos": 0.0,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -99,8 +99,8 @@
       }
     },
     {
-      "name": "intake",
-      "waypointRelativePos": 0.6196791943521601,
+      "name": "Shoot and Aim",
+      "waypointRelativePos": 0.0,
       "endWaypointRelativePos": 3.0,
       "command": {
         "type": "named",

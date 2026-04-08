@@ -387,9 +387,6 @@ public class RobotContainer {
                     Commands.parallel(
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
-                        m_pushout.AgitateCommand()
-                          .beforeStarting(Commands.waitSeconds(1))
-                          .repeatedly(),
                         m_intake.runIntakeCommand())
                         .onlyWhile(aimAtHub.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees))))
                     .finallyDo(
