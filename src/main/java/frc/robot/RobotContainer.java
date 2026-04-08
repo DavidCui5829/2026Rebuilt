@@ -376,7 +376,8 @@ public class RobotContainer {
         Commands.defer(() -> {
           if (isInAllianceZone()) // In alliance zone → shoot at hub
           {
-            aimAtHub = new AimAtHub(drivebase, driveAngularVelocity);
+            aimAtHub = new AimAtHub(drivebase, driveAngularVelocity,
+                dc()::getLeftX, dc()::getLeftY, dc()::getRightX);
             ControlAllShooting shootCmd = makeVariableShoot();
             return Commands.parallel(
                 aimAtHub,
@@ -473,17 +474,17 @@ public class RobotContainer {
         .scaleTranslation(1.0)
         .allianceRelativeControl(true);
 
-        dc().rightTrigger().whileTrue(Commands.defer(() -> {          
-              if (isInAllianceZone()) {
-                  aimAtHub = new AimAtHub(drivebase, driveAngularVelocity);
-                  return aimAtHub;
-              } else {
-                  aimAtFerry = new AimAtFerry(drivebase, driveAngularVelocity);
-                  return aimAtFerry;
-              }
-          }, Set.of(drivebase))
-        );
-
+    dc().rightTrigger().whileTrue(Commands.defer(() -> {
+        if (isInAllianceZone()) {
+            aimAtHub = new AimAtHub(drivebase, driveAngularVelocity,
+                dc()::getLeftX, dc()::getLeftY, dc()::getRightX);
+            return aimAtHub;
+        } else {
+            aimAtFerry = new AimAtFerry(drivebase, driveAngularVelocity);
+            return aimAtFerry;
+        }
+    }, Set.of(drivebase)));
+    
     driveDirectAngle = driveAngularVelocity.copy()
         .withControllerHeadingAxis(dc()::getRightX, dc()::getRightY)
         .headingWhile(true);
@@ -617,12 +618,7 @@ public class RobotContainer {
                           .beforeStarting(Commands.waitSeconds(1.5))
                           .repeatedly()
                           .onlyWhile(() -> !LT_Intake.getAsBoolean()),
-                        m_intake.runIntakeCommand(),
-                        drivebase.lockCommand(
-                            driverXbox::getLeftX,
-                            driverXbox::getLeftY,
-                            driverXbox::getRightX,
-                            driveAngularVelocity::get))
+                        m_intake.runIntakeCommand())
                         .finallyDo(
                           () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1))
                         .onlyWhile(aimAtHub.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees))))
