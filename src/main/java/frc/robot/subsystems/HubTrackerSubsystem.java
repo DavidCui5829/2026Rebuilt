@@ -197,26 +197,26 @@ public class HubTrackerSubsystem extends SubsystemBase
 
     dynamicHubCircle.setPoses(createCircle(drivebase.getCachedDynamicHubLocation(), 0.25, 10));
 
-    Translation2d goalLocation = drivebase.getCachedDynamicHubLocation().getTranslation();
-    Translation2d robotLocation = robotPose.getTranslation();
-    Translation2d targetVec = goalLocation.minus(robotLocation);
-    double        dist         = targetVec.getNorm();
+    // Translation2d goalLocation = drivebase.getCachedDynamicHubLocation().getTranslation();
+    // Translation2d robotLocation = robotPose.getTranslation();
+    // Translation2d targetVec = goalLocation.minus(robotLocation);
+    // double        dist         = targetVec.getNorm();
 
 
-    Translation2d back = new Translation2d(-dist, 0);
-    Transform2d t = new Transform2d(back, new Rotation2d());
+    // Translation2d back = new Translation2d(-dist, 0);
+    // Transform2d t = new Transform2d(back, new Rotation2d());
 
-    Pose2d start = robotPose;
-    Pose2d end = robotPose.plus(t);
+    // Pose2d start = robotPose;
+    // Pose2d end = robotPose.plus(t);
 
-    Rotation2d angle = end.getTranslation().minus(start.getTranslation()).getAngle();
+    // Rotation2d angle = end.getTranslation().minus(start.getTranslation()).getAngle();
     
-    start = new Pose2d(start.getX(), start.getY(), angle);
-    end = new Pose2d(end.getX(), end.getY(), angle);
+    // start = new Pose2d(start.getX(), start.getY(), angle);
+    // end = new Pose2d(end.getX(), end.getY(), angle);
 
-    traj.setPoses(start, end);
+    // traj.setPoses(start, end);
 
-    SmartDashboard.putNumber("Distance to Hub", dist);
+    // SmartDashboard.putNumber("Distance to Hub", dist);
     // SmartDashboard.putNumber("LUTRPM", ControlAllShooting.getRPM(dist));
   }
 
