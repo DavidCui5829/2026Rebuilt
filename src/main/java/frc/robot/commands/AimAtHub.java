@@ -47,14 +47,15 @@ public class AimAtHub extends Command {
     public void execute() {
         double leftMag = Math.hypot(leftX.getAsDouble(), leftY.getAsDouble());
         double rightMag = Math.abs(rightX.getAsDouble());
+        swerveSubsystem.driveFieldOriented(swerveInputStream.get());
 
-        if ((leftMag + rightMag) > Constants.OperatorConstants.DEADBAND) {
-            swerveSubsystem.driveFieldOriented(swerveInputStream.get());
-            SmartDashboard.putBoolean("Wheel Lock", false);
-        } else {
-            // swerveSubsystem.lock();
-            SmartDashboard.putBoolean("Wheel Lock", true);
-        }
+
+        // if ((leftMag + rightMag) > Constants.OperatorConstants.DEADBAND) {
+        //     SmartDashboard.putBoolean("Wheel Lock", false);
+        // } else {
+        //     // swerveSubsystem.lock();
+        //     SmartDashboard.putBoolean("Wheel Lock", true);
+        // }
     }
     
     @Override
