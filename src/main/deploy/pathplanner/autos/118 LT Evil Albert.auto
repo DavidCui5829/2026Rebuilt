@@ -13,7 +13,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": null
+            "pathName": "Through LT"
           }
         },
         {
@@ -32,6 +32,12 @@
           "type": "path",
           "data": {
             "pathName": "LT Second Swipe"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Through LT"
           }
         },
         {
