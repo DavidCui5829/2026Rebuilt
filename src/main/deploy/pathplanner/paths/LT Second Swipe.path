@@ -159,11 +159,11 @@
     },
     {
       "waypointRelativePos": 5.0,
-      "rotationDegrees": 13.208638546760419
+      "rotationDegrees": 13.20863854676042
     },
     {
       "waypointRelativePos": 6,
-      "rotationDegrees": 101.29322772285306
+      "rotationDegrees": 101.29322772285308
     },
     {
       "waypointRelativePos": 7,
@@ -219,7 +219,7 @@
   "eventMarkers": [
     {
       "name": "extend",
-      "waypointRelativePos": 0.0,
+      "waypointRelativePos": 1.8961967054263573,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",

@@ -13,12 +13,6 @@
         {
           "type": "named",
           "data": {
-            "name": "Correct Path"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "Control All Shooting"
           }
         }
