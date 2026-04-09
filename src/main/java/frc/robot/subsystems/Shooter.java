@@ -129,8 +129,13 @@ public class Shooter extends SubsystemBase {
                 + shooterRight1Encoder.getVelocity() + shooterRight2Encoder.getVelocity()) / 4.0;
     }
 
+    public double getShooterSetpoint() {
+
+        return ((shooterleft1Controller.getSetpoint() + shooterright1Controller.getSetpoint()) / 2.0);
+    }
+
     public boolean isShooterRunning() {
-        if (getRPM() >= 800) {
+        if (Math.abs(getShooterSetpoint() - getRPM()) < 100) {
             SmartDashboard.putBoolean("Shooter Running", true);
             return true;
         }
@@ -172,7 +177,7 @@ public class Shooter extends SubsystemBase {
         shooterright1Controller.setSetpoint(rpm, ControlType.kMAXMotionVelocityControl);
         // shooterright2Controller.setSetpoint(rpm,
         // ControlType.kMAXMotionVelocityControl);
-        shooterleft1Controller.setSetpoint(rpm+30, ControlType.kMAXMotionVelocityControl);
+        shooterleft1Controller.setSetpoint(rpm, ControlType.kMAXMotionVelocityControl);
         // shooterleft2Controller.setSetpoint(rpm,
         // ControlType.kMAXMotionVelocityControl);
     }
