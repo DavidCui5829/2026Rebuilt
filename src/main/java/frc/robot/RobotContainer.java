@@ -851,12 +851,13 @@ public class RobotContainer {
           followWithRecovery("LT Second Swipe", "Through LT"),
           makeAutoShootCommand());
     }
-    else if (selectedName.equals("Auto Correct Test")){
+    else if (selectedName.equals("Swipe Correction Test")){
       return Commands.sequence(
-        followWithRecovery("Auto Correct path 1", "Auto Correct path 2"),
+        followWithRecovery("LT Swipe", "Through LT"),
         makeAutoShootCommand()
       );
     }
+
     return selected;
   }
 
