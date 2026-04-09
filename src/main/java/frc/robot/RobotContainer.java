@@ -253,7 +253,7 @@ public class RobotContainer {
         e.printStackTrace();
         return Commands.none();
       }
-    }, java.util.Collections.emptySet());
+    }, java.util.Set.of(drivebase));
   }
 
   private Command makeAutoShootCommand() {
