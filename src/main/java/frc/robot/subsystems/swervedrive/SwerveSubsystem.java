@@ -161,6 +161,7 @@ public class SwerveSubsystem extends SubsystemBase {
     // so do not attempt to call it here; rely on the default behavior or other
     // available APIs.
     setupPathPlanner();
+    configurePathPlannerLogging();
 
     // Set up MegaTag Chooser
     megaTagChooser.addOption("MegaTag 1", false);
@@ -467,7 +468,7 @@ public class SwerveSubsystem extends SubsystemBase {
     );
   }
 
-  public void configurePathPlannerLogging() {
+  private void configurePathPlannerLogging() {
       PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
           targetPathPose = pose;
       });
