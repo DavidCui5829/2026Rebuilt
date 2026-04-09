@@ -35,6 +35,8 @@ public class ControlAllShooting extends Command
   private final Supplier<Pose2d> goalPoseSupplier;
   private final Shooter m_shooter;
   private final Supplier<Pose2d> robotPoseSupplier;
+
+  public double distance = 0.0;
   // private final Hopper m_hopper;
   // private final Kicker m_kicker;
   // private final Pushout m_pushout;
@@ -140,6 +142,8 @@ public class ControlAllShooting extends Command
     Translation2d robotLocation = robotPoseSupplier.get().getTranslation();
     Translation2d targetVec = goalLocation.minus(robotLocation);
     double        dist         = targetVec.getNorm();
+
+    distance = dist;
     // 3. CALCULATE IDEAL SHOT (Stationary)
     // Note: This returns HORIZONTAL velocity component
     double idealHorizontalSpeed = shooterTable.get(dist);

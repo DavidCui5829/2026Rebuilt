@@ -102,6 +102,8 @@ public class SwerveSubsystem extends SubsystemBase {
   private Pose2d cachedDynamicHub = new Pose2d();
   private Pose2d cachedDynamicFerry = new Pose2d();
 
+  
+
   public boolean isAiming = false;
 
   public boolean visionToggleAll = false;
