@@ -606,7 +606,7 @@ public class RobotContainer {
                 shootCmd,
                 Commands.sequence(
                     Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
-                        && aimAtHub.swerveInputStream.aimLock(Degrees.of(1.0)).getAsBoolean()),
+                        && aimAtHub.swerveInputStream.aimLock(Degrees.of(2.0)).getAsBoolean()),
                     Commands.parallel(
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
