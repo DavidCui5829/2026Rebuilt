@@ -22,7 +22,7 @@ public class AimAtHub extends Command {
     private final DoubleSupplier rightX;
 
     public AimAtHub(SwerveSubsystem swerveSubsystem, SwerveInputStream swerveInputStream,
-                    DoubleSupplier leftX, DoubleSupplier leftY, DoubleSupplier rightX) {
+            DoubleSupplier leftX, DoubleSupplier leftY, DoubleSupplier rightX) {
         this.swerveSubsystem = swerveSubsystem;
         this.swerveInputStream = swerveInputStream.copy();
         this.leftX = leftX;
@@ -35,29 +35,30 @@ public class AimAtHub extends Command {
     public void initialize() {
         swerveSubsystem.isAiming = true;
         swerveInputStream
-            .aim(swerveSubsystem::getCachedDynamicHubLocation)  // supplier, updates each loop
-            .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
-            .aimFeedforward(0.00045, 0.0001, 0.00022)
-            .aimHeadingOffset(Rotation2d.fromDegrees(180))
-            .aimHeadingOffset(true)
-            .aimWhile(true);
+
+                .aimHeadingOffset(Rotation2d.fromDegrees(180))
+                .aimHeadingOffset(true)
+                .aimWhile(true)
+                .aimLookahead(Time.ofBaseUnits(0.2, Seconds));
     }
 
     @Override
     public void execute() {
+        swerveInputStream
+                .aim(swerveSubsystem::getCachedDynamicHubLocation) // supplier, updates each loop
+                .aimFeedforward(0.00045, 0.0001, 0.00022);
         double leftMag = Math.hypot(leftX.getAsDouble(), leftY.getAsDouble());
         double rightMag = Math.abs(rightX.getAsDouble());
         swerveSubsystem.driveFieldOriented(swerveInputStream.get());
 
-
         // if ((leftMag + rightMag) > Constants.OperatorConstants.DEADBAND) {
-        //     SmartDashboard.putBoolean("Wheel Lock", false);
+        // SmartDashboard.putBoolean("Wheel Lock", false);
         // } else {
-        //     // swerveSubsystem.lock();
-        //     SmartDashboard.putBoolean("Wheel Lock", true);
+        // // swerveSubsystem.lock();
+        // SmartDashboard.putBoolean("Wheel Lock", true);
         // }
     }
-    
+
     @Override
     public boolean isFinished() {
         return false;
