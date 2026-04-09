@@ -608,6 +608,7 @@ public class RobotContainer {
                     Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
                         && aimAtHub.swerveInputStream.aimLock(Angle.ofBaseUnits(aimTolerance(shootCmd.distance), Degrees)).getAsBoolean()),
                     Commands.parallel(
+                        Commands.runOnce(() -> aimAtHub.readyToLock = true),
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand()
@@ -615,7 +616,11 @@ public class RobotContainer {
                             .onlyWhile(() -> !LT_Intake.getAsBoolean()),
                         m_intake.runIntakeCommand())
                         .finallyDo(
-                            () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1))
+                            () -> {
+                              m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1);
+                              aimAtHub.readyToLock = false;
+                            }
+                            )
                         .onlyWhile(aimAtHub.swerveInputStream.aimLock(Angle.ofBaseUnits(aimTolerance(shootCmd.distance), Degrees)))));
           } else {
             ControllAllPassing passCmd = makeVariablePass();
@@ -812,11 +817,11 @@ public class RobotContainer {
   }
 
   private double aimTolerance(double distance)
-    {
-      if(distance < 2) return 5.0;
-      else if (distance < 3.5) return 2.0;
-      return 1.0;
-    }
+  {
+    if(distance < 2) return 5.0;
+    else if (distance < 3.5) return 2.0;
+    return 1.0;
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

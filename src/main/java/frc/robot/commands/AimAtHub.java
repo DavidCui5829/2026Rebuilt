@@ -17,6 +17,8 @@ public class AimAtHub extends Command {
     public final SwerveSubsystem swerveSubsystem;
     public final SwerveInputStream swerveInputStream;
 
+    public boolean readyToLock = false;
+
     private final DoubleSupplier leftX;
     private final DoubleSupplier leftY;
     private final DoubleSupplier rightX;
@@ -51,12 +53,13 @@ public class AimAtHub extends Command {
         double rightMag = Math.abs(rightX.getAsDouble());
         swerveSubsystem.driveFieldOriented(swerveInputStream.get());
 
-        // if ((leftMag + rightMag) > Constants.OperatorConstants.DEADBAND) {
-        // SmartDashboard.putBoolean("Wheel Lock", false);
-        // } else {
-        // // swerveSubsystem.lock();
-        // SmartDashboard.putBoolean("Wheel Lock", true);
-        // }
+
+        if ((leftMag + rightMag) > (Constants.OperatorConstants.DEADBAND + 0.2) && !readyToLock) {
+            SmartDashboard.putBoolean("Wheel Lock", false);
+        } else {
+            // swerveSubsystem.lock();
+            SmartDashboard.putBoolean("Wheel Lock", true);
+        }
     }
 
     @Override
