@@ -163,7 +163,7 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
     public static final double PUSHOUT_RETRACTED_AGITATE_POS = 2; // it was 4.693
     public static final double PUSHOUT_EXTENDED_AGITATE_POS = 11; // TUNE THIS!!!
 
-    public static final double PUSHOUT_AGITATE_WAIT = 0.5; // seconds to wait between agitate cycles, TUNE THIS!!!
+    public static final double PUSHOUT_AGITATE_WAIT = 0.1; // seconds to wait between agitate cycles, TUNE THIS!!!
   }
 
   public static class ShooterConstants {
@@ -184,7 +184,7 @@ public static final double LOOKAHEAD_MAX_SEC   = 1.5;
     // PID Constants For Shooter
     public static final double p = 0.00024;
     public static final double i = 0.000;
-    public static final double d = 0.0001;
+    public static final double d = 0;
 
     // Feed-Forward Constants for Shooter
     public static final double s = 0.0;
