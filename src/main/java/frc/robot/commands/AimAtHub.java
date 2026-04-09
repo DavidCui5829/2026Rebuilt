@@ -37,7 +37,7 @@ public class AimAtHub extends Command {
         swerveInputStream
             .aim(swerveSubsystem::getCachedDynamicHubLocation)  // supplier, updates each loop
             .aimLookahead(Time.ofBaseUnits(0.2, Seconds))
-            .aimFeedforward(0.0002, 0.0001, 0.00022)
+            .aimFeedforward(0.00045, 0.0001, 0.00022)
             .aimHeadingOffset(Rotation2d.fromDegrees(180))
             .aimHeadingOffset(true)
             .aimWhile(true);
