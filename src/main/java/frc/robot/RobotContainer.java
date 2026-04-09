@@ -630,14 +630,14 @@ public class RobotContainer {
                 // drivebase.getDynamicFerryLocation())),
                 Commands.sequence(
                     Commands.waitUntil(() -> passCmd.isCASAtSpeed()
-                        && aimAtFerry.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees)).getAsBoolean()),
+                        && aimAtFerry.swerveInputStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
                     Commands.parallel(
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand()
                             .beforeStarting(Commands.waitSeconds(1.5)),
                         m_intake.runIntakeCommand())
-                        .onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(1, Degrees)))))
+                        .onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees)))))
                 .finallyDo(() -> m_shooter.setTargetRPMCommand(passCmd.RecordedidealHorizontalSpeed).withTimeout(1));
           }
         }, java.util.Collections.emptySet()));
