@@ -608,7 +608,10 @@ public class RobotContainer {
                     Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
                         && aimAtHub.swerveInputStream.aimLock(Angle.ofBaseUnits(aimTolerance(shootCmd.distance), Degrees)).getAsBoolean()),
                     Commands.parallel(
-                        Commands.runOnce(() -> aimAtHub.readyToLock = true),
+                        Commands.runOnce(() -> {
+                          aimAtHub.readyToLock = true;
+                          Logger.recordOutput("Aim/DynamicAimLockTolerance", aimTolerance(shootCmd.distance));
+                        }),
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand()
@@ -848,12 +851,13 @@ public class RobotContainer {
           followWithRecovery("LT Second Swipe", "Through LT"),
           makeAutoShootCommand());
     }
-    else if (selectedName.equals("Auto Correct Test")){
+    else if (selectedName.equals("Swipe Correction Test")){
       return Commands.sequence(
-        followWithRecovery("Auto Correct path 1", "Auto Correct path 2"),
+        followWithRecovery("LT Swipe", "Through LT"),
         makeAutoShootCommand()
       );
     }
+
     return selected;
   }
 
