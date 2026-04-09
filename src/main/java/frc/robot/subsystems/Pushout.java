@@ -76,16 +76,12 @@ public class Pushout extends SubsystemBase {
     {
         Debouncer currentDebouncer = new Debouncer(0.2);
 
-
-
-
         return new RunCommand(() -> PushoutController.setSetpoint(minVelocity, ControlType.kCurrent), this)
                 .until(() -> currentDebouncer.calculate((PushoutMotor.getEncoder().getVelocity() >= threshold)))
                 .finallyDo(() ->
                 {
                     StopPushout();
                 });
-
     }
 
     public Command PushCommand() {
