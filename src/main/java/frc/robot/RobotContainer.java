@@ -621,7 +621,7 @@ public class RobotContainer {
                               aimAtHub.readyToLock = false;
                             }
                             )
-                        .onlyWhile(aimAtHub.swerveInputStream.aimLock(Angle.ofBaseUnits(aimTolerance(shootCmd.distance), Degrees)))));
+                        .onlyWhile(() -> aimAtHub.swerveInputStream.aimLock(Angle.ofBaseUnits(aimTolerance(shootCmd.distance), Degrees)).getAsBoolean())));
           } else {
             ControllAllPassing passCmd = makeVariablePass();
             return Commands.parallel(
