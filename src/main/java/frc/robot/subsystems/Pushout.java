@@ -103,12 +103,12 @@ public class Pushout extends SubsystemBase {
         final double waitTime = PushoutConstants.PUSHOUT_AGITATE_WAIT;
         final double waitBetween = PushoutConstants.PUSHOUT_BETWEEN;
 
-        return Commands.sequence(
-            // push to 11 & pull to 8
-            runOnce(() -> PushoutController.setSetpoint(pushPositions[0], ControlType.kMAXMotionPositionControl)),
-            Commands.waitSeconds(waitTime),
-            runOnce(() -> PushoutController.setSetpoint(pullPositions[0], ControlType.kMAXMotionPositionControl)),
-            Commands.waitSeconds(waitTime),
+        Command agitate =  Commands.sequence(
+                // push to 11 & pull to 8
+                runOnce(() -> PushoutController.setSetpoint(pushPositions[0], ControlType.kMAXMotionPositionControl)),
+                Commands.waitSeconds(waitTime),
+                runOnce(() -> PushoutController.setSetpoint(pullPositions[0], ControlType.kMAXMotionPositionControl)),
+                Commands.waitSeconds(waitTime),
 
             Commands.waitSeconds(waitBetween),
 
@@ -133,6 +133,13 @@ public class Pushout extends SubsystemBase {
             Commands.idle(this)
 
         ).finallyDo(interrupted -> PushIntake());
+        agitate.addRequirements(this);
+        return agitate;
+    }
+
+    public Command runDefaultCommand()
+    {
+        return new RunCommand(() -> StopPushout(), this);
     }
 
     @Override
