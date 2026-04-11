@@ -641,6 +641,7 @@ public class RobotContainer {
                         && aimAtFerry.swerveInputStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
                     Commands.parallel(
                         m_hopper.runHopperToShooterCommand(),
+                        Commands.runOnce(() -> aimAtHub.swerveInputStream.scaleTranslation(1)),
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand()
                             .beforeStarting(Commands.waitSeconds(1.5)),
@@ -649,8 +650,6 @@ public class RobotContainer {
                 .finallyDo(() -> m_shooter.setTargetRPMCommand(passCmd.RecordedidealHorizontalSpeed).withTimeout(1));
           }
         }, java.util.Collections.emptySet()));
-    // RTtransfer_kick_shoot.onTrue(Commands.runOnce(() -> aimAtHub.swerveInputStream.scaleTranslation(0.4)));
-    // RTtransfer_kick_shoot.onFalse(Commands.runOnce(() -> aimAtHub.swerveInputStream.scaleTranslation(1)));
 
     // Intake
     LT_Intake.whileTrue(Commands.parallel(m_pushout.PushCommand(), m_intake.runIntakeCommand()));
