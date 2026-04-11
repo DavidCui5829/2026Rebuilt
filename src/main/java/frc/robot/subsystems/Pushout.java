@@ -101,6 +101,7 @@ public class Pushout extends SubsystemBase {
         final double[] pullPositions = { 8, 6, 4 }; // each time it pulls further out
         final double finalPos = 1; // pull to this position and idle there after agitation done
         final double waitTime = PushoutConstants.PUSHOUT_AGITATE_WAIT;
+        final double waitBetween = PushoutConstants.PUSHOUT_BETWEEN;
 
         return Commands.sequence(
             // push to 11 & pull to 8
@@ -109,17 +110,23 @@ public class Pushout extends SubsystemBase {
             runOnce(() -> PushoutController.setSetpoint(pullPositions[0], ControlType.kMAXMotionPositionControl)),
             Commands.waitSeconds(waitTime),
 
+            Commands.waitSeconds(waitBetween),
+
             // push to 9 & pull to 6
             runOnce(() -> PushoutController.setSetpoint(pushPositions[1], ControlType.kMAXMotionPositionControl)),
             Commands.waitSeconds(waitTime),
             runOnce(() -> PushoutController.setSetpoint(pullPositions[1], ControlType.kMAXMotionPositionControl)),
             Commands.waitSeconds(waitTime),
 
+            Commands.waitSeconds(waitBetween),
+
             // push to 7 & pull to 4
             runOnce(() -> PushoutController.setSetpoint(pushPositions[2], ControlType.kMAXMotionPositionControl)),
             Commands.waitSeconds(waitTime),
             runOnce(() -> PushoutController.setSetpoint(pullPositions[2], ControlType.kMAXMotionPositionControl)),
             Commands.waitSeconds(waitTime),
+
+            Commands.waitSeconds(waitBetween),
 
             // end pos
             runOnce(() -> PushoutController.setSetpoint(finalPos, ControlType.kMAXMotionPositionControl)),
