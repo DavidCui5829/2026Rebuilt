@@ -692,7 +692,7 @@ public class RobotContainer {
 
     LT_OP_1900Shot.whileTrue(
         Commands.parallel(
-            // keep running the VariableShoot command while we wait for the shooter to reach
+            // keep running the VariableShoot command while we wait for the shooter to reaal
             // speed
             m_shooter.shootFuelCommand(),
 
@@ -840,18 +840,7 @@ public class RobotContainer {
     String selectedName = loggedAutoChooser.get().getName();
 
     // put the main path (swipe) and the recovery path
-    if (selectedName.equals("#1 - Double Swipe Chalbert")) {
-      return Commands.sequence(
-          // First swipe — if knocked off, pathfinds to start of "Through LT" and follows
-          // it
-          followWithRecovery("LT Swipe", "Through LT"),
-          makeAutoShootCommand(),
-          // Second if knocked off, pathfinds to start of "Through LT Second Swipe" and
-          // follows it
-          followWithRecovery("LT Second Swipe", "Through LT"),
-          makeAutoShootCommand());
-    }
-    else if (selectedName.equals("Swipe Correction Test")){
+    if (selectedName.equals("Swipe Correction Test")){
       return Commands.sequence(
         followWithRecovery("LT Swipe", "Through LT"),
         makeAutoShootCommand()
