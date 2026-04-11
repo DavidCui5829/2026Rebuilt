@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.8476496110882685,
-        "y": 7.24065977933114
+        "x": 5.863409415121255,
+        "y": 7.2890727532097
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.095744968771169,
-        "y": 7.209858910898681
+        "x": 6.20534940014605,
+        "y": 7.288050261886543
       },
       "isLocked": false,
       "linkedName": "LT End"
@@ -20,31 +20,36 @@
         "y": 7.3332159745065795
       },
       "prevControl": {
-        "x": 5.228351432388869,
-        "y": 7.313545832179288
+        "x": 5.277430087954989,
+        "y": 7.292696923280051
       },
       "nextControl": {
-        "x": 4.694039974880508,
-        "y": 7.352372291223732
+        "x": 4.709643368280208,
+        "y": 7.364642967496386
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.994,
-        "y": 7.32
+        "x": 3.81910128388017,
+        "y": 7.327888730385164
       },
       "prevControl": {
-        "x": 3.7444251207041575,
-        "y": 7.305426749694539
+        "x": 3.569599103926866,
+        "y": 7.312119703828364
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "LT Shoot Spc"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 90.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -57,8 +62,8 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": 100.489
+    "velocity": 0.0,
+    "rotation": 103.34100000000001
   },
   "reversed": false,
   "folder": "Space City Paths",

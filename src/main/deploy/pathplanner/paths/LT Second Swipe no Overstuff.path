@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.9943835396956926,
-        "y": 7.32
+        "x": 3.81910128388017,
+        "y": 7.327888730385164
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.28953463642318,
-        "y": 7.29244086608348
+        "x": 4.114252380607656,
+        "y": 7.300329596468643
       },
       "isLocked": false,
       "linkedName": "LT Shoot Spc"
@@ -144,12 +144,12 @@
     },
     {
       "anchor": {
-        "x": 5.8476496110882685,
-        "y": 7.24065977933114
+        "x": 5.863409415121255,
+        "y": 7.2890727532097
       },
       "prevControl": {
-        "x": 6.084217649985291,
-        "y": 6.738235706310022
+        "x": 6.099977454018277,
+        "y": 6.786648680188582
       },
       "nextControl": null,
       "isLocked": false,
@@ -259,7 +259,7 @@
   "folder": "Space City Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 100.489
+    "rotation": 103.34100000000001
   },
   "useDefaultConstraints": false
 }

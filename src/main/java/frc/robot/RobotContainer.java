@@ -82,9 +82,6 @@ import frc.robot.subsystems.ObjectDetection;
  * trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  private AimAtHub aimAtHub;
-  private AimAtFerry aimAtFerry;
-  private PathConstraints autoConstraints;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   final CommandXboxController driverXbox = new CommandXboxController(0);
@@ -160,6 +157,9 @@ public class RobotContainer {
   SwerveInputStream aimAtHubStream;
   SwerveInputStream aimAtFerryStream;
 
+  private AimAtHub aimAtHub;
+  private AimAtFerry aimAtFerry;
+  private PathConstraints autoConstraints;
   // ========= DRIVER TRIGGERS ===========
   // Parallel Commands
   private Trigger RTtransfer_kick_shoot; // index to kicker, kick, agitate, and shoot only when up to speed
@@ -258,13 +258,13 @@ public class RobotContainer {
 
   private Command makeAutoShootCommand() {
     return Commands.defer(() -> {
-          Logger.recordOutput("Auto/ShootingAttempted", true);
-          Logger.recordOutput("Auto/InAllianceZone", isInAllianceZone());
-          if (isInAllianceZone()) {
-            ControlAllShooting shootCmd = new ControlAllShooting(drivebase::getCachedDynamicHubLocation, m_shooter,
-                drivebase::getPose, true);
-            return Commands.sequence(
-              Commands.parallel(
+      Logger.recordOutput("Auto/ShootingAttempted", true);
+      Logger.recordOutput("Auto/InAllianceZone", isInAllianceZone());
+      if (isInAllianceZone()) {
+        ControlAllShooting shootCmd = new ControlAllShooting(drivebase::getCachedDynamicHubLocation, m_shooter,
+            drivebase::getPose, true);
+        return Commands.sequence(
+            Commands.parallel(
                 shootCmd,
                 drivebase.driveFieldOriented(aimAtHubStream),
                 // Continuously update aim target for shoot-on-the-move
@@ -278,14 +278,17 @@ public class RobotContainer {
                         m_pushout.AgitateCommand()
                             .beforeStarting(Commands.waitSeconds(1.5)),
                         m_intake.runIntakeCommand()))
-                    .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)))
+                    .finallyDo(
+                        () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)))
                 .onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees))),
-              m_pushout.RetractCommand());
-          } else {
-            // Not in alliance zone: no-op command to satisfy return type
-            return Commands.none();
-          }
-        }, java.util.Collections.<edu.wpi.first.wpilibj2.command.Subsystem>emptySet()).withTimeout(5.75);};
+            m_pushout.RetractCommand());
+      } else {
+        // Not in alliance zone: no-op command to satisfy return type
+        return Commands.none();
+      }
+    }, java.util.Collections.<edu.wpi.first.wpilibj2.command.Subsystem>emptySet()).withTimeout(5.75);
+  };
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -328,23 +331,24 @@ public class RobotContainer {
         ControlAllShooting shootCmd = new ControlAllShooting(drivebase::getCachedDynamicHubLocation, m_shooter,
             drivebase::getPose, true);
         return Commands.sequence(
-          Commands.parallel(
-            shootCmd,
-            drivebase.driveFieldOriented(aimAtHubStream),
-            // Continuously update aim target for shoot-on-the-move
-            // Commands.run(() -> aimAtHubStream.aim(drivebase.getDynamicHubLocation())),
-            Commands.sequence(
-                Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
-                    && aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
-                Commands.parallel(
-                    m_hopper.runHopperToShooterCommand(),
-                    m_kicker.kickCommand(),
-                    m_pushout.AgitateCommand()
-                        .beforeStarting(Commands.waitSeconds(1.5)),
-                    m_intake.runIntakeCommand()))
-                .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)))
-            .onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees))),
-          m_pushout.RetractCommand());
+            Commands.parallel(
+                shootCmd,
+                drivebase.driveFieldOriented(aimAtHubStream),
+                // Continuously update aim target for shoot-on-the-move
+                // Commands.run(() -> aimAtHubStream.aim(drivebase.getDynamicHubLocation())),
+                Commands.sequence(
+                    Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
+                        && aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
+                    Commands.parallel(
+                        m_hopper.runHopperToShooterCommand(),
+                        m_kicker.kickCommand(),
+                        m_pushout.AgitateCommand()
+                            .beforeStarting(Commands.waitSeconds(1.5)),
+                        m_intake.runIntakeCommand()))
+                    .finallyDo(
+                        () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)))
+                .onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees))),
+            m_pushout.RetractCommand());
       } else {
         // Not in alliance zone: no-op command to satisfy return type
         return Commands.none();
@@ -606,7 +610,8 @@ public class RobotContainer {
                 shootCmd,
                 Commands.sequence(
                     Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
-                        && aimAtHub.swerveInputStream.aimLock(Angle.ofBaseUnits(aimTolerance(shootCmd.distance), Degrees)).getAsBoolean()),
+                        && aimAtHub.swerveInputStream
+                            .aimLock(Angle.ofBaseUnits(aimTolerance(shootCmd.distance), Degrees)).getAsBoolean()),
                     Commands.parallel(
                         Commands.runOnce(() -> {
                           aimAtHub.readyToLock = true;
@@ -622,9 +627,9 @@ public class RobotContainer {
                             () -> {
                               m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1);
                               aimAtHub.readyToLock = false;
-                            }
-                            )
-                        .onlyWhile(() -> aimAtHub.swerveInputStream.aimLock(Angle.ofBaseUnits(aimTolerance(shootCmd.distance), Degrees)).getAsBoolean())));
+                            })
+                        .onlyWhile(() -> aimAtHub.swerveInputStream
+                            .aimLock(Angle.ofBaseUnits(aimTolerance(shootCmd.distance), Degrees)).getAsBoolean())));
           } else {
             ControllAllPassing passCmd = makeVariablePass();
             return Commands.parallel(
@@ -801,7 +806,6 @@ public class RobotContainer {
       }
     }
 
-
     // driverXbox.x().whileTrue(Commands.runOnce(drivebase::lock,
     // drivebase).repeatedly());
     // driverXbox.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
@@ -819,10 +823,11 @@ public class RobotContainer {
     // }
   }
 
-  private double aimTolerance(double distance)
-  {
-    if(distance < 2) return 5.0;
-    else if (distance < 3.5) return 2.0;
+  private double aimTolerance(double distance) {
+    if (distance < 2)
+      return 5.0;
+    else if (distance < 3.5)
+      return 2.0;
     return 1.0;
   }
 
@@ -840,11 +845,10 @@ public class RobotContainer {
     String selectedName = loggedAutoChooser.get().getName();
 
     // put the main path (swipe) and the recovery path
-    if (selectedName.equals("Swipe Correction Test")){
+    if (selectedName.equals("Swipe Correction Test")) {
       return Commands.sequence(
-        followWithRecovery("LT Swipe", "Through LT"),
-        makeAutoShootCommand()
-      );
+          followWithRecovery("LT Swipe", "Through LT"),
+          makeAutoShootCommand());
     }
 
     return selected;

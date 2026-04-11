@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.9943835396956926,
-        "y": 7.32
+        "x": 3.81910128388017,
+        "y": 7.327888730385164
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.266117097388273,
-        "y": 7.351432425283848
+        "x": 4.09083484157275,
+        "y": 7.3593211556690115
       },
       "isLocked": false,
       "linkedName": "LT Shoot Spc"
@@ -239,7 +239,7 @@
   "folder": "DCMP Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 100.489
+    "rotation": 103.34100000000001
   },
   "useDefaultConstraints": false
 }
