@@ -641,7 +641,7 @@ public class RobotContainer {
                         && aimAtFerry.swerveInputStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
                     Commands.parallel(
                         m_hopper.runHopperToShooterCommand(),
-                        Commands.runOnce(() -> aimAtHub.swerveInputStream.scaleTranslation(1)),
+                     
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand()
                             .beforeStarting(Commands.waitSeconds(1.5)),
