@@ -111,11 +111,11 @@ public class Pushout extends SubsystemBase {
         final double waitBetween = PushoutConstants.PUSHOUT_BETWEEN;
 
         Command agitate =  Commands.sequence(
-                // push to 11 & pull to 8
-                runOnce(() -> PushoutController.setSetpoint(pushPositions[0], ControlType.kMAXMotionPositionControl)),
-                Commands.waitSeconds(waitTime),
-                runOnce(() -> PushoutController.setSetpoint(pullPositions[0], ControlType.kMAXMotionPositionControl)),
-                Commands.waitSeconds(waitTime),
+            // push to 11 & pull to 8
+            runOnce(() -> PushoutController.setSetpoint(pushPositions[0], ControlType.kMAXMotionPositionControl)),
+            Commands.waitSeconds(waitTime),
+            runOnce(() -> PushoutController.setSetpoint(pullPositions[0], ControlType.kMAXMotionPositionControl)),
+            Commands.waitSeconds(waitTime),
 
             Commands.waitSeconds(waitBetween),
 
@@ -148,6 +148,7 @@ public class Pushout extends SubsystemBase {
     {
         return new RunCommand(() -> StopPushout(), this);
     }
+    
 
     @Override
     public void periodic() { 
