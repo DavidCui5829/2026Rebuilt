@@ -1066,7 +1066,7 @@ public class SwerveSubsystem extends SubsystemBase {
   public Command lockCommand () {
     
     // Commands.waitSeconds(2);
-     return Commands.run(() -> swerveDrive.lockPose(), this);
+     return Commands.runOnce(this::lock, this).repeatedly();
   }
 
   public Command lockCommand(DoubleSupplier leftX, DoubleSupplier leftY, DoubleSupplier rightX, Supplier<ChassisSpeeds> fieldOrientedSpeeds) {
