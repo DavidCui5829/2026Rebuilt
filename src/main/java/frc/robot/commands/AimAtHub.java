@@ -7,6 +7,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.Time;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.util.function.DoubleSupplier;
@@ -55,7 +56,8 @@ public class AimAtHub extends Command {
 
         if ((leftMag + rightMag) < (Constants.OperatorConstants.DEADBAND + 0.2) && readyToLock) {
             SmartDashboard.putBoolean("Wheel Lock", true);
-            // swerveSubsystem.lock();
+            Commands.waitSeconds(0.5);
+            swerveSubsystem.lock();
         } else {
             SmartDashboard.putBoolean("Wheel Lock", false);
         }
