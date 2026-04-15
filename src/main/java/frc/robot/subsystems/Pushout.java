@@ -68,6 +68,10 @@ public class Pushout extends SubsystemBase {
         PushoutController.setSetpoint(PushoutConstants.PUSHOUT_RETRACTED_POS, ControlType.kMAXMotionPositionControl);
     }
 
+    public void FullyRetract() {
+        PushoutController.setSetpoint(PushoutConstants.FULLY_RETRACTED_POS, ControlType.kMAXMotionPositionControl);
+    }
+
     public void StopPushout() {
         PushoutMotor.set(0);
     }
@@ -92,8 +96,11 @@ public class Pushout extends SubsystemBase {
 
     public Command RetractCommand() {
         return this.runOnce(() -> RetractIntake());
-                // .finallyDo(interrupted -> StopPushout())
                 
+    }
+
+    public Command FullyRetractCommand() {
+        return this.runOnce(() -> FullyRetract());
     }
 
     public Command AgitateCommand() {
