@@ -3,12 +3,10 @@
   "robotLength": 0.87,
   "holonomicMode": true,
   "pathFolders": [
-    "McAllen Paths",
     "DCMP Paths",
     "Space City Paths"
   ],
   "autoFolders": [
-    "118 Destroyer",
     "DCMP Autos"
   ],
   "defaultMaxVel": 3.5,
