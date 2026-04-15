@@ -1165,8 +1165,8 @@ public class SwerveSubsystem extends SubsystemBase {
 
   public void setAimLocations()
   {
-    cachedDynamicHub = getCachedDynamicHubLocation();
-    cachedDynamicFerry = getCachedDynamicFerryLocation();
+    cachedDynamicHub = getDynamicHubLocation();
+    cachedDynamicFerry = getDynamicFerryLocation();
   }
 
   private Alliance getAlliance() {
