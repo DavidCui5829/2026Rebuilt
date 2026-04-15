@@ -51,10 +51,9 @@ public class AimAtHub extends Command {
     public void execute() {
 
         double leftMag = Math.hypot(leftX.getAsDouble(), leftY.getAsDouble());
-        double rightMag = Math.abs(rightX.getAsDouble());
         swerveSubsystem.driveFieldOriented(swerveInputStream.get());
 
-        if ((leftMag + rightMag) < (Constants.OperatorConstants.DEADBAND + 0.2) && readyToLock) {
+        if ((leftMag) < (Constants.OperatorConstants.DEADBAND) && readyToLock) {
             SmartDashboard.putBoolean("Wheel Lock", true);
             Commands.waitSeconds(0.5);
             swerveSubsystem.lock();
