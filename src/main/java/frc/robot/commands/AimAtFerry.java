@@ -22,6 +22,8 @@ public class AimAtFerry extends Command {
   public void initialize() {
     swerveSubsystem.isAiming = true;
     swerveInputStream
+        .aim(swerveSubsystem::getCachedDynamicFerryLocation)
+        .aimFeedforward(0.00045, 0.0001, 0.00022)
         .aimHeadingOffset(Rotation2d.fromDegrees(180))
         .aimHeadingOffset(true)
         .aimWhile(true);
@@ -30,13 +32,7 @@ public class AimAtFerry extends Command {
   @Override
   public void execute() {
     // shoot at the nearest ferry pos
-    Pose2d ferry = swerveSubsystem.getCachedDynamicFerryLocation();
-    swerveInputStream.aim(() -> ferry)
-        .aimFeedforward(0.00045, 0.0001, 0.00022);
-
-    swerveSubsystem.getField()
-        .getObject("AimTarget")
-        .setPose(ferry);
+    // Pose2d ferry = swerveSubsystem.getCachedDynamicFerryLocation();
 
     swerveSubsystem.driveFieldOriented(swerveInputStream.get());
   }
@@ -50,6 +46,6 @@ public class AimAtFerry extends Command {
   public void end(boolean interrupted) {
     swerveSubsystem.isAiming = false;
     swerveInputStream.aimWhile(false);
-    swerveSubsystem.getField().getObject("AimTarget").setPoses(List.of());
+    // swerveSubsystem.getField().getObject("AimTarget").setPoses(List.of());
   }
 }
