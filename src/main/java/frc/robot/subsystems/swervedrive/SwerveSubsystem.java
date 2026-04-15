@@ -1064,8 +1064,9 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
   public Command lockCommand () {
+    SmartDashboard.putBoolean("Wheel Lock", true);
     Commands.waitSeconds(2);
-     return Commands.run(() -> lock(), this);
+     return Commands.run(() -> swerveDrive.lockPose(), this);
   }
 
   public Command lockCommand(DoubleSupplier leftX, DoubleSupplier leftY, DoubleSupplier rightX, Supplier<ChassisSpeeds> fieldOrientedSpeeds) {
