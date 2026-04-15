@@ -1059,13 +1059,13 @@ public class SwerveSubsystem extends SubsystemBase {
    * Lock the swerve drive to prevent it from moving.
    */
   public void lock() {
-    
+    SmartDashboard.putBoolean("Wheel Lock", true);
     swerveDrive.lockPose();
   }
 
   public Command lockCommand () {
-    SmartDashboard.putBoolean("Wheel Lock", true);
-    Commands.waitSeconds(2);
+    
+    // Commands.waitSeconds(2);
      return Commands.run(() -> swerveDrive.lockPose(), this);
   }
 
