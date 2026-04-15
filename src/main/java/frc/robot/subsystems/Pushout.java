@@ -80,7 +80,7 @@ public class Pushout extends SubsystemBase {
     {
         Debouncer currentDebouncer = new Debouncer(0.2);
 
-        return new RunCommand(() -> PushoutController.setSetpoint(minVelocity, ControlType.kCurrent), this)
+        return new RunCommand(() -> PushoutController.setSetpoint(minVelocity, ControlType.kMAXMotionVelocityControl), this)
                 .until(() -> currentDebouncer.calculate((PushoutMotor.getEncoder().getVelocity() >= threshold)))
                 .finallyDo(() ->
                 {
