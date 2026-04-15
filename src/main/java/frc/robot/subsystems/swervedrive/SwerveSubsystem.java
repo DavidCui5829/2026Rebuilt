@@ -1059,7 +1059,13 @@ public class SwerveSubsystem extends SubsystemBase {
    * Lock the swerve drive to prevent it from moving.
    */
   public void lock() {
+    
     swerveDrive.lockPose();
+  }
+
+  public Command lockCommand () {
+    Commands.waitSeconds(2);
+     return Commands.run(() -> lock());
   }
 
   public Command lockCommand(DoubleSupplier leftX, DoubleSupplier leftY, DoubleSupplier rightX, Supplier<ChassisSpeeds> fieldOrientedSpeeds) {

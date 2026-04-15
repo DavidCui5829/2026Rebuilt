@@ -55,8 +55,7 @@ public class AimAtHub extends Command {
 
         if ((leftMag) < (Constants.OperatorConstants.DEADBAND) && readyToLock) {
             SmartDashboard.putBoolean("Wheel Lock", true);
-            Commands.waitSeconds(2);
-            swerveSubsystem.lock();
+            swerveSubsystem.lockCommand();
         } else {
             SmartDashboard.putBoolean("Wheel Lock", false);
         }

@@ -703,11 +703,7 @@ public class RobotContainer {
                       m_pushout.AgitateCommand()
                           .beforeStarting(Commands.waitSeconds(1.5))
                           .onlyWhile(() -> !LT_Intake.getAsBoolean()),
-                      drivebase.lockCommand(
-                          driverXbox::getLeftX,
-                          driverXbox::getLeftY,
-                          driverXbox::getRightX,
-                          driveAngularVelocity::get),
+                 
                       m_intake.runIntakeCommand()))
                   .finallyDo(
                       () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
