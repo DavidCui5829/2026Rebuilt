@@ -1065,7 +1065,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
   public Command lockCommand () {
     Commands.waitSeconds(2);
-     return Commands.run(() -> lock());
+     return Commands.run(() -> lock(), this);
   }
 
   public Command lockCommand(DoubleSupplier leftX, DoubleSupplier leftY, DoubleSupplier rightX, Supplier<ChassisSpeeds> fieldOrientedSpeeds) {
