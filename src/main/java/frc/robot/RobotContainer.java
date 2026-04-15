@@ -619,7 +619,7 @@ public class RobotContainer {
                         }),
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
-                        m_pushout.HomingCommand(-20).beforeStarting(Commands.waitSeconds(2.25)).repeatedly()
+                        m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(2.25))
                             .onlyWhile(() -> !LT_Intake.getAsBoolean()),
                         m_intake.runIntakeCommand())
                         .finallyDo(
@@ -760,7 +760,7 @@ public class RobotContainer {
 
     m_intake.setDefaultCommand(m_intake.runDefaultCommand());
     m_kicker.setDefaultCommand(m_kicker.runDefaultCommand());
-    m_pushout.setDefaultCommand(m_pushout.runDefaultCommand());
+    // m_pushout.setDefaultCommand(m_pushout.runDefaultCommand());
     m_hopper.setDefaultCommand(m_hopper.runDefaultCommand());
 
     if (RobotBase.isSimulation()) {
