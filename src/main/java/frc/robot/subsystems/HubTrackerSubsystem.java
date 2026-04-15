@@ -22,6 +22,8 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import edu.wpi.first.wpilibj.util.Color;
+
 public class HubTrackerSubsystem extends SubsystemBase
 {
 
@@ -32,6 +34,11 @@ public class HubTrackerSubsystem extends SubsystemBase
     private FieldObject2d traj;
 
     final CommandXboxController driverController;
+
+    boolean active = true;
+
+    Color GREEN = Color.kGreen;
+    Color RED = Color.kRed;
 
     private Pose2d hubPose;
     private double radius = 0.5; // radius to represent time left (circle gets smaller when shift ending)
@@ -143,6 +150,16 @@ public class HubTrackerSubsystem extends SubsystemBase
   {
     int seconds = (time - matchTime);
     SmartDashboard.putNumber("TimeLeft", seconds);
+    if(seconds <= 5)
+    {
+      if(x == 1) SmartDashboard.putString("Hub Color For Xavier", GREEN.toHexString());
+      else SmartDashboard.putString("Hub Color For Xavier", RED.toHexString());
+    }
+    else
+    {
+      if(active) SmartDashboard.putString("Hub Color For Xavier", GREEN.toHexString());
+      else SmartDashboard.putString("Hub Color For Xavier", RED.toHexString());
+    }
     radius = seconds / shiftTime;
     vibrate(radius);
   }
@@ -187,7 +204,7 @@ public class HubTrackerSubsystem extends SubsystemBase
     Pose2d robotPose = drivebase.getPose();
 
     field.setRobotPose(robotPose);
-    boolean active = isHubActive();
+    active = isHubActive();
 
     x = (x == 1) ? 0 : 1;
 

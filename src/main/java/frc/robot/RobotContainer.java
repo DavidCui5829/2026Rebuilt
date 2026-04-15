@@ -847,14 +847,14 @@ public class RobotContainer {
     if (selected == null)
       return Commands.none();
 
-    String selectedName = loggedAutoChooser.get().getName();
+    // String selectedName = loggedAutoChooser.get().getName();
 
     // put the main path (swipe) and the recovery path
-    if (selectedName.equals("Swipe Correction Test")) {
-      return Commands.sequence(
-          followWithRecovery("LT Swipe", "Through LT"),
-          makeAutoShootCommand());
-    }
+    // if (selectedName.equals("Swipe Correction Test")) {
+    //   return Commands.sequence(
+    //       followWithRecovery("LT Swipe", "Through LT"),
+    //       makeAutoShootCommand());
+    // }
 
     return selected;
   }
