@@ -1165,6 +1165,9 @@ public class SwerveSubsystem extends SubsystemBase {
 
   public void setAimLocations()
   {
+    // Live-compute (not the cached getters — those just return the stale field
+    // and make this a self-assignment, which is what caused the "no target" error
+    // on first trigger press).
     cachedDynamicHub = getDynamicHubLocation();
     cachedDynamicFerry = getDynamicFerryLocation();
   }

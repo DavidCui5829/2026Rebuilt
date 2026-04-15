@@ -106,6 +106,18 @@ public class Robot extends LoggedRobot {
       DriverStation.silenceJoystickConnectionWarning(true);
     }
 
+    // Pre-load classes used in deferred RT-trigger bindings so the first in-match
+    // press doesn't pay ~58ms of first-use class loading (WPILib units system,
+    // InterpolatingDoubleTreeMap, SwerveInputStream.copy, command composition).
+    // Construct-only — nothing is scheduled, no motors touched, no side effects.
+    try {
+      if (!Constants.USE_DRIVE_ONLY && !Constants.USE_SHOOTER_ONLY) {
+        m_robotContainer.warmupCommands();
+      }
+    } catch (Exception e) {
+      Logger.recordOutput("Init/WarmupError", e.getMessage());
+    }
+
   }
 
   /**

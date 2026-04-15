@@ -454,6 +454,26 @@ public class RobotContainer {
   }
 
   /**
+   * Constructs throwaway instances of the commands that fire from deferred RT bindings
+   * so first-use class loading (WPILib units system, InterpolatingDoubleTreeMap,
+   * SwerveInputStream.copy, command composition) happens at robot boot instead of
+   * mid-match. Nothing is scheduled — zero runtime side effects. Side-effect-free
+   * because ControlAllShooting's no-arg-requireShooter overload skips addRequirements,
+   * and the command constructors only assign fields / copy the input stream.
+   */
+  public void warmupCommands() {
+    @SuppressWarnings("unused")
+    ControlAllShooting shootWarm = makeVariableShoot();
+    @SuppressWarnings("unused")
+    ControllAllPassing passWarm = makeVariablePass();
+    @SuppressWarnings("unused")
+    AimAtHub aimHubWarm = new AimAtHub(drivebase, driveAngularVelocity,
+        dc()::getLeftX, dc()::getLeftY, dc()::getRightX);
+    @SuppressWarnings("unused")
+    AimAtFerry aimFerryWarm = new AimAtFerry(drivebase, driveAngularVelocity);
+  }
+
+  /**
    * Use this method to define your trigger->command mappings. Triggers can be
    * created via the
    * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
