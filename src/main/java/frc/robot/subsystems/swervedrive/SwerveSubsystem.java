@@ -1163,6 +1163,12 @@ public class SwerveSubsystem extends SubsystemBase {
       return getPose().getY() > 4;
   }
 
+  public void setAimLocations()
+  {
+    cachedDynamicHub = getCachedDynamicHubLocation();
+    cachedDynamicFerry = getCachedDynamicFerryLocation();
+  }
+
   private Alliance getAlliance() {
     return DriverStation.getAlliance().orElse(Alliance.Red);
   }

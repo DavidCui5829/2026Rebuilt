@@ -20,6 +20,7 @@ public class AimAtFerry extends Command {
 
   @Override
   public void initialize() {
+    swerveSubsystem.setAimLocations();
     swerveSubsystem.isAiming = true;
     swerveInputStream
         .aim(swerveSubsystem::getCachedDynamicFerryLocation)

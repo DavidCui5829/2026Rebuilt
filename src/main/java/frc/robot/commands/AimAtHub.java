@@ -35,6 +35,7 @@ public class AimAtHub extends Command {
 
     @Override
     public void initialize() {
+        swerveSubsystem.setAimLocations();
         swerveSubsystem.isAiming = true;
         swerveInputStream
                 .aim(swerveSubsystem::getCachedDynamicHubLocation) // supplier, updates each loop
