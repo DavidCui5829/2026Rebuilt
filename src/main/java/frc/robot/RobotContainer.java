@@ -58,6 +58,7 @@ import frc.robot.util.HubTracker;
 import static edu.wpi.first.units.Units.Seconds;
 
 import java.io.File;
+import java.lang.module.ModuleDescriptor.Requires;
 import java.util.function.BooleanSupplier;
 
 // import swervelib.SwerveDrive;
@@ -324,8 +325,10 @@ public class RobotContainer {
 
     // shooter
     NamedCommands.registerCommand("Control All Shooting", Commands.defer(() -> {
-      ControlAllShooting shootCmd = new ControlAllShooting(drivebase::getDynamicHubLocation, m_shooter,
-          drivebase::getPose, true);
+      // ControlAllShooting shootCmd = new ControlAllShooting(drivebase::getDynamicHubLocation, m_shooter,
+      //     drivebase::getPose, true);
+        ControlAllShooting shootCmd = makeVariableShoot();
+    
       return Commands.parallel(
           shootCmd,
           drivebase.driveFieldOriented(aimAtHubStream),
