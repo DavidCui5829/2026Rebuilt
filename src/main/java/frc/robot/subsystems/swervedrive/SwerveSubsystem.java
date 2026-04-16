@@ -176,17 +176,17 @@ public class SwerveSubsystem extends SubsystemBase {
     frontMegatagChooser.addOption("MegaTag 1", 1);
     frontMegatagChooser.setDefaultOption("MegaTag 2", 2);
 
-    SmartDashboard.putData("MegaTag Chooser", frontMegatagChooser);
+    SmartDashboard.putData("Front MegaTag Chooser", frontMegatagChooser);
 
     backMegatagChooser.addOption("MegaTag 1", 1);
     backMegatagChooser.setDefaultOption("MegaTag 2", 2);
 
-    SmartDashboard.putData("MegaTag Chooser", backMegatagChooser);
+    SmartDashboard.putData("Back MegaTag Chooser", backMegatagChooser);
 
     leftMegatagChooser.addOption("MegaTag 1", 1);
     leftMegatagChooser.setDefaultOption("MegaTag 2", 2);
 
-    SmartDashboard.putData("MegaTag Chooser", leftMegatagChooser);
+    SmartDashboard.putData("Left MegaTag Chooser", leftMegatagChooser);
 
 
     // Set up bleft Chooser

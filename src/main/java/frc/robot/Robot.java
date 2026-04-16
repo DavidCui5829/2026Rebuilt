@@ -202,9 +202,9 @@ public class Robot extends LoggedRobot {
     LimelightHelpers.SetThrottle(LimelightConstants.LIMELIGHT_FRONT, 0);
     LimelightHelpers.SetThrottle(LimelightConstants.LIMELIGHT_BACK, 0);
     LimelightHelpers.SetThrottle(LimelightConstants.LIMELIGHT_LEFT, 0);
-    LimelightHelpers.SetIMUMode(LimelightConstants.LIMELIGHT_FRONT, 4); // Use internal IMU + external IMU
-    LimelightHelpers.SetIMUMode(LimelightConstants.LIMELIGHT_BACK, 4); // Use internal IMU + external IMU
-    LimelightHelpers.SetIMUMode(LimelightConstants.LIMELIGHT_LEFT, 4); // Use internal IMU + external IMU
+    LimelightHelpers.SetIMUMode(LimelightConstants.LIMELIGHT_FRONT, 3); // Use internal IMU + external IMU
+    LimelightHelpers.SetIMUMode(LimelightConstants.LIMELIGHT_BACK, 3); // Use internal IMU + external IMU
+    LimelightHelpers.SetIMUMode(LimelightConstants.LIMELIGHT_LEFT, 3); // Use internal IMU + external IMU
     // // Set the complementary filter alpha (optional, default is 0.001)
     LimelightHelpers.SetIMUAssistAlpha(LimelightConstants.LIMELIGHT_FRONT, 0.1);
     LimelightHelpers.SetIMUAssistAlpha(LimelightConstants.LIMELIGHT_BACK, 0.1);
@@ -241,15 +241,15 @@ public class Robot extends LoggedRobot {
       m_robotContainer.setUseMegaTag2(true); // Switch to MT2 for accurate x/y with calibrated gyro
     }
     LimelightHelpers.SetThrottle(LimelightConstants.LIMELIGHT_FRONT, 0);
-    LimelightHelpers.SetIMUMode(LimelightConstants.LIMELIGHT_FRONT, 4); // Use internal IMU + external IMU
+    LimelightHelpers.SetIMUMode(LimelightConstants.LIMELIGHT_FRONT, 3); // Use internal IMU + external IMU
     // // Set the complementary filter alpha (optional, default is 0.001)
     LimelightHelpers.SetIMUAssistAlpha(LimelightConstants.LIMELIGHT_FRONT, 0.1);
     LimelightHelpers.SetThrottle(LimelightConstants.LIMELIGHT_BACK, 0);
-    LimelightHelpers.SetIMUMode(LimelightConstants.LIMELIGHT_BACK, 4); // Use internal IMU + external IMU
+    LimelightHelpers.SetIMUMode(LimelightConstants.LIMELIGHT_BACK, 3); // Use internal IMU + external IMU
     // // Set the complementary filter alpha (optional, default is 0.001)
     LimelightHelpers.SetIMUAssistAlpha(LimelightConstants.LIMELIGHT_BACK, 0.1);
     LimelightHelpers.SetThrottle(LimelightConstants.LIMELIGHT_LEFT, 0);
-    LimelightHelpers.SetIMUMode(LimelightConstants.LIMELIGHT_LEFT, 4); // Use internal IMU + external IMU
+    LimelightHelpers.SetIMUMode(LimelightConstants.LIMELIGHT_LEFT, 3); // Use internal IMU + external IMU
     // // Set the complementary filter alpha (optional, default is 0.001)
     LimelightHelpers.SetIMUAssistAlpha(LimelightConstants.LIMELIGHT_LEFT, 0.1);
 
