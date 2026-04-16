@@ -23,6 +23,7 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.Time;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.commands.AimAtHub;
 import frc.robot.commands.AimAtFerry;
 import java.util.Optional;
@@ -633,10 +634,15 @@ public class RobotContainer {
                         && aimAtHub.swerveInputStream
                             .aimLock(Angle.ofBaseUnits(aimTolerance(shootCmd.distance), Degrees)).getAsBoolean()),
                     Commands.parallel(
-                        Commands.runOnce(() -> {
-                          aimAtHub.readyToLock = true;
-                          Logger.recordOutput("Aim/DynamicAimLockTolerance", aimTolerance(shootCmd.distance));
-                        }),
+                        Commands.sequence(
+                            Commands.runOnce(() -> Logger.recordOutput(
+                                "Aim/ShotParallelStartedAt", Timer.getFPGATimestamp())),
+                            Commands.waitSeconds(1.0),
+                            Commands.runOnce(() -> {
+                              aimAtHub.readyToLock = true;
+                              Logger.recordOutput("Aim/DynamicAimLockTolerance", aimTolerance(shootCmd.distance));
+                              Logger.recordOutput("Aim/ReadyToLockFiredAt", Timer.getFPGATimestamp());
+                            })),
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand()

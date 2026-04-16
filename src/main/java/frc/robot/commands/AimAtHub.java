@@ -55,10 +55,8 @@ public class AimAtHub extends Command {
         swerveSubsystem.driveFieldOriented(swerveInputStream.get());
 
         if ((leftMag) < (Constants.OperatorConstants.DEADBAND) && readyToLock) {
-       
-           
-            // Commands.runOnce(swerveSubsystem::lock, swerveSubsystem).beforeStarting(Commands.waitSeconds(1));
-          
+            swerveSubsystem.lock();
+            SmartDashboard.putBoolean("Wheel Lock", true);
         } else {
             SmartDashboard.putBoolean("Wheel Lock", false);
         }
