@@ -71,6 +71,6 @@ public class AimAtHub extends Command {
     public void end(boolean interrupted) {
         swerveSubsystem.isAiming = false;
         swerveInputStream.aimWhile(false);
-        swerveSubsystem.stop();
+        // swerveSubsystem.stop();
     }
 }

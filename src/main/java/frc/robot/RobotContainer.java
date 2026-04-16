@@ -155,12 +155,14 @@ public class RobotContainer {
   // Derive the heading axis with math!
   SwerveInputStream driveDirectAngleKeyboard;
 
-  SwerveInputStream aimAtHubStream;
-  SwerveInputStream aimAtFerryStream;
+
 
   private AimAtHub aimAtHub;
   private AimAtFerry aimAtFerry;
   private PathConstraints autoConstraints;
+
+    SwerveInputStream aimAtHubStream;
+  SwerveInputStream aimAtFerryStream;
   // ========= DRIVER TRIGGERS ===========
   // Parallel Commands
   private Trigger RTtransfer_kick_shoot; // index to kicker, kick, agitate, and shoot only when up to speed
@@ -639,7 +641,7 @@ public class RobotContainer {
                                 "Aim/ShotParallelStartedAt", Timer.getFPGATimestamp())),
                             Commands.waitSeconds(1.0),
                             Commands.runOnce(() -> {
-                              aimAtHub.readyToLock = true;
+                              // aimAtHub.readyToLock = true;
                               Logger.recordOutput("Aim/DynamicAimLockTolerance", aimTolerance(shootCmd.distance));
                               Logger.recordOutput("Aim/ReadyToLockFiredAt", Timer.getFPGATimestamp());
                             })),
