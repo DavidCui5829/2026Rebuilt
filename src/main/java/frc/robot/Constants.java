@@ -180,7 +180,7 @@ public final class Constants {
 
     public static final double ALLIANCE_IDLE_RPM = -1000;
     public static final double ALLIANCE_AUTO_RPM = -1900;
-    public static final double NEUTRAL_IDLE_RPM = -500;
+    public static final double NEUTRAL_IDLE_RPM = -0;
 
     // PID Constants For Shooter
     public static final double p = 0.00024;
