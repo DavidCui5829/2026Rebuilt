@@ -216,8 +216,8 @@ public final class Constants {
     public static final int KICKER_LEFT_ID = 13;
     public static final int KICKER_RIGHT_ID = 14;
 
-    public static final double KICKER_REVERSE_RPM_TARGET = -10000; // RPM
-    public static final double KICKER_RPM_TARGET = 10000; // RPM
+    public static final double KICKER_REVERSE_RPM_TARGET = -14000; // RPM
+    public static final double KICKER_RPM_TARGET = 14000; // RPM
 
     // PID Constants
     public static final double p = 0.0002355;
@@ -241,8 +241,8 @@ public final class Constants {
     public static final double TWINDEXER_RIGHT_RPM = -0.8;
     public static final double TWINDEXER_LEFT_RPM = 0.8;
 
-    public static final double REVERSE_TWINDEXER_RIGHT_RPM = -9000;
-    public static final double REVERSE_TWINDEXER_LEFT_RPM = 9000;
+    public static final double REVERSE_TWINDEXER_RIGHT_RPM = -14000;
+    public static final double REVERSE_TWINDEXER_LEFT_RPM = 14000;
 
     // PID Constants
     public static final double p = 0.0002;
