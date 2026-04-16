@@ -325,7 +325,7 @@ public class RobotContainer {
 
     // shooter
     NamedCommands.registerCommand("Control All Shooting", Commands.defer(() -> {
-      ControlAllShooting shootCmd = new ControlAllShooting(drivebase::getDynamicHubLocation, m_shooter,
+      ControlAllShooting shootCmd = new ControlAllShooting(drivebase::getCachedDynamicHubLocation, m_shooter,
           drivebase::getPose, true);
  
       return Commands.parallel(
