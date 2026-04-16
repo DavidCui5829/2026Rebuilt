@@ -87,9 +87,11 @@ public class SwerveSubsystem extends SubsystemBase {
   private double lastYawRadians = 0.0;
   private double lastYawTimeSec = 0.0;
 
-  public int frontMegatagNumber = 1;
-  public int backMegatagNumber = 1;
-  public int leftMegatagNumber = 1;
+  public int allMegaTagNumber = 2;
+
+  public int frontMegatagNumber = 2;
+  public int backMegatagNumber = 2;
+  public int leftMegatagNumber = 2;
 
   public boolean useMegaTag2 = false; // MT1 during disabled, MT2 during auto/teleop
   
@@ -123,6 +125,8 @@ public class SwerveSubsystem extends SubsystemBase {
   private final SendableChooser<Integer> backMegatagChooser = new SendableChooser<Integer>();
 
   private final SendableChooser<Integer> leftMegatagChooser = new SendableChooser<Integer>();
+
+  private final SendableChooser<Integer> AllMegatagChooser = new SendableChooser<Integer>();
 
   /**
    * Initialize {@link SwerveDrive} with the directory provided.
@@ -187,6 +191,11 @@ public class SwerveSubsystem extends SubsystemBase {
     leftMegatagChooser.setDefaultOption("MegaTag 2", 2);
 
     SmartDashboard.putData("Left MegaTag Chooser", leftMegatagChooser);
+
+    AllMegatagChooser.addOption("MegaTag 1", 1);
+    AllMegatagChooser.setDefaultOption("MegaTag 2", 2);
+
+    SmartDashboard.putData("MegaTag Chooser", AllMegatagChooser);
 
 
     // Set up bleft Chooser
@@ -264,9 +273,19 @@ public class SwerveSubsystem extends SubsystemBase {
     // useBRightLimelight = limelightBRightChooser.getSelected();
     // useClimberLimelight = limelightClimberChooser.getSelected();
 
+
     frontMegatagNumber = frontMegatagChooser.getSelected();
     backMegatagNumber = backMegatagChooser.getSelected();
     leftMegatagNumber = leftMegatagChooser.getSelected();
+
+    if(AllMegatagChooser.getSelected() != allMegaTagNumber)
+    {
+      allMegaTagNumber = AllMegatagChooser.getSelected();
+
+      frontMegatagNumber = allMegaTagNumber;
+      backMegatagNumber = allMegaTagNumber;
+      leftMegatagNumber = allMegaTagNumber;
+    }
 
     updateOdometry();
     // -----------------------
