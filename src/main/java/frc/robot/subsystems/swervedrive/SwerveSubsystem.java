@@ -87,9 +87,9 @@ public class SwerveSubsystem extends SubsystemBase {
   private double lastYawRadians = 0.0;
   private double lastYawTimeSec = 0.0;
 
-  public int frontMegatagNumber = 2;
-  public int backMegatagNumber = 2;
-  public int leftMegatagNumber = 2;
+  public int frontMegatagNumber = 1;
+  public int backMegatagNumber = 1;
+  public int leftMegatagNumber = 1;
 
   public boolean useMegaTag2 = false; // MT1 during disabled, MT2 during auto/teleop
   
