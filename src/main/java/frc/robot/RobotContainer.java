@@ -327,21 +327,24 @@ public class RobotContainer {
     NamedCommands.registerCommand("Control All Shooting", Commands.defer(() -> {
       ControlAllShooting shootCmd = new ControlAllShooting(drivebase::getCachedDynamicHubLocation, m_shooter,
           drivebase::getPose, true);
- 
-      return Commands.parallel(
-          shootCmd,
-          drivebase.driveFieldOriented(aimAtHubStream),
-          // Continuously update aim target for shoot-on-the-move
-          // Commands.run(() -> aimAtHubStream.aim(drivebase.getDynamicHubLocation())),
-          Commands.sequence(
-              Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
-                  && aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
-              Commands.parallel(
-                  m_hopper.runHopperToShooterCommand(),
-                  m_kicker.kickCommand(),
-                  m_pushout.AgitateCommand(),
-                  m_intake.runIntakeCommand()))
-              .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
+      return Commands.sequence(
+          Commands.runOnce(() -> {
+            drivebase.setAimLocations();
+            drivebase.isAiming = true;
+          }),
+          Commands.parallel(
+              shootCmd,
+              drivebase.driveFieldOriented(aimAtHubStream),
+              Commands.sequence(
+                  Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
+                      && aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
+                  Commands.parallel(
+                      m_hopper.runHopperToShooterCommand(),
+                      m_kicker.kickCommand(),
+                      m_pushout.AgitateCommand(),
+                      m_intake.runIntakeCommand()))
+                  .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1))))
+          .finallyDo(() -> drivebase.isAiming = false);
     }, java.util.Collections.emptySet()).withTimeout(5.75));
 
     NamedCommands.registerCommand("intake", m_intake.runIntakeCommand());
