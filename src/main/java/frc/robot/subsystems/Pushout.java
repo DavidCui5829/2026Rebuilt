@@ -77,7 +77,7 @@ public class Pushout extends SubsystemBase {
     }
 
     public void PushoutDutycyle() {
-        PushoutMotor.set(0.5);
+        PushoutMotor.set(0.8);
     }
 
     public Command HomingCommand(double threshold)
