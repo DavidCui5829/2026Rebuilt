@@ -114,36 +114,52 @@ public class Pushout extends SubsystemBase {
     }
 
     public Command AgitateCommand() {
-        final double[] pushPositions = { 11, 9, 7}; // each time it pushes less far in
-        final double[] pullPositions = { 8, 6, 4 }; // each time it pulls further out
-        final double finalPos = 1; // pull to this position and idle there after agitation done
+        final double[] pullPositions = { 12.5, 10, 7, 5, 3}; // each time it pushes less far in
+        final double[] pushPositions = { 14, 12, 9, 7, 5 }; // each time it pulls further out
+        final double finalPos = 2; // pull to this position and idle there after agitation done
         final double waitTime = PushoutConstants.PUSHOUT_AGITATE_WAIT;
         final double waitBetween = PushoutConstants.PUSHOUT_BETWEEN;
 
         Command agitate =  Commands.sequence(
             // push to 11 & pull to 8
-            runOnce(() -> PushoutController.setSetpoint(pushPositions[0], ControlType.kMAXMotionPositionControl)),
-            Commands.waitSeconds(waitTime),
             runOnce(() -> PushoutController.setSetpoint(pullPositions[0], ControlType.kMAXMotionPositionControl)),
+            Commands.waitSeconds(waitTime),
+            runOnce(() -> PushoutController.setSetpoint(pushPositions[0], ControlType.kMAXMotionPositionControl)),
             Commands.waitSeconds(waitTime),
 
             Commands.waitSeconds(waitBetween),
 
             // push to 9 & pull to 6
-            runOnce(() -> PushoutController.setSetpoint(pushPositions[1], ControlType.kMAXMotionPositionControl)),
-            Commands.waitSeconds(waitTime),
             runOnce(() -> PushoutController.setSetpoint(pullPositions[1], ControlType.kMAXMotionPositionControl)),
+            Commands.waitSeconds(waitTime),
+            runOnce(() -> PushoutController.setSetpoint(pushPositions[1], ControlType.kMAXMotionPositionControl)),
             Commands.waitSeconds(waitTime),
 
             Commands.waitSeconds(waitBetween),
 
             // push to 7 & pull to 4
-            runOnce(() -> PushoutController.setSetpoint(pushPositions[2], ControlType.kMAXMotionPositionControl)),
-            Commands.waitSeconds(waitTime),
             runOnce(() -> PushoutController.setSetpoint(pullPositions[2], ControlType.kMAXMotionPositionControl)),
+            Commands.waitSeconds(waitTime),
+            runOnce(() -> PushoutController.setSetpoint(pushPositions[2], ControlType.kMAXMotionPositionControl)),
             Commands.waitSeconds(waitTime),
 
             Commands.waitSeconds(waitBetween),
+
+            runOnce(() -> PushoutController.setSetpoint(pullPositions[3], ControlType.kMAXMotionPositionControl)),
+            Commands.waitSeconds(waitTime),
+            runOnce(() -> PushoutController.setSetpoint(pushPositions[3], ControlType.kMAXMotionPositionControl)),
+            Commands.waitSeconds(waitTime),
+
+            Commands.waitSeconds(waitBetween),
+
+            runOnce(() -> PushoutController.setSetpoint(pullPositions[4], ControlType.kMAXMotionPositionControl)),
+            Commands.waitSeconds(waitTime),
+            runOnce(() -> PushoutController.setSetpoint(pushPositions[4], ControlType.kMAXMotionPositionControl)),
+            Commands.waitSeconds(waitTime),
+
+            Commands.waitSeconds(waitBetween),
+
+
 
             // end pos
             runOnce(() -> PushoutController.setSetpoint(finalPos, ControlType.kMAXMotionPositionControl)),

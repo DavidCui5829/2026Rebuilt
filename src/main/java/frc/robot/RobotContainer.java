@@ -155,13 +155,11 @@ public class RobotContainer {
   // Derive the heading axis with math!
   SwerveInputStream driveDirectAngleKeyboard;
 
-
-
   private AimAtHub aimAtHub;
   private AimAtFerry aimAtFerry;
   private PathConstraints autoConstraints;
 
-    SwerveInputStream aimAtHubStream;
+  SwerveInputStream aimAtHubStream;
   SwerveInputStream aimAtFerryStream;
   // ========= DRIVER TRIGGERS ===========
   // Parallel Commands
@@ -324,13 +322,8 @@ public class RobotContainer {
         Commands.parallel(m_pushout.PushCommand(), m_intake.runIntakeCommand()).withTimeout(4));
     NamedCommands.registerCommand("retract intake", m_pushout.RetractCommand().withTimeout(4));
 
-    // kicker
-    NamedCommands.registerCommand("kick", m_kicker.kickCommand().withTimeout(8));
-    NamedCommands.registerCommand("kick backwards", m_kicker.kickBackwardsCommand().withTimeout(8));
-
     // shooter
     NamedCommands.registerCommand("Control All Shooting", Commands.defer(() -> {
-      if (isInAllianceZone()) {
         ControlAllShooting shootCmd = new ControlAllShooting(drivebase::getCachedDynamicHubLocation, m_shooter,
             drivebase::getPose, true);
         return Commands.sequence(
@@ -349,80 +342,11 @@ public class RobotContainer {
                             .beforeStarting(Commands.waitSeconds(1.5)),
                         m_intake.runIntakeCommand()))
                     .finallyDo(
-                        () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)))
-                .onlyWhile(aimAtHubStream.aimLock(Angle.ofBaseUnits(3, Degrees))),
-            m_pushout.RetractCommand());
-      } else {
-        // Not in alliance zone: no-op command to satisfy return type
-        return Commands.none();
-      }
-    }, java.util.Collections.<edu.wpi.first.wpilibj2.command.Subsystem>emptySet()).withTimeout(5.75));
+                        () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1))));
+    }, java.util.Collections.emptySet()).withTimeout(5.75));
 
-    NamedCommands.registerCommand("speed up shooter", m_shooter.SpeedUpShooterCommand().withTimeout(15));
-    // NamedCommands.registerCommand("aim at hub",
-    // drivebase.aimAtPose(Constants.DrivebaseConstants.getHubPose2D()));
-    // NamedCommands.registerCommand("aim at ferry",
-    // drivebase.aimAtPose(Constants.DrivebaseConstants.getFerryPose(drivebase.getPose().getTranslation())));
-
-    // hopper
-    NamedCommands.registerCommand("transfer", m_hopper.runHopperToShooterCommand().withTimeout(6.7));
-    NamedCommands.registerCommand("reverse hopper", m_hopper.runReverseHopperCommand().withTimeout(6.7));
-
-    // // intake
     NamedCommands.registerCommand("intake", m_intake.runIntakeCommand());
     NamedCommands.registerCommand("outtake", m_intake.runOuttakeCommand().withTimeout(4));
-
-    // climber
-    // NamedCommands.registerCommand("climb up",
-    // m_climber.runClimbCommand().withTimeout(4));
-    // NamedCommands.registerCommand("climb down",
-    // m_climber.runClimberDownCommand().withTimeout(4));
-
-    NamedCommands.registerCommand("Shoot and Aim",
-        Commands.defer(() -> {
-          if (isInAllianceZone()) // In alliance zone → shoot at hub
-          {
-            aimAtHub = new AimAtHub(drivebase, driveAngularVelocity,
-                dc()::getLeftX, dc()::getLeftY, dc()::getRightX);
-            ControlAllShooting shootCmd = makeVariableShoot();
-            return Commands.parallel(
-                aimAtHub,
-                shootCmd,
-                Commands.sequence(
-                    Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
-                        && aimAtHub.swerveInputStream.aimLock(Degrees.of(2)).getAsBoolean()),
-                    Commands.parallel(
-                        m_hopper.runHopperToShooterCommand(),
-                        m_kicker.kickCommand(),
-                        m_intake.runIntakeCommand())
-                        .onlyWhile(aimAtHub.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees))))
-                    .finallyDo(
-                        () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
-          } else {
-            aimAtFerry = new AimAtFerry(drivebase, driveAngularVelocity);
-            ControllAllPassing passCmd = makeVariablePass();
-            return Commands.parallel(
-                aimAtFerry,
-                passCmd,
-                // Commands.runOnce(() -> driveAngularVelocity.aim(() ->
-                // drivebase.getDynamicFerryLocation())),
-                Commands.sequence(
-                    Commands.waitUntil(() -> passCmd.isCASAtSpeed()
-                        && aimAtFerry.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees)).getAsBoolean()),
-                    Commands.parallel(
-                        m_hopper.runHopperToShooterCommand(),
-                        m_kicker.kickCommand(),
-                        m_pushout.AgitateCommand()
-                            .beforeStarting(Commands.waitSeconds(1.5)),
-                        m_intake.runIntakeCommand())
-                        .onlyWhile(driveAngularVelocity.aimLock(Angle.ofBaseUnits(3, Degrees)))))
-                .finallyDo(() -> m_shooter.setTargetRPMCommand(passCmd.RecordedidealHorizontalSpeed).withTimeout(1));
-          }
-        }, java.util.Collections.emptySet()));
-
-    NamedCommands.registerCommand("aim at ferry",
-        drivebase.driveFieldOriented(aimAtFerryStream)
-            .until(aimAtFerryStream.aimLock(Angle.ofBaseUnits(1, Degrees))));
 
     // Auto constraints for correcting paths
     autoConstraints = new PathConstraints(
@@ -457,11 +381,13 @@ public class RobotContainer {
   }
 
   /**
-   * Constructs throwaway instances of the commands that fire from deferred RT bindings
+   * Constructs throwaway instances of the commands that fire from deferred RT
+   * bindings
    * so first-use class loading (WPILib units system, InterpolatingDoubleTreeMap,
    * SwerveInputStream.copy, command composition) happens at robot boot instead of
    * mid-match. Nothing is scheduled — zero runtime side effects. Side-effect-free
-   * because ControlAllShooting's no-arg-requireShooter overload skips addRequirements,
+   * because ControlAllShooting's no-arg-requireShooter overload skips
+   * addRequirements,
    * and the command constructors only assign fields / copy the input stream.
    */
 
@@ -670,7 +596,7 @@ public class RobotContainer {
                         && aimAtFerry.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees)).getAsBoolean()),
                     Commands.parallel(
                         m_hopper.runHopperToShooterCommand(),
-                     
+
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand()
                             .beforeStarting(Commands.waitSeconds(1.5)),
@@ -713,7 +639,7 @@ public class RobotContainer {
                       m_pushout.AgitateCommand()
                           .beforeStarting(Commands.waitSeconds(1.5))
                           .onlyWhile(() -> !LT_Intake.getAsBoolean()),
-                 
+
                       m_intake.runIntakeCommand()))
                   .finallyDo(
                       () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
@@ -733,10 +659,10 @@ public class RobotContainer {
                     m_intake.runIntakeCommand(),
                     m_kicker.kickCommand(),
                     // drivebase.lockCommand(
-                    //     driverXbox::getLeftX,
-                    //     driverXbox::getLeftY,
-                    //     driverXbox::getRightX,
-                    //     driveAngularVelocity::get),
+                    // driverXbox::getLeftX,
+                    // driverXbox::getLeftY,
+                    // driverXbox::getRightX,
+                    // driveAngularVelocity::get),
                     m_pushout.AgitateCommand()
                         .beforeStarting(Commands.waitSeconds(1.5))))));
 
@@ -752,7 +678,6 @@ public class RobotContainer {
     // intake
     X_OP_intake.whileTrue(m_intake.runIntakeCommand());
     A_OP_outtake.whileTrue(m_intake.runOuttakeCommand());
-
 
     // pushout
     Y_OP_extendIntake.whileTrue(m_pushout.PushoutDutycyleCommand());
@@ -776,12 +701,10 @@ public class RobotContainer {
     // oc().y().whileTrue(m_shooter.sysIdDynamicReverse());
 
     new Trigger(() -> isInAllianceZone()
-        && DriverStation.isTeleopEnabled()
-        )
+        && DriverStation.isTeleopEnabled())
         .onTrue(Commands.runOnce(() -> m_shooter.setDefaultCommand(m_shooter.setAllianceIdle())));
     new Trigger(() -> !isInAllianceZone()
-        && DriverStation.isTeleopEnabled()
-        )
+        && DriverStation.isTeleopEnabled())
         .onTrue(Commands.runOnce(() -> m_shooter.setDefaultCommand(m_shooter.setNeutralIdle())));
     m_shooter.setDefaultCommand(m_shooter.setAllianceIdle().onlyWhile(() -> DriverStation.isTeleopEnabled()));
 
@@ -877,9 +800,9 @@ public class RobotContainer {
 
     // put the main path (swipe) and the recovery path
     // if (selectedName.equals("Swipe Correction Test")) {
-    //   return Commands.sequence(
-    //       followWithRecovery("LT Swipe", "Through LT"),
-    //       makeAutoShootCommand());
+    // return Commands.sequence(
+    // followWithRecovery("LT Swipe", "Through LT"),
+    // makeAutoShootCommand());
     // }
 
     return selected;
