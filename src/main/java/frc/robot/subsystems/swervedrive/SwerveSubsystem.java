@@ -86,7 +86,10 @@ public class SwerveSubsystem extends SubsystemBase {
   // Track yaw over time to estimate yaw rate for logs.
   private double lastYawRadians = 0.0;
   private double lastYawTimeSec = 0.0;
-  public boolean useMegaTag2 = true; // MT1 during disabled, MT2 during auto/teleop
+
+  public int frontMegatagNumber = 2;
+  public int backMegatagNumber = 2;
+  public int leftMegatagNumber = 2;
   
   public boolean useMegaTag1 = false; // MT1 during disabled, MT2 during auto/teleop
 
@@ -108,14 +111,13 @@ public class SwerveSubsystem extends SubsystemBase {
 
   public boolean visionToggleAll = false;
 
-  private final SendableChooser<Boolean> megaTagChooser = new SendableChooser<Boolean>();
-  private LoggedDashboardChooser<Boolean> loggedMegaTagChooser;
+  // private final SendableChooser<Integer> megaTagChooser = new SendableChooser<Integer>();
 
-  // private final SendableChooser<Boolean> limelightBLeftChooser = new SendableChooser<Boolean>();
+  private final SendableChooser<Integer> frontMegatagChooser = new SendableChooser<Integer>();
 
-  // private final SendableChooser<Boolean> limelightBRightChooser = new SendableChooser<Boolean>();
+  private final SendableChooser<Integer> backMegatagChooser = new SendableChooser<Integer>();
 
-  // private final SendableChooser<Boolean> limelightClimberChooser = new SendableChooser<Boolean>();
+  private final SendableChooser<Integer> leftMegatagChooser = new SendableChooser<Integer>();
 
   /**
    * Initialize {@link SwerveDrive} with the directory provided.
@@ -166,12 +168,21 @@ public class SwerveSubsystem extends SubsystemBase {
     configurePathPlannerLogging();
 
     // Set up MegaTag Chooser
-    megaTagChooser.addOption("MegaTag 1", false);
-    megaTagChooser.setDefaultOption("MegaTag 2", true);
+    frontMegatagChooser.addOption("MegaTag 1", 1);
+    frontMegatagChooser.setDefaultOption("MegaTag 2", 2);
 
-    SmartDashboard.putData("MegaTag Chooser", megaTagChooser);
+    SmartDashboard.putData("MegaTag Chooser", frontMegatagChooser);
 
-    loggedMegaTagChooser = new LoggedDashboardChooser<>("MegaTag Chooser", megaTagChooser);
+    backMegatagChooser.addOption("MegaTag 1", 1);
+    backMegatagChooser.setDefaultOption("MegaTag 2", 2);
+
+    SmartDashboard.putData("MegaTag Chooser", backMegatagChooser);
+
+    leftMegatagChooser.addOption("MegaTag 1", 1);
+    leftMegatagChooser.setDefaultOption("MegaTag 2", 2);
+
+    SmartDashboard.putData("MegaTag Chooser", leftMegatagChooser);
+
 
     // Set up bleft Chooser
     // limelightBLeftChooser.addOption("Don't Use B-Left Limelight", false);
@@ -248,7 +259,9 @@ public class SwerveSubsystem extends SubsystemBase {
     // useBRightLimelight = limelightBRightChooser.getSelected();
     // useClimberLimelight = limelightClimberChooser.getSelected();
 
-    useMegaTag2 = megaTagChooser.getSelected();
+    frontMegatagNumber = frontMegatagChooser.getSelected();
+    backMegatagNumber = backMegatagChooser.getSelected();
+    leftMegatagNumber = leftMegatagChooser.getSelected();
 
     updateOdometry();
     // -----------------------
