@@ -895,9 +895,9 @@ public class SwerveSubsystem extends SubsystemBase {
   public void updateOdometry() {
 
 
-    if(useBackLimelight) updateLimelight(LimelightConstants.LIMELIGHT_BACK, 2);
-    if(useFrontLimelight) updateLimelight(LimelightConstants.LIMELIGHT_FRONT, 2);
-    if(useLeftLimelight) updateLimelight(LimelightConstants.LIMELIGHT_LEFT, 2);
+    if(useBackLimelight) updateLimelight(LimelightConstants.LIMELIGHT_BACK, backMegatagNumber);
+    if(useFrontLimelight) updateLimelight(LimelightConstants.LIMELIGHT_FRONT, frontMegatagNumber);
+    if(useLeftLimelight) updateLimelight(LimelightConstants.LIMELIGHT_LEFT, leftMegatagNumber);
     
     swerveDrive.updateOdometry();
   }
