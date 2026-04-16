@@ -148,8 +148,8 @@ public class HubTrackerSubsystem extends SubsystemBase
 
   private void publish(int time, int matchTime, double shiftTime)
   {
-    int seconds = (time - matchTime);
-    SmartDashboard.putNumber("TimeLeft", shiftTime - seconds);
+    double seconds = shiftTime -  (time - matchTime);
+    SmartDashboard.putNumber("TimeLeft", seconds);
     if(seconds <= 5)
     {
       if(x == 1) SmartDashboard.putString("Hub Color For Xavier", GREEN.toHexString());
