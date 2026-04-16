@@ -324,25 +324,22 @@ public class RobotContainer {
 
     // shooter
     NamedCommands.registerCommand("Control All Shooting", Commands.defer(() -> {
-        ControlAllShooting shootCmd = new ControlAllShooting(drivebase::getCachedDynamicHubLocation, m_shooter,
-            drivebase::getPose, true);
-        return Commands.sequence(
-            Commands.parallel(
-                shootCmd,
-                drivebase.driveFieldOriented(aimAtHubStream),
-                // Continuously update aim target for shoot-on-the-move
-                // Commands.run(() -> aimAtHubStream.aim(drivebase.getDynamicHubLocation())),
-                Commands.sequence(
-                    Commands.waitUntil(() -> shootCmd.isCASAtSpeed()),
-                        // && aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
-                    Commands.parallel(
-                        m_hopper.runHopperToShooterCommand(),
-                        m_kicker.kickCommand(),
-                        m_pushout.AgitateCommand()
-                            .beforeStarting(Commands.waitSeconds(1.5)),
-                        m_intake.runIntakeCommand()))
-                    .finallyDo(
-                        () -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1))));
+      ControlAllShooting shootCmd = new ControlAllShooting(drivebase::getDynamicHubLocation, m_shooter,
+          drivebase::getPose, true);
+      return Commands.parallel(
+          shootCmd,
+          drivebase.driveFieldOriented(aimAtHubStream),
+          // Continuously update aim target for shoot-on-the-move
+          // Commands.run(() -> aimAtHubStream.aim(drivebase.getDynamicHubLocation())),
+          Commands.sequence(
+              Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
+                  && aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
+              Commands.parallel(
+                  m_hopper.runHopperToShooterCommand(),
+                  m_kicker.kickCommand(),
+                  m_pushout.AgitateCommand(),
+                  m_intake.runIntakeCommand()))
+              .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1)));
     }, java.util.Collections.emptySet()).withTimeout(5.75));
 
     NamedCommands.registerCommand("intake", m_intake.runIntakeCommand());
