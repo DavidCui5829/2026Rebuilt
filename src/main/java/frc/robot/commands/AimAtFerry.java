@@ -14,7 +14,11 @@ public class AimAtFerry extends Command {
 
   public AimAtFerry(SwerveSubsystem swerveSubsystem, SwerveInputStream swerveInputStream) {
     this.swerveSubsystem = swerveSubsystem;
-    this.swerveInputStream = swerveInputStream.copy();
+    this.swerveInputStream = swerveInputStream.copy()
+        .aim(swerveSubsystem::getCachedDynamicFerryLocation)
+        .aimFeedforward(0.00045, 0.0001, 0.00022)
+        .aimHeadingOffset(Rotation2d.fromDegrees(180))
+        .aimHeadingOffset(true);
     addRequirements(this.swerveSubsystem);
   }
 
@@ -22,12 +26,7 @@ public class AimAtFerry extends Command {
   public void initialize() {
     swerveSubsystem.setAimLocations();
     swerveSubsystem.isAiming = true;
-    swerveInputStream
-        .aim(swerveSubsystem::getCachedDynamicFerryLocation)
-        .aimFeedforward(0.00045, 0.0001, 0.00022)
-        .aimHeadingOffset(Rotation2d.fromDegrees(180))
-        .aimHeadingOffset(true)
-        .aimWhile(true);
+    swerveInputStream.aimWhile(true);
   }
 
   @Override
