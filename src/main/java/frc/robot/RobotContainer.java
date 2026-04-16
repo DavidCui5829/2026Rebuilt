@@ -732,11 +732,11 @@ public class RobotContainer {
                     m_hopper.runHopperToShooterCommand(),
                     m_intake.runIntakeCommand(),
                     m_kicker.kickCommand(),
-                    drivebase.lockCommand(
-                        driverXbox::getLeftX,
-                        driverXbox::getLeftY,
-                        driverXbox::getRightX,
-                        driveAngularVelocity::get),
+                    // drivebase.lockCommand(
+                    //     driverXbox::getLeftX,
+                    //     driverXbox::getLeftY,
+                    //     driverXbox::getRightX,
+                    //     driveAngularVelocity::get),
                     m_pushout.AgitateCommand()
                         .beforeStarting(Commands.waitSeconds(1.5))))));
 
