@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import edu.wpi.first.units.Units;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.spark.SparkClosedLoopController;
@@ -187,7 +188,8 @@ public class Shooter extends SubsystemBase {
     {
         return new RunCommand(() -> 
         {
-            setTargetRPM(ShooterConstants.ALLIANCE_IDLE_RPM);
+            if (DriverStation.isAutonomousEnabled()) setTargetRPM(ShooterConstants.ALLIANCE_AUTO_RPM);
+            else setTargetRPM(ShooterConstants.ALLIANCE_IDLE_RPM);
         }, this);
     }
 
@@ -243,6 +245,8 @@ public class Shooter extends SubsystemBase {
 
         double left1RPM = ShooterLeft1Motor.getEncoder().getVelocity();
         double left2RPM = ShooterLeft2Motor.getEncoder().getVelocity();
+
+        isShooterRunning();
 
         // Shooter right wheel speed (RPM).
         Logger.recordOutput("Shooter/Right1RPM", right1RPM);
