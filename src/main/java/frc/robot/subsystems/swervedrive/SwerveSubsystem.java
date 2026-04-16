@@ -104,8 +104,11 @@ public class SwerveSubsystem extends SubsystemBase {
 
   boolean locked = false;
 
-  private Pose2d cachedDynamicHub = new Pose2d();
-  private Pose2d cachedDynamicFerry = new Pose2d();
+  // Initialize to non-kZero so YAGSL's SwerveInputStream.aim(supplier) actually registers the target.
+  // At registration time it calls supplier.get().equals(Pose2d.kZero) and skips the target if true.
+  // Overwritten with real compensated location on first setAimLocations() call.
+  private Pose2d cachedDynamicHub = Constants.DrivebaseConstants.getHubPose2D();
+  private Pose2d cachedDynamicFerry = Constants.DrivebaseConstants.getFerryPose(new Translation2d());
 
   
 
