@@ -642,7 +642,7 @@ public class RobotContainer {
                                 "Aim/ShotParallelStartedAt", Timer.getFPGATimestamp())),
                             Commands.waitSeconds(1.0),
                             Commands.runOnce(() -> {
-                              // aimAtHub.readyToLock = true;
+                              aimAtHub.readyToLock = true;
                               Logger.recordOutput("Aim/DynamicAimLockTolerance", aimTolerance(shootCmd.distance));
                               Logger.recordOutput("Aim/ReadyToLockFiredAt", Timer.getFPGATimestamp());
                             })),
@@ -667,7 +667,7 @@ public class RobotContainer {
                 // drivebase.getDynamicFerryLocation())),
                 Commands.sequence(
                     Commands.waitUntil(() -> passCmd.isCASAtSpeed()
-                        && aimAtFerry.swerveInputStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
+                        && aimAtFerry.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees)).getAsBoolean()),
                     Commands.parallel(
                         m_hopper.runHopperToShooterCommand(),
                      
@@ -675,7 +675,7 @@ public class RobotContainer {
                         m_pushout.AgitateCommand()
                             .beforeStarting(Commands.waitSeconds(1.5)),
                         m_intake.runIntakeCommand())
-                        .onlyWhile(aimAtFerry.swerveInputStream.aimLock(Angle.ofBaseUnits(3, Degrees)))))
+                        .onlyWhile(aimAtFerry.swerveInputStream.aimLock(Angle.ofBaseUnits(5, Degrees)))))
                 .finallyDo(() -> m_shooter.setTargetRPMCommand(passCmd.RecordedidealHorizontalSpeed).withTimeout(1));
           }
         }, java.util.Collections.emptySet()));
@@ -776,11 +776,11 @@ public class RobotContainer {
     // oc().y().whileTrue(m_shooter.sysIdDynamicReverse());
 
     new Trigger(() -> isInAllianceZone()
-        // && DriverStation.isTeleopEnabled()
+        && DriverStation.isTeleopEnabled()
         )
         .onTrue(Commands.runOnce(() -> m_shooter.setDefaultCommand(m_shooter.setAllianceIdle())));
     new Trigger(() -> !isInAllianceZone()
-        // && DriverStation.isTeleopEnabled()
+        && DriverStation.isTeleopEnabled()
         )
         .onTrue(Commands.runOnce(() -> m_shooter.setDefaultCommand(m_shooter.setNeutralIdle())));
     m_shooter.setDefaultCommand(m_shooter.setAllianceIdle().onlyWhile(() -> DriverStation.isTeleopEnabled()));

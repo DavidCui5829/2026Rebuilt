@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.994,
-        "y": 7.32
+        "x": 3.534450784593438,
+        "y": 4.015592011412268
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.994,
-        "y": 7.32
+        "x": 4.036588243851696,
+        "y": 4.008775895609526
       },
       "isLocked": false,
-      "linkedName": "LT Shoot Spc"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.634,
-        "y": 4.015592011412268
+        "x": 1.8912410841654772,
+        "y": 4.028530670470756
       },
       "prevControl": {
-        "x": 3.6340000000000003,
-        "y": 4.015592011412268
+        "x": 1.6412538828221548,
+        "y": 4.031060327469882
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 100.489
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

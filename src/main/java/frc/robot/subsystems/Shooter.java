@@ -188,8 +188,7 @@ public class Shooter extends SubsystemBase {
     {
         return new RunCommand(() -> 
         {
-            if (DriverStation.isAutonomousEnabled()) setTargetRPM(ShooterConstants.ALLIANCE_AUTO_RPM);
-            else setTargetRPM(ShooterConstants.ALLIANCE_IDLE_RPM);
+            setTargetRPM(ShooterConstants.ALLIANCE_IDLE_RPM);
         }, this);
     }
 
