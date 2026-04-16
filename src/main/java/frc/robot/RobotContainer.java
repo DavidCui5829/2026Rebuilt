@@ -464,6 +464,7 @@ public class RobotContainer {
    * because ControlAllShooting's no-arg-requireShooter overload skips addRequirements,
    * and the command constructors only assign fields / copy the input stream.
    */
+
   public void warmupCommands() {
     @SuppressWarnings("unused")
     ControlAllShooting shootWarm = makeVariableShoot();
@@ -746,7 +747,7 @@ public class RobotContainer {
         m_kicker.kickCommand(),
         m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(1.5)).repeatedly()));
 
-    LB_OP_unjam.whileTrue(Commands.parallel(m_hopper.runReverseHopperCommand(), m_kicker.kickBackwardsCommand()));
+    LB_OP_unjam.whileTrue(m_pushout.PushoutDutycyleCommand());
 
     // intake
     X_OP_intake.whileTrue(m_intake.runIntakeCommand());

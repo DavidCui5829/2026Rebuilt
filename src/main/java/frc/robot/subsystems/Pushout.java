@@ -76,6 +76,10 @@ public class Pushout extends SubsystemBase {
         PushoutMotor.set(0);
     }
 
+    public void PushoutDutycyle() {
+        PushoutMotor.set(0.5);
+    }
+
     public Command HomingCommand(double threshold)
     {
         Debouncer currentDebouncer = new Debouncer(0.2);
@@ -86,6 +90,12 @@ public class Pushout extends SubsystemBase {
                 {
                     StopPushout();
                 });
+    }
+
+    public Command PushoutDutycyleCommand() {
+        return this.runOnce(() -> PushoutDutycyle())
+                .finallyDo(interrupted -> StopPushout());
+                
     }
 
     public Command PushCommand() {

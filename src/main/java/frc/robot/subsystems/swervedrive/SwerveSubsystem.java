@@ -90,6 +90,8 @@ public class SwerveSubsystem extends SubsystemBase {
   public int frontMegatagNumber = 2;
   public int backMegatagNumber = 2;
   public int leftMegatagNumber = 2;
+
+  public boolean useMegaTag2 = false; // MT1 during disabled, MT2 during auto/teleop
   
   public boolean useMegaTag1 = false; // MT1 during disabled, MT2 during auto/teleop
 
