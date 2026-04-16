@@ -28,12 +28,7 @@ public class AimAtHub extends Command {
     public AimAtHub(SwerveSubsystem swerveSubsystem, SwerveInputStream swerveInputStream,
             DoubleSupplier leftX, DoubleSupplier leftY, DoubleSupplier rightX) {
         this.swerveSubsystem = swerveSubsystem;
-        this.swerveInputStream = swerveInputStream.copy()
-                .aim(swerveSubsystem::getCachedDynamicHubLocation) // supplier, updates each loop
-                .aimFeedforward(0.00045, 0.0001, 0.00022)
-                .aimHeadingOffset(Rotation2d.fromDegrees(180))
-                .aimHeadingOffset(true)
-                .aimLookahead(Time.ofBaseUnits(0.2, Seconds));
+        this.swerveInputStream = swerveInputStream.copy();
         this.leftX = leftX;
         this.leftY = leftY;
         this.rightX = rightX;
@@ -44,7 +39,13 @@ public class AimAtHub extends Command {
     public void initialize() {
         swerveSubsystem.setAimLocations();
         swerveSubsystem.isAiming = true;
-        swerveInputStream.aimWhile(true);
+        swerveInputStream
+                .aim(swerveSubsystem::getDynamicHubLocation) // supplier, updates each loop
+                .aimFeedforward(0.00045, 0.0001, 0.00022)
+                .aimHeadingOffset(Rotation2d.fromDegrees(180))
+                .aimHeadingOffset(true)
+                .aimWhile(true)
+                .aimLookahead(Time.ofBaseUnits(0.2, Seconds));
     }
 
     @Override

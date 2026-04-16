@@ -1133,7 +1133,7 @@ public class SwerveSubsystem extends SubsystemBase {
    *
    * @return A Pose2d representing the compensated aim point.
    */
-  private Pose2d getDynamicHubLocation() {
+  public Pose2d getDynamicHubLocation() {
 
     if(locked)
     {
