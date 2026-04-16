@@ -87,11 +87,11 @@ public class SwerveSubsystem extends SubsystemBase {
   private double lastYawRadians = 0.0;
   private double lastYawTimeSec = 0.0;
 
-  public int allMegaTagNumber = 2;
+  public int allMegaTagNumber = 1;
 
-  public int frontMegatagNumber = 2;
-  public int backMegatagNumber = 2;
-  public int leftMegatagNumber = 2;
+  public int frontMegatagNumber = 1;
+  public int backMegatagNumber = 1;
+  public int leftMegatagNumber = 1;
 
   public boolean useMegaTag2 = false; // MT1 during disabled, MT2 during auto/teleop
   
@@ -177,27 +177,41 @@ public class SwerveSubsystem extends SubsystemBase {
     configurePathPlannerLogging();
 
     // Set up MegaTag Chooser
-    frontMegatagChooser.addOption("MegaTag 1", 1);
-    frontMegatagChooser.setDefaultOption("MegaTag 2", 2);
+    frontMegatagChooser.addOption("MegaTag 2", 2);
+    frontMegatagChooser.setDefaultOption("MegaTag 1", 1);
 
     SmartDashboard.putData("Front MegaTag Chooser", frontMegatagChooser);
 
-    backMegatagChooser.addOption("MegaTag 1", 1);
-    backMegatagChooser.setDefaultOption("MegaTag 2", 2);
+    backMegatagChooser.addOption("MegaTag 2", 2);
+    backMegatagChooser.setDefaultOption("MegaTag 1", 1);
 
     SmartDashboard.putData("Back MegaTag Chooser", backMegatagChooser);
 
-    leftMegatagChooser.addOption("MegaTag 1", 1);
-    leftMegatagChooser.setDefaultOption("MegaTag 2", 2);
+    leftMegatagChooser.addOption("MegaTag 2", 2);
+    leftMegatagChooser.setDefaultOption("MegaTag 1", 1);
 
     SmartDashboard.putData("Left MegaTag Chooser", leftMegatagChooser);
 
-    AllMegatagChooser.addOption("MegaTag 1", 1);
-    AllMegatagChooser.setDefaultOption("MegaTag 2", 2);
-
+    AllMegatagChooser.addOption("MegaTag 2", 2);
+    AllMegatagChooser.setDefaultOption("MegaTag 1", 1);
     SmartDashboard.putData("MegaTag Chooser", AllMegatagChooser);
 
-
+    // mark yaaaaaaooo
+    // mark yaaaaaaooo
+    // mark yaaaaaaooo
+    //mark yao and leane programmed all of this
+    //ishaan guuuuuuuuuuupta
+    // hayden is graduating
+    // big dawg is on ALL of the subteams except CAD but that doesnt even ncount
+    // on that note why is Anna Yi not CADing????????????????? right now
+    // is hayden cooked for IB exams/?
+    //yes bro
+    //math aa hl --> 6
+    //compsci hl--> 6
+    //physics hl --> 777777777777777777
+  // englisg ll sl --> 6
+  //spansih ll a sl --> 5
+  // econ sl --> 6
     // Set up bleft Chooser
     // limelightBLeftChooser.addOption("Don't Use B-Left Limelight", false);
     // limelightBLeftChooser.setDefaultOption("Use B-Left Limelight", true);
@@ -214,7 +228,6 @@ public class SwerveSubsystem extends SubsystemBase {
 
     // SmartDashboard.putData("Climber Limelight Chooser", limelightClimberChooser);
   }
-
   /**
    * Construct the swerve drive.
    *
