@@ -89,8 +89,8 @@ public class Pushout extends SubsystemBase {
     }
 
     public Command PushCommand() {
-        return this.runOnce(() -> PushIntake());
-                // .finallyDo(interrupted -> StopPushout())
+        return this.runOnce(() -> PushIntake())
+                .finallyDo(interrupted -> StopPushout());
                 
     }
 
