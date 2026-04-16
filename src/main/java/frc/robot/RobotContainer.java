@@ -332,8 +332,8 @@ public class RobotContainer {
           // Continuously update aim target for shoot-on-the-move
           // Commands.run(() -> aimAtHubStream.aim(drivebase.getDynamicHubLocation())),
           Commands.sequence(
-              Commands.waitUntil(() -> shootCmd.isCASAtSpeed()),
-                  // && aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
+              Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
+                  && aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
               Commands.parallel(
                   m_hopper.runHopperToShooterCommand(),
                   m_kicker.kickCommand(),
