@@ -286,6 +286,8 @@ public class SwerveSubsystem extends SubsystemBase {
       backMegatagNumber = allMegaTagNumber;
       leftMegatagNumber = allMegaTagNumber;
     }
+    
+    SmartDashboard.putNumber("FrontMegatagNumber", frontMegatagNumber);
 
     updateOdometry();
     // -----------------------
