@@ -747,14 +747,15 @@ public class RobotContainer {
         m_kicker.kickCommand(),
         m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(1.5)).repeatedly()));
 
-    LB_OP_unjam.whileTrue(m_pushout.PushoutDutycyleCommand());
+    LB_OP_unjam.whileTrue(Commands.parallel(m_hopper.runReverseHopperCommand(), m_kicker.kickBackwardsCommand()));
 
     // intake
     X_OP_intake.whileTrue(m_intake.runIntakeCommand());
     A_OP_outtake.whileTrue(m_intake.runOuttakeCommand());
 
+
     // pushout
-    Y_OP_extendIntake.whileTrue(m_pushout.PushCommand());
+    Y_OP_extendIntake.whileTrue(m_pushout.PushoutDutycyleCommand());
     B_OP_reteactIntake.whileTrue(m_pushout.FullyRetractCommand());
 
     // vision
