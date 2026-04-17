@@ -93,7 +93,7 @@ public class Pushout extends SubsystemBase {
     }
 
     public Command PushoutDutycyleCommand() {
-        return this.runOnce(() -> PushoutDutycyle())
+        return this.run(() -> PushoutDutycyle())
                 .finallyDo(interrupted -> StopPushout());
                 
     }
