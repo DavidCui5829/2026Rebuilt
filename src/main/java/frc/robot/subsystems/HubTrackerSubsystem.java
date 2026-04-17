@@ -49,6 +49,7 @@ public class HubTrackerSubsystem extends SubsystemBase
     
     public HubTrackerSubsystem(SwerveSubsystem drivebase, CommandXboxController driverController)
     {
+        SmartDashboard.putString("Hub Color For Xavier", RED.toHexString());
         this.drivebase = drivebase;
         circle = field.getObject("Circle"); 
         traj = field.getObject("Trajectory");
