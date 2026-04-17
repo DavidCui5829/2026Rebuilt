@@ -345,7 +345,7 @@ public class RobotContainer {
                       m_intake.runIntakeCommand()))
                   .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1))))
           .finallyDo(() -> drivebase.isAiming = false);
-    }, java.util.Collections.emptySet()).withTimeout(5.75));
+    }, java.util.Collections.emptySet()).withTimeout(5.3));
 
     NamedCommands.registerCommand("intake", m_intake.runIntakeCommand());
     NamedCommands.registerCommand("outtake", m_intake.runOuttakeCommand().withTimeout(4));
