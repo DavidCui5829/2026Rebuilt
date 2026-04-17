@@ -514,6 +514,8 @@ public class RobotContainer {
     LT_OP_1900Shot = oc().leftTrigger(); // just shoot
     RT_OP_VariableShoot = oc().rightTrigger(); // Shoot, Kick, Index, Agitate, and Run Intake
 
+    Trigger ResetEncoder = oc().start();
+
     // Get to Shooter
     RB_OP_kickIndex = oc().rightBumper(); // kick, index
     LB_OP_unjam = oc().leftBumper(); // unjam
@@ -677,13 +679,15 @@ public class RobotContainer {
 
     LB_OP_unjam.whileTrue(Commands.parallel(m_hopper.runReverseHopperCommand(), m_kicker.kickBackwardsCommand()));
 
+    ResetEncoder.onTrue(m_pushout.ResetEncoderCommand());
+
     // intake
     X_OP_intake.whileTrue(m_intake.runIntakeCommand());
     A_OP_outtake.whileTrue(m_intake.runOuttakeCommand());
 
     // pushout
     Y_OP_extendIntake.whileTrue(m_pushout.PushoutDutycyleCommand());
-    B_OP_reteactIntake.whileTrue(m_pushout.FullyRetractCommand());
+    B_OP_reteactIntake.whileTrue(m_pushout.PushoutDutycyleRetractCommand());
 
     // vision
     POVUP_OP_FrontLimelight.onTrue(drivebase.FrontToggle());
