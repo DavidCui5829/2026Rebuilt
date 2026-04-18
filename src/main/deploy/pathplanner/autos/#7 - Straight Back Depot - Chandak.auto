@@ -7,7 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "semi"
+            "pathName": "Straight Back"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Control All Shooting"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Depot and shoot from Hub Shoot"
           }
         },
         {
