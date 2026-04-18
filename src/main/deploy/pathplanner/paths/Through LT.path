@@ -88,7 +88,7 @@
   "reversed": false,
   "folder": "Space City Paths",
   "idealStartingState": {
-    "velocity": 2.5,
+    "velocity": 2.25,
     "rotation": 90.0
   },
   "useDefaultConstraints": true

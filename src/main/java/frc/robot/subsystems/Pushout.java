@@ -130,8 +130,8 @@ public class Pushout extends SubsystemBase {
 
     public Command AgitateCommand() {
         final double[] pullPositions = { 12.5, 10, 7, 5, 3 }; // each time it pushes less far in
-        final double[] pushPositions = { 14, 12, 9, 7, 5 }; // each time it pulls further out
-        final double finalPos = 2; // pull to this position and idle there after agitation done
+        final double[] pushPositions = { 15, 13.5, 10, 8.5, 6 }; // each time it pulls further out
+        final double finalPos = 4; // pull to this position and idle there after agitation done
         final double waitTime = PushoutConstants.PUSHOUT_AGITATE_WAIT;
         final double waitBetween = PushoutConstants.PUSHOUT_BETWEEN;
 
