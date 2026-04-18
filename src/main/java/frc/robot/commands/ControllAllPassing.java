@@ -92,10 +92,10 @@ public class ControllAllPassing extends Command
                             Pair.of(Meters.of(9), RPM.of(-3000)),
                             Pair.of(Meters.of(10), RPM.of(-3300)),
                             Pair.of(Meters.of(11), RPM.of(-3750)),
-                            Pair.of(Meters.of(12), RPM.of(-4100)),
-                            Pair.of(Meters.of(13), RPM.of(-4400)),     
-                            Pair.of(Meters.of(14), RPM.of(-4800)),
-                            Pair.of(Meters.of(15), RPM.of(-5200))
+                            Pair.of(Meters.of(12), RPM.of(-4000)),
+                            Pair.of(Meters.of(13), RPM.of(-4000)),     
+                            Pair.of(Meters.of(14), RPM.of(-4000)),
+                            Pair.of(Meters.of(15), RPM.of(-4000))
                             )
     )
     {shooterTable.put(entry.getFirst().in(Meters), entry.getSecond().in(RPM));}
