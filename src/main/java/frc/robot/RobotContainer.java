@@ -675,7 +675,7 @@ public class RobotContainer {
         m_hopper.runHopperToShooterCommand(),
         m_intake.runIntakeCommand(),
         m_kicker.kickCommand(),
-        m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(1.5)).repeatedly()));
+        m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(1.5))));
 
     LB_OP_unjam.whileTrue(Commands.parallel(m_hopper.runReverseHopperCommand(), m_kicker.kickBackwardsCommand()));
 
