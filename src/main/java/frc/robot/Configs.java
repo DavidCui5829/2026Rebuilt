@@ -215,7 +215,8 @@ public final class Configs
 
                         static {
                                 kickerLeftMotorConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40).voltageCompensation(12);
-                                kickerRightMotorConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40).voltageCompensation(12).follow(KickerConstants.KICKER_LEFT_ID,true);
+                                kickerRightMotorConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40).voltageCompensation(12)
+                                .follow(KickerConstants.KICKER_LEFT_ID,true);
                                 
                                 kickerLeftMotorConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                                 // Set PID values for position control. We don't need to pass a closed
@@ -260,14 +261,15 @@ public final class Configs
                 
                         static {
 
-
-                                ShooterRightMotor1Config.idleMode(IdleMode.kCoast).smartCurrentLimit(50).voltageCompensation(12);
-                                ShooterRightMotor2Config.idleMode(IdleMode.kCoast).smartCurrentLimit(50).voltageCompensation(12)
-                                .follow(ShooterConstants.SHOOTER_R1_ID, true);
-                                
                                 ShooterLeftMotor1Config.idleMode(IdleMode.kCoast).smartCurrentLimit(50).voltageCompensation(12);
                                 ShooterLeftMotor2Config.idleMode(IdleMode.kCoast).smartCurrentLimit(50).voltageCompensation(12)
                                 .follow(ShooterConstants.SHOOTER_L1_ID, true);
+
+                                ShooterRightMotor1Config.idleMode(IdleMode.kCoast).smartCurrentLimit(50).voltageCompensation(12)
+                                .follow(ShooterConstants.SHOOTER_L1_ID, true);
+                                ShooterRightMotor2Config.idleMode(IdleMode.kCoast).smartCurrentLimit(50).voltageCompensation(12)
+                                .follow(ShooterConstants.SHOOTER_L1_ID);
+                                
                                 
                                 
                                 ShooterRightMotor1Config.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
