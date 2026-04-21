@@ -184,6 +184,12 @@ public class Shooter extends SubsystemBase {
         // ControlType.kMAXMotionVelocityControl);
     }
 
+    public void ShooterPassing()
+    {
+        shooterright1Controller.setSetpoint(ShooterConstants.SHOOTER_PASSING_SPEED , ControlType.kMAXMotionVelocityControl);
+        shooterleft1Controller.setSetpoint(ShooterConstants.SHOOTER_PASSING_SPEED, ControlType.kMAXMotionVelocityControl);
+    }
+
     public Command setAllianceIdle()
     {
         return new RunCommand(() -> 
@@ -217,6 +223,10 @@ public class Shooter extends SubsystemBase {
 
     public Command SpeedUpShooterCommand() {
         return new RunCommand(() -> SpeedUpShooter(), this);
+    }
+
+    public Command ShooterPassingCommand() {
+        return new RunCommand(() -> ShooterPassing(), this);
     }
 
     public Command sysIdQuasistaticForward() {

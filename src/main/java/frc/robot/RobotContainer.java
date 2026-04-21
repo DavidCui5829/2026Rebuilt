@@ -191,7 +191,7 @@ public class RobotContainer {
   private Trigger RT_OP_VariableShoot; // Shoot, Kick, Index, Agitate, and Run Intake
 
   // Get to Shooter
-  private Trigger RB_OP_kickIndex; // kick, index
+  private Trigger RB_OP_Pass; // kick, index
   private Trigger LB_OP_unjam; // unjam
 
   // Intake
@@ -517,7 +517,7 @@ public class RobotContainer {
     Trigger ResetEncoder = oc().start();
 
     // Get to Shooter
-    RB_OP_kickIndex = oc().rightBumper(); // kick, index
+    RB_OP_Pass = oc().rightBumper(); // kick, index
     LB_OP_unjam = oc().leftBumper(); // unjam
 
     // Intake
@@ -671,11 +671,23 @@ public class RobotContainer {
                         .beforeStarting(Commands.waitSeconds(1.5))))));
 
     // get to shooter
-    RB_OP_kickIndex.whileTrue(Commands.parallel(
-        m_hopper.runHopperToShooterCommand(),
-        m_intake.runIntakeCommand(),
-        m_kicker.kickCommand(),
-        m_pushout.AgitateCommand().beforeStarting(Commands.waitSeconds(1.5))));
+    RB_OP_Pass.whileTrue(
+        Commands.parallel(
+            m_shooter.ShooterPassingCommand(),
+
+            Commands.sequence(
+                Commands.waitUntil(m_shooter::isShooterRunning),
+                Commands.parallel(
+                    m_hopper.runHopperToShooterCommand(),
+                    m_intake.runIntakeCommand(),
+                    m_kicker.kickCommand(),
+                    // drivebase.lockCommand(
+                    // driverXbox::getLeftX,
+                    // driverXbox::getLeftY,
+                    // driverXbox::getRightX,
+                    // driveAngularVelocity::get),
+                    m_pushout.AgitateCommand()
+                        .beforeStarting(Commands.waitSeconds(1.5))))));
 
     LB_OP_unjam.whileTrue(Commands.parallel(m_hopper.runReverseHopperCommand(), m_kicker.kickBackwardsCommand()));
 
@@ -902,6 +914,20 @@ public class RobotContainer {
     if (alliance == Alliance.Blue && drivebase.getPose().getMeasureX().lt(blueZone)) {
       return true;
     } else if (alliance == Alliance.Red && drivebase.getPose().getMeasureX().gt(redZone)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  private boolean isInOpponentZone() {
+    Alliance alliance = getAlliance();
+    Distance blueZone = Inches.of(182);
+    Distance redZone = Inches.of(469);
+
+    if (alliance == Alliance.Red && drivebase.getPose().getMeasureX().lt(blueZone)) {
+      return true;
+    } else if (alliance == Alliance.Blue && drivebase.getPose().getMeasureX().gt(redZone)) {
       return true;
     }
 
