@@ -580,7 +580,7 @@ public class RobotContainer {
                         m_kicker.kickCommand(),
                         m_pushout.AgitateCommand()
                             .onlyWhile(() -> !LT_Intake.getAsBoolean())
-                            .beforeStarting(Commands.waitSeconds(2.25)),
+                            .beforeStarting(Commands.waitSeconds(1.75)),
                         m_intake.runIntakeCommand())
                         .finallyDo(
                             () -> {
