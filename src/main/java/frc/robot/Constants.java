@@ -163,7 +163,7 @@ public final class Constants {
     public static final double PUSHOUT_EXTENDED_AGITATE_POS = 11; // TUNE THIS!!!
 
     public static final double PUSHOUT_AGITATE_WAIT = 0.1; // seconds to wait between agitate cycles, TUNE THIS!!!\
-    public static final double PUSHOUT_BETWEEN = 0.8;
+    public static final double PUSHOUT_BETWEEN = 0.6;
   }
 
   public static class ShooterConstants {
