@@ -568,18 +568,18 @@ public class RobotContainer {
                             .aimLock(Angle.ofBaseUnits(aimTolerance(shootCmd.distance), Degrees)).getAsBoolean()),
                     Commands.parallel(
                         Commands.sequence(
-                            Commands.runOnce(() -> Logger.recordOutput(
-                                "Aim/ShotParallelStartedAt", Timer.getFPGATimestamp())),
+                            // Commands.runOnce(() -> Logger.recordOutput(
+                            //     "Aim/ShotParallelStartedAt", Timer.getFPGATimestamp())),
                             Commands.waitSeconds(1.0),
                             Commands.runOnce(() -> {
                               aimAtHub.readyToLock = true;
                               Logger.recordOutput("Aim/DynamicAimLockTolerance", aimTolerance(shootCmd.distance));
-                              Logger.recordOutput("Aim/ReadyToLockFiredAt", Timer.getFPGATimestamp());
+                              // Logger.recordOutput("Aim/ReadyToLockFiredAt", Timer.getFPGATimestamp());
                             })),
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
-                        m_pushout.HomingCommand(-10)
-                            .onlyWhile(() -> !LT_Intake.getAsBoolean())
+                       m_pushout.CheeksyAgitationCommand()
+                            // .onlyWhile(() -> !LT_Intake.getAsBoolean())
                             // .beforeStarting(Commands.waitSeconds(1.75)),
                             ,
                         m_intake.runIntakeCommand())
