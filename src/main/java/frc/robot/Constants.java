@@ -184,7 +184,7 @@ public final class Constants {
     public static final double NEUTRAL_IDLE_RPM = -0;
 
     // PID Constants For Shooter
-    public static final double p = 0.0002275;
+    public static final double p = 0.000227;
     public static final double i = 0.000;
     public static final double d = 0.0001;
 
@@ -193,7 +193,7 @@ public final class Constants {
     public static final double v = 0.001725;
     public static final double a = 0.0;
 
-    
+
     public final static InterpolatingDoubleTreeMap TOF = new InterpolatingDoubleTreeMap();
 
     static { // 7-12 are estimates - Aditya

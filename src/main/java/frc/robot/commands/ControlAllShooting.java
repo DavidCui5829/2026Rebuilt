@@ -89,26 +89,13 @@ public class ControlAllShooting extends Command
     
     for (var entry : List.of(
       // Pair.of(Meters.of(1), RPM.of((1000))),
-                            Pair.of(Meters.of(2), RPM.of(-1480-150)),
-                            Pair.of(Meters.of(2.5), RPM.of(-1715-150)),
-                            Pair.of(Meters.of(3), RPM.of(-1790-150)),
-                            Pair.of(Meters.of(3.5), RPM.of(-1930-150)),
-                            // Pair.of(Meters.of(3.5), RPM.of(2050),
-                            Pair.of(Meters.of(4), RPM.of(-2060-150)),
-                            Pair.of(Meters.of(5.2048), RPM.of(-2297-150)),
-                            Pair.of(Meters.of(6), RPM.of(-2440-150))
-                            
-                            //  Pair.of(Meters.of(2), RPM.of(1700)),
-                            // Pair.of(Meters.of(2.5), RPM.of(1815)),
-                            // Pair.of(Meters.of(3), RPM.of(1930)),
-                            // Pair.of(Meters.of(3.5), RPM.of(2045)),
-                            // // Pair.of(Meters.of(3.5), RPM.of(2050),
-                            // Pair.of(Meters.of(4), RPM.of(2160)),
-                            // Pair.of(Meters.of(4.5), RPM.of(2275)),
-                            // Pair.of(Meters.of(5), RPM.of(2390)),
-                            //  Pair.of(Meters.of(5.5), RPM.of(2505)),
-                            // // Pair.of(Meters.of(5.2048), RPM.of(2456.918)),
-                            // Pair.of(Meters.of(6), RPM.of(2620))
+                            Pair.of(Meters.of(2), RPM.of(-1480-200)),
+                            Pair.of(Meters.of(2.5), RPM.of(-1715-200)),
+                            Pair.of(Meters.of(3), RPM.of(-1790-200)),
+                            Pair.of(Meters.of(3.5), RPM.of(-1930-200)),
+                            Pair.of(Meters.of(4), RPM.of(-2060-200)),
+                            Pair.of(Meters.of(5.2048), RPM.of(-2297-200)),
+                            Pair.of(Meters.of(6), RPM.of(-2440-200))                            
                             )
     )
     {shooterTable.put(entry.getFirst().in(Meters), entry.getSecond().in(RPM));}
