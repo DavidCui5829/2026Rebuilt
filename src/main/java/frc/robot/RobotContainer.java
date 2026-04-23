@@ -578,9 +578,10 @@ public class RobotContainer {
                             })),
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
-                        m_pushout.AgitateCommand()
+                        m_pushout.HomingCommand(-10)
                             .onlyWhile(() -> !LT_Intake.getAsBoolean())
-                            .beforeStarting(Commands.waitSeconds(1.75)),
+                            // .beforeStarting(Commands.waitSeconds(1.75)),
+                            ,
                         m_intake.runIntakeCommand())
                         .finallyDo(
                             () -> {
