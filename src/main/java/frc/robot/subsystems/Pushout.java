@@ -49,7 +49,7 @@ public class Pushout extends SubsystemBase {
 
     private RelativeEncoder pushoutEncoder = PushoutMotor.getEncoder();
 
-    double minVelocity = -600.0;
+    double minVelocity = -450.0;
     // private final RelativeEncoder pushoutRightEncoder =
     // PushoutRightMotor.getEncoder();
 
