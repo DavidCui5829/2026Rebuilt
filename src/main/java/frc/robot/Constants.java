@@ -163,7 +163,7 @@ public final class Constants {
     public static final double PUSHOUT_EXTENDED_AGITATE_POS = 11; // TUNE THIS!!!
 
     public static final double PUSHOUT_AGITATE_WAIT = 0.1; // seconds to wait between agitate cycles, TUNE THIS!!!\
-    public static final double PUSHOUT_BETWEEN = 0.8;
+    public static final double PUSHOUT_BETWEEN = 0.6;
   }
 
   public static class ShooterConstants {
@@ -221,13 +221,13 @@ public final class Constants {
     public static final double KICKER_RPM_TARGET = 16000; // RPM
 
     // PID Constants
-    public static final double p = 0.0002355;
+    public static final double p = 0.000236;
     public static final double i = 0.000;
     public static final double d = 0.000;
 
     // Feed-Forward Constants
     public static final double s = 0.100;
-    public static final double v = 0.003;
+    public static final double v = 0.004;
     public static final double a = 0.0003;
 
     public static final double STOP = 0;
