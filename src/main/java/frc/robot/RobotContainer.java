@@ -201,7 +201,7 @@ public class RobotContainer {
   // Pushout
   private Trigger Y_OP_extendIntake; // push out
   private Trigger B_OP_reteactIntake; // pull in
-  private Trigger POVLEFT_OP_agitate; // agitate
+  private Trigger POVLEFT_OP_agitate; // agitate 
 
   // Climber / Vision
   private Trigger POVUP_OP_FrontLimelight;
