@@ -186,11 +186,11 @@ public final class Constants {
     // PID Constants For Shooter
     public static final double p = 0.000225;
     public static final double i = 0.000;
-    public static final double d = 0;
+    public static final double d = 0.00001;
 
     // Feed-Forward Constants for Shooter
     public static final double s = 0.0;
-    public static final double v = 0.0015;
+    public static final double v = 0.0019;
     public static final double a = 0.0;
 
     public final static InterpolatingDoubleTreeMap TOF = new InterpolatingDoubleTreeMap();
