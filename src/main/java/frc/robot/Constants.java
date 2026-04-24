@@ -184,9 +184,9 @@ public final class Constants {
     public static final double NEUTRAL_IDLE_RPM = -0;
 
     // PID Constants For Shooter
-    public static final double p = 0.00036;
+    public static final double p = 0.0004;
     public static final double i = 0.000;
-    public static final double d = 0.001;
+    public static final double d = 0.004;
 
     // Feed-Forward Constants for Shooter
     public static final double s = 0.0;
