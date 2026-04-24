@@ -89,13 +89,13 @@ public class ControlAllShooting extends Command
     
     for (var entry : List.of(
       // Pair.of(Meters.of(1), RPM.of((1000))),
-                            Pair.of(Meters.of(2), RPM.of(-1680)),
-                            Pair.of(Meters.of(2.5), RPM.of(-1915)),
-                            Pair.of(Meters.of(3), RPM.of(-1990)),
-                            Pair.of(Meters.of(3.5), RPM.of(-2130)),
-                            Pair.of(Meters.of(4), RPM.of(-2260)),
-                            Pair.of(Meters.of(5.2048), RPM.of(-2497)),
-                            Pair.of(Meters.of(6), RPM.of(-2640))                            
+                            Pair.of(Meters.of(2), RPM.of(-1700)),
+                            Pair.of(Meters.of(2.5), RPM.of(-1935)),
+                            Pair.of(Meters.of(3), RPM.of(-2010)),
+                            Pair.of(Meters.of(3.5), RPM.of(-2150)),
+                            Pair.of(Meters.of(4), RPM.of(-2280)),
+                            Pair.of(Meters.of(5.2048), RPM.of(-2517)),
+                            Pair.of(Meters.of(6), RPM.of(-2660))                            
                             )
     )
     {shooterTable.put(entry.getFirst().in(Meters), entry.getSecond().in(RPM));}
