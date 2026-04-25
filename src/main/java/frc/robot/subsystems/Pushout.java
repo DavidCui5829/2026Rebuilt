@@ -134,7 +134,6 @@ public class Pushout extends SubsystemBase {
         final double finalPos = 4; // pull to this position and idle there after agitation done
         final double waitTime = PushoutConstants.PUSHOUT_AGITATE_WAIT;
         final double waitBetween = PushoutConstants.PUSHOUT_BETWEEN;
-
         Command agitate = Commands.sequence(
                 // push to 11 & pull to 8
                 runOnce(() -> PushoutController.setSetpoint(pullPositions[0], ControlType.kMAXMotionPositionControl)),
