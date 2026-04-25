@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 3.131711154513889,
-        "y": 5.5606417100694445
+        "x": 1.6709264273925633,
+        "y": 5.827666478412934
       },
       "prevControl": {
-        "x": 2.868939053635339,
-        "y": 5.570665763491935
+        "x": 1.4081543265140133,
+        "y": 5.837690531835425
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "LB Shoot Spc"
+      "linkedName": "Delayed End"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 134.434
+    "rotation": 149.024
   },
   "reversed": false,
   "folder": "Worlds Paths",
