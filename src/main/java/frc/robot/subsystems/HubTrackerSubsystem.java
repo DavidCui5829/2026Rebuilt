@@ -176,7 +176,7 @@ public class HubTrackerSubsystem extends SubsystemBase
 
   private void vibrate(double r)
   {
-    if(r <= 0.15 && DriverStation.isFMSAttached())
+    if(r <= 0.15 && DriverStation.isFMSAttached() && DriverStation.isTeleop())
     {
         driverController.setRumble(RumbleType.kBothRumble, 0.15 * Math.pow((1.0 - r), 2));
     }
