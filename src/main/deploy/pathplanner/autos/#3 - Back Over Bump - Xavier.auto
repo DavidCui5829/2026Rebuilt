@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LB Swipe"
+            "pathName": "LB Swipe Face Front"
           }
         },
         {
@@ -44,6 +44,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "DCMP Autos",
+  "folder": "Worlds Autos",
   "choreoAuto": false
 }

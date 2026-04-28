@@ -3,11 +3,12 @@
   "robotLength": 0.87,
   "holonomicMode": true,
   "pathFolders": [
-    "DCMP Paths",
-    "Space City Paths"
+    "Worlds Paths",
+    "Worlds Paths 2"
   ],
   "autoFolders": [
-    "DCMP Autos"
+    "Delayed Autos",
+    "Worlds Autos"
   ],
   "defaultMaxVel": 3.5,
   "defaultMaxAccel": 3.5,

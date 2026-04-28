@@ -5,15 +5,21 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "LT Swipe"
+            "waitTime": 2.0
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Through LT"
+            "pathName": "Delayed Swipe"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Over Bump Delayed"
           }
         },
         {
@@ -25,13 +31,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LT Second Swipe"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Through LT"
+            "pathName": "Depot and shoot Delayed"
           }
         },
         {
@@ -44,6 +44,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Worlds Autos",
+  "folder": "Delayed Autos",
   "choreoAuto": false
 }
