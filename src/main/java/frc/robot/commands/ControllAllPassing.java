@@ -79,15 +79,14 @@ public class ControllAllPassing extends Command
     //RPM = 249.665 v_out
     // Test Results
     for (var entry : List.of(
-                            Pair.of(Meters.of(2), RPM.of(-1500)),
-                            Pair.of(Meters.of(2.5), RPM.of(-1735)),
-                            Pair.of(Meters.of(3), RPM.of(-1810)),
-                            Pair.of(Meters.of(3.5), RPM.of(-1950)),
-                            // Pair.of(Meters.of(3.5), RPM.of(2050),
-                            Pair.of(Meters.of(4), RPM.of(-2080)),
-                            Pair.of(Meters.of(5.2048), RPM.of(-2317)),
-                            Pair.of(Meters.of(6), RPM.of(-2460)),
-                            Pair.of(Meters.of(7), RPM.of(-2600)),
+                               Pair.of(Meters.of(2), RPM.of(-1700-240)),
+                            Pair.of(Meters.of(2.5), RPM.of(-1935-240)),
+                            Pair.of(Meters.of(3), RPM.of(-2010-240)),
+                            Pair.of(Meters.of(3.5), RPM.of(-2150-220)),
+                            Pair.of(Meters.of(4), RPM.of(-2280-220)),
+                            Pair.of(Meters.of(5.2048), RPM.of(-2517-220)),
+                            Pair.of(Meters.of(6), RPM.of(-3060-220)),
+                            Pair.of(Meters.of(7), RPM.of(-2600-200)),
                             Pair.of(Meters.of(8), RPM.of(-2800)),
                             Pair.of(Meters.of(9), RPM.of(-3000)),
                             Pair.of(Meters.of(10), RPM.of(-3300)),
