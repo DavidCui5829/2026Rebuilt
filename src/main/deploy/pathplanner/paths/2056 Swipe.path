@@ -8,24 +8,40 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.329444217048004,
-        "y": 5.4076657773843335
+        "x": 3.3382571806976333,
+        "y": 5.419791651256166
       },
       "isLocked": false,
       "linkedName": "LB Shoot Spc"
     },
     {
       "anchor": {
-        "x": 3.952058353677308,
-        "y": 7.378738989689587
+        "x": 3.94402711862777,
+        "y": 7.492289108791128
       },
       "prevControl": {
-        "x": 2.2656142947854767,
-        "y": 6.846482478916381
+        "x": 2.1912782201701675,
+        "y": 6.801365922541132
       },
       "nextControl": {
-        "x": 4.2532119512080655,
-        "y": 7.4737857018431155
+        "x": 4.312457593892934,
+        "y": 7.637522209839324
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.761824692096353,
+        "y": 7.490743416173964
+      },
+      "prevControl": {
+        "x": 4.424347863787409,
+        "y": 7.460189730161326
+      },
+      "nextControl": {
+        "x": 5.233205980650764,
+        "y": 7.533420230327081
       },
       "isLocked": false,
       "linkedName": null
@@ -36,12 +52,12 @@
         "y": 7.334807364437236
       },
       "prevControl": {
-        "x": 5.297309319446009,
-        "y": 7.483837005614854
+        "x": 5.298297550885595,
+        "y": 7.565286858901657
       },
       "nextControl": {
-        "x": 5.991517006173543,
-        "y": 7.1430930513115
+        "x": 5.879990067925411,
+        "y": 7.122282802049771
       },
       "isLocked": false,
       "linkedName": null
@@ -52,12 +68,12 @@
         "y": 6.105549063104263
       },
       "prevControl": {
-        "x": 6.262088488220183,
-        "y": 6.561094512922315
+        "x": 6.2195097016310745,
+        "y": 6.583549958862704
       },
       "nextControl": {
-        "x": 5.570587953120837,
-        "y": 5.798196363045197
+        "x": 5.693628524172364,
+        "y": 5.904778634206496
       },
       "isLocked": false,
       "linkedName": null
@@ -68,12 +84,12 @@
         "y": 4.724470253867069
       },
       "prevControl": {
-        "x": 5.723454550360762,
-        "y": 4.973739025651539
+        "x": 5.735721602885866,
+        "y": 5.05805621143324
       },
       "nextControl": {
-        "x": 5.792348703190599,
-        "y": 4.074952472833495
+        "x": 5.754397550438024,
+        "y": 4.147232399188148
       },
       "isLocked": false,
       "linkedName": null
@@ -84,12 +100,12 @@
         "y": 4.029958989994264
       },
       "prevControl": {
-        "x": 6.186527041243774,
-        "y": 3.9950272809164757
+        "x": 5.894869244800017,
+        "y": 3.8819679015316586
       },
       "nextControl": {
-        "x": 6.825862511053886,
-        "y": 4.085244627648549
+        "x": 6.818383634376271,
+        "y": 4.135437025485809
       },
       "isLocked": false,
       "linkedName": null
@@ -100,12 +116,12 @@
         "y": 5.016161679257273
       },
       "prevControl": {
-        "x": 7.089422482643969,
-        "y": 4.635067287691619
+        "x": 7.017402863494694,
+        "y": 4.665260469550446
       },
       "nextControl": {
-        "x": 6.428174661817941,
-        "y": 5.334431168271701
+        "x": 6.57039209238315,
+        "y": 5.209325839769796
       },
       "isLocked": false,
       "linkedName": null
@@ -116,12 +132,12 @@
         "y": 5.669752025462962
       },
       "prevControl": {
-        "x": 6.425533072942896,
-        "y": 5.664970852579744
+        "x": 6.3630079219519855,
+        "y": 5.669828136835357
       },
       "nextControl": {
-        "x": 4.385255549275,
-        "y": 5.679299110615709
+        "x": 4.3377120638284925,
+        "y": 5.669578824016949
       },
       "isLocked": false,
       "linkedName": null
@@ -132,8 +148,8 @@
         "y": 5.554865085985628
       },
       "prevControl": {
-        "x": 3.766972616172777,
-        "y": 5.633584367463627
+        "x": 3.8072979685309454,
+        "y": 5.638538693033893
       },
       "nextControl": null,
       "isLocked": false,
@@ -147,26 +163,30 @@
     },
     {
       "waypointRelativePos": 2,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 3.0,
       "rotationDegrees": -21.734992678509805
     },
     {
-      "waypointRelativePos": 3,
+      "waypointRelativePos": 4.0,
       "rotationDegrees": -93.73875767993862
     },
     {
-      "waypointRelativePos": 4,
+      "waypointRelativePos": 5.0,
       "rotationDegrees": -90.0
     },
     {
-      "waypointRelativePos": 5.0,
+      "waypointRelativePos": 6.0,
       "rotationDegrees": 13.20863854676042
     },
     {
-      "waypointRelativePos": 6,
+      "waypointRelativePos": 7.0,
       "rotationDegrees": 70.02453071318075
     },
     {
-      "waypointRelativePos": 7,
+      "waypointRelativePos": 8.0,
       "rotationDegrees": 126.85394079110945
     }
   ],
@@ -175,7 +195,7 @@
   "eventMarkers": [
     {
       "name": "extend",
-      "waypointRelativePos": 1.8961967054263573,
+      "waypointRelativePos": 2.8,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -186,7 +206,7 @@
     },
     {
       "name": "intake",
-      "waypointRelativePos": 2.2095915262172294,
+      "waypointRelativePos": 3.2095915262172294,
       "endWaypointRelativePos": 9.002838249063672,
       "command": {
         "type": "named",
