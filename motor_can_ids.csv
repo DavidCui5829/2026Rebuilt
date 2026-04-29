@@ -11,11 +11,10 @@ Shooter,Primary Motor,Right Shooter R,SparkFlex,9
 Shooter,Primary Motor,Right Shooter L,SparkFlex,10
 Shooter,Primary Motor,Left Shooter R,SparkFlex,11
 Shooter,Primary Motor,Left Shooter L,SparkFlex,12
-Kicker,Secondary Motor,Kickßr L,SparkFlex,13
+Kicker,Secondary Motor,Kicker L,SparkFlex,13
 Kicker,Secondary Motor,Kicker R,SparkFlex,14
 Twindexer,Drive Motor,Twindexer L,SparkFlex,15
 Twindexer,Drive Motor,Twindexer R,SparkFlex,16
-Intake_Extension_L,Drive Motor,Pushout,SparkFlex,17
-Intake_Extension_R,Drive Motor,Pushout 2,SparkFlex,18
-Intake,Drive Motor,Intake L,SparkFlex,19
-Intake,Drive Motor,Intake R,SparkFlex,20
+Intake_Extension,Drive Motor,Pushout,SparkFlex,17
+Intake,Drive Motor,Intake L,SparkFlex,18
+Intake,Drive Motor,Intake R,SparkFlex,19
