@@ -277,7 +277,7 @@ public class RobotContainer {
                     Commands.parallel(
                         m_hopper.runHopperToShooterCommand(),
                         m_kicker.kickCommand(),
-                        m_pushout.AgitateCommand()
+                        m_pushout.CheeksyAgitationCommand()
                             .beforeStarting(Commands.waitSeconds(1.5)),
                         m_intake.runIntakeCommand()))
                     .finallyDo(
@@ -341,7 +341,7 @@ public class RobotContainer {
                   Commands.parallel(
                       m_hopper.runHopperToShooterCommand(),
                       m_kicker.kickCommand(),
-                      m_pushout.AgitateCommand(),
+                      m_pushout.CheeksyAgitationCommand(),
                       m_intake.runIntakeCommand()))
                   .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1))))
           .finallyDo(() -> drivebase.isAiming = false);
@@ -603,7 +603,7 @@ public class RobotContainer {
                         m_hopper.runHopperToShooterCommand(),
 
                         m_kicker.kickCommand(),
-                        m_pushout.AgitateCommand()
+                        m_pushout.CheeksyAgitationCommand()
                             .beforeStarting(Commands.waitSeconds(1.5)),
                         m_intake.runIntakeCommand())
                         .onlyWhile(aimAtFerry.swerveInputStream.aimLock(Angle.ofBaseUnits(5, Degrees)))))
@@ -641,7 +641,7 @@ public class RobotContainer {
                   Commands.parallel(
                       m_hopper.runHopperToShooterCommand(),
                       m_kicker.kickCommand(),
-                      m_pushout.AgitateCommand()
+                      m_pushout.CheeksyAgitationCommand()
                           .beforeStarting(Commands.waitSeconds(1.5))
                           .onlyWhile(() -> !LT_Intake.getAsBoolean()),
 
@@ -668,7 +668,7 @@ public class RobotContainer {
                     // driverXbox::getLeftY,
                     // driverXbox::getRightX,
                     // driveAngularVelocity::get),
-                    m_pushout.AgitateCommand()
+                    m_pushout.CheeksyAgitationCommand()
                         .beforeStarting(Commands.waitSeconds(1.5))))));
 
     // get to shooter
@@ -687,7 +687,7 @@ public class RobotContainer {
                     // driverXbox::getLeftY,
                     // driverXbox::getRightX,
                     // driveAngularVelocity::get),
-                    m_pushout.AgitateCommand()
+                    m_pushout.CheeksyAgitationCommand()
                         .beforeStarting(Commands.waitSeconds(1.5))))));
 
     LB_OP_unjam.whileTrue(Commands.parallel(m_hopper.runReverseHopperCommand(), m_kicker.kickBackwardsCommand()));
