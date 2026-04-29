@@ -156,7 +156,7 @@ public final class Constants {
     public static final int PUSHOUT_ID = 17; // Correct
 
     public static final double PUSHOUT_RETRACTED_POS = 2; //
-    public static final double PUSHOUT_EXTENDED_POS = 14; // TUNE THIS!!!
+    public static final double PUSHOUT_EXTENDED_POS = 15.911; // TUNE THIS!!!
     public static final double FULLY_RETRACTED_POS = 0.25;
 
     public static final double PUSHOUT_RETRACTED_AGITATE_POS = 2; // it was 4.693
