@@ -95,58 +95,6 @@ public final class Configs
                                 .cruiseVelocity(400000)
                                 .maxAcceleration(400000);   
                         
-                        // PushoutMotorAgitateConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40).voltageCompensation(12);
-                        // PushoutMotorAgitateConfig.closedLoop
-                        // .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-                        // .p(3.3)
-                        // .i(0.0)
-                        // .d(0.001)
-                        // .outputRange(-1.0, 1.0);
-
-                        // PushoutMotorAgitateConfig.closedLoop
-                        // .maxMotion
-                        //         .allowedProfileError(0.5)
-                        //         .cruiseVelocity(3000)
-                        //         .maxAcceleration(10000);   
-                        
-                }
-
-            public static final SparkFlexConfig PushoutMotorPullConfig = new SparkFlexConfig();
-        //     public static final SparkFlexConfig PushoutMotorAgitateConfig = new SparkFlexConfig();
-            // public static final SparkFlexConfig PushoutRightMotorConfig = new SparkFlexConfig();
-
-
-                static {
-                        PushoutMotorConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40).voltageCompensation(12);
-
-
-                        PushoutMotorConfig.closedLoop
-                        .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-                        .p(3.3)
-                        .i(0.0)
-                        .d(0.001)
-                        .outputRange(-1.0, 1.0);
-
-                        PushoutMotorConfig.closedLoop
-                        .maxMotion
-                                .allowedProfileError(0.5)
-                                .cruiseVelocity(10000)
-                                .maxAcceleration(10000);   
-                        
-                        // PushoutMotorAgitateConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40).voltageCompensation(12);
-                        // PushoutMotorAgitateConfig.closedLoop
-                        // .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-                        // .p(3.3)
-                        // .i(0.0)
-                        // .d(0.001)
-                        // .outputRange(-1.0, 1.0);
-
-                        // PushoutMotorAgitateConfig.closedLoop
-                        // .maxMotion
-                        //         .allowedProfileError(0.5)
-                        //         .cruiseVelocity(3000)
-                        //         .maxAcceleration(10000);   
-                        
                 }
 
 
