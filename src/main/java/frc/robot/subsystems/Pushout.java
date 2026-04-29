@@ -37,11 +37,8 @@ public class Pushout extends SubsystemBase {
     // AdvantageKit logging
     private double desiredPercent = 0.0;
 
-    private SparkFlex PushoutMotorL = new SparkFlex(PushoutConstants.PUSHOUT_ID_L, MotorType.kBrushless);
-    private SparkClosedLoopController PushoutControllerL = PushoutMotorL.getClosedLoopController();
-    private SparkFlex PushoutMotorR = new SparkFlex(PushoutConstants.PUSHOUT_ID_R, MotorType.kBrushless);
-    private SparkClosedLoopController PushoutController2 = PushoutMotorR.getClosedLoopController();
-
+    private SparkFlex PushoutMotor = new SparkFlex(PushoutConstants.PUSHOUT_ID, MotorType.kBrushless);
+    private SparkClosedLoopController PushoutController = PushoutMotor.getClosedLoopController();
 
     private final Angle hardLowerLimit = Degrees.of(0);
 
@@ -50,32 +47,28 @@ public class Pushout extends SubsystemBase {
     // private SparkClosedLoopController PushoutRightController =
     // PushoutRightMotor.getClosedLoopController();
 
-    private RelativeEncoder pushoutEncoder = PushoutMotorL.getEncoder();
+    private RelativeEncoder pushoutEncoder = PushoutMotor.getEncoder();
 
     double minVelocity = -350.0;
     // private final RelativeEncoder pushoutRightEncoder =
     // PushoutRightMotor.getEncoder();
 
     public Pushout() {
-        PushoutMotorL.configure(Configs.PushoutSubsystem.PushoutMotorConfigL, ResetMode.kResetSafeParameters,
+        PushoutMotor.configure(Configs.PushoutSubsystem.PushoutMotorConfig, ResetMode.kResetSafeParameters,
                 PersistMode.kPersistParameters);
-        PushoutMotorR.configure(Configs.PushoutSubsystem.PushoutMotorConfigR, ResetMode.kResetSafeParameters,
-                PersistMode.kPersistParameters);
-           
         pushoutEncoder.setPosition(0);
-        
     }
 
     public void PushIntake() {
-        PushoutControllerL.setSetpoint(PushoutConstants.PUSHOUT_EXTENDED_POS, ControlType.kMAXMotionPositionControl);
+        PushoutController.setSetpoint(PushoutConstants.PUSHOUT_EXTENDED_POS, ControlType.kMAXMotionPositionControl);
     }
 
     public void RetractIntake() {
-        PushoutControllerL.setSetpoint(PushoutConstants.PUSHOUT_RETRACTED_POS, ControlType.kMAXMotionPositionControl);
+        PushoutController.setSetpoint(PushoutConstants.PUSHOUT_RETRACTED_POS, ControlType.kMAXMotionPositionControl);
     }
 
     public void FullyRetract() {
-        PushoutControllerL.setSetpoint(PushoutConstants.FULLY_RETRACTED_POS, ControlType.kMAXMotionPositionControl);
+        PushoutController.setSetpoint(PushoutConstants.FULLY_RETRACTED_POS, ControlType.kMAXMotionPositionControl);
     }
 
     public void ResetEncoder() {
@@ -83,19 +76,19 @@ public class Pushout extends SubsystemBase {
     }
 
     public void StopPushout() {
-        PushoutMotorL.set(0);
+        PushoutMotor.set(0);
     }
 
     public void PushoutDutycyle() {
-        PushoutMotorL.set(0.8);
+        PushoutMotor.set(0.8);
     }
 
     public void PushoutDutycyleRetract() {
-        PushoutMotorL.set(-0.8);
+        PushoutMotor.set(-0.8);
     }
     public void CheeksyAgitation() {
 
-        PushoutControllerL.setSetpoint(minVelocity, ControlType.kMAXMotionVelocityControl);
+        PushoutController.setSetpoint(minVelocity, ControlType.kMAXMotionVelocityControl);
     }
 
     public Command CheeksyAgitationCommand() {
@@ -107,9 +100,9 @@ public class Pushout extends SubsystemBase {
     public Command HomingCommand(double threshold) {
         Debouncer currentDebouncer = new Debouncer(0.2);
 
-        return new RunCommand(() -> PushoutControllerL.setSetpoint(minVelocity, ControlType.kMAXMotionVelocityControl),
+        return new RunCommand(() -> PushoutController.setSetpoint(minVelocity, ControlType.kMAXMotionVelocityControl),
                 this)
-                .until(() -> (PushoutMotorL.getEncoder().getVelocity() >= threshold))
+                .until(() -> (PushoutMotor.getEncoder().getVelocity() >= threshold))
                 .finallyDo(() -> {
                     StopPushout();
                 });
@@ -153,45 +146,45 @@ public class Pushout extends SubsystemBase {
         final double waitBetween = PushoutConstants.PUSHOUT_BETWEEN;
         Command agitate = Commands.sequence(
                 // push to 11 & pull to 8
-                runOnce(() -> PushoutControllerL.setSetpoint(pullPositions[0], ControlType.kMAXMotionPositionControl)),
+                runOnce(() -> PushoutController.setSetpoint(pullPositions[0], ControlType.kMAXMotionPositionControl)),
                 Commands.waitSeconds(waitTime),
-                runOnce(() -> PushoutControllerL.setSetpoint(pushPositions[0], ControlType.kMAXMotionPositionControl)),
+                runOnce(() -> PushoutController.setSetpoint(pushPositions[0], ControlType.kMAXMotionPositionControl)),
                 Commands.waitSeconds(waitTime),
 
                 Commands.waitSeconds(waitBetween),
 
                 // push to 9 & pull to 6
-                runOnce(() -> PushoutControllerL.setSetpoint(pullPositions[1], ControlType.kMAXMotionPositionControl)),
+                runOnce(() -> PushoutController.setSetpoint(pullPositions[1], ControlType.kMAXMotionPositionControl)),
                 Commands.waitSeconds(waitTime),
-                runOnce(() -> PushoutControllerL.setSetpoint(pushPositions[1], ControlType.kMAXMotionPositionControl)),
+                runOnce(() -> PushoutController.setSetpoint(pushPositions[1], ControlType.kMAXMotionPositionControl)),
                 Commands.waitSeconds(waitTime),
 
                 Commands.waitSeconds(waitBetween),
 
                 // push to 7 & pull to 4
-                runOnce(() -> PushoutControllerL.setSetpoint(pullPositions[2], ControlType.kMAXMotionPositionControl)),
+                runOnce(() -> PushoutController.setSetpoint(pullPositions[2], ControlType.kMAXMotionPositionControl)),
                 Commands.waitSeconds(waitTime),
-                runOnce(() -> PushoutControllerL.setSetpoint(pushPositions[2], ControlType.kMAXMotionPositionControl)),
-                Commands.waitSeconds(waitTime),
-
-                Commands.waitSeconds(waitBetween),
-
-                runOnce(() -> PushoutControllerL.setSetpoint(pullPositions[3], ControlType.kMAXMotionPositionControl)),
-                Commands.waitSeconds(waitTime),
-                runOnce(() -> PushoutControllerL.setSetpoint(pushPositions[3], ControlType.kMAXMotionPositionControl)),
+                runOnce(() -> PushoutController.setSetpoint(pushPositions[2], ControlType.kMAXMotionPositionControl)),
                 Commands.waitSeconds(waitTime),
 
                 Commands.waitSeconds(waitBetween),
 
-                runOnce(() -> PushoutControllerL.setSetpoint(pullPositions[4], ControlType.kMAXMotionPositionControl)),
+                runOnce(() -> PushoutController.setSetpoint(pullPositions[3], ControlType.kMAXMotionPositionControl)),
                 Commands.waitSeconds(waitTime),
-                runOnce(() -> PushoutControllerL.setSetpoint(pushPositions[4], ControlType.kMAXMotionPositionControl)),
+                runOnce(() -> PushoutController.setSetpoint(pushPositions[3], ControlType.kMAXMotionPositionControl)),
+                Commands.waitSeconds(waitTime),
+
+                Commands.waitSeconds(waitBetween),
+
+                runOnce(() -> PushoutController.setSetpoint(pullPositions[4], ControlType.kMAXMotionPositionControl)),
+                Commands.waitSeconds(waitTime),
+                runOnce(() -> PushoutController.setSetpoint(pushPositions[4], ControlType.kMAXMotionPositionControl)),
                 Commands.waitSeconds(waitTime),
 
                 Commands.waitSeconds(waitBetween),
 
                 // end pos
-                runOnce(() -> PushoutControllerL.setSetpoint(finalPos, ControlType.kMAXMotionPositionControl)),
+                runOnce(() -> PushoutController.setSetpoint(finalPos, ControlType.kMAXMotionPositionControl)),
                 Commands.idle(this)
 
         ).finallyDo(interrupted -> PushIntake());

@@ -132,8 +132,8 @@ public final class Constants {
   }
 
   public static class IntakeConstants {
-    public static final int INTAKE_LEFT_ID = 19; // unknown
-    public static final int INTAKE_RIGHT_ID = 20; // unknown
+    public static final int INTAKE_LEFT_ID = 18; // unknown
+    public static final int INTAKE_RIGHT_ID = 19; // unknown
 
     // PID Constants
     public static final double p = 0.006155;
@@ -153,8 +153,7 @@ public final class Constants {
   }
 
   public static class PushoutConstants {
-    public static final int PUSHOUT_ID_L = 17; // Correct
-    public static final int PUSHOUT_ID_R = 18; // Correct
+    public static final int PUSHOUT_ID = 17; // Correct
 
     public static final double PUSHOUT_RETRACTED_POS = 2; //
     public static final double PUSHOUT_EXTENDED_POS = 14; // TUNE THIS!!!

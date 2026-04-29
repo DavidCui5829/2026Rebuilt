@@ -8,7 +8,6 @@ import frc.robot.Constants.FunnelConstants;
 import frc.robot.Constants.HopperConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.KickerConstants;
-import frc.robot.Constants.PushoutConstants;
 import frc.robot.Constants.ShooterConstants;
 
 import com.ctre.phoenix6.swerve.utility.WheelForceCalculator.Feedforwards;
@@ -72,15 +71,16 @@ public final class Configs
 
         public static final class PushoutSubsystem {
 
-            public static final SparkFlexConfig PushoutMotorConfigL = new SparkFlexConfig();
-            public static final SparkFlexConfig PushoutMotorConfigR = new SparkFlexConfig();
+            public static final SparkFlexConfig PushoutMotorConfig = new SparkFlexConfig();
+        //     public static final SparkFlexConfig PushoutMotorAgitateConfig = new SparkFlexConfig();
+            // public static final SparkFlexConfig PushoutRightMotorConfig = new SparkFlexConfig();
+
 
                 static {
-                        PushoutMotorConfigL.idleMode(IdleMode.kCoast).smartCurrentLimit(40).voltageCompensation(12);
-                        PushoutMotorConfigR.idleMode(IdleMode.kCoast).smartCurrentLimit(40).voltageCompensation(12)
-                        .follow(PushoutConstants.PUSHOUT_ID_L, true);
+                        PushoutMotorConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40).voltageCompensation(12);
 
-                        PushoutMotorConfigL.closedLoop
+
+                        PushoutMotorConfig.closedLoop
                         .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                         .p(3.3)
                         .i(0.0)
@@ -89,12 +89,67 @@ public final class Configs
 
                         
 
-                        PushoutMotorConfigL.closedLoop
+                        PushoutMotorConfig.closedLoop
                         .maxMotion
                                 .allowedProfileError(0.5)
                                 .cruiseVelocity(400000)
                                 .maxAcceleration(400000);   
+                        
+                        // PushoutMotorAgitateConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40).voltageCompensation(12);
+                        // PushoutMotorAgitateConfig.closedLoop
+                        // .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                        // .p(3.3)
+                        // .i(0.0)
+                        // .d(0.001)
+                        // .outputRange(-1.0, 1.0);
+
+                        // PushoutMotorAgitateConfig.closedLoop
+                        // .maxMotion
+                        //         .allowedProfileError(0.5)
+                        //         .cruiseVelocity(3000)
+                        //         .maxAcceleration(10000);   
+                        
                 }
+
+            public static final SparkFlexConfig PushoutMotorPullConfig = new SparkFlexConfig();
+        //     public static final SparkFlexConfig PushoutMotorAgitateConfig = new SparkFlexConfig();
+            // public static final SparkFlexConfig PushoutRightMotorConfig = new SparkFlexConfig();
+
+
+                static {
+                        PushoutMotorConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40).voltageCompensation(12);
+
+
+                        PushoutMotorConfig.closedLoop
+                        .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                        .p(3.3)
+                        .i(0.0)
+                        .d(0.001)
+                        .outputRange(-1.0, 1.0);
+
+                        PushoutMotorConfig.closedLoop
+                        .maxMotion
+                                .allowedProfileError(0.5)
+                                .cruiseVelocity(10000)
+                                .maxAcceleration(10000);   
+                        
+                        // PushoutMotorAgitateConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40).voltageCompensation(12);
+                        // PushoutMotorAgitateConfig.closedLoop
+                        // .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                        // .p(3.3)
+                        // .i(0.0)
+                        // .d(0.001)
+                        // .outputRange(-1.0, 1.0);
+
+                        // PushoutMotorAgitateConfig.closedLoop
+                        // .maxMotion
+                        //         .allowedProfileError(0.5)
+                        //         .cruiseVelocity(3000)
+                        //         .maxAcceleration(10000);   
+                        
+                }
+
+
         };
 
         public static final class KickerSubsystem {
