@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.75801652713948,
-        "y": 5.64212359782617
+        "x": 3.7579362538635572,
+        "y": 5.489839032414714
       },
       "isLocked": false,
       "linkedName": "LB"
     },
     {
       "anchor": {
-        "x": 2.4864194008559197,
-        "y": 5.554865085985628
+        "x": 2.66756062767475,
+        "y": 6.745649072753209
       },
       "prevControl": {
-        "x": 2.2236472999773698,
-        "y": 5.564889139408119
+        "x": 2.4911387517076076,
+        "y": 6.922779876624908
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 144.17000000000002
+    "rotation": 125.97800000000001
   },
   "reversed": false,
   "folder": "Worlds Paths",

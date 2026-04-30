@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.4864194008559197,
-        "y": 5.554865085985628
+        "x": 2.66756062767475,
+        "y": 6.745649072753209
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.5860826052890715,
-        "y": 5.325589606088375
+        "x": 2.7672238321079017,
+        "y": 6.516373592855956
       },
       "isLocked": false,
       "linkedName": "LB Shoot Spc"
@@ -132,7 +132,7 @@
   "folder": "Worlds Paths 2",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 144.17000000000002
+    "rotation": 125.97800000000001
   },
   "useDefaultConstraints": false
 }
