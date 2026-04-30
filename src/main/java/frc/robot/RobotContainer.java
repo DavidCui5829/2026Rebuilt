@@ -613,8 +613,7 @@ public class RobotContainer {
                 .finallyDo(() -> m_shooter.setTargetRPMCommand(passCmd.RecordedidealHorizontalSpeed).withTimeout(1));
           }
         }, java.util.Collections.emptySet()));
-
-    
+        
 
     // Intake
     LT_Intake.whileTrue(Commands.parallel(m_pushout.PushCommand(), m_intake.runIntakeCommand()));
