@@ -50,6 +50,9 @@ public class Intake extends SubsystemBase {
     public void runIntake() {
         IntakeLeftController.setSetpoint(IntakeConstants.OUTTAKE_RPM,
                 ControlType.kMAXMotionVelocityControl);
+        IntakeRightController.setSetpoint(IntakeConstants.OUTTAKE_RPM,
+                ControlType.kMAXMotionVelocityControl);
+
     }
 
     public void stopIntake() {
