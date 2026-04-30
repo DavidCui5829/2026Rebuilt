@@ -378,7 +378,12 @@ public class RobotContainer {
     }, java.util.Collections.emptySet()).withTimeout(4));
 
     
-
+NamedCommands.registerCommand("Speed Up", Commands.defer(() -> {
+      ControlAllShooting shootCmd = new ControlAllShooting(drivebase::getCachedDynamicHubLocation, m_shooter,
+          drivebase::getPose, true);
+      return Commands.sequence(
+              shootCmd);
+    }, java.util.Collections.emptySet()));
     
     // public Command runIntakeCommand() {
     //     return new RunCommand(() -> runIntake(), this)
