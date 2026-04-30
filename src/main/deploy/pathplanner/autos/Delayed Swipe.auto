@@ -27,6 +27,12 @@
           "data": {
             "name": "Control All Shooting"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "get out way"
+          }
         }
       ]
     }

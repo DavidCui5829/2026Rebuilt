@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.6709264273925633,
-        "y": 5.827666478412934
+        "x": 2.4864194008559197,
+        "y": 5.723495007132667
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.3434987519229467,
-        "y": 6.027743934939618
+        "x": 2.1589917253863034,
+        "y": 5.923572463659351
       },
       "isLocked": false,
       "linkedName": "Delayed End"
@@ -110,7 +110,7 @@
   "folder": "Worlds Paths",
   "idealStartingState": {
     "velocity": 0.0,
-    "rotation": 149.024
+    "rotation": 141.934
   },
   "useDefaultConstraints": false
 }
