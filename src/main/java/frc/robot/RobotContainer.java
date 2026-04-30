@@ -37,6 +37,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 
 import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.Inches;
@@ -375,6 +376,15 @@ public class RobotContainer {
                   ))))
           .finallyDo(() -> drivebase.isAiming = false);
     }, java.util.Collections.emptySet()).withTimeout(4));
+
+    
+
+    
+    // public Command runIntakeCommand() {
+    //     return new RunCommand(() -> runIntake(), this)
+    //             .finallyDo(interrupted -> stopIntake());
+    // }
+
 
 
     NamedCommands.registerCommand("SOTM", Commands.defer(() -> {
