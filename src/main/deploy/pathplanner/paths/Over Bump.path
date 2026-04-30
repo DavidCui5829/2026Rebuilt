@@ -3,13 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.508573466476462,
-        "y": 5.658801711840229
+        "x": 5.863409415121255,
+        "y": 5.387089871611984
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.7579362538635572,
-        "y": 5.489839032414714
+        "x": 6.101528741734948,
+        "y": 5.310937482988638
+      },
+      "isLocked": false,
+      "linkedName": "LB Start"
+    },
+    {
+      "anchor": {
+        "x": 3.508573466476462,
+        "y": 5.658801711840229
+      },
+      "prevControl": {
+        "x": 4.096453659968741,
+        "y": 5.259691670511237
+      },
+      "nextControl": {
+        "x": 3.1213026386273155,
+        "y": 5.921718676588108
       },
       "isLocked": false,
       "linkedName": "LB"
@@ -20,15 +36,20 @@
         "y": 6.745649072753209
       },
       "prevControl": {
-        "x": 2.4911387517076076,
-        "y": 6.922779876624908
+        "x": 2.5399943145339954,
+        "y": 6.960653341900765
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "LB Shoot Spc"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 138.715
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],

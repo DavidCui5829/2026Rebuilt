@@ -36,7 +36,7 @@
         "y": 5.040743851273148
       },
       "prevControl": {
-        "x": 0.9199816997808893,
+        "x": 0.9199816997808895,
         "y": 4.83822072588845
       },
       "nextControl": {
@@ -119,9 +119,9 @@
       }
     },
     {
-      "name": "Shoot and Aim",
-      "waypointRelativePos": 0.0,
-      "endWaypointRelativePos": 3.0,
+      "name": "intake",
+      "waypointRelativePos": 1.7717758271437491,
+      "endWaypointRelativePos": 3.413909520594126,
       "command": {
         "type": "named",
         "data": {
