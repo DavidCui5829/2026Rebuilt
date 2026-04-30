@@ -168,7 +168,7 @@
     },
     {
       "name": "intake",
-      "waypointRelativePos": 1.6658921933085509,
+      "waypointRelativePos": 1.6205266711681294,
       "endWaypointRelativePos": 7.0,
       "command": {
         "type": "named",
