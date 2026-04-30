@@ -52,19 +52,7 @@
   ],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "Speed Up",
-      "waypointRelativePos": 0.8966914247130313,
-      "endWaypointRelativePos": 2.0,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "Speed Up"
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.5,
     "maxAcceleration": 3.5,
