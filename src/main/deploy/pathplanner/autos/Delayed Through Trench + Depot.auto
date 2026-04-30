@@ -27,6 +27,18 @@
           "data": {
             "name": "Control All Shooting"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Depot From Delayed"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Control All Shooting"
+          }
         }
       ]
     }

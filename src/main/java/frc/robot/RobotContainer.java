@@ -350,6 +350,32 @@ public class RobotContainer {
           .finallyDo(() -> drivebase.isAiming = false);
     }, java.util.Collections.emptySet()).withTimeout(5.3));
 
+    NamedCommands.registerCommand("Shoot Preload", Commands.defer(() -> {
+      ControlAllShooting shootCmd = new ControlAllShooting(drivebase::getCachedDynamicHubLocation, m_shooter,
+          drivebase::getPose, true);
+      return Commands.sequence(
+          Commands.runOnce(() -> {
+            drivebase.setAimLocations();
+            drivebase.isAiming = true;
+          }),
+          Commands.parallel(
+              shootCmd,
+              drivebase.driveFieldOriented(aimAtHubStream),
+              Commands.sequence(
+                  Commands.waitUntil(() -> shootCmd.isCASAtSpeed()
+                      && aimAtHubStream.aimLock(Angle.ofBaseUnits(1, Degrees)).getAsBoolean()),
+                  Commands.parallel(
+                      m_hopper.runHopperToShooterCommand(),
+                      m_kicker.kickCommand(),
+                      m_pushout.CheeksyAgitationCommand(),
+                      m_intake.runIntakeCommand()))
+                  .finallyDo(() -> Commands.parallel(
+                    m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1),
+                    m_pushout.RetractCommand()
+                  ))))
+          .finallyDo(() -> drivebase.isAiming = false);
+    }, java.util.Collections.emptySet()).withTimeout(2));
+
     NamedCommands.registerCommand("intake", m_intake.runIntakeCommand());
     NamedCommands.registerCommand("outtake", m_intake.runOuttakeCommand().withTimeout(4));
 
