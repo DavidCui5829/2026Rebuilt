@@ -331,7 +331,6 @@ public class RobotContainer {
           Commands.runOnce(() -> {
             drivebase.setAimLocations();
             drivebase.isAiming = true;
-            drivebase.shouldAimAtHubAuto = true;
           }),
           Commands.parallel(
               shootCmd,
@@ -348,7 +347,7 @@ public class RobotContainer {
                     m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1),
                     m_pushout.RetractCommand()
                   ))))
-          .finallyDo(() -> {drivebase.isAiming = false; drivebase.shouldAimAtHubAuto = false;});
+          .finallyDo(() -> drivebase.isAiming = false);
     }, java.util.Collections.emptySet()).withTimeout(5.3));
 
     NamedCommands.registerCommand("Shoot Preload", Commands.defer(() -> {
