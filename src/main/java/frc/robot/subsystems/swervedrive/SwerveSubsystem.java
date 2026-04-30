@@ -1264,7 +1264,7 @@ public class SwerveSubsystem extends SubsystemBase {
           }
           else
           {
-            return new Pose2d(new Translation2d(3.478, 0.432),
+            return new Pose2d(new Translation2d(3.478, 0.67),
               Rotation2d.fromDegrees(0));
           }
       }
@@ -1278,7 +1278,7 @@ public class SwerveSubsystem extends SubsystemBase {
         }
         else
         {
-          return new Pose2d(new Translation2d(5.789, 0.432),
+          return new Pose2d(new Translation2d(5.789, 0.67),
               Rotation2d.fromDegrees(180));
         }
       }

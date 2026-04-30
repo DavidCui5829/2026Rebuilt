@@ -343,7 +343,10 @@ public class RobotContainer {
                       m_kicker.kickCommand(),
                       m_pushout.CheeksyAgitationCommand(),
                       m_intake.runIntakeCommand()))
-                  .finallyDo(() -> m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1))))
+                  .finallyDo(() -> Commands.parallel(
+                    m_shooter.setTargetRPMCommand(shootCmd.RecordedidealHorizontalSpeed).withTimeout(1),
+                    m_pushout.RetractCommand()
+                  ))))
           .finallyDo(() -> drivebase.isAiming = false);
     }, java.util.Collections.emptySet()).withTimeout(5.3));
 
@@ -610,6 +613,8 @@ public class RobotContainer {
                 .finallyDo(() -> m_shooter.setTargetRPMCommand(passCmd.RecordedidealHorizontalSpeed).withTimeout(1));
           }
         }, java.util.Collections.emptySet()));
+
+    
 
     // Intake
     LT_Intake.whileTrue(Commands.parallel(m_pushout.PushCommand(), m_intake.runIntakeCommand()));

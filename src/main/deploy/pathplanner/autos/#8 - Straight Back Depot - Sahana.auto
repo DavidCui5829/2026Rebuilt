@@ -5,21 +5,9 @@
     "data": {
       "commands": [
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 4.0
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "Delayed Swipe"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Over Bump Delayed"
+            "pathName": "Straight Back"
           }
         },
         {
@@ -32,6 +20,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Delayed Autos",
+  "folder": "Worlds Autos",
   "choreoAuto": false
 }

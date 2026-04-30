@@ -13,25 +13,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Delayed Swipe"
+            "pathName": "LT Swipe"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Over Bump Delayed"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Control All Shooting"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Depot and shoot Delayed"
+            "pathName": "Through LT"
           }
         },
         {
