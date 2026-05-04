@@ -62,9 +62,13 @@ public class Hopper extends SubsystemBase {
 
     }
 
-    public boolean checkBalls() // Checks if there are balls in hopper based on output current
+    public boolean checkBalls() // Checks if there are balls in hopper based on output velocity
     {
+<<<<<<< Updated upstream
         return !(Math.abs((TwindexerLeftMotor.getEncoder().getVelocity() + TwindexerRightMotor.getEncoder().getVelocity()) / 2.0 - HopperConstants.REVERSE_TWINDEXER_RIGHT_RPM) < 100)
+=======
+        return !(Math.abs((TwindexerLeftMotor.getEncoder().getVelocity() + TwindexerRightMotor.getEncoder().getVelocity()) / 2.0 - HopperConstants.REVERSE_TWINDEXER_RIGHT_RPM) < 100);
+>>>>>>> Stashed changes
     }
 
     public void stopHopper() {
