@@ -1204,7 +1204,7 @@ public Pose2d getDynamicHubLocation() {
   }
 
   // 4. Final Compensation and Latency
-  // Add the specific 5829 LOOP_TIME (0.13s) to account for CAN bus delay
+  // Add the specific 5829 LOOP_TIME (0.11s) to account for CAN bus delay
   double totalLookahead = t + 0.11; 
   Translation2d virtualTarget = hubPos.minus(robotVel.times(totalLookahead));
 
