@@ -1164,37 +1164,56 @@ public class SwerveSubsystem extends SubsystemBase {
     return cachedDynamicFerry;
   }
 
-  /**
-   * Computes a virtual hub location that compensates for robot velocity,
-   * so the robot aims ahead of the actual hub when moving (shoot-on-the-move).
-   * Uses an iterative time-of-flight lookup to converge on the correct lead.
-   *
-   * @return A Pose2d representing the compensated aim point.
-   */
-  public Pose2d getDynamicHubLocation() {
+/**
+ * Upgraded Newton-Raphson Solver for Team 5829.
+ * Implements logic from "Newton’s Method for Dynamic Shooting" documentation.
+ */
+public Pose2d getDynamicHubLocation() {
+  // 1. Core Field Positions (using YAGSL odometry)
+  Translation2d hubPos = Constants.DrivebaseConstants.getHubPose2D().getTranslation();
+  Translation2d robotPos = getPose().getTranslation(); //
+  ChassisSpeeds fieldVel = getFieldVelocity(); //
+  
+  // Convert ChassisSpeeds to a Translation2d vector for math
+  Translation2d robotVel = new Translation2d(fieldVel.vxMetersPerSecond, fieldVel.vyMetersPerSecond);
 
-    if(locked)
-    {
-      return new Pose2d(Constants.DrivebaseConstants.getHubPose2D().getTranslation(), new Rotation2d(0));
-    }
+  // 2. Initial Guess for Time of Flight (t)
+  // We use the current distance divided by the 2026 exit velocity (~20m/s)
+  double currentDistance = robotPos.getDistance(hubPos);
+  double t = currentDistance / 20.0; 
 
-    Translation2d hubVec = Constants.DrivebaseConstants.getHubPose2D().getTranslation();
-    Translation2d robotVec = getPose().getTranslation();
-    ChassisSpeeds vel = getFieldVelocity();
-    Translation2d robotVel = new Translation2d(vel.vxMetersPerSecond, vel.vyMetersPerSecond);
+  // 3. Newton's Method Iterations
+  // Newton's Method converges much faster than fixed-point iteration.
+  for (int i = 0; i < 3; i++) {
+      // Calculate displacement vector from robot to hub at time 't'
+      // Displacement = Hub - (Robot + Vel * t)
+      Translation2d displacement = hubPos.minus(robotPos.plus(robotVel.times(t)));
+      double distAtT = displacement.getNorm();
 
-    Translation2d CompensatedHub = hubVec;
-    for (int i = 0; i < 15; i++) {
-      double distance = CompensatedHub.minus(robotVec).getNorm();
-      double tof = Constants.ShooterConstants.TOF.get(distance);
-      CompensatedHub = hubVec.minus(robotVel.times(tof));
-    }
+      // Function f(t): The difference between ball travel time and current guess 't'
+      // f(t) = (dist / v_ball) - t
+      double f_t = (distAtT / 20.0) - t;
 
-    Rotation2d aimRotation = CompensatedHub.minus(robotVec).getAngle();
+      // Derivative f'(t): Necessary for the Newton-Raphson update
+      // Accounts for the "closing velocity" between the robot and target
+      double dotProduct = (robotVel.getX() * displacement.getX()) + (robotVel.getY() * displacement.getY());
+      double f_prime_t = (dotProduct / (distAtT * 20.0)) - 1.0;
 
-    return new Pose2d(CompensatedHub, aimRotation);
+      // Newton Update step: t = t - f(t) / f'(t)
+      t = t - (f_t / f_prime_t);
   }
 
+  // 4. Final Compensation and Latency
+  // Add the specific 5829 LOOP_TIME (0.13s) to account for CAN bus delay
+  double totalLookahead = t + 0.11; 
+  Translation2d virtualTarget = hubPos.minus(robotVel.times(totalLookahead));
+
+  // AdvantageKit Logging for match analysis
+  Logger.recordOutput("Shooting/NewtonSolvedTOF", t);
+  Logger.recordOutput("Shooting/VirtualTarget", virtualTarget);
+
+  return new Pose2d(virtualTarget, new Rotation2d());
+}
   /**
    * Computes a virtual ferry location that compensates for robot velocity,
    * so the robot aims ahead of the actual ferry target when moving (pass-on-the-move).
