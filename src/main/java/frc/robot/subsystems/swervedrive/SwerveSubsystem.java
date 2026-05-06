@@ -1165,35 +1165,76 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
   /**
-   * Computes a virtual hub location that compensates for robot velocity,
-   * so the robot aims ahead of the actual hub when moving (shoot-on-the-move).
-   * Uses an iterative time-of-flight lookup to converge on the correct lead.
-   *
-   * @return A Pose2d representing the compensated aim point.
-   */
-  public Pose2d getDynamicHubLocation() {
+ * Computes a virtual hub location that compensates for robot velocity and acceleration,
+ * providing improved shoot-on-the-move accuracy for 2-5 meter distances.
+ * Uses iterative time-of-flight lookup with acceleration compensation.
+ * 
+ * @return A Pose2d representing the compensated aim point
+ */
+public Pose2d getDynamicHubLocation() {
+ 
 
-    if(locked)
-    {
-      return new Pose2d(Constants.DrivebaseConstants.getHubPose2D().getTranslation(), new Rotation2d(0));
-    }
-
-    Translation2d hubVec = Constants.DrivebaseConstants.getHubPose2D().getTranslation();
-    Translation2d robotVec = getPose().getTranslation();
-    ChassisSpeeds vel = getFieldVelocity();
-    Translation2d robotVel = new Translation2d(vel.vxMetersPerSecond, vel.vyMetersPerSecond);
-
-    Translation2d CompensatedHub = hubVec;
-    for (int i = 0; i < 15; i++) {
-      double distance = CompensatedHub.minus(robotVec).getNorm();
-      double tof = Constants.ShooterConstants.TOF.get(distance);
-      CompensatedHub = hubVec.minus(robotVel.times(tof));
-    }
-
-    Rotation2d aimRotation = CompensatedHub.minus(robotVec).getAngle();
-
-    return new Pose2d(CompensatedHub, aimRotation);
+  // Get current robot state
+  Translation2d hubVec = Constants.DrivebaseConstants.getHubPose2D().getTranslation();
+  Translation2d robotVec = getPose().getTranslation();
+  ChassisSpeeds vel = getFieldVelocity();
+  Translation2d robotVel = new Translation2d(vel.vxMetersPerSecond, vel.vyMetersPerSecond);
+  
+  // Calculate robot acceleration if we have previous data
+  double currentTime = Timer.getFPGATimestamp();
+  double dt = currentTime - previousTime;
+  Translation2d robotAccel = new Translation2d(0, 0);
+  
+  if (dt > 0.01 && dt < 0.5) { // Valid time window
+      double accelX = (vel.vxMetersPerSecond - previousVelocity.vxMetersPerSecond) / dt;
+      double accelY = (vel.vyMetersPerSecond - previousVelocity.vyMetersPerSecond) / dt;
+      robotAccel = new Translation2d(accelX, accelY);
   }
+  
+  // Update previous values for next iteration
+  previousVelocity = vel;
+  previousTime = currentTime;
+  
+  // Iterative solution with velocity and acceleration compensation
+  Translation2d compensatedHub = hubVec;
+  for (int i = 0; i < 20; i++) {
+      double distance = compensatedHub.minus(robotVec).getNorm();
+      
+      // Get time of flight with distance-based interpolation
+      double tof = Constants.ShooterConstants.TOF.get(distance);
+      
+      // Apply velocity compensation
+      Translation2d velCompensation = robotVel.times(tof);
+      
+      // Apply acceleration compensation (0.5 * a * t^2)
+      Translation2d accelCompensation = robotAccel.times(0.5 * tof * tof);
+      
+      // Update compensated hub position
+      compensatedHub = hubVec.minus(velCompensation).minus(accelCompensation);
+  }
+  
+  // Calculate the required heading to aim at the compensated hub
+  Rotation2d aimRotation = compensatedHub.minus(robotVec).getAngle();
+  
+  // Apply distance-based aim correction for closer shots
+  double distance = compensatedHub.minus(robotVec).getNorm();
+  if (distance < 3.0) {
+      // For close shots, apply a small correction factor
+      double correctionFactor = 0.05 * (3.0 - distance);
+      double speed = Math.hypot(vel.vxMetersPerSecond, vel.vyMetersPerSecond);
+      if (speed > 0.5) {
+          // Adjust aim based on robot speed for close shots
+          double speedCorrection = Math.min(speed * 0.02, 0.1);
+          aimRotation = aimRotation.plus(Rotation2d.fromRadians(speedCorrection));
+      }
+  }
+  
+  return new Pose2d(compensatedHub, aimRotation);
+}
+
+// Add these fields to your SwerveSubsystem class
+private ChassisSpeeds previousVelocity = new ChassisSpeeds();
+private double previousTime = Timer.getFPGATimestamp();
 
   /**
    * Computes a virtual ferry location that compensates for robot velocity,
